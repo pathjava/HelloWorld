@@ -2,24 +2,18 @@ package ru.progwards.java1.lessons.helloworld;
 
 public class Task3 {
     public static int addition(int x, int y){
-        int z = x + y;
-        System.out.print("Вызвана функция addition() ");
-        System.out.println(z);
-        return z;
+        System.out.println("Вызвана функция addition() ");
+        return x + y;
     }
 
     public static int subtraction(int x, int y){
-        int w = x - y;
-        System.out.print("Вызвана функция subtraction() ");
-        System.out.println(w);
-        return w;
+        System.out.println("Вызвана функция subtraction() ");
+        return x - y;
     }
 
     public static int multiplication(int x, int y){
-        int d = x * y;
-        System.out.print("Вызвана функция multiplication() ");
-        System.out.println(d);
-        return d;
+        System.out.println("Вызвана функция multiplication() ");
+        return x * y;
     }
 
     public static void main(String[] args) {
