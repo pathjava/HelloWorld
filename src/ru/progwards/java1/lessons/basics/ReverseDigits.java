@@ -2,16 +2,21 @@ package ru.progwards.java1.lessons.basics;
 
 public class ReverseDigits {
     public static void main(String[] args) {
-        int number = 135;
-        System.out.println(reverseDigits(number));
+        int d = 135;
+        System.out.println(reverseDigits(d));
     }
-
-    public static int reverseDigits(int number){
-        int reverse = 0;
-        while (number != 0) {
-            reverse = reverse * 10 + (number % 10);
-            number = number / 10;
-        }
-        return reverse;
+    // реализовал - это копипаст, но теперь хотя бы понятно как это работает
+    public static int reverseDigits(int d){
+        int a=0;
+        int e=0;
+        int b=0;
+        int c=0;
+        int s=0;
+        a=d%10;
+        e=d/10;
+        b=e%10;
+        c=d/100;
+        s=(a*100)+(b*10)+c;
+        return s;
     }
 }
