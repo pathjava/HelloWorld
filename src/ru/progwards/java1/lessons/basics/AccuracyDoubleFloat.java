@@ -8,14 +8,17 @@ public class AccuracyDoubleFloat {
     public static float volumeBallFloat(float radius){
         return (float) ((4 / 3) * 3.14 * Math.pow(radius, 3));
     }
-    // не понял как реализовать данное решение
-//    public static double calculateAccuracy(double radius){
-//
-//    }
+    // не совсем понял как реализовать данное решение
+    public static double calculateAccuracy(double radius){
+        double a = volumeBallDouble(radius);
+        float b = volumeBallFloat((float) radius);
+        return a - b;
+    }
 
     public static void main(String[] args) {
         int radius = (int) 6371.2;
         System.out.println(volumeBallDouble(radius));
         System.out.println(volumeBallFloat(radius));
+        System.out.println(calculateAccuracy(radius));
     }
 }
