@@ -16,12 +16,12 @@ public class Astronomy {
         double r = 71492;
         return sphereSquare(r);
     }
-    // сравниваем планеты - просто написал, так как не могу понять, что необходимо сделать - в каком виде
+    // сравниваем планеты - написал, но не уверен в правильности
     public static Double earthVsMercury(){
-        return earthSquare() - mercurySquare();
+        return earthSquare() / mercurySquare();
     }
     public static Double earthVsJupiter(){
-        return earthSquare() - jupiterSquare();
+        return earthSquare() / jupiterSquare();
     }
 
     public static void main(String[] args) {
