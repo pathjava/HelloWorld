@@ -20,7 +20,7 @@ public class TriangleSimpleInfo {
     }
 
     public static boolean isEquilateralTriangle(int a, int b, int c){
-        if (a == b && a == c && c == b)
+        if (a == b && b == c)
             return true;
         else
             return false;
