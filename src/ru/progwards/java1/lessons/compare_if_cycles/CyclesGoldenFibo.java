@@ -1,9 +1,15 @@
 package ru.progwards.java1.lessons.compare_if_cycles;
 
 public class CyclesGoldenFibo {
-    // абсолютно нет никакого решения
+    // решение дал Григорий
     public static boolean containsDigit(int number, int digit){
-        return true;
+        if (number == 0 && digit == 0) return true;
+        int n = number;
+        while (n > 0) {
+            if (n % 10 == digit) return true;
+            n /= 10;
+        }
+        return false;
     }
 
     public static int fiboNumber(int n){
@@ -16,12 +22,18 @@ public class CyclesGoldenFibo {
         }
     }
 
-    // абсолютно нет никакого решения
+    // решение дал Григорий
     public static boolean isGoldenTriangle(int a, int b, int c){
-        return true;
+        float k = 0;
+        if (a == b) k = (float)a / c;
+        else if (b == c) k = (float)b / a;
+        else if (a == c) k = (float)a / b;
+        return k > 1.61703f && k < 1.61903f;
     }
 
     public static void main(String[] args) {
+        System.out.println(containsDigit(240, 24));
         System.out.println(fiboNumber(20));
+        System.out.println(isGoldenTriangle(25, 25, 25));
     }
 }
