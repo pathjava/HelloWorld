@@ -25,14 +25,17 @@ public class CyclesGoldenFibo {
     // решение дал Григорий
     public static boolean isGoldenTriangle(int a, int b, int c){
         float k = 0;
-        if (a == b) k = (float)a / c;
-        else if (b == c) k = (float)b / a;
-        else if (a == c) k = (float)a / b;
+        if (a == b)
+            k = (float)a / c;
+        else if (b == c)
+            k = (float)b / a;
+        else if (a == c)
+            k = (float)a / b;
         return k > 1.61703f && k < 1.61903f;
     }
 
     public static void main(String[] args) {
-        System.out.println(containsDigit(240, 24));
+        System.out.println(containsDigit(12345, 2));
         System.out.println(fiboNumber(20));
         System.out.println(isGoldenTriangle(25, 25, 25));
     }
