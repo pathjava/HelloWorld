@@ -41,6 +41,7 @@ public class Animal {
          return getWeight() * getFoodCoeff();
     }
 
+    //честно говоря запутался и не понял как вывести информацию для проверки
     public static void main(String[] args) {
         System.out.println();
     }
