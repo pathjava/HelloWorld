@@ -8,8 +8,9 @@ public class ComplexNum {
         this.b = b;
     }
     public String toString(){
-        return a + "+" + b+"i";
+        return a + "+" + b +"i";
     }
+    // с этого момента я зашел в тупик, после чего прибегнул к гуглу
     public ComplexNum add(ComplexNum num1, ComplexNum num2){
         return new ComplexNum(num1.a + num2.a, num1.b + num2.b);
     }
@@ -24,6 +25,7 @@ public class ComplexNum {
     }
 
     public static void main(String[] args) {
-
+        ComplexNum complexNum = new ComplexNum(1,3);
+        System.out.println("z = " + complexNum);
     }
 }
