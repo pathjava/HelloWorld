@@ -14,7 +14,7 @@ public class Cow extends Animal {
         return foodKind.HAY;
     }
 
-    private Cow animal = new Cow(getWeight());
+    private Cow animal = new Cow(20);
 
     public double getFoodCoeff(){
         return animal.getFoodCoeff() * 0.05;

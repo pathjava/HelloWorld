@@ -14,7 +14,7 @@ public class Duck extends Animal {
         return foodKind.CORN;
     }
 
-    private Duck animal = new Duck(getWeight());
+    private Duck animal = new Duck(5);
 
     public double getFoodCoeff(){
         return animal.getFoodCoeff() * 0.04;

@@ -14,7 +14,7 @@ public class Hamster extends Animal {
         return foodKind.CORN;
     }
 
-    private Hamster animal = new Hamster(getWeight());
+    private Hamster animal = new Hamster(3);
 
     public double getFoodCoeff(){
         return animal.getFoodCoeff() * 0.03;
