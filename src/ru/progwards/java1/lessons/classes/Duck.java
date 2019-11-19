@@ -15,6 +15,6 @@ public class Duck extends Animal {
     }
 
     public double getFoodCoeff(){
-        return getFoodCoeff() * 0.04;
+        return 0.04;
     }
 }

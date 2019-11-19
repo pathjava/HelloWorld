@@ -15,13 +15,13 @@ public class Cow extends Animal {
     }
 
     public double getFoodCoeff(){
-        return getFoodCoeff() * 0.05;
+        return 0.05;
+//        return getFoodCoeff() * 0.05;
     }
 
     public static void main(String[] args) {
-        Cow animal = new Cow(250);
-        System.out.println(animal);
-        System.out.println(animal.getFoodCoeff());
-//        System.out.println(animal.getCoeff());
+//        Cow animal = new Cow(250);
+//        System.out.println(animal);
+//        System.out.println(animal.getFoodCoeff());
     }
 }

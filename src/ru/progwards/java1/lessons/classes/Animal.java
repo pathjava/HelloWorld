@@ -22,7 +22,7 @@ public class Animal {
         return FoodKind.UNKNOWN;
     }
     public String toString(){
-        return "I am" + getKind() + ", eat" + getFoodKind() + calculateFoodWeight();
+        return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
     }
 
     public double getWeight(){
@@ -41,9 +41,14 @@ public class Animal {
 
     //честно говоря запутался и не понял как вывести информацию для проверки
     public static void main(String[] args) {
-        Cow animal = new Cow(250);
-        System.out.println(animal);
-        System.out.println(animal.getFoodCoeff());
-//        System.out.println(animal.getCoeff());
+        Cow animal1 = new Cow(250);
+        System.out.println(animal1);
+        System.out.println(animal1.getFoodCoeff());
+        Hamster animal2 = new Hamster(150);
+        System.out.println(animal2);
+        System.out.println(animal2.getFoodCoeff());
+        Duck animal3 = new Duck(150);
+        System.out.println(animal3);
+        System.out.println(animal3.getFoodCoeff());
     }
 }
