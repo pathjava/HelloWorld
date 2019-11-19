@@ -26,7 +26,8 @@ public class ComplexNum {
 
     // как вывести одну строку разобрался, а вот с остальными не получилось
     public static void main(String[] args) {
-        ComplexNum complexNum = new ComplexNum(1,5);
-        System.out.println("z = " + complexNum);
+//        ComplexNum complexNum = new ComplexNum(1,5);
+//        System.out.println("z = " + complexNum);
+        System.out.println("z = " + new ComplexNum(2,5));
     }
 }

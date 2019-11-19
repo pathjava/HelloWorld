@@ -25,7 +25,7 @@ public class Animal {
         return "I am" + getKind() + ", eat" + getFoodKind() + calculateFoodWeight();
     }
 
-    private Animal animal = new Animal(1);
+//    private Animal animal = new Animal(1);
 
     public double getWeight(){
         return weight;
@@ -34,7 +34,7 @@ public class Animal {
         this.weight = weight;
     }
     public double getFoodCoeff(){
-        return animal.getWeight() * 0.02;
+        return getWeight() * 0.02;
     }
 
     public double calculateFoodWeight(){
@@ -42,8 +42,10 @@ public class Animal {
     }
 
     //честно говоря запутался и не понял как вывести информацию для проверки
-//    public static void main(String[] args) {
-//        Animal animal = new Animal(20);
+    public static void main(String[] args) {
+//        Cow animal = new Cow(250);
 //        System.out.println(animal);
-//    }
+//        System.out.println(animal.getFoodCoeff());
+//        System.out.println(animal.getCoeff());
+    }
 }
