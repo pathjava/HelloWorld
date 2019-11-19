@@ -16,7 +16,6 @@ public class Cow extends Animal {
 
     public double getFoodCoeff(){
         return 0.05;
-//        return getFoodCoeff() * 0.05;
     }
 
     public static void main(String[] args) {
