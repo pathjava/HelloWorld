@@ -26,8 +26,8 @@ public class ComplexNum {
 
     // вывести результаты получилось только после подсказки Григория - сам проверял варианты близкие к правильному решению, но верного не нашел
     public static void main(String[] args) {
-        ComplexNum a = new ComplexNum(2, 2);
-        ComplexNum b = new ComplexNum(1, 1);
+        ComplexNum a = new ComplexNum(2, 3);
+        ComplexNum b = new ComplexNum(3, 2);
         System.out.println(a.add(a, b));
         System.out.println(a.sub(a, b));
         System.out.println(a.mul(a, b));
