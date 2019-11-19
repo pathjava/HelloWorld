@@ -2,7 +2,7 @@ package ru.progwards.java1.lessons.classes;
 
 public class Animal {
 
-    private double weight;
+    public double weight;
 
     enum AnimalKind{
         ANIMAL,
@@ -25,8 +25,6 @@ public class Animal {
         return "I am" + getKind() + ", eat" + getFoodKind() + calculateFoodWeight();
     }
 
-//    private Animal animal = new Animal(1);
-
     public double getWeight(){
         return weight;
     }
@@ -43,9 +41,9 @@ public class Animal {
 
     //честно говоря запутался и не понял как вывести информацию для проверки
     public static void main(String[] args) {
-//        Cow animal = new Cow(250);
-//        System.out.println(animal);
-//        System.out.println(animal.getFoodCoeff());
+        Cow animal = new Cow(250);
+        System.out.println(animal);
+        System.out.println(animal.getFoodCoeff());
 //        System.out.println(animal.getCoeff());
     }
 }
