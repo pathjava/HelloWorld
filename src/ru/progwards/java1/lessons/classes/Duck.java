@@ -6,12 +6,12 @@ public class Duck extends Animal {
     }
 
     @Override
-    public animalKind getKind(){
-        return animalKind.DUCK;
+    public AnimalKind getKind(){
+        return AnimalKind.DUCK;
     }
     @Override
-    public foodKind getFoodKind(){
-        return foodKind.CORN;
+    public FoodKind getFoodKind(){
+        return FoodKind.CORN;
     }
 
     private Duck animal = new Duck(5);

@@ -4,28 +4,28 @@ public class Animal {
 
     private double weight;
 
-    enum animalKind{
+    enum AnimalKind{
         ANIMAL,
         COW,
         HAMSTER,
         DUCK,
     }
-    public animalKind getKind(){
-        return animalKind.ANIMAL;
+    public AnimalKind getKind(){
+        return AnimalKind.ANIMAL;
     }
-    enum foodKind{
+    enum FoodKind{
         UNKNOWN,
         HAY,
         CORN,
     }
-    public foodKind getFoodKind(){
-        return foodKind.UNKNOWN;
+    public FoodKind getFoodKind(){
+        return FoodKind.UNKNOWN;
     }
     public String toString(){
         return "I am" + getKind() + ", eat" + getFoodKind() + calculateFoodWeight();
     }
 
-    public Animal animal = new Animal(1);
+    private Animal animal = new Animal(1);
 
     public double getWeight(){
         return weight;
@@ -42,7 +42,8 @@ public class Animal {
     }
 
     //честно говоря запутался и не понял как вывести информацию для проверки
-    public static void main(String[] args) {
-        System.out.println();
-    }
+//    public static void main(String[] args) {
+//        Animal animal = new Animal(20);
+//        System.out.println(animal);
+//    }
 }

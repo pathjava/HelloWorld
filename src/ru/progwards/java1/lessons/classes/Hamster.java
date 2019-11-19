@@ -6,12 +6,12 @@ public class Hamster extends Animal {
     }
 
     @Override
-    public animalKind getKind(){
-        return animalKind.HAMSTER;
+    public AnimalKind getKind(){
+        return AnimalKind.HAMSTER;
     }
     @Override
-    public foodKind getFoodKind(){
-        return foodKind.CORN;
+    public FoodKind getFoodKind(){
+        return FoodKind.CORN;
     }
 
     private Hamster animal = new Hamster(3);
