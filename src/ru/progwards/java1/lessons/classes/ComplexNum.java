@@ -24,7 +24,7 @@ public class ComplexNum {
         return new ComplexNum((num1.a * num2.a + num1.b * num2.b)/(num2.a * num2.a + num2.b * num2.b),(num1.b * num2.a - num1.a * num2.b)/(num2.a * num2.a + num2.b * num2.b));
     }
 
-    // как вывести одну строку разобрался, а вот с остальными не получилось
+    // вывести результаты получилось только после подсказки Григория - сам проверял варианты близкие к правильному решению, но верного не нашел
     public static void main(String[] args) {
         ComplexNum a = new ComplexNum(2, 2);
         ComplexNum b = new ComplexNum(1, 1);

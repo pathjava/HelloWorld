@@ -24,7 +24,7 @@ public class Animal {
     public String toString(){
         return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
     }
-
+    //метод calculateFoodWeight
     public double getWeight(){
         return weight;
     }
@@ -39,7 +39,7 @@ public class Animal {
          return getWeight() * getFoodCoeff();
     }
 
-    //честно говоря запутался и не понял как вывести информацию для проверки
+    //не сразу понял как вывести, но после подсказки Григория получилось
     public static void main(String[] args) {
         Cow animal1 = new Cow(250);
         System.out.println(animal1);
