@@ -36,9 +36,9 @@ public class Animal {
 
     //не сразу понял как вывести, но после подсказки Григория получилось
     public static void main(String[] args) {
-//        Animal animal = new Animal(50);
-//        System.out.println(animal);
-//        System.out.println(animal.getFoodCoeff());
+        Animal animal = new Animal(403);
+        System.out.println(animal);
+        System.out.println(animal + " " + animal.calculateFoodWeight());
 
         Cow animal1 = new Cow(250);
         System.out.println(animal1);
