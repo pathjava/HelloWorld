@@ -4,7 +4,8 @@ public class Animal {
 
     public double weight;
 
-    public Animal() {
+    public Animal(double weight) {
+        this.weight = weight;
     }
 
     static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
@@ -37,18 +38,18 @@ public class Animal {
 
     //не сразу понял как вывести, но после подсказки Григория получилось
     public static void main(String[] args) {
-//        Animal animal = new Animal(50);
-//        System.out.println(animal);
-//        System.out.println(animal.getFoodCoeff());
+        Animal animal = new Animal(50);
+        System.out.println(animal);
+        System.out.println(animal.getFoodCoeff());
 
-//        Cow animal1 = new Cow(250);
-//        System.out.println(animal1);
-//        System.out.println(animal1.getFoodCoeff());
-//        Hamster animal2 = new Hamster(150);
-//        System.out.println(animal2);
-//        System.out.println(animal2.getFoodCoeff());
-//        Duck animal3 = new Duck(100);
-//        System.out.println(animal3);
-//        System.out.println(animal3.getFoodCoeff());
+        Cow animal1 = new Cow(250);
+        System.out.println(animal1);
+        System.out.println(animal1.getFoodCoeff());
+        Hamster animal2 = new Hamster(150);
+        System.out.println(animal2);
+        System.out.println(animal2.getFoodCoeff());
+        Duck animal3 = new Duck(100);
+        System.out.println(animal3);
+        System.out.println(animal3.getFoodCoeff());
     }
 }
