@@ -24,42 +24,42 @@ public class SumBits {
 
     //данный метод показал Валерий на консультации 23.11.2019
     //данный метод не прошел проверку роботом, хотя на консультации Валерий говорил, что ожидал такого решения
-        byte result = 0;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        value >>= 1;
-        if ((value & 1) == 1)
-            result++;
-        return result;
-    }
-    public static void main(String[] args) {
-        System.out.println(sumBits((byte) 0b10101110));
-    }
-
-    // данный метод подсмотрел в Гугл
-//        byte count;
-//        for (count = 0; value != 0; count++) {
-//            value &= (value - 1);
-//        }
-//        return count;
+//        int result = 0;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        return result;
 //    }
 //    public static void main(String[] args) {
-//        System.out.println(sumBits((byte) 0b00110101));
+//        System.out.println(sumBits((byte) 0b00101110));
 //    }
+
+    // данный метод подсмотрел в Гугл
+        byte count;
+        for (count = 0; value != 0; count++) {
+            value &= (value - 1);
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+        System.out.println(sumBits((byte) 0b00110101));
+    }
 }
