@@ -2,9 +2,14 @@ package ru.progwards.java1.lessons.bitsworld;
 
 public class SumBits {
     public static int sumBits(byte value) {
-        int result = 0;
-
-        while (value > 0) {
+    //данный метод долго мучал сам, но была ошибка при старшей 1 - на консультации разобрали причину
+    // ошибка была  в нехватке  || value < -1 в условие цикла и определении result 0 или <0
+        int result;
+        if (value < 0)
+            result = 1;
+        else
+            result = 0;
+        while (value > 0 || value < -1) {
             if ((value & 1) == 1) {
                 result++;
             }
@@ -13,10 +18,41 @@ public class SumBits {
         return result;
     }
     public static void main(String[] args) {
-        System.out.println(sumBits((byte) 0b01101100));
+        System.out.println(sumBits((byte) 0b10101110));
     }
 
+    //данный метод показал Валерий на консультации 23.11.2019
+//        int result = 0;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        value >>= 1;
+//        if ((value & 1) == 1)
+//            result++;
+//        return result;
+//    }
+//
+//    public static void main(String[] args) {
+//        System.out.println(sumBits((byte) 0b00101110));
+//    }
 
+
+    // данный метод подсмотрел в Гугл
 //    public static int sumBits(byte value) {
 //        byte count;
 //        for (count = 0; value != 0; count++) {
@@ -27,8 +63,5 @@ public class SumBits {
 //
 //    public static void main(String[] args) {
 //        System.out.println(sumBits((byte) 0b00110101));
-
-//        int res = 177;
-//        System.out.println("Number of one bits = " + Integer.bitCount(res));
 //    }
 }
