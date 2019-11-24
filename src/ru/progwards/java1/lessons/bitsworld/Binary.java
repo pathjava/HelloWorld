@@ -2,19 +2,24 @@ package ru.progwards.java1.lessons.bitsworld;
 
 public class Binary {
     public byte num;
-    public byte number;
 
     public Binary(byte num){
         this.num = num;
     }
 
+    String result = "";
+
     public String toString(){
-        return "";
+        if (num % 2 == 0)
+            result = "0";
+        else
+            result = "1";
+        return result;
     }
 
 
     public static void main(String[] args) {
-        Binary binary = new Binary(num);
-        System.out.println(123);
+        Binary binary = new Binary((byte) 3);
+        System.out.println(binary);
     }
 }

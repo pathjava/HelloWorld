@@ -1,28 +1,30 @@
 package ru.progwards.sever;
 
+
 public class Test2 {
+    static void decToBinary(int n)
+    {
+        // array to store binary number
+        int[] binaryNum = new int[32];
 
-//    public static int sumBits(byte value) {
-//        byte count;
-//        for (count = 0; value != 0; count++) {
-//            value &= (value - 1);
-//        }
-//        //System.out.println(count);
-//        return count;
-//    }
+        // counter for binary array
+        int i = 0;
+        while (n > 0) {
+            // storing remainder in binary array
+            binaryNum[i] = n % 2;
+            n = n / 2;
+            i++;
+        }
 
-    public static void main(String[] args) {
-        int a = 90;
-        System.out.println(Integer.toString(a, 2));
+        // printing binary array in reverse order
+        for (int j = i - 1; j >= 0; j--)
+            System.out.print(binaryNum[j]);
     }
 
-//    public static void main(String[] args) {
-//        byte test = (byte) 0b00110011;
-//        byte count;
-//        for (count=0; test != 0; count++){
-//            test &= (test - 1);
-//        }
-//        System.out.println(count);
-//
-//    }
+    // driver program
+    public static void main(String[] args)
+    {
+        int n = 17;
+        decToBinary(n);
+    }
 }
