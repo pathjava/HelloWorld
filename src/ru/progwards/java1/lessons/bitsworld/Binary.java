@@ -10,15 +10,16 @@ public class Binary {
     String result = "";
 
     public String toString(){
-        // не смог пока написать рабочее решение, которое будет проходить по всем битам и добавлять их в result
-//        if (num % 2 == 0)
-//            result = "0";
-//        else
-//            result = "1";
-//        return result;
+        String result = "";
+
+        for (int i = Byte.SIZE - 1; i >= 0; i--) {
+            result += (num >> i) & 0b00000001;
+        }
+
+        return result;
 
         //данное решение не мое
-        return String.format("%8s", Integer.toBinaryString(num & 0xFF)).replace(' ', '0');
+        //return String.format("%8s", Integer.toBinaryString(num & 0xFF)).replace(' ', '0');
     }
 
 
