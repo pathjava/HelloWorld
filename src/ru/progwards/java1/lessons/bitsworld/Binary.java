@@ -12,9 +12,16 @@ public class Binary {
     public String toString(){
         String result = "";
 
+//        for (int i = 0; i < Byte.SIZE; i++) {
+//            result = ((num >> i) & 0b00000001) + result;
+//        }
         for (int i = Byte.SIZE - 1; i >= 0; i--) {
             result += (num >> i) & 0b00000001;
         }
+        //решение выше обрабатывается в компиляторе так:
+//        for (int i = Byte.SIZE - 1; i >= 0; i--) {
+//            result += ((Integer)((num >> i) & 0b00000001)).toString();
+//        }
 
         return result;
 
