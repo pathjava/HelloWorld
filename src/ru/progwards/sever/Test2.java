@@ -1,47 +1,25 @@
 package ru.progwards.sever;
 
 
-public class Test2 {
-//    static void decToBinary(int n)
-//    {
-//        // array to store binary number
-//        int[] binaryNum = new int[32];
-//
-//        // counter for binary array
-//        int i = 0;
-//        while (n > 0) {
-//            // storing remainder in binary array
-//            binaryNum[i] = n % 2;
-//            n = n / 2;
-//            i++;
-//        }
-//
-//        // printing binary array in reverse order
-//        for (int j = i - 1; j >= 0; j--)
-//            System.out.print(binaryNum[j]);
-//    }
-//
-//    // driver program
-//    public static void main(String[] args)
-//    {
-//        int n = 17;
-//        decToBinary(n);
-//    }
-public enum Grade{VERYBAD, BAD, SATISFACTORILY, GOOD, EXCELLENT, NOTDEFINED}
-    static Grade intToGrade(int grade) {
-        switch (grade) {
-            case 1:
-                return Grade.VERYBAD;
-            case 2:
-                return Grade.BAD;
-            case 3:
-                return Grade.SATISFACTORILY;
-            case 4:
-                return Grade.GOOD;
-            case 5:
-                return Grade.EXCELLENT;
-            default:
-                return Grade.NOTDEFINED;
-        }
+class Test2 {
+    private double a;
+    private double b;
+
+    public Test2(double a, double b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    public double area() {
+        return a*b;
+    }
+
+    public int compareTo(Test2 anRectangle){
+        if (this.area() > anRectangle.area())
+            return 1;
+        else if (this.area() == anRectangle.area())
+            return 0;
+        else
+            return -1;
     }
 }
