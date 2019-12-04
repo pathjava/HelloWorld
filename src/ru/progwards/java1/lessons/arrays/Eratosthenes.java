@@ -3,6 +3,8 @@ package ru.progwards.java1.lessons.arrays;
 import java.util.Arrays;
 
 public class Eratosthenes {
+    //изначально решение увидел в обсуждениях, но там сразу было указано, что оно ошибочное
+    //взял его за основу и далее переработал
     int N = 0;
 
     private boolean[] sieve;
