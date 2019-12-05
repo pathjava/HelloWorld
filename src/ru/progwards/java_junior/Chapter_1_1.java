@@ -6,7 +6,7 @@ public class Chapter_1_1 {
         int counter;
 
         counter = 0;
-        for (inch = 1; inch < 134; inch++){
+        for (inch = 1; inch <= 144; inch++){
             meter = inch * 39.37;
             System.out.println(inch + " = " + meter);
 
