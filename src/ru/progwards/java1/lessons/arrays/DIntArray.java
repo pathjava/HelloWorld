@@ -30,6 +30,9 @@ public class DIntArray {
         c учетом того, что новый элемент окажется где-то в середине, и потом положить в нужный индекс элемент num. */
 
         //здесь вообще не понимаю как реализовать даже в мыслях
+        int[] a = new int[] {num};
+        System.arraycopy(a, 0, a.length, pos, a.length + 1);
+        a[a.length - 1] = num;
     }
 
     public void atDelete(int pos){
