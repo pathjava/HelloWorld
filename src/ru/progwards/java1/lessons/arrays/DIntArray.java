@@ -12,15 +12,15 @@ public class DIntArray {
         /* public void add(int num) - добавляет элемент num в конец массива, при этом размер массива должен увеличиться на 1.
         Для этого нужно будет разместить новый массив нужного размера, скопировать в него старый, и добавить в хвост элемент num. */
 
-        int len = a.length;
-        int[] a = new int[len + 1];
-        a = Arrays.copyOf(a, a.length + 1);
-        a[a.length - 1] = num;
-
-        // ранее написанные варианты решеения
-//        int[] a = new int[] {num};
+//        int len = a.length;
+//        int[] a = new int[len + 1];
 //        a = Arrays.copyOf(a, a.length + 1);
 //        a[a.length - 1] = num;
+
+        // ранее написанные варианты решеения
+        int[] a = new int[] {num};
+        a = Arrays.copyOf(a, a.length + 1);
+        a[a.length - 1] = num;
 
 //        int[] b = new int[a.length + 1];
 //        System.arraycopy(a, 0, b, 0, a.length);
@@ -47,5 +47,14 @@ public class DIntArray {
 
     public int at(int pos){
         return pos;
+    }
+
+    public static void main(String[] args) {
+        DIntArray dIntArray = new DIntArray();
+        int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        System.out.println(Arrays.toString(arr));
+        dIntArray.add(11);
+        System.out.println(Arrays.toString(arr));
     }
 }
