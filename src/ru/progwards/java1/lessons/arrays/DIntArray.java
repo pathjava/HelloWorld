@@ -17,6 +17,11 @@ public class DIntArray {
         a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = num;
 
+        // ранее написанные варианты решеения
+//        int[] a = new int[] {num};
+//        a = Arrays.copyOf(a, a.length + 1);
+//        a[a.length - 1] = num;
+
 //        int[] b = new int[a.length + 1];
 //        System.arraycopy(a, 0, b, 0, a.length);
 //        a = b;
