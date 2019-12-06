@@ -15,7 +15,7 @@ public class DIntArray {
 
         // вот понимаю, что надо проверить длину массива, после этого создать новый +1, через Arrays.copyOf() скопировать в него старый
         // массив, но как добавить в конец элемент не понимаю.
-        int[] a = new int[num + 1];
+        int[] a = new int[num];
         //a = Arrays.copyOf(a, size + 1);
         a[size] = num;
         size++;
