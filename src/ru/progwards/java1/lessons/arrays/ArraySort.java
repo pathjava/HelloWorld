@@ -14,6 +14,15 @@ public class ArraySort {
             }
         }
     }
+
+    public static void main(String[] args) {
+        int[] arr = {23, 55, 3, 3, -45, 270, 15, 1};
+        sort(arr);
+        for (int value : arr) {
+            System.out.print(value + " ");
+        }
+    }
+
     //это мое самостоятельное решение - судя по варианту выше, мыслил в верном направлении, но не совсем
 //    public static void sort(int[] a){
 //        int i = a[0];
