@@ -12,7 +12,8 @@ public class DIntArray {
         /* public void add(int num) - добавляет элемент num в конец массива, при этом размер массива должен увеличиться на 1.
         Для этого нужно будет разместить новый массив нужного размера, скопировать в него старый, и добавить в хвост элемент num. */
 
-        int[] a = new int[] {num};
+        int len = a.length;
+        int[] a = new int[len + 1];
         a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = num;
 
@@ -26,8 +27,9 @@ public class DIntArray {
         Для этого нужно будет разместить новый массив нужного размера, скопировать в него старый,
         c учетом того, что новый элемент окажется где-то в середине, и потом положить в нужный индекс элемент num. */
 
-        int[] a = new int[] {num};
-        System.arraycopy(a, 0, a.length, pos, a.length + 1);
+        int len = a.length;
+        int[] a = new int[len + 1];
+        a = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = num;
     }
 
