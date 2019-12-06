@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class DIntArray {
     private int[] a;
-    public int size = 0;
 
     DIntArray(){
     }
@@ -15,11 +14,14 @@ public class DIntArray {
 
         // вот понимаю, что надо проверить длину массива, после этого создать новый +1, через Arrays.copyOf() скопировать в него старый
         // массив, но как добавить в конец элемент не понимаю.
-        int[] b = new int[a.length + 1];
-        System.arraycopy(a, 0, b, 0, a.length);
-        //a = Arrays.copyOf(a, size + 1);
-        //a[size] = num;
-        //size++;
+
+        int[] a = new int[] {num};
+        a = Arrays.copyOf(a, a.length + 1);
+        a[a.length - 1] = num;
+
+//        int[] b = new int[a.length + 1];
+//        System.arraycopy(a, 0, b, 0, a.length);
+//        a = b;
     }
 
     public void atInsert(int pos, int num){
