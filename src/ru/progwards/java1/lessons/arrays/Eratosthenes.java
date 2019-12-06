@@ -19,11 +19,11 @@ public class Eratosthenes {
     private void sift(){
         sieve[0] = false;
         sieve[1] = false;
-        int i = 2;
-        int j = 2;
-        for (i = 2; i < sieve.length; i++){
+//        int i = 2;
+//        int j = 2;
+        for (int i = 2; i < sieve.length; i++){
             if (sieve[i]){
-                for (j = 2; i * j < sieve.length; ++j){
+                for (int j = 2; i * j < sieve.length; ++j){
                     sieve[i * j] = false;
                 }
             }
