@@ -50,9 +50,10 @@ public class DIntArray {
     }
 
     public static void main(String[] args) {
+        DIntArray dIntArray = new DIntArray();
         // как запустить отладку?
         int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
+        dIntArray.add(11);
         System.out.println(Arrays.toString(arr));
     }
 }
