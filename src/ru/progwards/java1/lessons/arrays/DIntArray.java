@@ -3,14 +3,18 @@ package ru.progwards.java1.lessons.arrays;
 import java.util.Arrays;
 
 public class DIntArray {
-    //private int[] a = {};
+    private int[] a = {};
     // тестовый массив
-    private int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    //private int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
     DIntArray(){
     }
-
+    /* сегодня мне помогли с решением - увидев рабочий вариант, я понимаю, что был близок к
+    * правильному решению, но объективно оценивая - не хватило опыта и знаний.
+    * я разобрал все методы и прописал, какая строка за что отвечает - сделал это
+    * в первую  очередь для себя, чтобы пройти по всему коду */
     public void add(int num){
+        //создаем массив b и помещаем в него массив a с увеличением размера на +1
         int[] b = new int[a.length + 1];
         //копируем массив от 0, в конце остается +1 ячейка
         System.arraycopy(a, 0, b, 0, a.length);
@@ -21,6 +25,7 @@ public class DIntArray {
     }
 
     public void atInsert(int pos, int num){
+        //создаем массив b и помещаем в него массив a с увеличением размера на +1
         int[] b = new int[a.length + 1];
         //копируем массив от 0 до значения позиции
         System.arraycopy(a, 0, b, 0, pos);
@@ -33,6 +38,7 @@ public class DIntArray {
     }
 
     public void atDelete(int pos){
+        //создаем массив b и помещаем в него массив a с уменьшением размера на -1
         int[] b = new int[a.length - 1];
         //копируем массив от 0 до pos
         System.arraycopy(a, 0, b, 0, pos);
