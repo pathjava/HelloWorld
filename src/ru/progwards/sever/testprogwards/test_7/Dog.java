@@ -1,4 +1,4 @@
-package ru.progwards.sever.testprogwards;
+package ru.progwards.sever.testprogwards.test_7;
 
 public class Dog implements Eating, Speaking {
     @Override

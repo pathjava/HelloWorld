@@ -1,4 +1,4 @@
-package ru.progwards.sever;
+package ru.progwards.sever.testprogwards.test_7;
 
 public class Test_7_1 {
     private double a;

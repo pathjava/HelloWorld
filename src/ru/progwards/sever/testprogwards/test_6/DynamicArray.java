@@ -1,4 +1,4 @@
-package ru.progwards.sever;
+package ru.progwards.sever.testprogwards.test_6;
 
 // Java program deals with all operation of a dynamic array
 // add, remove, resize memory of array is the main feature

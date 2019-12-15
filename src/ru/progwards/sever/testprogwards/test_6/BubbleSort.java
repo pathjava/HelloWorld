@@ -1,4 +1,4 @@
-package ru.progwards.sever;
+package ru.progwards.sever.testprogwards.test_6;
 
 public class BubbleSort {
     private void bubbleSort(int[] arr){
