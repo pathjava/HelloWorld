@@ -1,29 +1,24 @@
 package ru.progwards.java1.lessons.interfaces;
 
-public class Animal implements FoodCompare {
+public class Animal implements FoodCompare  {
 
-    public double weight;
+    static enum AnimalKind {ANIMAL, COW, HAMSTER, DUCK}
 
-    public Animal(double weight) {
+    static enum FoodKind {UNKNOWN, HAY, CORN}
+
+    private AnimalKind animalKind = AnimalKind.ANIMAL;
+    private FoodKind foodKind = FoodKind.UNKNOWN;
+
+    private double weight = 1d; // вес животного
+    double foodCoeff = 0.02; // коэффициент веса еды к весу тела животного
+
+    Animal() {
+    }
+
+    Animal(double weight) { // не нужный объект, когда не задан тип животного
         this.weight = weight;
     }
 
-    private AnimalKind animalKind = AnimalKind.ANIMAL;
-    static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
-    public AnimalKind getKind(){
-        return AnimalKind.ANIMAL;
-    }
-
-    private FoodKind foodKind = FoodKind.UNKNOWN;
-    static enum FoodKind{UNKNOWN, HAY, CORN,}
-    public FoodKind getFoodKind(){
-        return FoodKind.UNKNOWN;
-    }
-
-    public String toString(){
-        return "I am " + getKind() + ", eat " + getFoodKind();
-    }
-    double foodCoeff = 0.02;
     Animal(AnimalKind animalKind, FoodKind food, double weight, double foodCoeff) {
         this.animalKind = animalKind;
         this.foodKind = food;
@@ -31,64 +26,83 @@ public class Animal implements FoodCompare {
         this.foodCoeff = foodCoeff;
     }
 
-    //метод calculateFoodWeight
-    public double getWeight(){
-        return weight;
+    public AnimalKind getKind() {
+        return animalKind;
     }
-    public double getFoodCoeff(){
-        return 0.02;
-    }
-    public double calculateFoodWeight(){
-        return getWeight() * getFoodCoeff();
-    }
-    public String toStringFull(){
-        return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
+
+    public FoodKind getFoodKind() {
+        return foodKind;
     }
 
     @Override
+    public String toString() {
+        return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    void setFoodCoeff(double foodCoeff) {
+        this.foodCoeff = foodCoeff;
+    }
+
+    public double getFoodCoeff() {
+        return foodCoeff;
+    }
+
+    public double getCoeff() {
+        return foodCoeff;
+    }
+
+    // рассчитывает необходимый вес еды, по формуле - вес-еды = вес-животного * коэффициент веса тела
+    public double calculateFoodWeight() {
+        return getWeight() * getFoodCoeff();
+    }
+
+    @Override
+    // возвращает true, если объекты равны и false если не равны по параметру - вес животного
     public boolean equals(Object anObject) {
-        if (this == anObject) return true;
-        if (anObject == null || getClass() != anObject.getClass()) return false;
-
-        Animal animal = (Animal) anObject;
-
-        return Double.compare(animal.calculateFoodWeight(), calculateFoodWeight()) == 0;
+        if (anObject == this) return true;
+        if (anObject == null || anObject.getClass() != this.getClass()) return false;
+        Animal o = (Animal) anObject;
+        return Double.compare(o.calculateFoodWeight(), this.calculateFoodWeight()) == 0;
     }
 
-    public double getFood1kgPrice(){
-        switch (foodKind){
-            case HAY:
-                return 20.0;
-            case CORN:
-                return 50.0;
+    // информация о цене 1 кг еды
+    public double getFood1kgPrice() {
+        switch (foodKind) {
+            case HAY: return 20d;
+            case CORN: return 50d;
         }
-        return 0.0;
+        return 0d;
     }
-    public double getFoodPrice(){
+
+    // возвращает информацию о цене еды для данного животного
+    public double getFoodPrice() {
         return calculateFoodWeight() * getFood1kgPrice();
     }
 
     @Override
+    // результаты сравнения цены еды для данного животного с ценой еды для другого животного
     public int compareFoodPrice(Animal animal) {
         return Double.compare(getFoodPrice(), animal.getFoodPrice());
     }
 
-    //не сразу понял как вывести, но после подсказки Григория получилось
+//    @Override
+//    public int compareTo(Object o) {
+//        if (o == this) return 0;
+//        if (!(o instanceof Animal)) throw new RuntimeException("Object o is not inherited from Animal class.");
+//        double w = this.getWeight();
+//        double wo = ((Animal) o).getWeight();
+//        if (w == wo) return 0;
+//        if (w > wo) return 1;
+//        return -1;
+//    }
+
     public static void main(String[] args) {
-        Animal animal = new Animal(403);
+        Animal animal = new Animal();
         System.out.println(animal);
-        System.out.println(animal + " " + animal.calculateFoodWeight());
-
-//        Cow animal1 = new Cow(250);
-//        System.out.println(animal1);
-//        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
-//        System.out.println(animal1 + " " + animal1.getFoodPrice());
-//        Hamster animal2 = new Hamster(150);
-//        System.out.println(animal2);
-//        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
-//        Duck animal3 = new Duck(100);
-//        System.out.println(animal3);
-//        System.out.println(animal3 + " " + animal3.calculateFoodWeight());
-
     }
+
 }
