@@ -14,7 +14,7 @@ public class Animal implements FoodCompare {
         return AnimalKind.ANIMAL;
     }
 
-    //private FoodKind foodKind = FoodKind.UNKNOWN;
+    private FoodKind foodKind = FoodKind.UNKNOWN;
     static enum FoodKind{UNKNOWN, HAY, CORN,}
     public FoodKind getFoodKind(){
         return FoodKind.UNKNOWN;
@@ -49,7 +49,7 @@ public class Animal implements FoodCompare {
     }
 
     public double getFood1kgPrice(){
-        switch (FoodKind.UNKNOWN){
+        switch (foodKind){
             case HAY:
                 return 20.0;
             case CORN:
