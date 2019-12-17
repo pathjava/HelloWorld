@@ -75,17 +75,21 @@ public class Animal implements FoodCompare {
         System.out.println(animal);
         System.out.println(animal + " " + animal.calculateFoodWeight());
         System.out.println(animal + " " + animal.getFoodPrice());
-
-//        Cow animal1 = new Cow(250);
-//        System.out.println(animal1);
-//        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
-//        System.out.println(animal1 + " " + animal1.getFoodPrice());
-//        Hamster animal2 = new Hamster(150);
-//        System.out.println(animal2);
-//        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
-//        Duck animal3 = new Duck(100);
-//        System.out.println(animal3);
-//        System.out.println(animal3 + " " + animal3.calculateFoodWeight());
+        System.out.println();
+        Cow animal1 = new Cow(250);
+        System.out.println(animal1);
+        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
+        System.out.println(animal1 + " " + animal1.getFoodPrice());
+        System.out.println();
+        Hamster animal2 = new Hamster(150);
+        System.out.println(animal2);
+        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
+        System.out.println(animal2 + " " + animal2.getFoodPrice());
+        System.out.println();
+        Duck animal3 = new Duck(100);
+        System.out.println(animal3);
+        System.out.println(animal3 + " " + animal3.calculateFoodWeight());
+        System.out.println(animal3 + " " + animal3.getFoodPrice());
 
     }
 }
