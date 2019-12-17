@@ -14,11 +14,12 @@ public class Animal implements FoodCompare {
         return AnimalKind.ANIMAL;
     }
 
-    private FoodKind foodKind = FoodKind.UNKNOWN;
+//    private FoodKind foodKind = FoodKind.UNKNOWN;
     static enum FoodKind{UNKNOWN, HAY, CORN,}
     public FoodKind getFoodKind(){
         return FoodKind.UNKNOWN;
     }
+
 
     public String toString(){
         return "I am " + getKind() + ", eat " + getFoodKind();
@@ -50,7 +51,7 @@ public class Animal implements FoodCompare {
 
     public double getFood1kgPrice(){
         double result = 0;
-        switch (foodKind){
+        switch (getFoodKind()){
             case HAY:
                 return 20;
             case CORN:
