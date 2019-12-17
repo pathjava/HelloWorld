@@ -23,6 +23,13 @@ public class Animal implements FoodCompare {
     public String toString(){
         return "I am " + getKind() + ", eat " + getFoodKind();
     }
+    double foodCoeff = 0.02;
+    Animal(AnimalKind animalKind, FoodKind food, double weight, double foodCoeff) {
+        this.animalKind = animalKind;
+        this.foodKind = food;
+        this.weight = weight;
+        this.foodCoeff = foodCoeff;
+    }
 
     //метод calculateFoodWeight
     public double getWeight(){
@@ -72,10 +79,10 @@ public class Animal implements FoodCompare {
         System.out.println(animal);
         System.out.println(animal + " " + animal.calculateFoodWeight());
 
-        Cow animal1 = new Cow(250);
-        System.out.println(animal1);
-        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
-        System.out.println(animal1 + " " + animal1.getFoodPrice());
+//        Cow animal1 = new Cow(250);
+//        System.out.println(animal1);
+//        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
+//        System.out.println(animal1 + " " + animal1.getFoodPrice());
 //        Hamster animal2 = new Hamster(150);
 //        System.out.println(animal2);
 //        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
