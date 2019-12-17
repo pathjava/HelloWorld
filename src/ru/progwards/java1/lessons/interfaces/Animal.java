@@ -49,13 +49,16 @@ public class Animal implements FoodCompare {
     }
 
     public double getFood1kgPrice(){
+        double result = 0;
         switch (foodKind){
             case HAY:
                 return 20;
             case CORN:
                 return 50;
+            case UNKNOWN:
+                return 0;
         }
-        return 0;
+        return result;
     }
     public double getFoodPrice(){
         return calculateFoodWeight() * getFood1kgPrice();
@@ -71,11 +74,12 @@ public class Animal implements FoodCompare {
         Animal animal = new Animal(403);
         System.out.println(animal);
         System.out.println(animal + " " + animal.calculateFoodWeight());
+        System.out.println(animal + " " + animal.getFoodPrice());
 
-        Cow animal1 = new Cow(250);
-        System.out.println(animal1);
-        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
-        System.out.println(animal1 + " " + animal1.getFoodPrice());
+//        Cow animal1 = new Cow(250);
+//        System.out.println(animal1);
+//        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
+//        System.out.println(animal1 + " " + animal1.getFoodPrice());
 //        Hamster animal2 = new Hamster(150);
 //        System.out.println(animal2);
 //        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
