@@ -8,7 +8,7 @@ public class Animal implements FoodCompare {
         this.weight = weight;
     }
 
-    //private AnimalKind animalKind = AnimalKind.ANIMAL;
+    private AnimalKind animalKind = AnimalKind.ANIMAL;
     static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
     public AnimalKind getKind(){
         return AnimalKind.ANIMAL;
