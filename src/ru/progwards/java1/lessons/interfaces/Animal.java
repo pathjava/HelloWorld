@@ -8,18 +8,15 @@ public class Animal implements FoodCompare {
         this.weight = weight;
     }
 
-    //private AnimalKind animalKind = AnimalKind.ANIMAL;
     static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
     public AnimalKind getKind(){
         return AnimalKind.ANIMAL;
     }
 
-//    private FoodKind foodKind = FoodKind.UNKNOWN;
     static enum FoodKind{UNKNOWN, HAY, CORN,}
     public FoodKind getFoodKind(){
         return FoodKind.UNKNOWN;
     }
-
 
     public String toString(){
         return "I am " + getKind() + ", eat " + getFoodKind();
@@ -39,6 +36,7 @@ public class Animal implements FoodCompare {
         return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
     }
 
+    //возвращает true, если объекты равны и false если не равны по параметру - вес животного
     @Override
     public boolean equals(Object anObject) {
         if (this == anObject) return true;
@@ -49,6 +47,7 @@ public class Animal implements FoodCompare {
         return Double.compare(animal.calculateFoodWeight(), calculateFoodWeight()) == 0;
     }
 
+    //возвращает информацию о цене 1 кг еды
     public double getFood1kgPrice(){
         double result = 0;
         switch (getFoodKind()){
@@ -61,36 +60,41 @@ public class Animal implements FoodCompare {
         }
         return result;
     }
+
+    //возвращает информацию о цене еды для данного животного по формуле calculateFoodWeight() * getFood1kgPrice()
     public double getFoodPrice(){
         return calculateFoodWeight() * getFood1kgPrice();
     }
 
+    //возвращает результаты сравнения цены еды для данного животного с ценой еды для другого животного
     @Override
     public int compareFoodPrice(Animal animal) {
         return Double.compare(getFoodPrice(), animal.getFoodPrice());
     }
 
-    //не сразу понял как вывести, но после подсказки Григория получилось
     public static void main(String[] args) {
-        Animal animal = new Animal(403);
+        Animal animal = new Animal(0);
         System.out.println(animal);
-        System.out.println(animal + " " + animal.calculateFoodWeight());
-        System.out.println(animal + " " + animal.getFoodPrice());
+        System.out.println("Food Weight " + animal.calculateFoodWeight());
+        System.out.println("Food Price " + animal.getFoodPrice());
+        System.out.println("Food 1kg Price " + animal.getFood1kgPrice());
         System.out.println();
         Cow animal1 = new Cow(250);
         System.out.println(animal1);
-        System.out.println(animal1 + " " + animal1.calculateFoodWeight());
-        System.out.println(animal1 + " " + animal1.getFoodPrice());
+        System.out.println("Food Weight " + animal1.calculateFoodWeight());
+        System.out.println("Food Price " + animal1.getFoodPrice());
+        System.out.println("Food 1kg Price " + animal1.getFood1kgPrice());
         System.out.println();
         Hamster animal2 = new Hamster(150);
         System.out.println(animal2);
-        System.out.println(animal2 + " " + animal2.calculateFoodWeight());
-        System.out.println(animal2 + " " + animal2.getFoodPrice());
+        System.out.println("Food Weight " + animal2.calculateFoodWeight());
+        System.out.println("Food Price " + animal2.getFoodPrice());
+        System.out.println("Food 1kg Price " + animal2.getFood1kgPrice());
         System.out.println();
         Duck animal3 = new Duck(100);
         System.out.println(animal3);
-        System.out.println(animal3 + " " + animal3.calculateFoodWeight());
-        System.out.println(animal3 + " " + animal3.getFoodPrice());
-
+        System.out.println("Food Weight " + animal3.calculateFoodWeight());
+        System.out.println("Food Price " + animal3.getFoodPrice());
+        System.out.println("Food 1kg Price " + animal3.getFood1kgPrice());
     }
 }
