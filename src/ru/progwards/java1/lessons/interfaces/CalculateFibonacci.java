@@ -41,6 +41,7 @@ public class CalculateFibonacci {
     }
 
     static public void clearLastFibo(){
+        if (lastFibo.n == 0)
         lastFibo = null;
     }
 
