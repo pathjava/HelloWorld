@@ -1,6 +1,6 @@
 package ru.progwards.java1.lessons.interfaces;
 
-public class ArraySort {
+public class ArraySort implements CompareWeight {
     public static void sort(int[] a){
         //данное решение подсмотрел в Гугл после долгой самостоятельной битвы над задачей (мое решение закомментировано ниже)
         int n = a.length;
@@ -13,6 +13,11 @@ public class ArraySort {
                 }
             }
         }
+    }
+
+    @Override
+    public CompareResult compareWeight(CompareWeight smthHasWeigt) {
+        return null;
     }
 
     public static void main(String[] args) {

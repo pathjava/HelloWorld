@@ -1,6 +1,6 @@
 package ru.progwards.java1.lessons.interfaces;
 
-public class Animal implements FoodCompare {
+public class Animal implements FoodCompare, CompareWeight {
 
     public double weight;
 
@@ -8,12 +8,12 @@ public class Animal implements FoodCompare {
         this.weight = weight;
     }
 
-    static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
+    static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK;}
     public AnimalKind getKind(){
         return AnimalKind.ANIMAL;
     }
 
-    static enum FoodKind{UNKNOWN, HAY, CORN,}
+    static enum FoodKind{UNKNOWN, HAY, CORN;}
     public FoodKind getFoodKind(){
         return FoodKind.UNKNOWN;
     }
@@ -49,7 +49,6 @@ public class Animal implements FoodCompare {
 
     //возвращает информацию о цене 1 кг еды
     public double getFood1kgPrice(){
-        double result = 0;
         switch (getFoodKind()){
             case HAY:
                 return 20;
@@ -58,7 +57,7 @@ public class Animal implements FoodCompare {
             case UNKNOWN:
                 return 0;
         }
-        return result;
+        return 0;
     }
 
     //возвращает информацию о цене еды для данного животного по формуле calculateFoodWeight() * getFood1kgPrice()
@@ -70,6 +69,11 @@ public class Animal implements FoodCompare {
     @Override
     public int compareFoodPrice(Animal animal) {
         return Double.compare(getFoodPrice(), animal.getFoodPrice());
+    }
+
+    @Override
+    public CompareResult compareWeight(CompareWeight smthHasWeigt) {
+        return null;
     }
 
     public static void main(String[] args) {
