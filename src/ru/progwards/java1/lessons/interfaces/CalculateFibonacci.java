@@ -24,8 +24,8 @@ public class CalculateFibonacci {
     }
 
     public static class CacheInfo{
-        public int n;
-        public int fibo;
+        int n;
+        int fibo;
 
         CacheInfo(){
             n = -1;
@@ -40,7 +40,7 @@ public class CalculateFibonacci {
         return lastFibo;
     }
 
-    static public void clearLastFibo(){
+    public void clearLastFibo(){
         lastFibo = null;
     }
 
