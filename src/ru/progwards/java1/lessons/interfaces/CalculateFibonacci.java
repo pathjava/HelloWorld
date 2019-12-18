@@ -40,7 +40,7 @@ public class CalculateFibonacci {
         return lastFibo;
     }
 
-    public void clearLastFibo(){
+    public static void clearLastFibo(){
         lastFibo = null;
     }
 
