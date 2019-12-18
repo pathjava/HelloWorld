@@ -41,8 +41,7 @@ public class CalculateFibonacci {
     }
 
     static public void clearLastFibo(){
-        if (lastFibo.fibo == 0)
-        lastFibo = null;
+        lastFibo = new CacheInfo();
     }
 
     public static void main(String[] args) {
