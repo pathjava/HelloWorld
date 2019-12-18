@@ -36,11 +36,11 @@ public class CalculateFibonacci {
         }
     }
 
-    static  CacheInfo getLastFibo(){
+    static public CacheInfo getLastFibo(){
         return lastFibo;
     }
 
-    public  void clearLastFibo(){
+    public static void clearLastFibo(){
         lastFibo = null;
     }
 
