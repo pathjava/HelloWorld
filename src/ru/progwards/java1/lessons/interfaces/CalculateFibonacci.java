@@ -45,8 +45,10 @@ public class CalculateFibonacci {
     }
 
     public static void main(String[] args) {
+        CalculateFibonacci calculateFibonacci = new CalculateFibonacci();
         System.out.println(fiboNumber(29));
         System.out.println(getLastFibo());
+//        System.out.println(calculateFibonacci);
 //        System.out.println(clearLastFibo());
     }
 }
