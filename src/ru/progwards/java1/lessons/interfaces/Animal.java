@@ -8,12 +8,12 @@ public class Animal implements FoodCompare, CompareWeight {
         this.weight = weight;
     }
 
-    static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK;}
+    enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK;}
     public AnimalKind getKind(){
         return AnimalKind.ANIMAL;
     }
 
-    static enum FoodKind{UNKNOWN, HAY, CORN;}
+    enum FoodKind{UNKNOWN, HAY, CORN;}
     public FoodKind getFoodKind(){
         return FoodKind.UNKNOWN;
     }
@@ -73,7 +73,12 @@ public class Animal implements FoodCompare, CompareWeight {
 
     @Override
     public CompareResult compareWeight(CompareWeight smthHasWeigt) {
-        return null;
+        if (this.getWeight() < getWeight())
+            return CompareResult.LESS;
+        else if (this.getWeight() == getWeight())
+            return CompareResult.EQUAL;
+        else
+            return CompareResult.GREATER;
     }
 
     public static void main(String[] args) {
