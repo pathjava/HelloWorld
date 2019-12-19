@@ -3,7 +3,7 @@ package ru.progwards.java1.lessons.interfaces;
 public class CalculateFibonacci {
     // данное решение в значительной мере показал Григорий
     public static int fiboNumber(int n){
-        if (lastFibo.n == 0)
+        if (lastFibo.fibo == 0)
             return n;
         else if (lastFibo.n == n)
             return lastFibo.fibo;
