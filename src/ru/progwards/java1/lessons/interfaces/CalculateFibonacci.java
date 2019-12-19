@@ -3,10 +3,10 @@ package ru.progwards.java1.lessons.interfaces;
 public class CalculateFibonacci {
     // данное решение в значительной мере показал Григорий
     public static int fiboNumber(int n){
-//        if (lastFibo.fibo == 0)
-//            return n;
-//        else
-            if (lastFibo.n == n)
+        if (lastFibo == null){
+            lastFibo.n = -1;
+        }
+        else if (lastFibo.n == n)
             return lastFibo.fibo;
             int f1 = 0, f2 = 1;
             int t;
@@ -48,10 +48,8 @@ public class CalculateFibonacci {
     }
 
     public static void main(String[] args) {
-        CalculateFibonacci calculateFibonacci = new CalculateFibonacci();
-        System.out.println(fiboNumber(29));
-        System.out.println(getLastFibo());
-//        System.out.println(calculateFibonacci);
-//        System.out.println(clearLastFibo());
+        System.out.println(fiboNumber(6));
+        CalculateFibonacci.clearLastFibo();
+        System.out.println(fiboNumber(6));
     }
 }
