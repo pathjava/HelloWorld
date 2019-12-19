@@ -4,7 +4,7 @@ public class CalculateFibonacci {
     // данное решение в значительной мере показал Григорий
     public static int fiboNumber(int n){
         if (lastFibo == null){
-            lastFibo.n = -1;
+            lastFibo = new CacheInfo();
         }
         else if (lastFibo.n == n)
             return lastFibo.fibo;
