@@ -13,11 +13,17 @@ public class Food implements CompareWeight {
 
     @Override
     public CompareResult compareWeight(CompareWeight smthHasWeigt) {
-         if (this.getWeight() < getWeight())
+        Food otherWeight = (Food) smthHasWeigt;
+         if (this.getWeight() < otherWeight.getWeight())
              return CompareResult.LESS;
-         else if (this.getWeight() == getWeight())
+         else if (this.getWeight() == otherWeight.getWeight())
              return CompareResult.EQUAL;
          else
              return CompareResult.GREATER;
+    }
+
+    public static void main(String[] args) {
+        Food food = new Food(12);
+        System.out.println();
     }
 }
