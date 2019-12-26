@@ -5,5 +5,5 @@ public interface CompareWeight {
 
     public enum CompareResult{LESS, EQUAL, GREATER;}
 
-    public boolean compareWeight(CompareWeight smthHasWeigt);
+    public CompareResult compareWeight(CompareWeight smthHasWeigt);
 }

@@ -1,11 +1,13 @@
 package ru.progwards.java1.lessons.interfaces;
 
-public class ArraySort implements CompareWeight {
+import java.util.Arrays;
+
+public class ArraySort  {
     public static void sort(CompareWeight[] a){
         int n = a.length;
         for (int i = 0; i < n-1; i++){
             for (int j = 0; j < n-i-1; j++){
-                if (a[j].compareWeight(a[j+1])){
+                if (a[j].compareWeight(a[j+1]) == CompareWeight.CompareResult.GREATER){
                     CompareWeight temp = a[j];
                     a[j] = a[j+1];
                     a[j+1] = temp;
@@ -14,35 +16,28 @@ public class ArraySort implements CompareWeight {
         }
     }
 
-//    public static void sort(CompareWeight[] a) {
-//        int n = a.length;
-//        for (int i = 0; i < n; i++) {
-//            int min = i;
-//            for (int j = i+1; j < n; j++) {
-//                if (less(a[j], a[min])) min = j;
-//            }
-//            exch(a, i, min);
-//            assert isSorted(a, 0, i);
-//        }
-//        assert isSorted(a);
-//    }
-//    // is the array sorted from a[lo] to a[hi]
-//    private static boolean isSorted(CompareWeight[] a, int lo, int hi) {
-//        for (int i = lo + 1; i <= hi; i++)
-//            if (less(a[i], a[i-1])) return false;
-//        return true;
-//    }
-
-    @Override
-    public boolean compareWeight(CompareWeight smthHasWeigt) {
-        return Boolean.parseBoolean(null);
-    }
-
     public static void main(String[] args) {
-//        int[] arr = {23, 55, 3, 3, -45, 270, 15, 1};
-//        sort(arr);
-//        for (int value : arr) {
-//            System.out.print(value + " ");
-//        }
+        Animal animal = new Animal(0);
+        Cow animal1 = new Cow(250);
+        Hamster animal2 = new Hamster(150);
+        Duck animal3 = new Duck(100);
+
+        CompareWeight [] a = new CompareWeight[4];
+        a[1] = animal;
+        a[2] = animal1;
+        a[3] = animal2;
+        a[0] = animal3;
+
+        CompareWeight [] a2 = new CompareWeight[4];
+        a2[0] = new Food(60);
+        a2[1] = new Food(90);
+        a2[2] = new Food(45);
+        a2[3] = new Food(20);
+
+        sort(a);
+        sort(a2);
+
+        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(a2));
     }
 }

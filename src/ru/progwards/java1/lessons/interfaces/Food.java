@@ -12,7 +12,7 @@ public class Food implements CompareWeight {
     }
 
     @Override
-    public boolean compareWeight(CompareWeight smthHasWeigt) {
+    public CompareResult compareWeight(CompareWeight smthHasWeigt) {
         Food otherWeight = (Food) smthHasWeigt;
          if (this.getWeight() < otherWeight.getWeight())
              return CompareResult.LESS;
@@ -20,6 +20,10 @@ public class Food implements CompareWeight {
              return CompareResult.EQUAL;
          else
              return CompareResult.GREATER;
+    }
+
+    public String toString(){
+        return "I am food " + getWeight();
     }
 
     public static void main(String[] args) {
