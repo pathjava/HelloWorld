@@ -11,6 +11,7 @@ abstract class PersonCompare {
         return 0;
     }
 
+    // код из теста
     PersonCompare personCompare = new PersonCompare (){
         @Override
         public int compare(Person p1, Person p2){
