@@ -7,15 +7,13 @@ public class BigAlgebra {
     static BigDecimal fastPow(BigDecimal num, int pow){
         return num.pow(pow);
     }
-//
+
 //    static BigInteger fibonacci(int n){
-//
 //    }
 
     public static void main(String[] args) {
-        BigDecimal bigDecimal = new BigDecimal(1.5);
+//        BigDecimal bigDecimal = new BigDecimal(1.5);
         BigAlgebra bigAlgebra = new BigAlgebra();
-        bigAlgebra.fastPow( bigDecimal, 53426);
-        System.out.println(bigAlgebra.toString());
+        System.out.println();
     }
 }

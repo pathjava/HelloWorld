@@ -1,18 +1,25 @@
 package ru.progwards.sever;
 
-public class Test5 {
-    public static void printStrAndHash(String str) {
-        System.out.println(str.hashCode() + " " + str);
-    }
+import java.math.BigDecimal;
 
-    public static void main(String[] args) {
-        printStrAndHash("Зачем");
-        printStrAndHash("нужны");
-        printStrAndHash("хеш-таблицы?");
-        printStrAndHash("Чтобы");
-        printStrAndHash("поиск");
-        printStrAndHash("летал");
-        printStrAndHash("как");
-        printStrAndHash("птица.");
+public class Test5 {
+    public static void main(String[] args)
+    {
+        // Creating BigDecimal object
+        BigDecimal b1
+                = new BigDecimal("924567");
+
+        // Exponent or power
+        int n = 5;
+
+        // Using pow() method
+        BigDecimal result = b1.pow(n);
+
+        // Display result
+        System.out.println("Result of pow operation "
+                + "between BigDecimal "
+                + b1 + " and exponent "
+                + n + " equal to "
+                + result);
     }
 }
