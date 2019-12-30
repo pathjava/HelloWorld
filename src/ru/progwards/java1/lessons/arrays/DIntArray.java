@@ -52,11 +52,22 @@ public class DIntArray {
         return a[pos];
     }
 
+//    public int at2(int pos){
+//        int[] arr = new int[10];
+////        arr[0] = 5;
+////        arr[1] = 7;
+//        arr[pos] = 8;
+//        System.out.println(arr[pos]);
+//    }
+
     public static void main(String[] args) {
         DIntArray dIntArray = new DIntArray();
         // как сделать вызов массива для теста из main так и не понял
         //int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         dIntArray.add(12);
+        dIntArray.add(10);
+        dIntArray.add(20);
+        System.out.println(dIntArray.at(1));
         System.out.println(Arrays.toString(dIntArray.a));
         dIntArray.atInsert(5, 15);
         System.out.println(Arrays.toString(dIntArray.a));
