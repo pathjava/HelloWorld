@@ -9,13 +9,24 @@ public class BigAlgebra {
     }
 
     static BigInteger fibonacci(int n){
-        if (n == 0 || n == 1) {
+        if (n == 0) {
+            return BigInteger.ZERO;
+        } else if (n == 1) {
             return BigInteger.ONE;
+        } else {
+            return fibonacci(n - 1).add(fibonacci(n - 2));
         }
-        return fibonacci(n - 1).add(fibonacci(n - 2));
+
+//        if (n == 0 || n == 1) {
+//            return BigInteger.ONE;
+//        }
+//        return fibonacci(n - 1).add(fibonacci(n - 2));
     }
 
     public static void main(String[] args) {
+        BigDecimal bigDecimal = new BigDecimal("1.25");
+//        int value = 17;
+        System.out.println(fastPow(bigDecimal, 17));
         System.out.println(fibonacci(20));
     }
 }
