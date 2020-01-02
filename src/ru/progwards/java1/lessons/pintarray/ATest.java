@@ -17,7 +17,7 @@ public class ATest {
         long stop = System.currentTimeMillis();
 
         for(int i=0; i<count1; i++)
-            System.out.println(i+" "+a1.get(i)+" "+a1.get(i));
+        System.out.println(i+" "+a1.get(i)+" "+a1.get(i));
         System.out.println("DIntArray add time ="+(middle-start));
         System.out.println("BIntArray add time ="+(stop-middle));
     }

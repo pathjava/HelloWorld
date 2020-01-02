@@ -15,11 +15,6 @@ public class BigAlgebra {
             return BigInteger.ONE;
         } else
             return fibonacci(n - 1).add(fibonacci(n - 2));
-
-//        if (n == 0 || n == 1) {
-//            return BigInteger.ONE;
-//        }
-//        return fibonacci(n - 1).add(fibonacci(n - 2));
     }
 
     public static void main(String[] args) {
