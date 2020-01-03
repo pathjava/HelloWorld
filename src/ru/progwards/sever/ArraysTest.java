@@ -30,11 +30,11 @@ public class ArraysTest {
         for (int i = 0; i < table.length; i++){
             for (int j = 0; j < table[i].length; j++) {
                 table[i][j] = (i * (table.length + 1)) + j + 1;
-                if (table[i][j] >= 1 && table[i][j] <=9 && table[i][j] != table.length + 1) {
+                if (table[i][j] >= 1 && table[i][j] <=9 && table[i][j] != table[i].length) {
                     System.out.print(table[i][j] + "  ");
                 }
-//                else if (table[i][j] >= 10 && table[i][j] != table.length - 1 ) {
-//                    System.out.print(table[i][j] + " ");
+//                else if (table[i][j] >= 10 && table[i][j] == table[i].length ) {
+//                    System.out.print(table[i][j] + "");
 //                }
                 else
                     System.out.print(table[i][j] + " ");
@@ -44,7 +44,7 @@ public class ArraysTest {
         System.out.println();
     }
 
-    // пузырьковая сортировка
+    // пузырьковая сортировка int
     int[] arr = {45, 21, -14, 1204, 587, -312, 1, -2, 345, 0};
 
     public void bubbleSort(){
@@ -65,6 +65,30 @@ public class ArraysTest {
         System.out.println();
         System.out.println("Отсортированный массив:");
         for (int value : arr) System.out.print(value + " ");
+        System.out.println();
+    }
+
+    // пузырьковая сортировка String
+    String[] arrStr = {"bear", "a", "one", "tiger", "zero", "elephant", "airplane", "car", "football", "entertainment"};
+
+    public void bubbleSortString(){
+        System.out.println("Исходный массив String:");
+        for (String item : arrStr) System.out.print(item + " ");
+        System.out.println();
+
+//        int n = arrStr.length;
+        for (int i = 0; i < arrStr.length - 1; i++){
+            for (int j = 0; j < arrStr.length - 1; j++){
+                if (arrStr[j].compareTo(arrStr[j+1]) > 0){
+                    String temp = arrStr[j];
+                    arrStr[j] = arrStr[j+1];
+                    arrStr[j+1] = temp;
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("Отсортированный массив String:");
+        for (String value : arrStr) System.out.print(value + " ");
         System.out.println();
     }
 
@@ -111,6 +135,8 @@ public class ArraysTest {
         minMax.minMaxArray();
         ArraysTest bubble = new ArraysTest();
         bubble.bubbleSort();
+        ArraysTest bubbleString = new ArraysTest();
+        bubbleString.bubbleSortString();
         ArraysTest arrFill = new ArraysTest();
         arrFill.arrayFilling();
 
