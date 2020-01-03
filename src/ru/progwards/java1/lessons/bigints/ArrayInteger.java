@@ -14,11 +14,11 @@ public class ArrayInteger {
     }
 
     void fromInt(BigInteger value){
-//        this.digits = value.toByteArray();
-        if (putVal == digits.length){
-            return;
-        }
-        digits[putVal++] = value.byteValueExact();
+        this.digits = value.toByteArray();
+//        if (putVal == digits.length){
+//            return;
+//        }
+//        digits[putVal++] = value.byteValueExact();
     }
 
     BigInteger toInt(){
