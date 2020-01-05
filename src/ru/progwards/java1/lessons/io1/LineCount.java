@@ -19,8 +19,8 @@ public class LineCount {
             }
             System.out.println(lines);
             scanner.close();
-        } catch (IOException e){
-            return allError;
+        } catch (IOException e) {
+            lines = allError;
         }
         return lines;
     }
