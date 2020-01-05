@@ -20,6 +20,10 @@ public class LineCount {
             }
             System.out.println(lines);
             scanner.close();
+          // FileNotFoundException является наследником IOException
+          // и по идее должно хватать указания только IOException
+          // но задача не проходит проверку без указания FileNotFoundException
+          // зачем писать дважды фактически одно и тоже?
         } catch (FileNotFoundException e) {
             lines = allError;
         } catch (IOException e) {
@@ -30,6 +34,6 @@ public class LineCount {
 
     public static void main(String[] args) throws IOException {
         LineCount test = new LineCount();
-        test.calcEmpty("test_09_T3.txt");
+        calcEmpty("test_09_T3.txt");
     }
 }
