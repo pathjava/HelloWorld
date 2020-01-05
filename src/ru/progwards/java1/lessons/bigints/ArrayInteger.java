@@ -4,9 +4,13 @@ import java.math.BigInteger;
 
 public class ArrayInteger {
     byte[] digits;
+    int putVal;
+    int getVal;
 
     ArrayInteger(int n){
         digits = new byte[n];
+        putVal = 0;
+        getVal = 0;
     }
 
     void fromInt(BigInteger value){
@@ -14,11 +18,14 @@ public class ArrayInteger {
 //        if (putVal == digits.length){
 //            return;
 //        }
-        digits = value.toByteArray();
+        digits[putVal++] = value.byteValueExact();
     }
 
     BigInteger toInt(){
         byte[] rev = new byte[digits.length + 1];
+        if (getVal == putVal){
+            return BigInteger.ZERO;
+        }
         return new BigInteger(rev);
     }
 
