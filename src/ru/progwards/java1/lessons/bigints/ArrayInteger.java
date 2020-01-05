@@ -5,12 +5,12 @@ import java.math.BigInteger;
 public class ArrayInteger {
     byte[] digits;
     int putVal;
-    int getVal;
+//    int getVal;
 
     ArrayInteger(int n){
         digits = new byte[n];
         putVal = 0;
-        getVal = 0;
+//        getVal = 0;
     }
 
     void fromInt(BigInteger value){
