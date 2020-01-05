@@ -1,11 +1,12 @@
 package ru.progwards.java1.lessons.io1;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class LineCount {
-    public static int calcEmpty(String fileName) throws IOException {
+    public static int calcEmpty(String fileName) {
         int lines = 0;
         int allError = -1;
         try{
@@ -19,6 +20,8 @@ public class LineCount {
             }
             System.out.println(lines);
             scanner.close();
+        } catch (FileNotFoundException e) {
+            lines = allError;
         } catch (IOException e) {
             lines = allError;
         }
