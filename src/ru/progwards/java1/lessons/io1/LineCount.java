@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class LineCount {
-    public static int calcEmpty(String fileName) throws FileNotFoundException {
+    public static int calcEmpty(String fileName) throws IOException {
         int lines = 0;
         try{
             FileReader fileReader = new FileReader(fileName);
@@ -19,8 +19,8 @@ public class LineCount {
             }
             System.out.println(lines);
             scanner.close();
-        } catch (FileNotFoundException e){
-            throw new FileNotFoundException("-1");
+        } catch (IOException e){
+            throw new IOException("-1");
         }
         return lines;
     }
