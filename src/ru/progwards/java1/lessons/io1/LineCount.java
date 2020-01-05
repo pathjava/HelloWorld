@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class LineCount {
     public static int calcEmpty(String fileName) throws IOException {
         int lines = 0;
+        int allError = -1;
         try{
             FileReader fileReader = new FileReader(fileName);
             Scanner scanner = new Scanner(fileReader);
@@ -19,7 +20,7 @@ public class LineCount {
             System.out.println(lines);
             scanner.close();
         } catch (IOException e){
-            e.printStackTrace();
+            return allError;
         }
         return lines;
     }
