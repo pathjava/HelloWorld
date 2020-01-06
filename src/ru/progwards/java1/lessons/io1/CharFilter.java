@@ -15,10 +15,8 @@ public class CharFilter {
                 String str = scanner.nextLine();
                 // это рабочий вариант через регулярное выражение, но в нем нет гибкости применения
 //                str = str.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
-                String strFilter = filter;
-                int length = strFilter.length();
-                for (int i = 0; i < length; i++){
-                    str = str.replace(String.valueOf(strFilter.charAt(i)), "");
+                for (int i = 0; i < filter.length(); i++){
+                    str = str.replace(String.valueOf(filter.charAt(i)), "");
                 }
                 fileWriter.write(str);
                 fileWriter.close();
