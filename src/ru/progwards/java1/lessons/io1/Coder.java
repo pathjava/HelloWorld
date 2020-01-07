@@ -25,7 +25,7 @@ public class Coder {
                     result += code[(int)symbol];
                 }
                 fileWriter.write(result);
-                scanner.close();
+//                scanner.close();
                 fileWriter.close();
             }
         } catch (IOException e){
