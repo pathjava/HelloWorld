@@ -15,14 +15,18 @@ public class Coder {
             FileReader fileReader = new FileReader(inFileName);
             Scanner scanner = new Scanner(fileReader);
             FileWriter fileWriter = new FileWriter(outFileName);
+            FileWriter fileWriterLog = new FileWriter(logName, true);
+            int result = 0;
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
-                int result = 0;
                 char[] code1 = str.toCharArray();
-                for (int i = 1; i < str.length(); i++){
+                for (int i = 0; i < code1.length; i++){
                     char symbol = code1[i];
                     result += code[(int)symbol];
                 }
+                fileWriter.write(result);
+                scanner.close();
+                fileWriter.close();
             }
         } catch (IOException e){
             System.out.println(e.getMessage());
