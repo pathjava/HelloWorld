@@ -20,6 +20,7 @@ public class LineCount {
             }
             System.out.println(lines);
             scanner.close();
+            fileReader.close();
           // FileNotFoundException является наследником IOException
           // и по идее должно хватать указания только IOException
           // но задача не проходит проверку без указания FileNotFoundException
@@ -34,6 +35,6 @@ public class LineCount {
 
     public static void main(String[] args) throws IOException {
         LineCount test = new LineCount();
-        calcEmpty("test_09_T3.txt");
+        calcEmpty("src\\ru\\progwards\\java1\\lessons\\io1\\lineCount.txt");
     }
 }

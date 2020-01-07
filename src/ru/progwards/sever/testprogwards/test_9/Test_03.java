@@ -19,7 +19,7 @@ public class Test_03 {
                 }
             }
             System.out.println(lines);
-            scanner.close();
+            fileReader.close();
         } catch (FileNotFoundException e){
             throw new FileNotFoundException("файл не найден");
         }

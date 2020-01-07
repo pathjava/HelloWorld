@@ -13,12 +13,14 @@ public class CharFilter {
             FileWriter fileWriter = new FileWriter(outFileName);
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
+//                str.toCharArray()
                 // это рабочий вариант через регулярное выражение, но в нем нет гибкости применения
 //                str = str.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
                 for (int i = 0; i < filter.length(); i++){
                     str = str.replace(String.valueOf(filter.charAt(i)), "");
                 }
                 fileWriter.write(str);
+                scanner.close();
                 fileWriter.close();
             }
         } catch (IOException e){
