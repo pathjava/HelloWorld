@@ -16,7 +16,7 @@ public class Coder {
             Scanner scanner = new Scanner(fileReader);
             FileWriter fileWriter = new FileWriter(outFileName);
             FileWriter fileWriterLog = new FileWriter(logName, true);
-            int result = 0;
+            String result = "";
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 char[] code1 = str.toCharArray();
@@ -37,8 +37,12 @@ public class Coder {
     }
 
     public static void main(String[] args) throws IOException {
-//        codeFile("src\\ru\\progwards\\java1\\lessons\\io1\\coderIn.txt",
-//                "src\\ru\\progwards\\java1\\lessons\\io1\\coderOut.txt",
-//                code, "src\\ru\\progwards\\java1\\lessons\\io1\\coderLog.txt");
+        char[] code = new char[256];
+        for(int i = 0; i < code.length; i++){
+            code[i] = 'a';
+        }
+        codeFile("src\\ru\\progwards\\java1\\lessons\\io1\\coderIn.txt",
+                "src\\ru\\progwards\\java1\\lessons\\io1\\coderOut.txt",
+                code, "src\\ru\\progwards\\java1\\lessons\\io1\\coderLog.txt");
     }
 }
