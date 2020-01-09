@@ -23,9 +23,8 @@ public class ArrayInteger {
 
     BigInteger toInt(){
         BigInteger result = BigInteger.ZERO;
-        for (int i = 0; i < digitsNum; i++) {
-//            result = result.multiply(BigInteger.TEN);
-//            result = result.add(BigInteger.valueOf(digits[i]));
+        for (int i = digitsNum-1; i >= 0; i--) {
+            result = result.multiply(BigInteger.TEN);
             result = result.add(BigInteger.valueOf(digits[i]));
         }
         return result;
@@ -91,13 +90,16 @@ public class ArrayInteger {
 
 
     public static void main(String[] args) {
-        ArrayInteger ai1 = new ArrayInteger(1);
+        ArrayInteger ai1 = new ArrayInteger(5);
         ArrayInteger ai2 = new ArrayInteger(2);
 
         ai1.fromInt(BigInteger.valueOf(5));
         System.out.println(ai1);
 
         ai2.fromInt(BigInteger.valueOf(22));
+
+        ai1.fromInt(BigInteger.valueOf(83521));
+        System.out.println(ai1.toInt());
 
         System.out.println(ai1.add(ai2));
 
