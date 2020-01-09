@@ -91,14 +91,6 @@ public class ArrayInteger {
         return signNegative ? "-" + result : result;
     }
 
-    /*ERROR: Тест "Метод add(ArrayInteger num)" не пройден. Метод работает неправильно.
-    Для экземпляра ArrayInteger ai1 = new ArrayInteger(7) вызван метод fromInt(new BigInteger(7674106)).
-    Для экземпляра ArrayInteger ai2 = new ArrayInteger(5) вызван метод fromInt(new BigInteger(  74277)).
-    Затем был вызван метод ai1.add(ai2). После этого метод ai1.toInt() возвратил значенние: 8759483. Ожидалось: 7748383
-По данной задаче в целом не зачет, решение возвращено на доработку. Задача выполнена на 62.50%
-*/
-
-
     public static void main(String[] args) {
         ArrayInteger ai1 = new ArrayInteger(7);
         ArrayInteger ai2 = new ArrayInteger(5);
