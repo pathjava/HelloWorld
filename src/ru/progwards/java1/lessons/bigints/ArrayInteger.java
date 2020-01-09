@@ -32,6 +32,7 @@ public class ArrayInteger {
 
 
     boolean add(ArrayInteger num) {
+        // технический код
 //        int res = digits[0] + num.digits[0];
 //        digits[0] = (byte)(res % 10);
 //        if (res > 9) {
@@ -64,7 +65,7 @@ public class ArrayInteger {
         }
         return true;
 
-        // вариант через тернарный оператор
+        // технический код - вариант через тернарный оператор не полностью рабочий
 //            result = ((num.digits.length <= i) ? 0 : num.digits[i]) + ((digits.length <= i) ? 0 : this.digits[i]) + outOfNine;
 //            if (result > 9){
 //                outOfNine = 1;
