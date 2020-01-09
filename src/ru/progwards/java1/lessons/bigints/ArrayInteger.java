@@ -24,7 +24,8 @@ public class ArrayInteger {
     BigInteger toInt(){
         BigInteger result = BigInteger.ZERO;
         for (int i = 0; i < digitsNum; i++) {
-            result = result.multiply(BigInteger.TEN);
+//            result = result.multiply(BigInteger.TEN);
+//            result = result.add(BigInteger.valueOf(digits[i]));
             result = result.add(BigInteger.valueOf(digits[i]));
         }
         return result;
