@@ -20,10 +20,13 @@ public class Coder {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 char[] code1 = str.toCharArray();
-                for (int i = 0; i < code1.length; i++){
-                    char symbol = code1[i];
-                    result += code[(int)symbol];
+                for (char symbol : code1) {
+                    result += code[(int) symbol];
                 }
+//                for (int i = 0; i < code1.length; i++){
+//                    char symbol = code1[i];
+//                    result += code[(int)symbol];
+//                }
                 fileWriter.write(result);
 //                scanner.close();
                 fileWriter.close();
