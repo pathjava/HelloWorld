@@ -57,6 +57,8 @@ public class ArrayInteger {
             if (result > 9){
                 outOfNine = 1;
                 result -= 10;
+            } else {
+                outOfNine = 0;
             }
             digits[i] = (byte) result;
         }
@@ -89,18 +91,25 @@ public class ArrayInteger {
         return signNegative ? "-" + result : result;
     }
 
+    /*ERROR: Тест "Метод add(ArrayInteger num)" не пройден. Метод работает неправильно.
+    Для экземпляра ArrayInteger ai1 = new ArrayInteger(7) вызван метод fromInt(new BigInteger(7674106)).
+    Для экземпляра ArrayInteger ai2 = new ArrayInteger(5) вызван метод fromInt(new BigInteger(  74277)).
+    Затем был вызван метод ai1.add(ai2). После этого метод ai1.toInt() возвратил значенние: 8759483. Ожидалось: 7748383
+По данной задаче в целом не зачет, решение возвращено на доработку. Задача выполнена на 62.50%
+*/
+
 
     public static void main(String[] args) {
-        ArrayInteger ai1 = new ArrayInteger(5);
-        ArrayInteger ai2 = new ArrayInteger(2);
+        ArrayInteger ai1 = new ArrayInteger(7);
+        ArrayInteger ai2 = new ArrayInteger(5);
 
-        ai1.fromInt(BigInteger.valueOf(5));
+        ai1.fromInt(BigInteger.valueOf(7674106));
         System.out.println(ai1);
 
-        ai2.fromInt(BigInteger.valueOf(22));
+        ai2.fromInt(BigInteger.valueOf(74277));
 
-        ai1.fromInt(BigInteger.valueOf(83521));
-        System.out.println(ai1.toInt());
+//        ai1.fromInt(BigInteger.valueOf(7674106));
+//        System.out.println(ai1.toInt());
 
         System.out.println(ai1.add(ai2));
 
