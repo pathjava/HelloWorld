@@ -32,19 +32,37 @@ public class ArrayInteger {
 
 
     boolean add(ArrayInteger num) {
-        int res = digits[0] + num.digits[0];
-        digits[0] = (byte)(res % 10);
-        if (res > 9) {
-            if (digitsNum < 2) {
-                digitsNum = 2;
-                if (digits.length < digitsNum) {
-                    digitsNum = 0;
-                    return false;
-                }
-            }
-            digits[1] = 1;
+//        int res = digits[0] + num.digits[0];
+//        digits[0] = (byte)(res % 10);
+//        if (res > 9) {
+//            if (digitsNum < 2) {
+//                digitsNum = 2;
+//                if (digits.length < digitsNum) {
+//                    digitsNum = 0;
+//                    return false;
+//                }
+//            }
+//            digits[1] = 1;
+//        }
+//        return true;
+
+        int result = 0;
+        int outOfNine = 1;
+        for (int i = 0, j = Math.max(digits.length, num.digits.length); i < j; i++){
+            result = digits[i] + num.digits[i];
+            if (result > 9)
+                result = digits[i] + num.digits[i] + outOfNine;
         }
         return true;
+
+//        result = ((num.digits.length <= i) ? 0 : num.digits[i]) + ((digits.length <= i) ? 0 : this.digits[i]) + outOfNine;
+//        if (result > 9){
+//            outOfNine = 1;
+//            result %= 10;
+//        } else {
+//            outOfNine = 0;
+//        }
+
     }
 
     @Override
@@ -61,15 +79,15 @@ public class ArrayInteger {
 
 
     public static void main(String[] args) {
-        ArrayInteger ai1 = new ArrayInteger(1);
-        ArrayInteger ai2 = new ArrayInteger(1);
+        ArrayInteger ai1 = new ArrayInteger(10);
+        ArrayInteger ai2 = new ArrayInteger(10);
 
         ai1.fromInt(BigInteger.valueOf(5));
         System.out.println(ai1);
 
-        ai2.fromInt(BigInteger.valueOf(5));
+        ai2.fromInt(BigInteger.valueOf(50));
 
-        System.out.println(ai1.add(ai2));
+//        System.out.println(ai1.add(ai2));
 
         System.out.println(ai1);
     }
