@@ -11,26 +11,66 @@ String logName), в котором прочитать файл inFileName и п�
 В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
 
 public class Coder {
-    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
-        try{
-            FileReader fileReader = new FileReader(inFileName);
-            Scanner scanner = new Scanner(fileReader);
-            FileWriter fileWriter = new FileWriter(outFileName);
+//    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
+//        try{
+//            FileReader fileReader = new FileReader(inFileName);
+//            Scanner scanner = new Scanner(fileReader);
+//            FileWriter fileWriter = new FileWriter(outFileName);
+////            FileWriter fileWriterLog = new FileWriter(logName, true);
+//            String result = "";
+//            while (scanner.hasNextLine()) {
+//                String str = scanner.nextLine();
+//                char[] code1 = str.toCharArray();
+//                for (char symbol : code1) {
+//                    result += code[(int) symbol];
+//                }
+//                fileWriter.write(result);
+//                fileWriter.close();
+//            }
+//        } catch (Exception e){
 //            FileWriter fileWriterLog = new FileWriter(logName, true);
-            String result = "";
-            while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                char[] code1 = str.toCharArray();
-                for (char symbol : code1) {
-                    result += code[(int) symbol];
-                }
-                fileWriter.write(result);
-                fileWriter.close();
+////            System.out.println(e.getMessage());
+//            fileWriterLog.write(e.getMessage());
+//        }
+//    }
+
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
+        FileInputStream fIn = null;
+        BufferedInputStream bIn = null;
+        FileOutputStream fOut = null;
+        BufferedOutputStream bOut = null;
+        try {
+            fIn = new FileInputStream(inFileName);
+            bIn = new BufferedInputStream(fIn);
+            fOut = new FileOutputStream(outFileName);
+            bOut = new BufferedOutputStream(fOut);
+            int i;
+            while ((i = bIn.read()) != -1) {
+                bOut.write(code[i]);
             }
-        } catch (Exception e){
-            FileWriter fileWriterLog = new FileWriter(logName, true);
-//            System.out.println(e.getMessage());
-            fileWriterLog.write(e.getMessage());
+        } catch (Throwable e) {
+            FileWriter fEOut = null;
+            BufferedWriter bEOut = null;
+            try {
+                fEOut = new FileWriter(logName, true);
+                bEOut = new BufferedWriter(fEOut);
+                bEOut.write(e.getMessage());
+            } catch (Throwable e2) {
+            } finally {
+                try {
+                    if (bEOut != null) bEOut.close();
+                    if (fEOut != null) fEOut.close();
+                } catch (Throwable e3) {
+                }
+            }
+        } finally {
+            try {
+                if (bOut != null) bOut.close();
+                if (fOut != null) fOut.close();
+                if (bIn != null) bIn.close();
+                if (fIn != null) fIn.close();
+            } catch (Throwable e) {
+            }
         }
     }
 
