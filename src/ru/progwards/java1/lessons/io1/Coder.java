@@ -1,6 +1,7 @@
 package ru.progwards.java1.lessons.io1;
 
 import java.io.*;
+import java.util.Random;
 import java.util.Scanner;
 
 /*Создать статический метод public static void codeFile(String inFileName, String outFileName, char[] code,
@@ -23,10 +24,6 @@ public class Coder {
                 for (char symbol : code1) {
                     result += code[(int) symbol];
                 }
-//                for (int i = 0; i < code1.length; i++){
-//                    char symbol = code1[i];
-//                    result += code[(int)symbol];
-//                }
                 fileWriter.write(result);
 //                scanner.close();
                 fileWriter.close();
@@ -38,8 +35,13 @@ public class Coder {
 
     public static void main(String[] args) throws IOException {
         char[] code = new char[256];
+        // заполняем исходящий файл
+//        for (int i = 0; i < code.length; i++) {
+//            code[i] = (char)i;
+//        }
+        // вызываем ошибку - если в тексте есть цифра, увеличиваем её значение +1
         for(int i = 0; i < code.length; i++){
-            code[i] = 'a';
+            code[i] = (char) (Character.isDigit((char) i) ? i + 1 : i);
         }
         codeFile("src\\ru\\progwards\\java1\\lessons\\io1\\coderIn.txt",
                 "src\\ru\\progwards\\java1\\lessons\\io1\\coderOut.txt",

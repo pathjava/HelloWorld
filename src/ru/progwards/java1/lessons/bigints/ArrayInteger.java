@@ -32,21 +32,7 @@ public class ArrayInteger {
 
 
     boolean add(ArrayInteger num) {
-        // технический код
-//        int res = digits[0] + num.digits[0];
-//        digits[0] = (byte)(res % 10);
-//        if (res > 9) {
-//            if (digitsNum < 2) {
-//                digitsNum = 2;
-//                if (digits.length < digitsNum) {
-//                    digitsNum = 0;
-//                    return false;
-//                }
-//            }
-//            digits[1] = 1;
-//        }
-//        return true;
-
+//        signNegative = (num < 0) ? true : false;
         int result = 0;
         int outOfNine = 0;
         if (digits.length < num.digitsNum){
@@ -67,6 +53,21 @@ public class ArrayInteger {
         }
         return true;
 
+        // технический код
+//        int res = digits[0] + num.digits[0];
+//        digits[0] = (byte)(res % 10);
+//        if (res > 9) {
+//            if (digitsNum < 2) {
+//                digitsNum = 2;
+//                if (digits.length < digitsNum) {
+//                    digitsNum = 0;
+//                    return false;
+//                }
+//            }
+//            digits[1] = 1;
+//        }
+//        return true;
+
         // технический код - вариант через тернарный оператор не полностью рабочий
 //            result = ((num.digits.length <= i) ? 0 : num.digits[i]) + ((digits.length <= i) ? 0 : this.digits[i]) + outOfNine;
 //            if (result > 9){
@@ -81,24 +82,34 @@ public class ArrayInteger {
 
     @Override
     public String toString() {
-        String result = ""; // 1 2 3
+        StringBuilder result = new StringBuilder(); // 1 2 3
         for (int i = 0; i < digitsNum; i++) {
-            result = digits[i] + result;
+            result.insert(0, digits[i]);
         }
+        result = new StringBuilder((result.length() == 0) ? "0" : result.toString());
 
-        result = result.isEmpty() ? "0" : result;
-
-        return signNegative ? "-" + result : result;
+        return signNegative ? "-" + result : result.toString();
     }
 
-    public static void main(String[] args) {
-        ArrayInteger ai1 = new ArrayInteger(7);
-        ArrayInteger ai2 = new ArrayInteger(5);
+//    @Override
+//    public String toString() {
+//        String result = ""; // 1 2 3
+//        for (int i = 0; i < digitsNum; i++) {
+//            result = digits[i] + result;
+//        }
+//        result = result.isEmpty() ? "0" : result;
+//
+//        return signNegative ? "-" + result : result;
+//    }
 
-        ai1.fromInt(BigInteger.valueOf(7674106));
+    public static void main(String[] args) {
+        ArrayInteger ai1 = new ArrayInteger(3);
+        ArrayInteger ai2 = new ArrayInteger(2);
+
+        ai1.fromInt(BigInteger.valueOf(106));
         System.out.println(ai1);
 
-        ai2.fromInt(BigInteger.valueOf(74277));
+        ai2.fromInt(BigInteger.valueOf(74));
 
 //        ai1.fromInt(BigInteger.valueOf(7674106));
 //        System.out.println(ai1.toInt());

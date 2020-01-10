@@ -1,3 +1,1 @@
-codeFile("src\\ru\\progwards\\java1\\lessons\\io1\\coderIn.txt",
-                "src\\ru\\progwards\\java1\\lessons\\io1\\coderOut.txt",
-                code, "src\\ru\\progwards\\java1\\lessons\\io1\\coderLog.txt");
+She 1
