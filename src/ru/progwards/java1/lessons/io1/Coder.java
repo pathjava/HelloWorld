@@ -25,15 +25,14 @@ public class Coder {
                     result += code[(int) symbol];
                 }
                 fileWriter.write(result);
-//                scanner.close();
                 fileWriter.close();
             }
-        } catch (IOException e){
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         char[] code = new char[256];
         // заполняем исходящий файл
 //        for (int i = 0; i < code.length; i++) {
