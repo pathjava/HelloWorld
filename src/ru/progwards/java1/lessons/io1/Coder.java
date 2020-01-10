@@ -30,7 +30,6 @@ public class Coder {
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
                 fileWriterLog.write(e.getMessage());
-            } catch (Exception e1){
             } finally {
                 fileWriterLog.close();
             }
