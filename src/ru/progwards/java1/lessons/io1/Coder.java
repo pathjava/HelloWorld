@@ -15,7 +15,6 @@ public class Coder {
             FileReader fileReader = new FileReader(inFileName);
             Scanner scanner = new Scanner(fileReader);
             FileWriter fileWriter = new FileWriter(outFileName);
-//            FileWriter fileWriterLog = new FileWriter(logName, true);
             String result = "";
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
@@ -26,20 +25,14 @@ public class Coder {
                 fileWriter.write(result);
                 fileWriter.close();
             }
-        } catch (Throwable e) {
-            FileWriter fEOut = null;
-            BufferedWriter bEOut = null;
-            try {
-                fEOut = new FileWriter(logName, true);
-                bEOut = new BufferedWriter(fEOut);
-                bEOut.write(e.getMessage());
-            } catch (Throwable e2) {
-            } finally {
-                try {
-                    if (bEOut != null) bEOut.close();
-                    if (fEOut != null) fEOut.close();
-                } catch (Throwable e3) {
-                }
+        } catch (Exception e){
+            FileWriter fileWriterLog = new FileWriter(logName, true);
+            try{
+                fileWriterLog.write(e.getMessage());
+            } catch (Exception e1) {
+                throw new Exception(logName);
+            } finally{
+                fileWriterLog.close();
             }
         }
     }
