@@ -25,11 +25,11 @@ public class Coder {
                 fileWriter.write(result);
                 fileWriter.close();
             }
-        } catch (Exception e){
+        } catch (Throwable e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
                 fileWriterLog.write(e.getMessage());
-            } catch (Exception e1) {
+            } catch (Throwable e1) {
                 throw new Exception(logName);
             } finally{
                 fileWriterLog.close();
