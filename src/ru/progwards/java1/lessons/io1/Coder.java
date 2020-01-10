@@ -27,13 +27,8 @@ public class Coder {
             }
         } catch (Throwable e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
-            try{
-                fileWriterLog.write(e.getMessage());
-            } catch (Throwable e1) {
-                throw new Exception(logName);
-            } finally{
-                fileWriterLog.close();
-            }
+            fileWriterLog.write(e.getMessage());
+            fileWriterLog.close();
         }
     }
 
