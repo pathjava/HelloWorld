@@ -25,11 +25,25 @@ public class Coder {
                 fileWriter.write(result);
                 fileWriter.close();
             }
-        } catch (Throwable e){
+        } catch (Exception e){
+            // что не так? ловим ошибку, пишем ее в файл и закрываем запись.
+            // так как нет возможности видеть ваш тест, то и отследить по Debug невозможно.
             FileWriter fileWriterLog = new FileWriter(logName, true);
             fileWriterLog.write(e.getMessage());
             fileWriterLog.close();
         }
+
+//        catch (Exception e){
+//            FileWriter fileWriterLog = new FileWriter(logName, true);
+//            try{
+//                fileWriterLog.write(e.getMessage());
+//            } catch (Exception e1) {
+//                throw new Exception(logName);
+//            } finally{
+//                fileWriterLog.close();
+//            }
+//        }
+
     }
 
     public static void main(String[] args) throws Exception {
