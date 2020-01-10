@@ -30,7 +30,10 @@ public class Coder {
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
                 fileWriterLog.write(e.getMessage());
-            } finally {
+            } catch (Exception e1) {
+//                System.out.println(e1);
+                throw new Exception(logName);
+            } finally{
                 fileWriterLog.close();
             }
         }
@@ -39,13 +42,13 @@ public class Coder {
     public static void main(String[] args) throws Exception {
         char[] code = new char[256];
         // заполняем исходящий файл
-//        for (int i = 0; i < code.length; i++) {
-//            code[i] = (char)i;
-//        }
-        // вызываем ошибку - если в тексте есть цифра, увеличиваем её значение +1
-        for(int i = 0; i < code.length; i++){
-            code[i] = (char) (Character.isDigit((char) i) ? i + 1 : i);
+        for (int i = 0; i < code.length; i++) {
+            code[i] = (char)i;
         }
+        // вызываем ошибку - если в тексте есть цифра, увеличиваем её значение +1
+//        for(int i = 0; i < code.length; i++){
+//            code[i] = (char) (Character.isDigit((char) i) ? i + 1 : i);
+//        }
         codeFile("src\\ru\\progwards\\java1\\lessons\\io1\\coderIn.txt",
                 "src\\ru\\progwards\\java1\\lessons\\io1\\coderOut.txt",
                 code, "src\\ru\\progwards\\java1\\lessons\\io1\\coderLog.txt");
