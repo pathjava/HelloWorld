@@ -11,12 +11,12 @@ String logName), в котором прочитать файл inFileName и п�
 В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
 
 public class Coder {
-    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
         try{
             FileReader fileReader = new FileReader(inFileName);
             Scanner scanner = new Scanner(fileReader);
             FileWriter fileWriter = new FileWriter(outFileName);
-            FileWriter fileWriterLog = new FileWriter(logName, true);
+//            FileWriter fileWriterLog = new FileWriter(logName, true);
             String result = "";
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
@@ -28,11 +28,13 @@ public class Coder {
                 fileWriter.close();
             }
         } catch (Exception e){
-            System.out.println(e.getMessage());
+            FileWriter fileWriterLog = new FileWriter(logName, true);
+//            System.out.println(e.getMessage());
+            fileWriterLog.write(e.getMessage());
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         char[] code = new char[256];
         // заполняем исходящий файл
 //        for (int i = 0; i < code.length; i++) {
