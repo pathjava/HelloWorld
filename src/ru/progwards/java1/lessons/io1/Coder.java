@@ -46,14 +46,21 @@ public class Coder {
                 fileWriterLog.write(e.getMessage());
             } catch (IOException e1) {
             } finally{
-                assert fileWriterLog != null;
-//                fileWriterLog.close();
+                try {
+                    assert fileWriterLog != null;
+                    fileWriterLog.close();
+                } catch (IOException e1){
+                }
             }
         } finally {
-            assert fileWriter != null;
-//            fileWriter.close();
-            scanner.close();
-//            fileReader.close();
+            try {
+                assert fileWriter != null;
+                fileWriter.close();
+                scanner.close();
+                fileReader.close();
+            }catch (IOException e){
+
+            }
         }
 
     }
