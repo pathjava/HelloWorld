@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class Coder {
     public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
         FileReader fileReader = null;
-        Scanner scanner = null;
+//        Scanner scanner = null;
         FileWriter fileWriter = null;
         try{
             fileReader = new FileReader(inFileName);
-            scanner = new Scanner(fileReader);
+//            scanner = new Scanner(fileReader);
             fileWriter = new FileWriter(outFileName);
 
 //            int i;
@@ -41,12 +41,12 @@ public class Coder {
                 fileWriterLog = new  FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
                 fileWriterLog.close();
-            } catch (Throwable e1) {
+            } catch (Throwable ignored) {
             } finally {
                 try {
                     assert fileWriterLog != null;
                     fileWriterLog.close();
-                } catch (Throwable e1){
+                } catch (Throwable ignored){
                 }
             }
         } finally {
@@ -55,8 +55,7 @@ public class Coder {
                 fileWriter.close();
 //                scanner.close();
                 fileReader.close();
-            } catch (Throwable e){
-
+            } catch (Throwable ignored){
             }
         }
 
