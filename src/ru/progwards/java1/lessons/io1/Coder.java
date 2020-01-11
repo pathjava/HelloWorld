@@ -33,6 +33,9 @@ public class Coder {
 //            fileWriterLog.close();
 //        }
 
+            // в задание написано:
+            /*В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
+            // что не так то, пишем ошибку, пробрасываем, закрываем.
        } catch (IOException e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
