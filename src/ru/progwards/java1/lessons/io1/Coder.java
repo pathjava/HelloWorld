@@ -45,7 +45,6 @@ public class Coder {
                 fileWriterLog = new  FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
             } catch (IOException e1) {
-                throw new IOException();
             } finally{
                 assert fileWriterLog != null;
                 fileWriterLog.close();
