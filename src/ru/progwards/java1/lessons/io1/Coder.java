@@ -12,18 +12,18 @@ public class Coder {
             fileReader = new FileReader(inFileName);
 //            scanner = new Scanner(fileReader);
             fileWriter = new FileWriter(outFileName);
+            int symbol = fileReader.read();
+            while (symbol != -1) {
+                fileWriter.write(code[symbol]);
+                symbol = fileReader.read();
+            }
 
 //            int i;
 //            while ((i = fileReader.read()) != -1) {
 //                fileWriter.write(code[i]);
 //            }
 
-            int result = fileReader.read();
-            while (result != -1) {
-                fileWriter.write(code[result]);
-                result = fileReader.read();
-            }
-
+            // по данному решению Валерий говорил, что верно, но робот не принял
 //            String result = "";
 //            while (scanner.hasNextLine()) {
 //                String str = scanner.nextLine();
