@@ -25,20 +25,9 @@ public class Coder {
                 for (char symbol : code1) {
                     result += code[(int) symbol];
                 }
-                fileWriter.write(result);
-                fileWriter.close();
+//                fileWriter.write(result);
+//                fileWriter.close();
             }
-//        } catch (IOException e){
-//            // что не так? ловим ошибку, пишем ее в файл и закрываем запись.
-//            // так как нет возможности видеть ваш тест, то и отследить по Debug невозможно.
-//            FileWriter fileWriterLog = new FileWriter(logName, true);
-//            fileWriterLog.write(e.getMessage());
-//            fileWriterLog.close();
-//        }
-
-            // в задание написано:
-            /*В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
-            // что не так то, пишем ошибку, пробрасываем, закрываем.
        } catch (IOException e){
             FileWriter fileWriterLog = null;
             try{
