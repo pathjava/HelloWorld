@@ -10,7 +10,7 @@ String logName), в котором прочитать файл inFileName и п�
 В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
 
 public class Coder {
-    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws Exception {
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
         try{
             FileReader fileReader = new FileReader(inFileName);
             Scanner scanner = new Scanner(fileReader);
@@ -25,28 +25,28 @@ public class Coder {
                 fileWriter.write(result);
                 fileWriter.close();
             }
-        } catch (Exception e){
-            // что не так? ловим ошибку, пишем ее в файл и закрываем запись.
-            // так как нет возможности видеть ваш тест, то и отследить по Debug невозможно.
-            FileWriter fileWriterLog = new FileWriter(logName, true);
-            fileWriterLog.write(e.getMessage());
-            fileWriterLog.close();
-        }
-
-//        catch (Exception e){
+//        } catch (IOException e){
+//            // что не так? ловим ошибку, пишем ее в файл и закрываем запись.
+//            // так как нет возможности видеть ваш тест, то и отследить по Debug невозможно.
 //            FileWriter fileWriterLog = new FileWriter(logName, true);
-//            try{
-//                fileWriterLog.write(e.getMessage());
-//            } catch (Exception e1) {
-//                throw new Exception(logName);
-//            } finally{
-//                fileWriterLog.close();
-//            }
+//            fileWriterLog.write(e.getMessage());
+//            fileWriterLog.close();
 //        }
+
+       } catch (Exception e){
+            FileWriter fileWriterLog = new FileWriter(logName, true);
+            try{
+                fileWriterLog.write(e.getMessage());
+            } catch (Exception e1) {
+                System.out.println(e1);
+            } finally{
+                fileWriterLog.close();
+            }
+        }
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         char[] code = new char[256];
         // заполняем исходящий файл
         for (int i = 0; i < code.length; i++) {
