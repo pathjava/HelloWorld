@@ -36,9 +36,9 @@ public class Coder {
        } catch (IOException e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
-                fileWriterLog.write(e.getMessage());
+                fileWriterLog.write(logName);
             } catch (IOException e1) {
-                System.out.println(e1);
+                fileWriterLog.write(e.getMessage());
             } finally{
                 fileWriterLog.close();
             }
