@@ -36,13 +36,12 @@ public class Coder {
        } catch (IOException e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
-                fileWriterLog.write(logName);
-            } catch (IOException e1) {
                 fileWriterLog.write(e.getMessage());
+            } catch (IOException e1) {
+                throw new IOException();
             } finally{
                 fileWriterLog.close();
             }
-            System.out.println(e);
         }
 
     }
