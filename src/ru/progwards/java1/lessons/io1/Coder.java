@@ -11,10 +11,13 @@ String logName), в котором прочитать файл inFileName и п�
 
 public class Coder {
     public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
+        FileReader fileReader = null;
+        Scanner scanner = null;
+        FileWriter fileWriter = null;
         try{
-            FileReader fileReader = new FileReader(inFileName);
-            Scanner scanner = new Scanner(fileReader);
-            FileWriter fileWriter = new FileWriter(outFileName);
+            fileReader = new FileReader(inFileName);
+            scanner = new Scanner(fileReader);
+            fileWriter = new FileWriter(outFileName);
             String result = "";
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
@@ -47,6 +50,11 @@ public class Coder {
                 assert fileWriterLog != null;
                 fileWriterLog.close();
             }
+        } finally {
+            assert fileWriter != null;
+            fileWriter.close();
+            scanner.close();
+            fileReader.close();
         }
 
     }
