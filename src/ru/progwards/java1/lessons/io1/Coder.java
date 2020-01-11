@@ -33,15 +33,16 @@ public class Coder {
 //            fileWriterLog.close();
 //        }
 
-       } catch (Exception e){
+       } catch (IOException e){
             FileWriter fileWriterLog = new FileWriter(logName, true);
             try{
                 fileWriterLog.write(e.getMessage());
-            } catch (Exception e1) {
+            } catch (IOException e1) {
                 System.out.println(e1);
             } finally{
                 fileWriterLog.close();
             }
+            System.out.println(e);
         }
 
     }
