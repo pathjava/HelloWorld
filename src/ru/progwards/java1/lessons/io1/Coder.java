@@ -25,14 +25,15 @@ public class Coder {
                 for (char symbol : code1) {
                     result += code[(int) symbol];
                 }
-//                fileWriter.write(result);
-//                fileWriter.close();
+                fileWriter.write(result);
+                fileWriter.close();
             }
        } catch (IOException e){
             FileWriter fileWriterLog = null;
             try{
                 fileWriterLog = new  FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
+                fileWriterLog.close();
             } catch (IOException e1) {
             } finally{
                 try {
