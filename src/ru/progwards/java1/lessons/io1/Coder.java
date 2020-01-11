@@ -18,16 +18,28 @@ public class Coder {
 //                fileWriter.write(code[i]);
 //            }
 
-            String result = "";
+
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 char[] code1 = str.toCharArray();
                 for (char symbol : code1) {
-                    result += code[(int) symbol];
+                    fileWriter.write(code[(int) symbol]);
                 }
-                fileWriter.write(result);
-                fileWriter.close();
+//                fileWriter.write(result);
+//                fileWriter.close();
             }
+
+//            String result = "";
+//            while (scanner.hasNextLine()) {
+//                String str = scanner.nextLine();
+//                char[] code1 = str.toCharArray();
+//                for (char symbol : code1) {
+//                    result += code[(int) symbol];
+//                }
+//                fileWriter.write(result);
+//                fileWriter.close();
+//            }
+
        } catch (Throwable e){
             FileWriter fileWriterLog = null;
             try {
@@ -46,7 +58,7 @@ public class Coder {
             try {
                 assert fileWriter != null;
                 fileWriter.close();
-                scanner.close();
+//                scanner.close();
                 fileReader.close();
             } catch (Throwable e){
 
