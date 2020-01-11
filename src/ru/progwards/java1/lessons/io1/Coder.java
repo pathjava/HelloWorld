@@ -10,7 +10,7 @@ String logName), в котором прочитать файл inFileName и п�
 В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
 
 public class Coder {
-    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) throws IOException {
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName)  {
         FileReader fileReader = null;
         Scanner scanner = null;
         FileWriter fileWriter = null;
@@ -47,18 +47,18 @@ public class Coder {
             } catch (IOException e1) {
             } finally{
                 assert fileWriterLog != null;
-                fileWriterLog.close();
+//                fileWriterLog.close();
             }
         } finally {
             assert fileWriter != null;
-            fileWriter.close();
+//            fileWriter.close();
             scanner.close();
-            fileReader.close();
+//            fileReader.close();
         }
 
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
         char[] code = new char[256];
         // заполняем исходящий файл
         for (int i = 0; i < code.length; i++) {
