@@ -13,29 +13,29 @@ public class Coder {
             scanner = new Scanner(fileReader);
             fileWriter = new FileWriter(outFileName);
 
-            int i;
-            while ((i = fileReader.read()) != -1) {
-                fileWriter.write(code[i]);
-            }
-
-//            String result = "";
-//            while (scanner.hasNextLine()) {
-//                String str = scanner.nextLine();
-//                char[] code1 = str.toCharArray();
-//                for (char symbol : code1) {
-//                    result += code[(int) symbol];
-//                }
-//                fileWriter.write(result);
-//                fileWriter.close();
+//            int i;
+//            while ((i = fileReader.read()) != -1) {
+//                fileWriter.write(code[i]);
 //            }
+
+            String result = "";
+            while (scanner.hasNextLine()) {
+                String str = scanner.nextLine();
+                char[] code1 = str.toCharArray();
+                for (char symbol : code1) {
+                    result += code[(int) symbol];
+                }
+                fileWriter.write(result);
+                fileWriter.close();
+            }
        } catch (Throwable e){
             FileWriter fileWriterLog = null;
-            try{
+            try {
                 fileWriterLog = new  FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
                 fileWriterLog.close();
             } catch (Throwable e1) {
-            } finally{
+            } finally {
                 try {
                     assert fileWriterLog != null;
                     fileWriterLog.close();
@@ -48,7 +48,7 @@ public class Coder {
                 fileWriter.close();
                 scanner.close();
                 fileReader.close();
-            }catch (Throwable e){
+            } catch (Throwable e){
 
             }
         }
