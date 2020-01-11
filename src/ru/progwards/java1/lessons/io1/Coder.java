@@ -22,8 +22,8 @@ public class Coder {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 char[] code1 = str.toCharArray();
-                for (char symbol : code1) {
-                    fileWriter.write(code[(int) symbol]);
+                for (int symbol : code1) {
+                    fileWriter.write(code[symbol]);
                 }
 //                fileWriter.write(result);
 //                fileWriter.close();
