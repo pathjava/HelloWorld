@@ -42,16 +42,17 @@ public class Coder {
                 } catch (IOException e1){
                 }
             }
-        } finally {
-            try {
-                assert fileWriter != null;
-                fileWriter.close();
-                scanner.close();
-                fileReader.close();
-            }catch (IOException e){
-
-            }
         }
+//        finally {
+//            try {
+//                assert fileWriter != null;
+//                fileWriter.close();
+//                scanner.close();
+//                fileReader.close();
+//            }catch (IOException e){
+//
+//            }
+//        }
 
     }
 
