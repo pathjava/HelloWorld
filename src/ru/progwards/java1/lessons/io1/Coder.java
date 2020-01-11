@@ -3,14 +3,8 @@ package ru.progwards.java1.lessons.io1;
 import java.io.*;
 import java.util.Scanner;
 
-/*Создать статический метод public static void codeFile(String inFileName, String outFileName, char[] code,
-String logName), в котором прочитать файл inFileName и перекодировать его посимвольно в соответствии
-с заданным шифром, результат записать в outFileName. Шифр задается маcсивом char[] code, где каждому
-символу symbol оригинального файла соответствует символ code[(int)symbol] выходного файла.
-В случае ошибок, в файл с именем logName вывести название ошибки через метод класса Exception - getMessage()*/
-
 public class Coder {
-    public static void codeFile(String inFileName, String outFileName, char[] code, String logName)  {
+    public static void codeFile(String inFileName, String outFileName, char[] code, String logName) {
         FileReader fileReader = null;
         Scanner scanner = null;
         FileWriter fileWriter = null;
@@ -19,15 +13,21 @@ public class Coder {
             scanner = new Scanner(fileReader);
             fileWriter = new FileWriter(outFileName);
             String result = "";
-            while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                char[] code1 = str.toCharArray();
-                for (char symbol : code1) {
-                    result += code[(int) symbol];
-                }
-                fileWriter.write(result);
-                fileWriter.close();
+
+            int i;
+            while ((i = fileReader.read()) != -1) {
+                fileWriter.write(code[i]);
             }
+
+//            while (scanner.hasNextLine()) {
+//                String str = scanner.nextLine();
+//                char[] code1 = str.toCharArray();
+//                for (char symbol : code1) {
+//                    result += code[(int) symbol];
+//                }
+//                fileWriter.write(result);
+//                fileWriter.close();
+//            }
        } catch (IOException e){
             FileWriter fileWriterLog = null;
             try{
@@ -42,21 +42,20 @@ public class Coder {
                 } catch (IOException e1){
                 }
             }
+        } finally {
+            try {
+                assert fileWriter != null;
+                fileWriter.close();
+                scanner.close();
+                fileReader.close();
+            }catch (IOException e){
+
+            }
         }
-//        finally {
-//            try {
-//                assert fileWriter != null;
-//                fileWriter.close();
-//                scanner.close();
-//                fileReader.close();
-//            }catch (IOException e){
-//
-//            }
-//        }
 
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         char[] code = new char[256];
         // заполняем исходящий файл
         for (int i = 0; i < code.length; i++) {
