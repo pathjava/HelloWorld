@@ -18,23 +18,36 @@ public class Coder {
 //                fileWriter.write(code[i]);
 //            }
 
-
-            while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                char[] code1 = str.toCharArray();
-                for (int symbol : code1) {
-                    fileWriter.write(code[symbol]);
-                }
+            int result = fileReader.read();
+            while (result != -1) {
+                fileWriter.write(code[result]);
+                result = fileReader.read();
+//                String str = scanner.nextLine();
+//                char[] code1 = str.toCharArray();
+//                for (int symbol : code1) {
+//                    result += code[symbol];
+//                }
 //                fileWriter.write(result);
 //                fileWriter.close();
             }
+
+
+//            while (scanner.hasNextLine()) {
+//                String str = scanner.nextLine();
+//                char[] code1 = str.toCharArray();
+//                for (int symbol : code1) {
+//                    fileWriter.write(code[symbol]);
+//                }
+//                fileWriter.write(result);
+//                fileWriter.close();
+//            }
 
 //            String result = "";
 //            while (scanner.hasNextLine()) {
 //                String str = scanner.nextLine();
 //                char[] code1 = str.toCharArray();
-//                for (char symbol : code1) {
-//                    result += code[(int) symbol];
+//                for (int symbol : code1) {
+//                    result += code[symbol];
 //                }
 //                fileWriter.write(result);
 //                fileWriter.close();
