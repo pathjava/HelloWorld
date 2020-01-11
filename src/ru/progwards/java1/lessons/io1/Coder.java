@@ -22,25 +22,7 @@ public class Coder {
             while (result != -1) {
                 fileWriter.write(code[result]);
                 result = fileReader.read();
-//                String str = scanner.nextLine();
-//                char[] code1 = str.toCharArray();
-//                for (int symbol : code1) {
-//                    result += code[symbol];
-//                }
-//                fileWriter.write(result);
-//                fileWriter.close();
             }
-
-
-//            while (scanner.hasNextLine()) {
-//                String str = scanner.nextLine();
-//                char[] code1 = str.toCharArray();
-//                for (int symbol : code1) {
-//                    fileWriter.write(code[symbol]);
-//                }
-//                fileWriter.write(result);
-//                fileWriter.close();
-//            }
 
 //            String result = "";
 //            while (scanner.hasNextLine()) {
