@@ -41,24 +41,34 @@ public class Coder {
                 fileWriterLog = new  FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
                 fileWriterLog.close();
-            } catch (Throwable ignored) {
+            } catch (Throwable e1) {
+                e1.printStackTrace();
             } finally {
                 try {
-                    assert fileWriterLog != null;
-                    fileWriterLog.close();
-                } catch (Throwable ignored){
+                    if (fileWriterLog != null) {
+                        fileWriterLog.close();
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
         } finally {
             try {
-                assert fileWriter != null;
-                fileWriter.close();
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 //                scanner.close();
-                fileReader.close();
-            } catch (Throwable ignored){
+            try {
+                if (fileReader != null) {
+                    fileReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
     }
 
     public static void main(String[] args) {
