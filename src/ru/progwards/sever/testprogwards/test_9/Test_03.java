@@ -28,6 +28,6 @@ public class Test_03 {
 
     public static void main(String[] args) throws IOException {
         Test_03 test = new Test_03();
-        test.lineCount("test_09_T3.txt");
+        test.lineCount("src\\ru\\progwards\\sever\\testprogwards\\test_9\\test_09_T3.txt");
     }
 }
