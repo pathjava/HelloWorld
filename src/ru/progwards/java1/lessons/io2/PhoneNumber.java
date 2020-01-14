@@ -4,6 +4,9 @@ package ru.progwards.java1.lessons.io2;
 public class PhoneNumber {
     public static String format(String phone){
         String formatNumber = "";
+        if(phone.length() < 10 || phone.length() > 11) {
+            throw new RuntimeException("В номере телефон должно быть 10 или 11 цифр!");
+        }
         StringBuilder stringBuilder = new StringBuilder();
         for (char c : phone.toCharArray()){
             if (Character.isDigit(c)){
