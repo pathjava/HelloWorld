@@ -11,22 +11,21 @@ public class Translator {
 
     public String translate(String sentence){
         StringBuilder stringBuilders = new StringBuilder();
-//        sentence = sentence.toLowerCase();
         String[] tempArr = sentence.split("(?<=\\b|[^\\p{L}])");
         for (int i = 0; i < tempArr.length; i++) {
             for (int j = 0; j < inLang.length; j++) {
                 char chTemp = tempArr[i].charAt(0);
                 if (tempArr[i].toLowerCase().equals(inLang[j])){
-                    tempArr[i] = outLang[j];
+                    tempArr[i] = Character.isUpperCase(chTemp) ? FirstUpperCase(outLang[j]) : outLang[j];
                 }
-                if(Character.isLowerCase(chTemp)){
-
-                } else if (Character.isUpperCase(chTemp)) {
-
-                }
-            } stringBuilders.append(tempArr[i]);
+            }
+            stringBuilders.append(tempArr[i]);
         }
         return stringBuilders.toString();
+    }
+
+    public static String FirstUpperCase(String outLang){
+        return outLang.substring(0, 1).toUpperCase() + outLang.substring(1);
     }
 
     public static void main(String[] args) {
@@ -36,6 +35,11 @@ public class Translator {
 }
 
 /*
+Данное решение было первым, но оно работает только при условии,
+что вся входящая строка в нижнем регистре (строчные). В этом решение
+нет возможности проверять отдельно взятое слово из входящей строки
+и проверять на то, какая первая буква - Заглавная или строчная
+
 sentence = sentence.toLowerCase();
         for (int i = 0; i < inLang.length; i++) {
             if (sentence.contains(inLang[i])){
@@ -45,17 +49,3 @@ sentence = sentence.toLowerCase();
         return sentence;
 */
 
-/*    public String translate(String sentence){
-        String temp = "";
-        sentence = sentence.toLowerCase();
-        String[] tempArr = sentence.split(" ");
-        for (int i = 0; i < tempArr.length; i++) {
-            // for each нужен для прохода по всему массиву каждый раз
-            for (int j = 0; j < inLang.length; j++) {
-                if (tempArr[i].equals(inLang[j])){
-                    tempArr[i] = outLang[j];
-                }
-            }
-        }
-        return Arrays.toString(tempArr);
-    }*/
