@@ -7,11 +7,13 @@ import java.util.Scanner;
 
 public class Censor {
     public static void censorFile(String inoutFileName, String[] obscene){
+        /* проверяем, передано ли имя файла */
         if (inoutFileName == null || inoutFileName.compareTo("") == 0) try {
             throw new CensorException("Имя файла передавать обязатльно", inoutFileName);
         } catch (CensorException e) {
             e.printStackTrace();
         }
+        /* проверяем, переданы ли слова в массиве obscene */
         if (obscene == null) try {
             throw new CensorException("Последовательность слов передавать обязательно", inoutFileName);
         } catch (CensorException e) {
@@ -23,14 +25,18 @@ public class Censor {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 assert obscene != null;
+                /* проверяем, есть ли слова из массива obscene в строке из файла */
                 for (int i = 0; i < obscene.length; i++) {
                     if (str.contains(obscene[i])) {
+                        /* и если строка содержит слово из массива obscene, меняем слово на * через
+                        метод ChangeWord с тем же количеством символов */
                         str = str.replace(obscene[i], ChangeWord(obscene[i]));
                     }
                 }
-                FileWriter fileWriter = new FileWriter(inoutFileName);
-                fileWriter.write(str);
-                fileWriter.close();
+                /* записываем результат из строки str в исходный файл */
+                try (FileWriter fileWriter = new FileWriter(inoutFileName)) {
+                    fileWriter.write(str);
+                }
             }
         } catch (IOException e) {
             try {
@@ -42,7 +48,11 @@ public class Censor {
     }
 
     public static String ChangeWord(String obscene){
+        /* компилятор progwards не обрабатывает решение из одной строки */
 //        return "*".repeat(obscene.length());
+
+        /* из метода censorFile получаем ChangeWord(obscene[i]) и генерируем строку из * с тем же
+        * количеством символов*/
         StringBuilder tempStar = new StringBuilder();
         for (int i = 0; i <= obscene.length() - 1; i++){
             tempStar.append("*");
@@ -50,6 +60,7 @@ public class Censor {
         return tempStar.toString();
     }
 
+    /* свой класс обработчик ошибок*/
     static class CensorException extends Exception{
         String errName;
         String fileName;
