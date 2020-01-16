@@ -2,14 +2,12 @@ package ru.progwards.java1.lessons.io2;
 
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Censor {
     public static void censorFile(String inoutFileName, String[] obscene) throws CensorException {
-
-            try (FileReader fileReader = new FileReader(inoutFileName)){
-                 Scanner scanner = new Scanner(fileReader);
+            try (FileReader fileReader = new FileReader(inoutFileName);
+                 Scanner scanner = new Scanner(fileReader)){
                 while (scanner.hasNextLine()) {
                     String str = scanner.nextLine();
                     /* проверяем, есть ли слова из массива obscene в строке из файла */
@@ -25,12 +23,12 @@ public class Censor {
                         fileWriter.write(str);
                     }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new CensorException(e.getMessage(), inoutFileName);
             }
     }
 
-    public static String ChangeWord(String obscene){
+    public static String ChangeWord (String obscene){
         /* компилятор progwards не обрабатывает решение из одной строки */
 //        return "*".repeat(obscene.length());
 
@@ -64,7 +62,7 @@ public class Censor {
             censorFile(null,
                     null);
         } catch (CensorException e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 }
