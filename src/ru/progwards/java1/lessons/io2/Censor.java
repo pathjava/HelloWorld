@@ -64,9 +64,6 @@ public class Censor {
     }
 
     public static void main(String[] args) {
-//        censorFile("Hello, World! How are you? A'm live in Saint-Petersburg.",
-//                new String[]{"Hello", "World", "Java", "Saint-Petersburg"});
-
         censorFile("src\\ru\\progwards\\java1\\lessons\\io2\\censorTest.txt",
                 new String[]{"Hello", "World", "Java", "Saint-Petersburg"});
     }
