@@ -17,10 +17,12 @@ public class Censor {
         } catch (CensorException e) {
             e.printStackTrace();
         }
+        assert inoutFileName != null;
         try (FileReader fileReader = new FileReader(inoutFileName);
              Scanner scanner = new Scanner(fileReader);) {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
+                assert obscene != null;
                 for (int i = 0; i < obscene.length; i++) {
                     if (str.contains(obscene[i])) {
                         str = str.replace(obscene[i], ChangeWord(obscene[i]));
