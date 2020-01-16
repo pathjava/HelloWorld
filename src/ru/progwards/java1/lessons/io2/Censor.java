@@ -61,7 +61,7 @@ public class Censor {
     }
 
     /* свой класс обработчик ошибок*/
-    static class CensorException extends Exception{
+    static class CensorException extends RuntimeException {
         String errName;
         String fileName;
 
