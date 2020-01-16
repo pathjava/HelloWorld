@@ -6,45 +6,28 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Censor {
-    public static void censorFile(String inoutFileName, String[] obscene){
-        /* проверяем, передано ли имя файла */
-        if (inoutFileName == null || inoutFileName.compareTo("") == 0) try {
-            throw new CensorException("Имя файла передавать обязатльно", inoutFileName);
-        } catch (CensorException e) {
-            e.printStackTrace();
-        }
-        /* проверяем, переданы ли слова в массиве obscene */
-        if (obscene == null) try {
-            throw new CensorException("Последовательность слов передавать обязательно", inoutFileName);
-        } catch (CensorException e) {
-            e.printStackTrace();
-        }
-        assert inoutFileName != null;
-        try (FileReader fileReader = new FileReader(inoutFileName);
-             Scanner scanner = new Scanner(fileReader);) {
-            while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                assert obscene != null;
-                /* проверяем, есть ли слова из массива obscene в строке из файла */
-                for (int i = 0; i < obscene.length; i++) {
-                    if (str.contains(obscene[i])) {
+    public static void censorFile(String inoutFileName, String[] obscene) throws CensorException {
+
+            try (FileReader fileReader = new FileReader(inoutFileName)){
+                 Scanner scanner = new Scanner(fileReader);
+                while (scanner.hasNextLine()) {
+                    String str = scanner.nextLine();
+                    /* проверяем, есть ли слова из массива obscene в строке из файла */
+                    for (int i = 0; i < obscene.length; i++) {
+                        if (str.contains(obscene[i])) {
                         /* и если строка содержит слово из массива obscene, меняем слово на * через
                         метод ChangeWord с тем же количеством символов */
-                        str = str.replace(obscene[i], ChangeWord(obscene[i]));
+                            str = str.replace(obscene[i], ChangeWord(obscene[i]));
+                        }
+                    }
+                    /* записываем результат из строки str в исходный файл */
+                    try (FileWriter fileWriter = new FileWriter(inoutFileName)) {
+                        fileWriter.write(str);
                     }
                 }
-                /* записываем результат из строки str в исходный файл */
-                try (FileWriter fileWriter = new FileWriter(inoutFileName)) {
-                    fileWriter.write(str);
-                }
-            }
-        } catch (IOException e) {
-            try {
+            } catch (IOException e) {
                 throw new CensorException(e.getMessage(), inoutFileName);
-            } catch (CensorException ex) {
-                ex.printStackTrace();
             }
-        }
     }
 
     public static String ChangeWord(String obscene){
@@ -61,7 +44,7 @@ public class Censor {
     }
 
     /* свой класс обработчик ошибок*/
-    static class CensorException extends RuntimeException {
+    static class CensorException extends Exception {
         String errName;
         String fileName;
 
@@ -77,8 +60,12 @@ public class Censor {
     }
 
     public static void main(String[] args) {
-        censorFile("src\\ru\\progwards\\java1\\lessons\\io2\\censorTest.txt",
-                new String[]{"Hello", "World", "Java", "Saint-Petersburg"});
+        try {
+            censorFile(null,
+                    null);
+        } catch (CensorException e) {
+            e.printStackTrace();
+        }
     }
 }
 
