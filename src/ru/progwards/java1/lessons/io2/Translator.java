@@ -11,12 +11,19 @@ public class Translator {
 
     public String translate(String sentence){
         StringBuilder stringBuilders = new StringBuilder();
+        /*разбиваем предложение по словам, пробелам и знакам препинания и размещаем в отдельные ячейки массива*/
         String[] tempArr = sentence.split("(?<=\\b|[^\\p{L}])");
         for (int i = 0; i < tempArr.length; i++) {
-            for (int j = 0; j < inLang.length; j++) {
-                char chTemp = tempArr[i].charAt(0);
-                if (tempArr[i].toLowerCase().equals(inLang[j])){
-                    tempArr[i] = Character.isUpperCase(chTemp) ? FirstUpperCase(outLang[j]) : outLang[j];
+            /*проверяем, является ли символ под индексом 0 буквой и если да, запускаем проверку*/
+            char temp = tempArr[i].charAt(0);
+            if (Character.isAlphabetic(temp)){
+                for (int j = 0; j < inLang.length; j++) {
+                    /*проверяем первый символ каждого слова из строки sentence - Заглавный или строчный*/
+                    char chTemp = tempArr[i].charAt(0);
+                    if (tempArr[i].toLowerCase().equals(inLang[j])){
+                        /*если Заглавный, то в методе FirstUpperCase делаем первую букву слова из outLang[j] Заглавной*/
+                        tempArr[i] = Character.isUpperCase(chTemp) ? FirstUpperCase(outLang[j]) : outLang[j];
+                    }
                 }
             }
             stringBuilders.append(tempArr[i]);
@@ -29,8 +36,9 @@ public class Translator {
     }
 
     public static void main(String[] args) {
-        Translator test = new Translator(new String[]{"hello", "world", "java"}, new String[]{"привет", "мир", "джава"});
-        System.out.println(test.translate("Hello, World! How are you?"));
+        Translator test = new Translator(new String[]{"hello", "world", "java", "saint", "petersburg"},
+                new String[]{"привет", "мир", "джава", "санкт", "петербург"});
+        System.out.println(test.translate("Hello, World! How are you? A'm live in Saint-Petersburg."));
     }
 }
 
