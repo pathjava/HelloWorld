@@ -7,6 +7,16 @@ import java.util.Scanner;
 
 public class Censor {
     public static void censorFile(String inoutFileName, String[] obscene){
+        if (inoutFileName == null || inoutFileName.compareTo("") == 0) try {
+            throw new CensorException("Имя файла передавать обязатльно", inoutFileName);
+        } catch (CensorException e) {
+            e.printStackTrace();
+        }
+        if (obscene == null) try {
+            throw new CensorException("Последовательность слов передавать обязательно", inoutFileName);
+        } catch (CensorException e) {
+            e.printStackTrace();
+        }
         try (FileReader fileReader = new FileReader(inoutFileName);
              Scanner scanner = new Scanner(fileReader);) {
             while (scanner.hasNextLine()) {
