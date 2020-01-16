@@ -34,7 +34,7 @@ public class LineCount {
     }
 
     public static void main(String[] args) throws IOException {
-        LineCount test = new LineCount();
+//        LineCount test = new LineCount();
         calcEmpty("src\\ru\\progwards\\java1\\lessons\\io1\\lineCount.txt");
     }
 }

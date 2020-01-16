@@ -30,7 +30,12 @@ public class Censor {
     }
 
     public static String ChangeWord(String obscene){
-        return "*".repeat(obscene.length());
+//        return "*".repeat(obscene.length());
+        StringBuilder tempStar = new StringBuilder();
+        for (int i = 0; i <= obscene.length() - 1; i++){
+            tempStar.append("*");
+        }
+        return tempStar.toString();
     }
 
     static class CensorException extends Exception{
@@ -47,7 +52,6 @@ public class Censor {
             return errName + ":" + fileName;
         }
     }
-
 
     public static void main(String[] args) {
 //        censorFile("Hello, World! How are you? A'm live in Saint-Petersburg.",
