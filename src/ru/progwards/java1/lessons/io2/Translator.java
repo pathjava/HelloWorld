@@ -19,8 +19,8 @@ public class Translator {
             if (Character.isAlphabetic(temp)){
                 for (int j = 0; j < inLang.length; j++) {
                     /*проверяем первый символ каждого слова из строки sentence - Заглавный или строчный*/
-                    char chTemp = tempArr[i].charAt(0);
                     if (tempArr[i].toLowerCase().equals(inLang[j])){
+                        char chTemp = tempArr[i].charAt(0);
                         /*если Заглавный, то в методе FirstUpperCase делаем первую букву слова из outLang[j] Заглавной*/
                         tempArr[i] = Character.isUpperCase(chTemp) ? FirstUpperCase(outLang[j]) : outLang[j];
                     }
