@@ -58,9 +58,16 @@ public class Censor {
     }
 
     public static void main(String[] args) {
+//        try {
+//            censorFile(null,
+//                    null);
+//        } catch (CensorException e) {
+//            System.out.println(e.toString());
+//        }
+
         try {
-            censorFile(null,
-                    null);
+            censorFile("src\\ru\\progwards\\java1\\lessons\\io2\\censorTest.txt",
+                    new String[]{"Hello", "World", "Java", "Saint-Petersburg"});
         } catch (CensorException e) {
             System.out.println(e.toString());
         }
