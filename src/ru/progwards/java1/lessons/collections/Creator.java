@@ -47,55 +47,32 @@ public class Creator {
     }
 
     public static Collection<Integer> fill3(int n){
-//        Collection<Integer> fillList = new ArrayList<>();
-//        for (int i = 0; i < (n * 3); i++) {
-//            fillList.add(i);
-//            int sq = i * i;
-//            fillList.add(sq);
-//            fillList.add(sq * i);
-//        }
-//        return fillList;
-
-        /* более красивое решение с использованием статического метода Math.pow */
-//        Collection<Integer> fillList = new ArrayList<>();
-//        for (int i = 0; i < n; i++) {
-//            fillList.add(i);
-//            fillList.add((int) Math.pow(i, 2));
-//            fillList.add((int) Math.pow(i, 3));
-//        }
-//        return fillList;
-
-        List<Integer> fillList = new ArrayList<>();
+        Collection<Integer> fillList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             fillList.add(i);
-            int index = fillList.indexOf(i);
-            fillList.set(index, index);
-
-            fillList.add(i);
-            index = fillList.indexOf(i);
-            int square = (int) Math.pow(index, 2);
-            fillList.set(index, square);
-
-            fillList.add(i);
-            index = fillList.indexOf(i);
-            int cube = (int) Math.pow(index, 3);
-            fillList.set(index, cube);
+            int index = ((ArrayList<Integer>) fillList).indexOf(i);
+            ((ArrayList<Integer>) fillList).set(index, index);
+            fillList.add(index * index);
+            fillList.add(index * index * index);
         }
         return fillList;
 
+        /* решение, когда изначально указан интерфейс List, а не Collection */
 //        List<Integer> fillList = new ArrayList<>();
 //        for (int i = 0; i < n; i++) {
 //            fillList.add(i);
-//            fillList.add((int) Math.pow(i, 2));
-//            fillList.add((int) Math.pow(i, 3));
+//            int index = fillList.indexOf(i);
+//            fillList.set(index, index);
+//            fillList.add(index*index);
+//            fillList.add(index*index*index);
 //        }
 //        return fillList;
     }
 
 
     public static void main(String[] args) {
-//        System.out.println(fillEven(10));
-//        System.out.println(fillOdd(8));
+        System.out.println(fillEven(10));
+        System.out.println(fillOdd(8));
         System.out.println(fill3(3));
     }
 }
