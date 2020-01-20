@@ -2,6 +2,7 @@ package ru.progwards.java1.lessons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -49,19 +50,19 @@ public class Creator {
     public static Collection<Integer> fill3(int n){
         Collection<Integer> fillList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
+            /* добавляем элемент со значением i */
             fillList.add(i);
-            int index = ((ArrayList<Integer>) fillList).indexOf(i);
+            int index = ((ArrayList<Integer>) fillList).lastIndexOf(i);
             ((ArrayList<Integer>) fillList).set(index, index);
-            fillList.add(index * index);
-            fillList.add(index * index * index);
+            fillList.add(index*index);
+            fillList.add(index*index*index);
         }
         return fillList;
 
-        /* решение, когда изначально указан интерфейс List, а не Collection */
 //        List<Integer> fillList = new ArrayList<>();
 //        for (int i = 0; i < n; i++) {
 //            fillList.add(i);
-//            int index = fillList.indexOf(i);
+//            int index = fillList.lastIndexOf(i);
 //            fillList.set(index, index);
 //            fillList.add(index*index);
 //            fillList.add(index*index*index);
@@ -71,8 +72,8 @@ public class Creator {
 
 
     public static void main(String[] args) {
-        System.out.println(fillEven(10));
-        System.out.println(fillOdd(8));
-        System.out.println(fill3(3));
+//        System.out.println(fillEven(10));
+//        System.out.println(fillOdd(8));
+        System.out.println(fill3(4));
     }
 }
