@@ -2,6 +2,7 @@ package ru.progwards.java1.lessons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -56,19 +57,45 @@ public class Creator {
 //        return fillList;
 
         /* более красивое решение с использованием статического метода Math.pow */
-        Collection<Integer> fillList = new ArrayList<>();
-        for (int i = 0; i < (n * 3); i++) {
+//        Collection<Integer> fillList = new ArrayList<>();
+//        for (int i = 0; i < n; i++) {
+//            fillList.add(i);
+//            fillList.add((int) Math.pow(i, 2));
+//            fillList.add((int) Math.pow(i, 3));
+//        }
+//        return fillList;
+
+        List<Integer> fillList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
             fillList.add(i);
-            fillList.add((int) Math.pow(i, 2));
-            fillList.add((int) Math.pow(i, 3));
+            int index = fillList.indexOf(i);
+            fillList.set(index, index);
+
+            fillList.add(i);
+            index = fillList.indexOf(i);
+            int square = (int) Math.pow(index, 2);
+            fillList.set(index, square);
+
+            fillList.add(i);
+            index = fillList.indexOf(i);
+            int cube = (int) Math.pow(index, 3);
+            fillList.set(index, cube);
         }
         return fillList;
+
+//        List<Integer> fillList = new ArrayList<>();
+//        for (int i = 0; i < n; i++) {
+//            fillList.add(i);
+//            fillList.add((int) Math.pow(i, 2));
+//            fillList.add((int) Math.pow(i, 3));
+//        }
+//        return fillList;
     }
 
 
     public static void main(String[] args) {
-        System.out.println(fillEven(10));
-        System.out.println(fillOdd(8));
+//        System.out.println(fillEven(10));
+//        System.out.println(fillOdd(8));
         System.out.println(fill3(3));
     }
 }
