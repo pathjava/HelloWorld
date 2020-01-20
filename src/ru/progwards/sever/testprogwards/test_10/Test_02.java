@@ -5,11 +5,10 @@ import java.util.Scanner;
 public class Test_02 {
     public void scanLines(){
         try (Scanner scanner = new Scanner(System.in)) {
-            String str, strLow;
+            String str;
             while (true){
                 str = scanner.nextLine();
-//                strLow = str.toLowerCase();
-                if (str.contains("привет")){
+                if (str.contains("Привет")){
                     System.out.println("Здравствуйте!");
                 } else if (str.contains("как дела")){
                     System.out.println("Хорошо");

@@ -7,7 +7,7 @@ public class Binary {
         this.num = num;
     }
 
-    String result = "";
+//    String result = "";
 
     public String toString(){
         String result = "";
@@ -23,6 +23,16 @@ public class Binary {
 //            result += ((Integer)((num >> i) & 0b00000001)).toString();
 //        }
 
+        // решение без циклов
+//        result += (num >> 7) & 0b00000001;
+//        result += (num >> 6) & 0b00000001;
+//        result += (num >> 5) & 0b00000001;
+//        result += (num >> 4) & 0b00000001;
+//        result += (num >> 3) & 0b00000001;
+//        result += (num >> 2) & 0b00000001;
+//        result += (num >> 1) & 0b00000001;
+//        result += (num >> 0) & 0b00000001;
+
         return result;
 
         //данное решение не мое
@@ -31,7 +41,7 @@ public class Binary {
 
 
     public static void main(String[] args) {
-        Binary binary = new Binary((byte) 23);
+        Binary binary = new Binary((byte) 123);
         System.out.println(binary);
     }
 }
