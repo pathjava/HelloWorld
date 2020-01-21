@@ -2,7 +2,6 @@ package ru.progwards.java1.lessons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -47,18 +46,23 @@ public class Creator {
 //        return fillList;
     }
 
-    public static Collection<Integer> fill3(int n){
+    public static Collection <Integer> fill3(int n){
         Collection<Integer> fillList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             /* добавляем элемент со значением i */
             fillList.add(i);
+            /* получаем значение индекса последнего добавленного в лист элемента и присваиваем переменной index */
             int index = ((ArrayList<Integer>) fillList).lastIndexOf(i);
+            /* устанавливаем значение индекса вместо значения последнего элемента*/
             ((ArrayList<Integer>) fillList).set(index, index);
+            /* добавляем новый следующий элемент в лист со значением index в квадрате */
             fillList.add(index*index);
+            /* добавляем новый следующий элемент в лист со значением index в кубе */
             fillList.add(index*index*index);
         }
         return fillList;
 
+        /* решение через интерфейс List */
 //        List<Integer> fillList = new ArrayList<>();
 //        for (int i = 0; i < n; i++) {
 //            fillList.add(i);
@@ -72,8 +76,8 @@ public class Creator {
 
 
     public static void main(String[] args) {
-//        System.out.println(fillEven(10));
-//        System.out.println(fillOdd(8));
+        System.out.println(fillEven(10));
+        System.out.println(fillOdd(8));
         System.out.println(fill3(4));
     }
 }
