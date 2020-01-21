@@ -37,7 +37,19 @@ public class Finder {
     }
 
     public static Collection<Integer> findLocalMax(Collection<Integer> numbers){
-        return numbers;
+        /* создаем лист ArrayList */
+        Collection<Integer> list = new ArrayList<>();
+        /* преобразуем входящие значения из numbers в массив */
+        Object[] arr = numbers.toArray();
+
+        for (int i = 1; i < arr.length-1; i++) {
+            /* проверяет, если значение под индексом i больше значений i-1 и i+1,
+            * тогда значение arr[i] помещаем в list*/
+            if (((int)arr[i] > (int)arr[i-1]) && ((int)arr[i] > (int)arr[i+1])){
+                list.add((Integer) arr[i]);
+            }
+        }
+        return list;
     }
 
     public static boolean findSequence(Collection<Integer> numbers){
@@ -53,5 +65,7 @@ public class Finder {
     public static void main(String[] args) {
         List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
         System.out.println(findMinSumPair(test));
+        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
+        System.out.println(findLocalMax(test2));
     }
 }
