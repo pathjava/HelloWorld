@@ -97,14 +97,14 @@ public class Finder {
 
 
     public static void main(String[] args) {
-//        List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
-//        System.out.println(findMinSumPair(test));
-//
-//        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
-//        System.out.println(findLocalMax(test2));
-//
-//        List<Integer> test3 = List.of(8,2,2,1,10,9,10,5,1,4,8,10);
-//        System.out.println(findSequence(test3));
+        List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
+        System.out.println(findMinSumPair(test));
+
+        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
+        System.out.println(findLocalMax(test2));
+
+        List<Integer> test3 = List.of(8,2,2,1,10,9,10,5,1,4,8,10);
+        System.out.println(findSequence(test3));
 
         List<String> test4 = List.of("Григорий","Борис","Дмитрий","Борис","Григорий","Борис","Александр");
         System.out.println(findSimilar(test4));
