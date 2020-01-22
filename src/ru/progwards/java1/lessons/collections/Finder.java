@@ -60,7 +60,9 @@ public class Finder {
         /* создаем и инициализируем переменную и устанавливаем значение по умолчанию 1 */
         int value = 1;
         int i = 0;
-        while (i < arr.length) {
+        /* проверяем в value <= numbers.size(), чтобы значение value было меньше или равно значению numbers.size(),
+        * чтобы value не вышло за пределы значения numbers.size() */
+        while (i < numbers.size() && value <= numbers.size()) {
             /* крутимся в цикле и проверяем все значения arr[i] на равенство со значением value */
             if ((int)arr[i] == value) {
                 /* если условие if равно, то переменной result присваиваем true,
@@ -78,35 +80,36 @@ public class Finder {
     public static String findSimilar(Collection<String> names){
         Object[] arr = names.toArray();
 
-        int maxCounter = 0;
-        String element = "";
-        for (int i = 0; i <arr.length ; i++) {
-            int counter =1;
-            for (int j = i+1; j <arr.length ; j++) {
-                if(arr[i] == arr[j]){
-                    counter++;
-                }
-            }
-            if(maxCounter < counter){
-                maxCounter = counter;
+        int maxCounter = 1;
+        int counter = 1;
+        String element = (String) arr[0];
+        for (int i = 1; i <arr.length; i++) {
+            if (arr[i-1] == arr[i]) {
+                counter++;
                 element = (String) arr[i];
             }
+        }
+        if(maxCounter < counter){
+            maxCounter = counter;
         }
         return element + ":" + maxCounter;
     }
 
 
     public static void main(String[] args) {
-        List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
-        System.out.println(findMinSumPair(test));
+//        List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
+//        System.out.println(findMinSumPair(test));
+//
+//        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
+//        System.out.println(findLocalMax(test2));
 
-        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
-        System.out.println(findLocalMax(test2));
+//        List<Integer> test3 = List.of(8,2,2,1,10,9,10,5,1,4,8,10);
+//        List<Integer> test3 = List.of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
+//        System.out.println(findSequence(test3));
 
-        List<Integer> test3 = List.of(8,2,2,1,10,9,10,5,1,4,8,10);
-        System.out.println(findSequence(test3));
-
-        List<String> test4 = List.of("Григорий","Борис","Дмитрий","Борис","Григорий","Борис","Александр");
+//        List<String> test4 = List.of("Григорий","Борис","Дмитрий","Борис","Григорий","Борис","Александр");
+        List<String> test4 = List.of("Дмитрий","Борис","Борис","Борис","Дмитрий","Борис","Дмитрий","Григорий","Борис",
+                "Александр","Григорий","Дмитрий","Василий","Борис","Дмитрий","Борис");
         System.out.println(findSimilar(test4));
     }
 }

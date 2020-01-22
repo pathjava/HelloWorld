@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Creator {
-    /* спросить у Никиты / Валерия, как они видят правильность решения, так как тип листа не указан в задание */
     public static Collection<Integer> fillEven(int n) {
         /* 3) данное решение как последующее развитие второго решения от Intellij IDEA*/
 //        return IntStream.rangeClosed(2, (n * 2)).filter(i -> i % 2 == 0).boxed().collect(Collectors.toList());
