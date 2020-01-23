@@ -1,14 +1,11 @@
 package ru.progwards.java1.lessons.collections;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 public class MatrixIterator<T> implements Iterator<T> {
     private T[][] array;
-    int indexHor;
-    int indexVer;
+    private int indexRow;
+    private int indexCol;
 
     MatrixIterator(T[][] array) {
         this.array = array;
@@ -16,12 +13,17 @@ public class MatrixIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        return indexHor < array.length;
+        return indexRow < array.length && indexCol < array[indexRow].length;
     }
 
     @Override
     public T next() {
-        return this.hasNext() ? array[indexVer++][indexHor++] : null;
+        T nextValue = array[indexRow][indexCol++];
+        if (indexCol >= array[indexRow].length) {
+            indexRow++;
+            indexCol = 0;
+        }
+        return nextValue;
     }
 
     public static void main(String[] args) {

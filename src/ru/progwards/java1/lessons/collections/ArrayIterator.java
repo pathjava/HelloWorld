@@ -6,7 +6,7 @@ public class ArrayIterator<T> implements Iterator<T> {
     /* заводим массив array, где вместо T (забыл как правильно назвать) может подаваться любой тип (String, int и т.д.) */
     private T[] array;
     /* заводим переменную index, которая далее будет использоваться для проверки текущего местоположения итератора */
-    int index;
+    private int index;
     /* конструктор */
     ArrayIterator(T[] array) {
         this.array = array;
