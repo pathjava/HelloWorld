@@ -20,11 +20,11 @@ public class Finder {
                 id1 = i;
                 /* переменной id2 присваиваем индекс второго значения из минимальной суммы */
                 id2 = i + 1;
-            } /* если значение двух пар, например при сложении -76,-75,-76 одинаковое, то берем индексы последних двух значений*/
+            } /* если значение двух пар, например при сложении -76,-75,-76 одинаковое, то берем индексы первых двух значений*/
             else if (((int)arr[i] + (int)arr[i + 1]) == min) {
-                min = ((int) arr[i] + (int) arr[i + 1]);
-                id1 = i;
-                id2 = i + 1;
+//                min = ((int) arr[i] + (int) arr[i + 1]);
+                id1 = i-1;
+                id2 = i;
             }
         }
         /* создаем лист ArrayList */
@@ -144,7 +144,8 @@ public class Finder {
 
     public static void main(String[] args) {
 //        List<Integer> test = List.of(98,11,-14,-2,-47,-35,63,92,13,89,37,2,77,24,-45,89,-76,-75,-76);
-//        System.out.println(findMinSumPair(test));
+        List<Integer> test = List.of(-3,-73,-3,6,-40,19,10,-40);
+        System.out.println(findMinSumPair(test));
 //
 //        List<Integer> test2 = List.of(7,87,60,-74,28,10,33,-42,-25);
 //        System.out.println(findLocalMax(test2));
@@ -154,11 +155,11 @@ public class Finder {
 //        System.out.println(findSequence(test3));
 
 //        List<String> test4 = List.of("Григорий","Борис","Дмитрий","Борис","Григорий","Борис","Александр");
-        List<String> test4 = List.of("Дмитрий","Борис","Борис","Борис","Дмитрий","Борис","Дмитрий","Григорий","Борис",
-                "Александр","Григорий","Дмитрий","Василий","Борис","Дмитрий","Борис");
+//        List<String> test4 = List.of("Дмитрий","Борис","Борис","Борис","Дмитрий","Борис","Дмитрий","Григорий","Борис",
+//                "Александр","Григорий","Дмитрий","Василий","Борис","Дмитрий","Борис");
 //        List<String> test4 = List.of("Александр","Борис","Борис","Александр","Александр","Василий",
 //                "Дмитрий","Дмитрий","Александр","Василий","Григорий");
 //        List<String> test4 = List.of("Александр","Борис","Борис","Александр","Александр","Василий");
-        System.out.println(findSimilar(test4));
+//        System.out.println(findSimilar(test4));
     }
 }
