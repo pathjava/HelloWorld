@@ -77,54 +77,68 @@ public class Finder {
         return result;
     }
 
-    public static String findSimilar(Collection<String> names){
+    public static String findSimilar(Collection<String> names) {
+        /* преобразуем входящие значения из names в массив */
         Object[] arr = names.toArray();
-
-//        int lastCounter = 0;
+        /* заводим переменную lastElement для хранения последнего проверенного имени */
         String lastElement = "";
+        /* заводим переменную для хранения последнего максимального количества встретившихся подряд имен (по умолчанию 1) */
         int lastMaxCounter = 1;
+        /* заводим переменную для хранения последнего имени,
+         * встретившегося максимальное количество раз подряд (по умочанию имя под индексом 0) */
         String lastCountElement = (String) arr[0];
+        /* заводим переменную, считающую количество встретившихся подряд имен (по умолчанию 1) */
         int counter = 1;
-        for (int i = 0; i <arr.length; i++) {
-
-            if(lastElement.equals(arr[i])){
+        for (int i = 0; i < arr.length; i++) {
+            /* сравниваем lastElement и arr[i] и если равно, то инкрементируем переменную counter на +1 */
+            if (lastElement.equals(arr[i])) {
                 counter++;
             } else {
+                /* если условие выше не равно, то переменной lastElement приваиваем arr[i] */
                 lastElement = (String) arr[i];
+                /* а счетчик сбрасываем до 1 */
                 counter = 1;
-//                lastCounter = counter;
             }
-            if (lastMaxCounter < counter){
+            /* если counter больше lastMaxCounter (которая по умолчанию 1) */
+            if (lastMaxCounter < counter) {
+                /* тогда переменной lastMaxCounter присваиваем значение переменной counter */
                 lastMaxCounter = counter;
+                /* а переменной lastCountElement присваиваем последнее наиболее повторяющееся подряд имя из arr[i] */
                 lastCountElement = (String) arr[i];
             }
         }
-        // "Дмитрий 0","Борис 1","Борис 2","Борис 3","Дмитрий 4","Борис",
-        // "Александр 0","Борис 1","Борис 2","Александр 3","Александр 4","Василий 5",
-        // "Александр 0","Борис 1","Борис 2","Александр 3","Александр 4","Василий 5",
-        //                "Дмитрий 6","Дмитрий 7","Александр 8","Василий 9","Григорий 10"
         return lastCountElement + ":" + lastMaxCounter;
+    }
 
-
-        /* решение, которое ищет и считает все вхождения определенного слова
-        * и опредекляет наиболее часто встречающееся */
-//        Object[] arr = names.toArray();
-//
-//        int lastCounter = 0;
-//        String element = "";
-//        for (int i = 0; i <arr.length ; i++) {
-//            int counter =1;
-//            for (int j = i+1; j <arr.length ; j++) {
-//                if(arr[i] == arr[j]){
-//                    counter++;
-//                }
-//            }
-//            if(lastCounter < counter){
-//                lastCounter = counter;
-//                element = (String) arr[i];
-//            }
-//        }
-//        return element + ":" + lastCounter;
+        /* решение, которое ищет и считает все вхождения определенного слова (а не только расположенные подряд)
+        * и определяет наиболее часто встречающееся */
+    public static String findSimilar2(Collection<String> names){
+        /* преобразуем входящие значения из names в массив */
+        Object[] arr = names.toArray();
+        /* заводим счетчик последнего, наиболее часто встретившегося в массиве имени (по умолчанию 1) */
+        int lastCounter = 1;
+        /* заводим переменную, хранящую последнее, наиболее часто встречающееся имя (по умочанию имя под индексом 0)
+        * имя по умолчанию для того, если все имена в массиве встречаются только один раз, то выведется самое первое */
+        String element = (String) arr[0];
+        for (int i = 0; i <arr.length ; i++) {
+            /* заводим и инициализируем счетчик сколько раз встретилось проверяемое имя */
+            int counter = 1;
+            /* заводим внутренний цикл, в котором имя arr[i] поочереди проверяем на совпадение со всеми именами в массиве */
+            for (int j = i + 1; j <arr.length; j++) {
+                if(arr[i] == arr[j]){
+                    /* при каждом совпадении счетчик инкременируем на +1 */
+                    counter++;
+                }
+            }
+            /* проверяем, если значение счетчика counter больше значения lastCounter (которая по умолчанию 1) */
+            if(lastCounter < counter){
+                /* тогда переменной lastCounter присваиваем значение счетчика counter */
+                lastCounter = counter;
+                /* а переменной element присваиваем имя, наиболее часто встретившееся при обходе в цикле */
+                element = (String) arr[i];
+            }
+        }
+        return element + ":" + lastCounter;
     }
 
 
