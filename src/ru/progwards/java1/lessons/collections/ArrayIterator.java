@@ -23,13 +23,14 @@ public class ArrayIterator<T> implements Iterator<T> {
     public T next() {
         /* реализация через тернарный оператор. если this.hasNext() является true, то есть дальнейший шаг по массиву возможен,
         * тогда инкременируем индекс на +1 (array[index++]) и получаем значение следующей ячейки,
-        * если this.hasNext() является false, это означает конец массива и возвращаем null */
+        * если this.hasNext() является false, это означает конец массива, следующая ячейка массива недоступна и возвращаем null */
         return this.hasNext() ? array[index++] : null;
     }
 
     public static void main(String[] args) {
         ArrayIterator<Integer> iterator = new ArrayIterator<>(new Integer[]{5,2,7,4,10,55,10,1,12,100});
-        while (iterator.hasNext())
+        while (iterator.hasNext()) {
             System.out.println(iterator.next());
+        }
     }
 }
