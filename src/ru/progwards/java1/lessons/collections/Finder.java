@@ -80,19 +80,51 @@ public class Finder {
     public static String findSimilar(Collection<String> names){
         Object[] arr = names.toArray();
 
-        int maxCounter = 1;
+//        int lastCounter = 0;
+        String lastElement = "";
+        int lastMaxCounter = 1;
+        String lastCountElement = (String) arr[0];
         int counter = 1;
-        String element = (String) arr[0];
-        for (int i = 1; i <arr.length; i++) {
-            if (arr[i-1] == arr[i]) {
+        for (int i = 0; i <arr.length; i++) {
+
+            if(lastElement.equals(arr[i])){
                 counter++;
-                element = (String) arr[i];
+            } else {
+                lastElement = (String) arr[i];
+                counter = 1;
+//                lastCounter = counter;
+            }
+            if (lastMaxCounter < counter){
+                lastMaxCounter = counter;
+                lastCountElement = (String) arr[i];
             }
         }
-        if(maxCounter < counter){
-            maxCounter = counter;
-        }
-        return element + ":" + maxCounter;
+        // "Дмитрий 0","Борис 1","Борис 2","Борис 3","Дмитрий 4","Борис",
+        // "Александр 0","Борис 1","Борис 2","Александр 3","Александр 4","Василий 5",
+        // "Александр 0","Борис 1","Борис 2","Александр 3","Александр 4","Василий 5",
+        //                "Дмитрий 6","Дмитрий 7","Александр 8","Василий 9","Григорий 10"
+        return lastCountElement + ":" + lastMaxCounter;
+
+
+        /* решение, которое ищет и считает все вхождения определенного слова
+        * и опредекляет наиболее часто встречающееся */
+//        Object[] arr = names.toArray();
+//
+//        int lastCounter = 0;
+//        String element = "";
+//        for (int i = 0; i <arr.length ; i++) {
+//            int counter =1;
+//            for (int j = i+1; j <arr.length ; j++) {
+//                if(arr[i] == arr[j]){
+//                    counter++;
+//                }
+//            }
+//            if(lastCounter < counter){
+//                lastCounter = counter;
+//                element = (String) arr[i];
+//            }
+//        }
+//        return element + ":" + lastCounter;
     }
 
 
@@ -110,6 +142,9 @@ public class Finder {
 //        List<String> test4 = List.of("Григорий","Борис","Дмитрий","Борис","Григорий","Борис","Александр");
         List<String> test4 = List.of("Дмитрий","Борис","Борис","Борис","Дмитрий","Борис","Дмитрий","Григорий","Борис",
                 "Александр","Григорий","Дмитрий","Василий","Борис","Дмитрий","Борис");
+//        List<String> test4 = List.of("Александр","Борис","Борис","Александр","Александр","Василий",
+//                "Дмитрий","Дмитрий","Александр","Василий","Григорий");
+//        List<String> test4 = List.of("Александр","Борис","Борис","Александр","Александр","Василий");
         System.out.println(findSimilar(test4));
     }
 }

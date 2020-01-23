@@ -14,6 +14,10 @@ public class LineCount {
             Scanner scanner = new Scanner(fileReader);
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
+                /* вариант решения через isEmpty */
+//                if (str.isEmpty())
+                /* вариант решения через equals */
+//                if ("".equals(str))
                 if(str.length() == 0) {
                     lines++;
                 }
