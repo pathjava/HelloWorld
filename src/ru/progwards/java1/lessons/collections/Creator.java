@@ -18,8 +18,14 @@ public class Creator {
 
         /* 1) первоначальное решение через цикл for и ArrayList, но в условие задачи не сказано,
          * какой именно тип листа (ArrayList или LinkedList) */
+        /* создаем ArrayList типа Integer */
 //        Collection<Integer> fillList = new ArrayList<>();
+        /* запускаем цикл, начиная от 2, где в условие i <= (n * 2) n умножаем на 2,
+        * так как количество проходов и соответственно добавленных элементов
+        * регламентируется входящим значением int n, а так как при выявлении четных чисел через (i % 2 == 0)
+        * количество добавленных символов будет в два раза меньше, то значение int n увеличиваем вдвое */
 //        for (int i = 2; i <= (n * 2); i++) {
+                /* проверяем, является ли значение четным и если да, то добавляем его в лист */
 //            if (i % 2 == 0){
 //                fillList.add(i);
 //            }
@@ -35,7 +41,7 @@ public class Creator {
         Collection<Integer> fillList = IntStream.iterate((n * 2), i -> i >= 1, i -> i - 1).filter(i -> i % 2 != 0).boxed().collect(Collectors.toList());
         return fillList;
 
-        /* так же как и у метода fillEven выше */
+        /* так же как и у метода fillEven выше за некоторомы исключениями */
 //        Collection<Integer> fillList = new ArrayList<>();
 //        for (int i = (n * 2); i >= 1; i--) {
 //            if (i % 2 != 0) {
