@@ -8,7 +8,7 @@ public class ProductAnalytics {
     private List<Shop> shops;
     private List<Product> products;
 
-    public ProductAnalytics(List<Shop> shops, List<Product> products) {
+    public ProductAnalytics(List<Product> products, List<Shop> shops) {
         this.shops = shops;
         this.products = products;
     }
