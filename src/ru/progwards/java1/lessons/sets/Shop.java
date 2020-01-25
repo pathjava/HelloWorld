@@ -3,13 +3,13 @@ package ru.progwards.java1.lessons.sets;
 import java.util.List;
 
 public class Shop {
-    private List<ProductAnalytics.Product> products;
+    private List<Product> products;
 
-    public Shop(List<ProductAnalytics.Product> products) {
+    public Shop(List<Product> products) {
         this.products = products;
     }
 
-    public List<ProductAnalytics.Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 }
