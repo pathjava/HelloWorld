@@ -29,10 +29,10 @@ public class ProductAnalytics {
     public Set<Product> existAtListInOne(){
         if (shops == null || shops.size() == 0) return new HashSet<>();
 
-        Iterator<Shop> it = shops.iterator();
-        Set<Product> allProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
-        while (it.hasNext()) {
-            allProducts.addAll(new HashSet<Product>(((Shop) it.next()).getProducts()));
+        Iterator<Shop> iterator = shops.iterator();
+        Set<Product> allProducts = new HashSet<Product>(((Shop) iterator.next()).getProducts());
+        while (iterator.hasNext()) {
+            allProducts.addAll(new HashSet<Product>(((Shop) iterator.next()).getProducts()));
         }
         allProducts.retainAll(products);
         return allProducts;
@@ -52,19 +52,19 @@ public class ProductAnalytics {
     public Set<Product> existOnlyInOne(){
 
         Set<Product> allProducts = new HashSet<Product>();
-        if (products == null || products.size() == 0) return allProducts;
-        if (shops == null || shops.size() == 0) return allProducts;
+//        if (products == null || products.size() == 0) return allProducts;
+//        if (shops == null || shops.size() == 0) return allProducts;
         for (int i = 0; i < shops.size(); i++) {
             Set<Product> earlierProducts = new HashSet<Product>();
             Set<Product> tempProducts = new HashSet<Product>();
             Set<Product> currentProducts;
-            Iterator<Shop> it = shops.iterator();
-            for (int k = 0; k < shops.size(); k++) {
-                currentProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
+            Iterator<Shop> iterator = shops.iterator();
+            for (int j = 0; j < shops.size(); j++) {
+                currentProducts = new HashSet<Product>(((Shop) iterator.next()).getProducts());
                 currentProducts.retainAll(products);
-                if (k < i) {
+                if (j < i) {
                     earlierProducts.addAll(currentProducts);
-                } else if (k == i) {
+                } else if (j == i) {
                     tempProducts = currentProducts;
                     tempProducts.removeAll(earlierProducts);
                 } else {
