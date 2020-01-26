@@ -56,57 +56,57 @@ public class ProductAnalytics {
     // товары из products, которые есть только в одном магазине
     public Set<Product> existOnlyInOne(){
 
-//        Set<Product> products = new HashSet<Product>();
-//        if (allProducts == null || allProducts.size() == 0) return products;
-//        if (shops == null || shops.size() == 0) return products;
-//        for (int i = 0; i < shops.size(); i++) {
-//            Set<Product> productsBefore = new HashSet<Product>();
-//            Set<Product> products1 = new HashSet<Product>();
-//            Set<Product> productsNow;
-//            Iterator it = shops.iterator();
-//            for (int k = 0; k < shops.size(); k++) {
-//                productsNow = new HashSet<Product>(((Shop) it.next()).getProducts());
-//                productsNow.retainAll(allProducts);
-//                if (k < i) {
-//                    productsBefore.addAll(productsNow);
-//                } else if (k == i) {
-//                    products1 = productsNow;
-//                    products1.removeAll(productsBefore);
-//                } else {
-//                    products1.removeAll(productsNow);
-//                }
-//            }
-//            products.addAll(products1);
-//        }
-//
-//        return products;
-
-        Set<Product> allProducts = new HashSet<Product>(products);
-
-        int i = 0;
-        while (i < shops.size()) {
-            Set<Product> earlierProducts = new HashSet<Product>();
-            Set<Product> tempProducts = new HashSet<Product>();
-            Set<Product> currentProducts;
+        Set<Product> products2 = new HashSet<Product>();
+        if (products == null || products.size() == 0) return products2;
+        if (shops == null || shops.size() == 0) return products2;
+        for (int i = 0; i < shops.size(); i++) {
+            Set<Product> productsBefore = new HashSet<Product>();
+            Set<Product> products1 = new HashSet<Product>();
+            Set<Product> productsNow;
             Iterator it = shops.iterator();
-            int k = 0;
-            while (k < shops.size()) {
-                currentProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
-                currentProducts.retainAll(products);
+            for (int k = 0; k < shops.size(); k++) {
+                productsNow = new HashSet<Product>(((Shop) it.next()).getProducts());
+                productsNow.retainAll(products);
                 if (k < i) {
-                    earlierProducts.addAll(currentProducts);
+                    productsBefore.addAll(productsNow);
                 } else if (k == i) {
-                    tempProducts = currentProducts;
-                    tempProducts.removeAll(earlierProducts);
+                    products1 = productsNow;
+                    products1.removeAll(productsBefore);
                 } else {
-                    tempProducts.removeAll(currentProducts);
+                    products1.removeAll(productsNow);
                 }
-                k++;
             }
-            products.addAll(tempProducts);
-            i++;
+            products2.addAll(products1);
         }
-        return allProducts;
+
+        return products2;
+
+//        Set<Product> allProducts = new HashSet<Product>(products2);
+//
+//        int i = 0;
+//        while (i < shops.size()) {
+//            Set<Product> earlierProducts = new HashSet<Product>();
+//            Set<Product> tempProducts = new HashSet<Product>();
+//            Set<Product> currentProducts;
+//            Iterator it = shops.iterator();
+//            int k = 0;
+//            while (k < shops.size()) {
+//                currentProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
+//                currentProducts.retainAll(products2);
+//                if (k < i) {
+//                    earlierProducts.addAll(currentProducts);
+//                } else if (k == i) {
+//                    tempProducts = currentProducts;
+//                    tempProducts.removeAll(earlierProducts);
+//                } else {
+//                    tempProducts.removeAll(currentProducts);
+//                }
+//                k++;
+//            }
+//            products2.addAll(tempProducts);
+//            i++;
+//        }
+//        return allProducts;
     }
 
 }
