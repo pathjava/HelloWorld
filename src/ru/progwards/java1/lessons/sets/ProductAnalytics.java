@@ -55,6 +55,32 @@ public class ProductAnalytics {
 
     // товары из products, которые есть только в одном магазине
     public Set<Product> existOnlyInOne(){
+
+//        Set<Product> products = new HashSet<Product>();
+//        if (allProducts == null || allProducts.size() == 0) return products;
+//        if (shops == null || shops.size() == 0) return products;
+//        for (int i = 0; i < shops.size(); i++) {
+//            Set<Product> productsBefore = new HashSet<Product>();
+//            Set<Product> products1 = new HashSet<Product>();
+//            Set<Product> productsNow;
+//            Iterator it = shops.iterator();
+//            for (int k = 0; k < shops.size(); k++) {
+//                productsNow = new HashSet<Product>(((Shop) it.next()).getProducts());
+//                productsNow.retainAll(allProducts);
+//                if (k < i) {
+//                    productsBefore.addAll(productsNow);
+//                } else if (k == i) {
+//                    products1 = productsNow;
+//                    products1.removeAll(productsBefore);
+//                } else {
+//                    products1.removeAll(productsNow);
+//                }
+//            }
+//            products.addAll(products1);
+//        }
+//
+//        return products;
+
         Set<Product> allProducts = new HashSet<Product>(products);
 
         int i = 0;
@@ -66,7 +92,7 @@ public class ProductAnalytics {
             int k = 0;
             while (k < shops.size()) {
                 currentProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
-                currentProducts.retainAll(allProducts);
+                currentProducts.retainAll(products);
                 if (k < i) {
                     earlierProducts.addAll(currentProducts);
                 } else if (k == i) {
@@ -80,26 +106,6 @@ public class ProductAnalytics {
             products.addAll(tempProducts);
             i++;
         }
-
-//        for (int i = 0; i < shops.size(); i++) {
-//            Set<Product> earlierProducts = new HashSet<Product>();
-//            Set<Product> tempProducts = new HashSet<Product>();
-//            Set<Product> currentProducts;
-//            Iterator it = shops.iterator();
-//            for (int k = 0; k < shops.size(); k++) {
-//                currentProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
-//                currentProducts.retainAll(allProducts);
-//                if (k < i) {
-//                    earlierProducts.addAll(currentProducts);
-//                } else if (k == i) {
-//                    tempProducts = currentProducts;
-//                    tempProducts.removeAll(earlierProducts);
-//                } else {
-//                    tempProducts.removeAll(currentProducts);
-//                }
-//            }
-//            products.addAll(tempProducts);
-//        }
         return allProducts;
     }
 
