@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class LettersInFile {
-
     public static String process(String fileName) {
         Set<Character> latinUpper = new TreeSet<>();
         Set<Character> latinLower = new TreeSet<>();
@@ -20,18 +19,16 @@ public class LettersInFile {
                 String str = scanner.nextLine();
                 for (int i = 0; i < str.length(); i++) {
                     char ch = str.charAt(i);
-                    if (Character.isLetter(ch)) {
-                        if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
-                                && Character.isUpperCase(ch)) {
+                    if (Character.isLetter(ch) && Character.isUpperCase(ch)) {
+                        if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
                             latinUpper.add(ch);
-                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
-                                && Character.isLowerCase(ch)) {
-                            latinLower.add(ch);
-                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
-                                && Character.isUpperCase(ch)) {
+                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC) {
                             cyrillicUpper.add(ch);
-                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
-                                && Character.isLowerCase(ch)) {
+                        }
+                    } else if (Character.isLetter(ch) && Character.isLowerCase(ch)) {
+                        if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
+                            latinLower.add(ch);
+                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC) {
                             cyrillicLower.add(ch);
                         }
                     } else
@@ -46,7 +43,6 @@ public class LettersInFile {
         StringBuilder latinLowerString = new StringBuilder();
         StringBuilder cyrillicUpperString = new StringBuilder();
         StringBuilder cyrillicLowerString = new StringBuilder();
-        StringBuilder symbolsString = new StringBuilder();
         for (Character character : latinUpper) {
             latinUpperString.append(character);
         }
@@ -59,13 +55,15 @@ public class LettersInFile {
         for (Character character : cyrillicLower) {
             cyrillicLowerString.append(character);
         }
+
+        StringBuilder symbolsString = new StringBuilder();
         for (Character symbol : symbols) {
             symbolsString.append(symbol);
         }
         System.out.println(symbolsString.toString());
+
         return String.valueOf(latinUpperString.append(latinLowerString).append(cyrillicUpperString).append(cyrillicLowerString));
     }
-
 
     public static void main(String[] args) {
         System.out.println(process("src/ru/progwards/java1/lessons/sets/letters.txt"));
