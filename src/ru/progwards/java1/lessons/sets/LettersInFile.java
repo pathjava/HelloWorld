@@ -1,8 +1,6 @@
 package ru.progwards.java1.lessons.sets;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,27 +12,30 @@ public class LettersInFile {
         Set<Character> latinLower = new TreeSet<>();
         Set<Character> cyrillicUpper = new TreeSet<>();
         Set<Character> cyrillicLower = new TreeSet<>();
-        String str = "";
+        Set<Character> symbols = new TreeSet<>();
         Scanner scanner;
         try (FileReader fileReader = new FileReader(fileName)) {
             scanner = new Scanner(fileReader);
             while (scanner.hasNextLine()) {
-                str = scanner.nextLine();
+                String str = scanner.nextLine();
                 for (int i = 0; i < str.length(); i++) {
                     char ch = str.charAt(i);
-                    if (Character.isLetter(ch) && Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
-                            && Character.isUpperCase(ch)){
-                        latinUpper.add(ch);
-                    } else if (Character.isLetter(ch) && Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
-                            && Character.isLowerCase(ch)){
-                        latinLower.add(ch);
-                    } else if (Character.isLetter(ch) && Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
-                            && Character.isUpperCase(ch)){
-                        cyrillicUpper.add(ch);
-                    } else if (Character.isLetter(ch) && Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
-                            && Character.isLowerCase(ch)){
-                        cyrillicLower.add(ch);
-                    }
+                    if (Character.isLetter(ch)) {
+                        if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
+                                && Character.isUpperCase(ch)) {
+                            latinUpper.add(ch);
+                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN
+                                && Character.isLowerCase(ch)) {
+                            latinLower.add(ch);
+                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
+                                && Character.isUpperCase(ch)) {
+                            cyrillicUpper.add(ch);
+                        } else if (Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.CYRILLIC
+                                && Character.isLowerCase(ch)) {
+                            cyrillicLower.add(ch);
+                        }
+                    } else
+                        symbols.add(ch);
                 }
             }
             scanner.close();
@@ -45,6 +46,7 @@ public class LettersInFile {
         StringBuilder latinLowerString = new StringBuilder();
         StringBuilder cyrillicUpperString = new StringBuilder();
         StringBuilder cyrillicLowerString = new StringBuilder();
+        StringBuilder symbolsString = new StringBuilder();
         for (Character character : latinUpper) {
             latinUpperString.append(character);
         }
@@ -57,6 +59,10 @@ public class LettersInFile {
         for (Character character : cyrillicLower) {
             cyrillicLowerString.append(character);
         }
+        for (Character symbol : symbols) {
+            symbolsString.append(symbol);
+        }
+        System.out.println(symbolsString.toString());
         return String.valueOf(latinUpperString.append(latinLowerString).append(cyrillicUpperString).append(cyrillicLowerString));
     }
 
