@@ -27,31 +27,15 @@ public class ProductAnalytics {
 
     // товары из products, которые имеются хотя бы в одном магазине
     public Set<Product> existAtListInOne(){
-//        Set<Product> allProducts = new HashSet<Product>(products2);
-//
-//        for (Shop shop : shops) {
-//            allProducts.addAll(new HashSet<Product>(shop.getProducts()));
-//        }
-//        allProducts.retainAll(products2);
-
-//        Iterator<Shop> iterator = shops.iterator();
-//        Set<Product> allProducts = new HashSet<Product>(((Shop) iterator.next()).getProducts());
-//        while (iterator.hasNext()) {
-//            products2.addAll(new HashSet<Product>(((Shop) iterator.next()).getProducts()));
-//        }
-//        products2.retainAll(allProducts);
-//        return allProducts;
-
         if (shops == null || shops.size() == 0) return new HashSet<>();
 
-        Iterator it = shops.iterator();
-        //Set<Product> products2 = new HashSet<Product>(allProducts);
-        Set<Product> products2 = new HashSet<Product>(((Shop) it.next()).getProducts());
+        Iterator<Shop> it = shops.iterator();
+        Set<Product> allProducts = new HashSet<Product>(((Shop) it.next()).getProducts());
         while (it.hasNext()) {
-            products2.addAll(new HashSet<Product>(((Shop) it.next()).getProducts()));
+            allProducts.addAll(new HashSet<Product>(((Shop) it.next()).getProducts()));
         }
-        products2.retainAll(products);
-        return products2;
+        allProducts.retainAll(products);
+        return allProducts;
     }
 
     // товары из products, которых нет ни в одном магазине
