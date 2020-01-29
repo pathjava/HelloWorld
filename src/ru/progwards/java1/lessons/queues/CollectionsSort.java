@@ -76,14 +76,12 @@ public class CollectionsSort {
     }
 
     public static void minSort(Collection<Integer> data){
-        List<Integer> list = new ArrayList<>(data);
         Collection<Integer> tempList = new ArrayList<>();
 
-        for (int i = list.size() -1; i >= 0; i--) {
-            tempList.add(Collections.min(list));
-            list.remove(Collections.min(list));
+        for (int i = data.size() -1; i >= 0; i--) {
+            tempList.add(Collections.min(data));
+            data.remove(Collections.min(data));
         }
-        data.clear();
         data.addAll(tempList);
 
         String str;
