@@ -22,24 +22,4 @@ public class ArraySort {
             System.out.print(value + " ");
         }
     }
-
-    //это мое самостоятельное решение - судя по варианту выше, мыслил в верном направлении, но не совсем
-//    public static void sort(int[] a){
-//        int i = a[0];
-//        int j = a[0];
-//        for (int i = 0; i < i+1; i++){
-//            int temp = a[i];
-//            a[i] = a[i+1];
-//            a[i] = temp;
-//            if (a[i] >= a.length){
-//                for (j = i+1; j < j+1; j++){
-//                    if (a[i] > a[j]){
-//                        int temp2 = a[j];
-//                        a[j] = a[j+1];
-//                        a[j] = temp2;
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
