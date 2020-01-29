@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.queues;
 
+import com.google.inject.internal.asm.$ClassWriter;
+
 import java.util.*;
 
 public class CollectionsSort {
@@ -57,7 +59,7 @@ public class CollectionsSort {
             sort = true;
             for (int i = 0; i < list.size() - 1; i++) {
                 if (list.get(i) > list.get(i + 1)) {
-                Collections.swap(list, i, i+1);
+                    Collections.swap(list, i, i+1);
                     sort = false;
                 }
             }
@@ -73,13 +75,34 @@ public class CollectionsSort {
         }
     }
 
+    public static void minSort(Collection<Integer> data){
+        List<Integer> list = new ArrayList<>(data);
+        Collection<Integer> tempList = new ArrayList<>();
 
+        for (int i = list.size() -1; i >= 0; i--) {
+            tempList.add(Collections.min(list));
+            list.remove(Collections.min(list));
+        }
+        data.clear();
+        data.addAll(tempList);
+
+        String str;
+        int i = 0;
+        for (Object o : tempList) {
+            if (i <= (tempList.size()-2)){
+                str = ", ";
+            } else str = "\n";
+            System.out.print(o + str);
+            i++;
+        }
+    }
 
 
     public static void main(String[] args) {
-        List<Integer> array = List.of(5,1,11,25,7,1,12,28,35,3);
+        List<Integer> array = new ArrayList<>(List.of(5,25,11,1,7,1,12,28,35,3));
         mySort(array);
         mySort2(array);
         mySort3(array);
+        minSort(array);
     }
 }
