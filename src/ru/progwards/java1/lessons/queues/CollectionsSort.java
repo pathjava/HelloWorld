@@ -1,6 +1,5 @@
 package ru.progwards.java1.lessons.queues;
 
-import javax.swing.event.ListDataListener;
 import java.util.*;
 
 public class CollectionsSort {
@@ -10,9 +9,7 @@ public class CollectionsSort {
         for (int i = 0; i < arr.length -1; i++){
             for (int j = 0; j < arr.length -i -1; j++){
                 if ((int)arr[j] > (int)arr[j+1]){
-                    int temp = (int)arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    Collections.swap(Arrays.asList(arr), j,j+1);
                 }
             }
         }
@@ -75,6 +72,28 @@ public class CollectionsSort {
 //        }
 //    }
 
+//    public static void mySort4(Collection<Integer> data){
+//        Object[] arr = data.toArray();
+//        for (int i = 0; i < arr.length -1; i++){
+//            for (int j = 0; j < arr.length -i -1; j++){
+//                if ((int)arr[j] > (int)arr[j+1]){
+//                        int temp = (int)arr[j];
+//                        arr[j] = arr[j+1];
+//                        arr[j+1] = temp;
+//                }
+//            }
+//        }
+//        String str;
+//        int output = 0;
+//        for (Object o : arr) {
+//            if (output <= (arr.length-2)){
+//                str = ", ";
+//            } else str = "\n";
+//            System.out.print(o + str);
+//            output++;
+//        }
+//    }
+
     public static void minSort(Collection<Integer> data){
         Collection<Integer> tempList = new ArrayList<>();
 
@@ -96,8 +115,7 @@ public class CollectionsSort {
     }
 
     static void collSort(Collection<Integer> data){
-        List<Integer> list = new ArrayList<>(data);
-        Collections.sort(list);
+        Collections.sort((List)data);
 
 //        String str;
 //        int output = 0;
@@ -110,7 +128,7 @@ public class CollectionsSort {
 //        }
     }
 
-    static final int ELEMENT = 1000;
+    static final int ELEMENT = 10_000;
     public static Collection<String> compareSort(){
         List<Integer> listMySort = new ArrayList<>();
 
@@ -219,6 +237,10 @@ public class CollectionsSort {
 //        mySort3(array);
 //        minSort(listMinSort);
 //        collSort(listCollSort);
+        List array = new ArrayList<>(List.of(95,5,69,67,76,74));
+        System.out.println(array);
+        mySort(array);
+        System.out.println(array);
         System.out.println(compareSort());
     }
 }
