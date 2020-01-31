@@ -110,15 +110,13 @@ public class CollectionsSort {
 //        }
     }
 
-    static final int ELEMENT = 10_000;
+    static final int ELEMENT = 1000;
     public static Collection<String> compareSort(){
         List<Integer> listMySort = new ArrayList<>();
 
         Random random = new Random();
         for (int i = 0; i < ELEMENT; i++) {
             listMySort.add(random.nextInt(5000));
-//            listMinSort.add(random.nextInt(5000));
-//            listCollSort.add(random.nextInt(5000));
         }
         List<Integer> listMinSort = new ArrayList<>(listMySort);
         List<Integer> listCollSort = new ArrayList<>(listMySort);
@@ -198,33 +196,28 @@ public class CollectionsSort {
 
 
     public static void main(String[] args) {
-//        final int ELEMENT = 50_000;
-//        List<Integer> listMySort = new ArrayList<>();
-//        List<Integer> listMinSort = new ArrayList<>();
-//        List<Integer> listCollSort = new ArrayList<>();
-//
-//        Random random = new Random();
-//        for (int i = 0; i < ELEMENT; i++) {
-//            listMySort.add(random.nextInt(5000));
-//            listMinSort.add(random.nextInt(5000));
-//            listCollSort.add(random.nextInt(5000));
-//        }
-//        mySort(listMySort);
-//        minSort(listMinSort);
-//        collSort(listCollSort);
+        final int ELEMENT = 1000;
+        List<Integer> listMySort = new ArrayList<>();
 
-//        List<Integer> array = new ArrayList<>(List.of(95,5,69,67,76,74));
-//        mySort(array);
-//        mySort2(array);
-//        mySort3(array);
-//        minSort(listMinSort);
-//        collSort(listCollSort);
-        List array = new ArrayList<>(List.of(95,5,69,67,76,74));
-        System.out.println(array);
-//        mySort(array);
-        minSort(array);
-//        collSort(array);
-        System.out.println(array);
+        Random random = new Random();
+        for (int i = 0; i < ELEMENT; i++) {
+            listMySort.add(random.nextInt(5000));
+        }
+        List<Integer> listMinSort = new ArrayList<>(listMySort);
+        List<Integer> listCollSort = new ArrayList<>(listMySort);
+
+        System.out.println(listMySort);
+        mySort(listMySort);
+        System.out.println(listMySort);
+        System.out.println();
+        System.out.println(listMinSort);
+        minSort(listMinSort);
+        System.out.println(listMinSort);
+        System.out.println();
+        System.out.println(listCollSort);
+        collSort(listCollSort);
+        System.out.println(listCollSort);
+
         System.out.println(compareSort());
     }
 }
