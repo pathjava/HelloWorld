@@ -3,20 +3,30 @@ package ru.progwards.java1.lessons.queues;
 import java.util.*;
 
 public class CollectionsSort {
-
     public static void mySort(Collection<Integer> data){
+        /* создаем ArrayList, который наполняем содержимым параметра data */
         List<Integer> list = new ArrayList<>(data);
+        /* создаем и инициализируем переменную sort */
         boolean sort = false;
+        /* заводим цикл с условием выполнения, пока sort не будет истина (true) */
         while (!sort) {
+            /* присваиваем переменной sort значение истина и когда все значения ArrayList будут отсортированы и
+            * цикл for не будет доходить до sort = false, тогда в условие цикла while вернется true и он завершится */
             sort = true;
-            for (int i = 0; i < list.size() - 1; i++) {
-                if (list.get(i) > list.get(i + 1)) {
+            /* создаем цикл */
+            for (int i = 0; i < list.size() -1; i++) {
+                /* в условие проверяем, больше ли значение get(i) чем get(i+1) и если истина, переходим к методу swap */
+                if (list.get(i) > list.get(i+1)) {
+                    /* меняем местами значения под индексами i и i+1 */
                     Collections.swap(list, i, i+1);
+                    /* так как в ArrayList не все отсортировано, то цикл доходит до переменной sort и ей присваивается ложь */
                     sort = false;
                 }
             }
         }
+        /* очищаем входящую коллекцию из параметра data */
         data.clear();
+        /* копируем из list отсортированный массив обратно в data*/
         data.addAll(list);
 //        String str;
 //        int output = 0;
@@ -196,12 +206,12 @@ public class CollectionsSort {
 
 
     public static void main(String[] args) {
-        final int ELEMENT = 1000;
+        final int ELEMENT = 5;
         List<Integer> listMySort = new ArrayList<>();
 
         Random random = new Random();
         for (int i = 0; i < ELEMENT; i++) {
-            listMySort.add(random.nextInt(5000));
+            listMySort.add(random.nextInt(20));
         }
         List<Integer> listMinSort = new ArrayList<>(listMySort);
         List<Integer> listCollSort = new ArrayList<>(listMySort);
