@@ -133,17 +133,17 @@ public class CollectionsSort {
 //        speed = (System.currentTimeMillis() - start);
 //        nameMethod = "mySort";
 //        res.add(addResult(speed, nameMethod));
+
+//        start = System.currentTimeMillis();
+//        minSort(listMinSort);
+//        speed = (System.currentTimeMillis() - start);
+//        nameMethod = "minSort";
+//        res.add(addResult(speed, nameMethod));
 //
 //        start = System.currentTimeMillis();
 //        collSort(listCollSort);
 //        speed = (System.currentTimeMillis() - start);
 //        nameMethod = "collSort";
-//        res.add(addResult(speed, nameMethod));
-//
-//        start = System.currentTimeMillis();
-//        minSort(listMinSort);
-//        speed = (System.currentTimeMillis() - start);
-//        nameMethod = "minSort";
 //        res.add(addResult(speed, nameMethod));
 
         for (int i = 0; i < 3; i++) {
@@ -185,6 +185,7 @@ public class CollectionsSort {
             }
             finalResult.add(methodName.toString());
         }
+
         return finalResult;
     }
 
@@ -210,8 +211,8 @@ public class CollectionsSort {
 //            listMinSort.add(random.nextInt(5000));
 //            listCollSort.add(random.nextInt(5000));
 //        }
-//        List<Integer> array = new ArrayList<>(List.of(5,25,11,-1,7,1,-12,28,35,3));
-//        mySort(listMySort);
+//        List<Integer> array = new ArrayList<>(List.of(95,5,69,67,76,74));
+//        mySort(array);
 //        mySort2(array);
 //        mySort3(array);
 //        minSort(listMinSort);
