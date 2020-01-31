@@ -1,5 +1,6 @@
 package ru.progwards.java1.lessons.queues;
 
+import javax.swing.event.ListDataListener;
 import java.util.*;
 
 public class CollectionsSort {
@@ -109,63 +110,113 @@ public class CollectionsSort {
 //        }
     }
 
-    static final int ELEMENT = 200;
+    static final int ELEMENT = 30_000;
     public static Collection<String> compareSort(){
-        List<Integer> list = new ArrayList<>();
+        List<Integer> listMySort = new ArrayList<>();
+        List<Integer> listMinSort = new ArrayList<>();
+        List<Integer> listCollSort = new ArrayList<>();
+
         Random random = new Random();
         for (int i = 0; i < ELEMENT; i++) {
-            list.add(random.nextInt(5000));
+            listMySort.add(random.nextInt(5000));
+            listMinSort.add(random.nextInt(5000));
+            listCollSort.add(random.nextInt(5000));
         }
 
-        List<String> result = new ArrayList<>();
-        long mySort = 0;
-        long minSort =0;
-        long collSort = 0;
-        for (int i = 0; i < 3; i++) {
-            switch (i){
-                case 0:
-                    long start = System.currentTimeMillis();
-                    mySort(list);
-                    mySort = (System.currentTimeMillis() - start);
-                    result.add(i, "mySort");
-                    result.add(i+1, String.valueOf(mySort));
-                    break;
-                case 1:
-                    start = System.currentTimeMillis();
-                    minSort(list);
-                    minSort = (System.currentTimeMillis() - start);
-                    result.add(i+1, "minSort");
-                    result.add(i+2, String.valueOf(minSort));
-                    break;
-                case 2:
-                    start = System.currentTimeMillis();
-                    collSort(list);
-                    collSort = (System.currentTimeMillis() - start);
-                    result.add(i+2, "collSort");
-                    result.add(i+3, String.valueOf(collSort));
-                    break;
+        long speed = 0;
+        String nameMethod = "";
+
+        List<String> res = new ArrayList<>();
+
+        long start = System.currentTimeMillis();
+        mySort(listMySort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "mySort";
+        res.add(addResult(speed, nameMethod));
+
+        start = System.currentTimeMillis();
+        collSort(listCollSort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "collSort";
+        res.add(addResult(speed, nameMethod));
+
+        start = System.currentTimeMillis();
+        minSort(listMinSort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "minSort";
+        res.add(addResult(speed, nameMethod));
+
+//        for (int i = 0; i < 3; i++) {
+//            switch (i){
+//                case 0:
+//                    long start = System.currentTimeMillis();
+//                    mySort(listMySort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "mySort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//                case 1:
+//                    start = System.currentTimeMillis();
+//                    minSort(listMinSort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "minSort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//                case 2:
+//                    start = System.currentTimeMillis();
+//                    collSort(listCollSort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "collSort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//            }
+//        }
+        Collections.sort(res);
+
+        List<String> finalResult = new ArrayList<>();
+        StringBuilder methodName;
+        for (int i = 0; i < res.size(); i++) {
+            methodName = new StringBuilder();
+            String str = res.get(i);
+            for (int j = 0; j < str.length(); j++) {
+                char ch = str.charAt(j);
+                if (Character.isAlphabetic(ch)){
+                    methodName.append(ch);
+                }
             }
+            finalResult.add(methodName.toString());
         }
-        System.out.println(result);
+        return finalResult;
+    }
 
-        List<String> resultTest = new ArrayList<>();
-        if (mySort < minSort && mySort < collSort){
-            resultTest.add(0, "mySort");
-        } else if (minSort < mySort && minSort < collSort){
-            resultTest.add(0, "minSort");
-        } else
-            resultTest.add(0, "collSort");
-        return resultTest;
+    static String addResult(long speed, String name){
+        int n = String.valueOf(Long.MAX_VALUE).length();
+        String str = "0".repeat(n) + speed;
+        str = str.substring(str.length()-n) + "|" + name;
+        return str;
     }
 
 
     public static void main(String[] args) {
-        List<Integer> array = new ArrayList<>(List.of(5,25,11,-1,7,1,-12,28,35,3));
-//        mySort(array);
+//        final int ELEMENT = 50_000;
+//        List<Integer> listMySort = new ArrayList<>();
+//        List<Integer> listMinSort = new ArrayList<>();
+////        Collections.copy(listMinSort, listMySort);
+//        List<Integer> listCollSort = new ArrayList<>();
+////        Collections.copy(listCollSort, listMySort);
+//
+//        Random random = new Random();
+//        for (int i = 0; i < ELEMENT; i++) {
+//            listMySort.add(random.nextInt(5000));
+//            listMinSort.add(random.nextInt(5000));
+//            listCollSort.add(random.nextInt(5000));
+//        }
+//        List<Integer> array = new ArrayList<>(List.of(5,25,11,-1,7,1,-12,28,35,3));
+//        mySort(listMySort);
 //        mySort2(array);
 //        mySort3(array);
-//        minSort(array);
-//        collSort(array);
+//        minSort(listMinSort);
+//        collSort(listCollSort);
         System.out.println(compareSort());
     }
 }
