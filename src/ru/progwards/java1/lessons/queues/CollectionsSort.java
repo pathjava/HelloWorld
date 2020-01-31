@@ -128,49 +128,49 @@ public class CollectionsSort {
 
         List<String> res = new ArrayList<>();
 
-//        long start = System.currentTimeMillis();
-//        mySort(listMySort);
-//        speed = (System.currentTimeMillis() - start);
-//        nameMethod = "mySort";
-//        res.add(addResult(speed, nameMethod));
+        long start = System.currentTimeMillis();
+        mySort(listMySort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "mySort";
+        res.add(addResult(speed, nameMethod));
 
-//        start = System.currentTimeMillis();
-//        minSort(listMinSort);
-//        speed = (System.currentTimeMillis() - start);
-//        nameMethod = "minSort";
-//        res.add(addResult(speed, nameMethod));
-//
-//        start = System.currentTimeMillis();
-//        collSort(listCollSort);
-//        speed = (System.currentTimeMillis() - start);
-//        nameMethod = "collSort";
-//        res.add(addResult(speed, nameMethod));
+        start = System.currentTimeMillis();
+        minSort(listMinSort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "minSort";
+        res.add(addResult(speed, nameMethod));
 
-        for (int i = 0; i < 3; i++) {
-            switch (i){
-                case 0:
-                    long start = System.currentTimeMillis();
-                    mySort(listMySort);
-                    speed = (System.currentTimeMillis() - start);
-                    nameMethod = "mySort";
-                    res.add(addResult(speed, nameMethod));
-                    break;
-                case 1:
-                    start = System.currentTimeMillis();
-                    minSort(listMinSort);
-                    speed = (System.currentTimeMillis() - start);
-                    nameMethod = "minSort";
-                    res.add(addResult(speed, nameMethod));
-                    break;
-                case 2:
-                    start = System.currentTimeMillis();
-                    collSort(listCollSort);
-                    speed = (System.currentTimeMillis() - start);
-                    nameMethod = "collSort";
-                    res.add(addResult(speed, nameMethod));
-                    break;
-            }
-        }
+        start = System.currentTimeMillis();
+        collSort(listCollSort);
+        speed = (System.currentTimeMillis() - start);
+        nameMethod = "collSort";
+        res.add(addResult(speed, nameMethod));
+
+//        for (int i = 0; i < 3; i++) {
+//            switch (i){
+//                case 0:
+//                    long start = System.currentTimeMillis();
+//                    mySort(listMySort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "mySort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//                case 1:
+//                    start = System.currentTimeMillis();
+//                    minSort(listMinSort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "minSort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//                case 2:
+//                    start = System.currentTimeMillis();
+//                    collSort(listCollSort);
+//                    speed = (System.currentTimeMillis() - start);
+//                    nameMethod = "collSort";
+//                    res.add(addResult(speed, nameMethod));
+//                    break;
+//            }
+//        }
         Collections.sort(res);
 
         List<String> finalResult = new ArrayList<>();
