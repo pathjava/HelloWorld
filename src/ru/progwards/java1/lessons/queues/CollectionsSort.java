@@ -5,14 +5,19 @@ import java.util.*;
 public class CollectionsSort {
 
     public static void mySort(Collection<Integer> data){
-        Object[] arr = data.toArray();
-        for (int i = 0; i < arr.length -1; i++){
-            for (int j = 0; j < arr.length -i -1; j++){
-                if ((int)arr[j] > (int)arr[j+1]){
-                    Collections.swap(Arrays.asList(arr), j,j+1);
+        List<Integer> list = new ArrayList<>(data);
+        boolean sort = false;
+        while (!sort) {
+            sort = true;
+            for (int i = 0; i < list.size() - 1; i++) {
+                if (list.get(i) > list.get(i + 1)) {
+                    Collections.swap(list, i, i+1);
+                    sort = false;
                 }
             }
         }
+        data.clear();
+        data.addAll(list);
 //        String str;
 //        int output = 0;
 //        for (Object o : arr) {
@@ -34,29 +39,6 @@ public class CollectionsSort {
 //                    int temp = list.get(i);
 //                    list.set(i, list.get(i + 1));
 //                    list.set(i + 1, temp);
-//                    sort = false;
-//                }
-//            }
-//        }
-//        String str;
-//        int output = 0;
-//        for (Object o : list) {
-//            if (output <= (list.size()-2)){
-//                str = ", ";
-//            } else str = "\n";
-//            System.out.print(o + str);
-//            output++;
-//        }
-//    }
-
-//    public static void mySort3(Collection<Integer> data){
-//        List<Integer> list = new ArrayList<>(data);
-//        boolean sort = false;
-//        while (!sort) {
-//            sort = true;
-//            for (int i = 0; i < list.size() - 1; i++) {
-//                if (list.get(i) > list.get(i + 1)) {
-//                    Collections.swap(list, i, i+1);
 //                    sort = false;
 //                }
 //            }
@@ -239,7 +221,9 @@ public class CollectionsSort {
 //        collSort(listCollSort);
         List array = new ArrayList<>(List.of(95,5,69,67,76,74));
         System.out.println(array);
-        mySort(array);
+//        mySort(array);
+        minSort(array);
+//        collSort(array);
         System.out.println(array);
         System.out.println(compareSort());
     }
