@@ -110,18 +110,18 @@ public class CollectionsSort {
 //        }
     }
 
-    static final int ELEMENT = 30_000;
+    static final int ELEMENT = 1000;
     public static Collection<String> compareSort(){
         List<Integer> listMySort = new ArrayList<>();
-        List<Integer> listMinSort = new ArrayList<>();
-        List<Integer> listCollSort = new ArrayList<>();
 
         Random random = new Random();
         for (int i = 0; i < ELEMENT; i++) {
             listMySort.add(random.nextInt(5000));
-            listMinSort.add(random.nextInt(5000));
-            listCollSort.add(random.nextInt(5000));
+//            listMinSort.add(random.nextInt(5000));
+//            listCollSort.add(random.nextInt(5000));
         }
+        List<Integer> listMinSort = new ArrayList<>(listMySort);
+        List<Integer> listCollSort = new ArrayList<>(listMySort);
 
         long speed = 0;
         String nameMethod = "";
@@ -201,9 +201,7 @@ public class CollectionsSort {
 //        final int ELEMENT = 50_000;
 //        List<Integer> listMySort = new ArrayList<>();
 //        List<Integer> listMinSort = new ArrayList<>();
-////        Collections.copy(listMinSort, listMySort);
 //        List<Integer> listCollSort = new ArrayList<>();
-////        Collections.copy(listCollSort, listMySort);
 //
 //        Random random = new Random();
 //        for (int i = 0; i < ELEMENT; i++) {
@@ -211,6 +209,10 @@ public class CollectionsSort {
 //            listMinSort.add(random.nextInt(5000));
 //            listCollSort.add(random.nextInt(5000));
 //        }
+//        mySort(listMySort);
+//        minSort(listMinSort);
+//        collSort(listCollSort);
+
 //        List<Integer> array = new ArrayList<>(List.of(95,5,69,67,76,74));
 //        mySort(array);
 //        mySort2(array);
