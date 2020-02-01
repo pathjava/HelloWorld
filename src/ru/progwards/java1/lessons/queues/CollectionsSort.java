@@ -138,11 +138,14 @@ public class CollectionsSort {
         /* копируем содержимое массива listMySort */
         List<Integer> listMinSort = new ArrayList<>(listMySort);
         List<Integer> listCollSort = new ArrayList<>(listMySort);
+
         /* заводим и инициализируем переменные */
         long speed = 0;
         String nameMethod = "";
+
         /* заводим массив в который будем помещать результат работы метода addResult(speed, nameMethod) */
         List<String> res = new ArrayList<>();
+
         /* запоминаем время начала испольнения метода mySort(listMySort) */
         long start = System.currentTimeMillis();
         /* запускаем метод */
@@ -196,6 +199,7 @@ public class CollectionsSort {
 
         /* методом Collections.sort сортируем массив res */
         Collections.sort(res);
+
         /* заводим массив, в который помещаем только имена методов в отсортированном виде */
         List<String> finalResult = new ArrayList<>();
         /* заводим переменную класса StringBuilder */
