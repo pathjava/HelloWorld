@@ -238,12 +238,12 @@ public class CollectionsSort {
 
 
     public static void main(String[] args) {
-        final int ELEMENT = 5;
+        final int ELEMENT = 500;
         List<Integer> listMySort = new ArrayList<>();
 
         Random random = new Random();
         for (int i = 0; i < ELEMENT; i++) {
-            listMySort.add(random.nextInt(20));
+            listMySort.add(random.nextInt(2000));
         }
         List<Integer> listMinSort = new ArrayList<>(listMySort);
         List<Integer> listCollSort = new ArrayList<>(listMySort);
