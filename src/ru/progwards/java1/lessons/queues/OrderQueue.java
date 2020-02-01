@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.queues;
 
-import org.apache.logging.log4j.core.util.JsonUtils;
-
 import java.util.ArrayDeque;
 
 public class OrderQueue {
