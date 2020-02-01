@@ -1,8 +1,6 @@
 package ru.progwards.java1.lessons.queues;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderQueue {
     ArrayDeque<Order> thirdQueue = new ArrayDeque<>();
@@ -18,28 +16,15 @@ public class OrderQueue {
             firstQueue.offer(order);
     }
 
-    Order returnOrder;
     public Order get(){
-        for (int i = 0; i < 3; i++) {
-            switch (i){
-                case 0:
-                    if (!firstQueue.isEmpty()){
-                        return firstQueue.poll();
-                    }
-                    break;
-                case 1:
-                    if (!secondQueue.isEmpty()){
-                        return secondQueue.poll();
-                    }
-                    break;
-                case 2:
-                    if (!thirdQueue.isEmpty()){
-                        return thirdQueue.poll();
-                    }
-                    break;
-            }
+        if (!firstQueue.isEmpty()){
+            return firstQueue.poll();
+        } else if (!secondQueue.isEmpty()){
+            return secondQueue.poll();
+        } else if (!thirdQueue.isEmpty()){
+            return thirdQueue.poll();
         }
-        return returnOrder;
+        return null;
     }
 
 
