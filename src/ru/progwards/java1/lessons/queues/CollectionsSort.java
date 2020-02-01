@@ -87,12 +87,16 @@ public class CollectionsSort {
 //    }
 
     public static void minSort(Collection<Integer> data){
+        /* создаем временный ArrayList, который наполняем значениями, полученными методом Collections.min(data)
+        * заполнение происходит от самого меньшего к большему */
         Collection<Integer> tempList = new ArrayList<>();
-
+        /* в цикле методом Collections.min находим минимальные значения и передаем в tempList*/
         for (int i = data.size() -1; i >= 0; i--) {
             tempList.add(Collections.min(data));
+            /* после того как найденное значение переданов Collections.min, функцией remove удаляем его из data */
             data.remove(Collections.min(data));
         }
+        /* после завершения цикла все отсортированные значения из tempList помещаем в data */
         data.addAll(tempList);
 
 //        String str;
@@ -107,6 +111,7 @@ public class CollectionsSort {
     }
 
     static void collSort(Collection<Integer> data){
+        /* методом Collections.sort сортируем все значения в data */
         Collections.sort((List)data);
 
 //        String str;
@@ -119,27 +124,34 @@ public class CollectionsSort {
 //            output++;
 //        }
     }
-
+    /* заводим константу и присваиваем ей значение */
     static final int ELEMENT = 1000;
     public static Collection<String> compareSort(){
-        List<Integer> listMySort = new ArrayList<>();
-
+        /* заводим массив ArrayList размером равным значению константы ELEMENT */
+        List<Integer> listMySort = new ArrayList<>(ELEMENT);
+        /* заводим генератор псевдослучайных чисел */
         Random random = new Random();
+        /* в цикле заполняем listMySort случайными числами в количестве ELEMENT */
         for (int i = 0; i < ELEMENT; i++) {
             listMySort.add(random.nextInt(5000));
         }
+        /* копируем содержимое массива listMySort */
         List<Integer> listMinSort = new ArrayList<>(listMySort);
         List<Integer> listCollSort = new ArrayList<>(listMySort);
-
+        /* заводим и инициализируем переменные */
         long speed = 0;
         String nameMethod = "";
-
+        /* заводим массив в который будем помещать результат работы метода addResult(speed, nameMethod) */
         List<String> res = new ArrayList<>();
-
+        /* запоминаем время начала испольнения метода mySort(listMySort) */
         long start = System.currentTimeMillis();
+        /* запускаем метод */
         mySort(listMySort);
+        /* время исполнения метода - от времени завершения метода отнимаем время начала метода */
         speed = (System.currentTimeMillis() - start);
+        /* присваиваем переменной имя метода */
         nameMethod = "mySort";
+        /* передаем скорость и имя метода в метод addResult и полученный результат добавляем в массив res */
         res.add(addResult(speed, nameMethod));
 
         start = System.currentTimeMillis();
@@ -154,6 +166,8 @@ public class CollectionsSort {
         nameMethod = "collSort";
         res.add(addResult(speed, nameMethod));
 
+        /* тестирование скорости выполнения сортировки через switch, когда каждый метод запускается и выолняется единолично
+        * и только после выполнения предыдущего метода запускается следующий */
 //        for (int i = 0; i < 3; i++) {
 //            switch (i){
 //                case 0:
@@ -179,27 +193,41 @@ public class CollectionsSort {
 //                    break;
 //            }
 //        }
-        Collections.sort(res);
 
+        /* методом Collections.sort сортируем массив res */
+        Collections.sort(res);
+        /* заводим массив, в который помещаем только имена методов в отсортированном виде */
         List<String> finalResult = new ArrayList<>();
+        /* заводим переменную класса StringBuilder */
         StringBuilder methodName;
+        /* запускаем цикл for-each и поочереди берем значения из массива res */
         for (String re : res) {
+            /* выделяем место в памяти для переменной methodName */
             methodName = new StringBuilder();
+            /* в цикле проверяем каждый символ полученного значения из массива res и если это буква
+            * конкатенируем её в переменную methodName */
             for (int j = 0; j < re.length(); j++) {
                 char ch = re.charAt(j);
                 if (Character.isAlphabetic(ch)) {
                     methodName.append(ch);
                 }
             }
+            /* сконкатенированный в цикле результат помещаем в массив finalResult */
             finalResult.add(methodName.toString());
         }
-
+        /* возвращаем результат в метод */
         return finalResult;
     }
-
+    /* метод, в котором объединяем результат скорости метода сортировки и имя метода*/
     static String addResult(long speed, String name){
+        /* переменной n присваиваем значение максимального количества символов числа long - 19 */
         int n = String.valueOf(Long.MAX_VALUE).length();
+        /* строковую переменную str заполняем девятнадцатью нолями и добавляем результат скорости выполнения метода сортировки */
         String str = "0".repeat(n) + speed;
+        /* функцией substring определяем индекс, с которого будет возвращена строка
+        * в данном случае берем длину строки str.length() и отнимаем от неё -n (то есть 19) и получаем индекс
+        * далее к полученному значению конкатенируем вертикальную черту и имя метода
+        * (вертикальная черта сугубо для наглядности и никакого функционала не несёт ) */
         str = str.substring(str.length()-n) + "|" + name;
         return str;
     }
