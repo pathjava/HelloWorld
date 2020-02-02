@@ -64,7 +64,7 @@ public class StackCalc {
         if (!arrayDeque.isEmpty()) {
             two = arrayDeque.poll();
         }
-        arrayDeque.push(one / two);
+        arrayDeque.push(two / one);
     }
 
 
