@@ -6,11 +6,9 @@ public class StackCalc {
     /* создаем массив для стека */
     ArrayDeque<Double> arrayDeque = new ArrayDeque<>();
 
-    /* заполняем массив при условии, что value не равно нулю */
+    /* заполняем массив, он же стек */
     public void push(double value){
-        if (!(value == 0)) {
-            arrayDeque.push(value);
-        }
+        arrayDeque.push(value);
     }
 
     /* если стек не пустой получаем и удаляем верхнее значение в стеке */
