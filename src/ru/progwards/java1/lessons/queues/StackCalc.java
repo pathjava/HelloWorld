@@ -13,9 +13,6 @@ public class StackCalc {
 
     /* если стек не пустой получаем и удаляем верхнее значение в стеке */
     public double pop(){
-        if (arrayDeque.isEmpty()){
-            System.out.println("arrayDeque is null");
-        }
         return arrayDeque.pop();
     }
 
