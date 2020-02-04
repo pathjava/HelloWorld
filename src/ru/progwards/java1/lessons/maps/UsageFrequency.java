@@ -32,10 +32,10 @@ public class UsageFrequency {
                     }
                 }
             }
-            System.out.println(wordsList);
+//            System.out.println(wordsList);
 //            System.out.println(wordsList.size());
 //            System.out.println();
-            System.out.println(charsList);
+//            System.out.println(charsList);
 //            System.out.println();
 //            System.out.println(charsList.size());
         } catch(Throwable e){
