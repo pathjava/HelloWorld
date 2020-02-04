@@ -32,7 +32,7 @@ public class UsageFrequency {
                     }
                 }
             }
-//            System.out.println(wordsList);
+            System.out.println(wordsList);
 //            System.out.println(wordsList.size());
 //            System.out.println();
             System.out.println(charsList);
@@ -44,21 +44,25 @@ public class UsageFrequency {
     }
 
     public Map<Character, Integer> getLetters(){
-        HashMap<Character, Integer> countChars = new HashMap<>();
+        TreeMap<Character, Integer> countChars = new TreeMap<>();
         int count = 1;
         for (int i = 0; i < charsList.size(); i++) {
-            Integer oldVal = countChars.putIfAbsent(charsList.get(i), count);
-            if (oldVal == null) count++;
+            if (countChars.containsKey(charsList.get(i))){
+                countChars.put(charsList.get(i), (count + 1));
+            } else
+                countChars.put(charsList.get(i), count);
         }
         return countChars;
     }
 
     public Map<String, Integer> getWords(){
-        HashMap<String, Integer> countWords = new HashMap<>();
+        TreeMap<String, Integer> countWords = new TreeMap<>();
         int count = 1;
         for (int i = 0; i < wordsList.size(); i++) {
-            Integer oldVal = countWords.putIfAbsent(wordsList.get(i), count);
-            if (oldVal == null) count++;
+            if (countWords.containsKey(wordsList.get(i))){
+                countWords.put(wordsList.get(i), (count + 1));
+            } else
+                countWords.put(wordsList.get(i), count);
         }
         return countWords;
     }
