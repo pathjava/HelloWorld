@@ -4,6 +4,21 @@ import java.util.*;
 
 public class CollectionsSort {
     public static void mySort(Collection<Integer> data){
+        List<Integer> list = new ArrayList<>(data);
+        int i = 0;
+        while (i < list.size()) {
+            for (int j = i+1; j < list.size(); j++) {
+                if (list.get(i) > list.get(j)) {
+                    Collections.swap(list, i, j);
+                }
+            }
+            i++;
+        }
+        data.clear();
+        data.addAll(list);
+    }
+
+    public static void mySort2(Collection<Integer> data){
         /* создаем ArrayList, который наполняем содержимым параметра data */
         List<Integer> list = new ArrayList<>(data);
         /* создаем и инициализируем переменную sort */
@@ -125,7 +140,7 @@ public class CollectionsSort {
 //        }
     }
     /* заводим константу и присваиваем ей значение */
-    static final int ELEMENT = 1000;
+    static final int ELEMENT = 100_000;
     public static Collection<String> compareSort(){
         /* заводим массив ArrayList размером равным значению константы ELEMENT */
         List<Integer> listMySort = new ArrayList<>(ELEMENT);
