@@ -17,7 +17,7 @@ public class CollectionsSort {
         data.clear();
         data.addAll(list);
     }
-
+    /* сортировка на основе пузырькового метода */
     public static void mySort2(Collection<Integer> data){
         /* создаем ArrayList, который наполняем содержимым параметра data */
         List<Integer> list = new ArrayList<>(data);
