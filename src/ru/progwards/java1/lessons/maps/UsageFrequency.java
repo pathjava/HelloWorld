@@ -30,11 +30,11 @@ public class UsageFrequency {
                     }
                 }
             }
-            System.out.println(wordsList);
+//            System.out.println(wordsList);
 //            System.out.println(wordsList.size());
-            System.out.println();
-            System.out.println(charsList);
-            System.out.println();
+//            System.out.println();
+//            System.out.println(charsList);
+//            System.out.println();
 //            System.out.println(charsList.size());
         } catch(Throwable e){
             throw new RuntimeException(e);
@@ -48,7 +48,7 @@ public class UsageFrequency {
             Integer oldVal = countChars.putIfAbsent(charsList.get(i), count);
             if (oldVal == null) count++;
         }
-        System.out.println(countChars);
+//        System.out.println(countChars);
         return countChars;
     }
 
@@ -59,7 +59,7 @@ public class UsageFrequency {
             Integer oldVal = countWords.putIfAbsent(String.valueOf(wordsList.get(i)), count);
             if (oldVal == null) count++;
         }
-        System.out.println(countWords);
+//        System.out.println(countWords);
         return countWords;
     }
 
