@@ -34,12 +34,18 @@ public class UsageFrequency {
                         }
                     }
 
-                    for (int i = 0; i < wordsList.size(); i++) {
-                        for (int j = 0; j < wordsList.get(i).length(); j++) {
-                            char ch = wordsList.get(i).charAt(j);
-                                charsList.add(ch);
-                        }
-                    }
+//                    for (int i = 0; i < wordsList.size(); i++) {
+//                        for (int j = 0; j < wordsList.get(i).length(); j++) {
+//                            char ch = wordsList.get(i).charAt(j);
+//                                charsList.add(ch);
+//                        }
+//                    }
+                }
+            }
+            for (int i = 0; i < wordsList.size(); i++) {
+                for (int j = 0; j < wordsList.get(i).length(); j++) {
+                    char ch = wordsList.get(i).charAt(j);
+                    charsList.add(ch);
                 }
             }
 //            System.out.println(wordsList);
