@@ -32,7 +32,7 @@ public class UsageFrequency {
                     }
                 }
             }
-//            System.out.println(wordsList);
+            System.out.println(wordsList);
 //            System.out.println(wordsList.size());
 //            System.out.println();
 //            System.out.println(charsList);
@@ -48,10 +48,12 @@ public class UsageFrequency {
         int count = 1;
         for (int i = 0; i < charsList.size(); i++) {
             if (countChars.containsKey(charsList.get(i))){
-                countChars.put(charsList.get(i), (count + 1));
+                Integer value = countChars.get(charsList.get(i));
+                countChars.put(charsList.get(i), (value + 1));
             } else
                 countChars.put(charsList.get(i), count);
         }
+
         return countChars;
     }
 
@@ -60,7 +62,8 @@ public class UsageFrequency {
         int count = 1;
         for (int i = 0; i < wordsList.size(); i++) {
             if (countWords.containsKey(wordsList.get(i))){
-                countWords.put(wordsList.get(i), (count + 1));
+                Integer value = countWords.get(wordsList.get(i));
+                countWords.put(wordsList.get(i), (value + 1));
             } else
                 countWords.put(wordsList.get(i), count);
         }
