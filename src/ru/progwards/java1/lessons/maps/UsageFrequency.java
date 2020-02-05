@@ -16,7 +16,7 @@ public class UsageFrequency {
                 if (!str.isEmpty()) {
                     for (int i = 0; i < str.length(); i++) {
                         char temp = str.charAt(i);
-                        if (!(Character.isLetter(temp) || Character.isDigit(temp))){
+                        if (!(Character.isLetterOrDigit(temp))){
                             tempString.append(" ");
                         } else
                             tempString.append(temp);
@@ -28,7 +28,7 @@ public class UsageFrequency {
                             char ch = strTemp[i].charAt(0);
                             if (Character.isDigit(ch) && strTemp[i].length() == 1){
                                 charsList.add(ch);
-                            } else if (Character.isLetter(ch) || Character.isDigit(ch)) {
+                            } else if (Character.isLetterOrDigit(ch)) {
                                 wordsList.add(strTemp[i]);
                             }
                         }
@@ -41,12 +41,6 @@ public class UsageFrequency {
                     charsList.add(ch);
                 }
             }
-//            System.out.println(wordsList);
-//            System.out.println(wordsList.size());
-//            System.out.println();
-//            System.out.println(charsList);
-//            System.out.println();
-//            System.out.println(charsList.size());
         } catch(Throwable e){
             throw new RuntimeException(e);
         }
