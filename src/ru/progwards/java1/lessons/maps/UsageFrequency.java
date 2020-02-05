@@ -9,25 +9,35 @@ public class UsageFrequency {
 
     public void processFile(String fileName){
         try (FileReader fileReader = new FileReader(fileName); Scanner scanner = new Scanner(fileReader)) {
+            StringBuilder tempString;
             while (scanner.hasNext()){
+                tempString = new StringBuilder();
                 String str = scanner.nextLine();
                 if (!("".equals(str))) {
-                    String[] words = str.split("(?<=\\b|[^\\p{L}])");
-                    for (int i = 0; i < words.length; i++) {
-                        char temp = words[i].charAt(0);
-                        if (Character.isLetter(temp)){
-                            wordsList.add(words[i]);
+                    for (int i = 0; i < str.length(); i++) {
+                        char temp = str.charAt(i);
+                        if (!(Character.isLetter(temp) || Character.isDigit(temp))){
+                            tempString.append(" ");
+                        } else
+                            tempString.append(temp);
+                    }
+
+                    String[] strTemp = tempString.toString().split(" ");
+                    for (int i = 0; i < strTemp.length; i++) {
+                        if (!strTemp[i].isEmpty()) {
+                            char ch = strTemp[i].charAt(0);
+                            if (Character.isDigit(ch) && strTemp[i].length() == 1){
+                                charsList.add(ch);
+                            } else if (Character.isLetter(ch) || Character.isDigit(ch)) {
+                                wordsList.add(strTemp[i]);
+                            }
                         }
                     }
-                    for (int i = 0; i < words.length; i++) {
-                        char temp = words[i].charAt(0);
-                        if (Character.isLetter(temp) || Character.isDigit(temp)) {
-                            for (int j = 0; j < words[i].length(); j++) {
-                                char ch = words[i].charAt(j);
-                                if (Character.isLetter(ch) || Character.isDigit(ch)) {
-                                    charsList.add(ch);
-                                }
-                            }
+
+                    for (int i = 0; i < wordsList.size(); i++) {
+                        for (int j = 0; j < wordsList.get(i).length(); j++) {
+                            char ch = wordsList.get(i).charAt(j);
+                                charsList.add(ch);
                         }
                     }
                 }
