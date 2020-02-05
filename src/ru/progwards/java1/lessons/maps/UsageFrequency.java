@@ -13,7 +13,7 @@ public class UsageFrequency {
             while (scanner.hasNext()){
                 tempString = new StringBuilder();
                 String str = scanner.nextLine();
-                if (!("".equals(str))) {
+                if (!str.isEmpty()) {
                     for (int i = 0; i < str.length(); i++) {
                         char temp = str.charAt(i);
                         if (!(Character.isLetter(temp) || Character.isDigit(temp))){
@@ -33,13 +33,6 @@ public class UsageFrequency {
                             }
                         }
                     }
-
-//                    for (int i = 0; i < wordsList.size(); i++) {
-//                        for (int j = 0; j < wordsList.get(i).length(); j++) {
-//                            char ch = wordsList.get(i).charAt(j);
-//                                charsList.add(ch);
-//                        }
-//                    }
                 }
             }
             for (int i = 0; i < wordsList.size(); i++) {
