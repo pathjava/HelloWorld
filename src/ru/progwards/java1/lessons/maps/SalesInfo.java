@@ -3,13 +3,15 @@ package ru.progwards.java1.lessons.maps;
 import java.io.FileReader;
 import java.util.*;
 
+import static java.util.AbstractMap.*;
+
 public class SalesInfo {
     private TreeMap<Integer, ArrayList<String>> treeMap = new TreeMap<>();
     private static int count;
     public int loadOrders(String fileName){
         int indexMap = 1;
         try (FileReader fileReader = new FileReader(fileName); Scanner scanner = new Scanner(fileReader)) {
-            ArrayList<String> list = null;
+            ArrayList<String> list;
             outerloop:
             while (scanner.hasNext()){
                 count = 0;
@@ -97,12 +99,20 @@ public class SalesInfo {
 
         for (Map.Entry<Integer, ArrayList<String>> entry : treeMap.entrySet()) {
             if (goodsList.containsKey(entry.getValue().get(0))){
-                AbstractMap.SimpleEntry<Double, Integer> sum = goodsList.get(entry.getValue().get(0));
-                AbstractMap.SimpleEntry<Double, Integer> count = goodsList.get(entry.getValue().get(1));
-                goodsList.put(entry.getValue().get(0), (new AbstractMap.SimpleEntry<>((Double.parseDouble(entry.getValue().get(3))),(Integer.parseInt(entry.getValue().get(2))))));
+                double sum = 0;
+                int count = 0;
+                for (SimpleEntry<Double, Integer> value : goodsList.values()) {
+                    sum = value.getKey();
+                    count = value.getValue();
+                }
+                goodsList.put(entry.getValue().get(0), (new AbstractMap.SimpleEntry<>((Double.parseDouble(entry.getValue().get(3)) + sum),(Integer.parseInt(entry.getValue().get(2))) + count)));
             } else
                 goodsList.put(entry.getValue().get(0), (new AbstractMap.SimpleEntry<>((Double.parseDouble(entry.getValue().get(3))),(Integer.parseInt(entry.getValue().get(2))))));
         }
+
+//        for (Map.Entry<Integer, ArrayList<String>> entry : treeMap.entrySet()) {
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
+//        }
 
 //        for (Map.Entry<String, AbstractMap.SimpleEntry<Double, Integer>> entry : goodsList.entrySet()) {
 //            System.out.println(entry.getKey() + " : " + entry.getValue());
