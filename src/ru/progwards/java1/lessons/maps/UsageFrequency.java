@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.util.*;
 
 public class UsageFrequency {
-    ArrayList<Character > charsList = new ArrayList<>();
-    ArrayList<String> wordsList = new ArrayList<>();
+    private ArrayList<Character > charsList = new ArrayList<>();
+    private ArrayList<String> wordsList = new ArrayList<>();
 
     public void processFile(String fileName){
         try (FileReader fileReader = new FileReader(fileName); Scanner scanner = new Scanner(fileReader)) {
