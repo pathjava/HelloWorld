@@ -21,18 +21,25 @@ public class FiboMapCache {
             }
         }
         //проверить есть ли -1 и -2
-        BigDecimal a = BigDecimal.ONE;
+        BigDecimal a = BigDecimal.ZERO;
         BigDecimal b = BigDecimal.ONE;
-        BigDecimal c = BigDecimal.ZERO;
+        BigDecimal c = null;
 //        System.out.println(a);
 //        System.out.println(b);
-        for(int i = 3; i <= n; i++){
-            c = a.add(b);
-            a = b;
-            b = c;
-//            System.out.println(c);
-            // ложить рассчитанные фибоначи в мап
+
+        int i = 1;
+        while (i++ < n) {
+            c = b;
+            b = b.add(a);
+            a = c;
         }
+//        for(int i = 3; i <= n; i++){
+//            c = a.add(b);
+//            a = b;
+//            b = c;
+////            System.out.println(c);
+//            // ложить рассчитанные фибоначи в мап
+//        }
 
         if (cacheOn) {
             if (fiboCache == null) {
@@ -41,7 +48,7 @@ public class FiboMapCache {
             fiboCache.put(n, c);
         }
 
-        return c;
+        return b;
     }
 
     public void clearCahe(){
