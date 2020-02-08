@@ -39,7 +39,7 @@ public class FiboMapCache {
             if (fiboCache == null) {
                 fiboCache = new TreeMap<>();
             }
-            fiboCache.put(n, c);
+            fiboCache.put(n, b);
         }
 
         return b;
