@@ -24,13 +24,13 @@ public class FiboMapCache {
         BigDecimal a = BigDecimal.ONE;
         BigDecimal b = BigDecimal.ONE;
         BigDecimal c = BigDecimal.ZERO;
-        System.out.println(a);
-        System.out.println(b);
+//        System.out.println(a);
+//        System.out.println(b);
         for(int i = 3; i <= n; i++){
             c = a.add(b);
             a = b;
             b = c;
-            System.out.println(c);
+//            System.out.println(c);
             // ложить рассчитанные фибоначи в мап
         }
 
