@@ -9,37 +9,51 @@ public class Insurance {
     private ZonedDateTime start;
     private Duration duration;
 
+    /* установить дату-время начала действия страховки */
     public Insurance(ZonedDateTime start) {
-//        this.start = start;
-//        Instant instant = Instant.from(start);
-        this.start = ZonedDateTime.from(start);
-//        this.start = instant;
-//        this.start = ZonedDateTime.now(ZoneId.of(String.valueOf(start)));
-//        LocalDate localDate = start.toLocalDate();
+        this.start = start;
+//        this.start = ZonedDateTime.from(start);
     }
 
+    /* установить дату-время начала действия страховки
+    * SHORT соответствует ISO_LOCAL_DATE
+    * LONG  - ISO_LOCAL_DATE_TIME
+    * FULL - ISO_ZONED_DATE_TIME
+    * Для вариантов, когда не задан явно часовой пояс использовать таковой по умолчанию */
     public Insurance(String strStart, FormatStyle style){
-
-//        Instant inst = Instant.parse(strStart);
-//        ZonedDateTime strStart = Instant.now().atZone(ZoneId.of("Europe/Moscow"));
-//        DateTimeFormatter isoLocalDate = DateTimeFormatter.ISO_LOCAL_DATE;
-//        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(style);
-//        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).format(style);
-//        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL).format(style);
+        LocalDate localDate;
+        LocalTime localTime;
+        switch (style){
+            case SHORT:
+                localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
+                localTime = LocalTime.of(00,00,00);
+                start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
+                break;
+            case LONG:
+                localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
+                localTime = LocalTime.of(00,00,00);
+                start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
+                break;
+            case FULL:
+                localDate = LocalDate.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
+                localTime = LocalTime.of(00,00,00);
+                start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
+                break;
+        }
     }
 
 
     /* установить продолжительность действия страховки */
     public void setDuration(Duration duration){
-
+// сложить
     }
     /* установить продолжительность действия страховки, задав дату-время окончания */
     public void setDuration(ZonedDateTime expiration){
-
+// старт и окончание
     }
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
     public void setDuration(int months, int days, int hours){
-
+// к старту прибавить аргументы
     }
     /* установить продолжительность действия страховки
     * SHORT - целое число миллисекунд (тип long)
