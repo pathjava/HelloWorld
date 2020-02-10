@@ -45,14 +45,17 @@ public class Insurance {
 
     /* установить продолжительность действия страховки */
     public void setDuration(Duration duration){
+        start.plus(duration);
 // сложить
     }
     /* установить продолжительность действия страховки, задав дату-время окончания */
     public void setDuration(ZonedDateTime expiration){
+
 // старт и окончание
     }
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
     public void setDuration(int months, int days, int hours){
+        start.plusMonths(months).plusDays(days).plusHours(hours);
 // к старту прибавить аргументы
     }
     /* установить продолжительность действия страховки
