@@ -2,6 +2,7 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class Insurance {
     public static enum FormatStyle {SHORT, LONG, FULL}
@@ -28,17 +29,14 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(00,00,00);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
-                break;
             case LONG:
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 localTime = LocalTime.of(00,00,00);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
-                break;
             case FULL:
                 localDate = LocalDate.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
                 localTime = LocalTime.of(00,00,00);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
-                break;
         }
     }
 
@@ -50,7 +48,7 @@ public class Insurance {
     }
     /* установить продолжительность действия страховки, задав дату-время окончания */
     public void setDuration(ZonedDateTime expiration){
-
+        start.minus(expiration);
 // старт и окончание
     }
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
