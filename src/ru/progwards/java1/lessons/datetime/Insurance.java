@@ -9,17 +9,9 @@ public class Insurance {
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
 
-    /* установить дату-время начала действия страховки */
     public Insurance(ZonedDateTime start) {
         this.start = start;
-//        this.start = ZonedDateTime.from(start);
     }
-
-    /* установить дату-время начала действия страховки
-    * SHORT соответствует ISO_LOCAL_DATE
-    * LONG  - ISO_LOCAL_DATE_TIME
-    * FULL - ISO_ZONED_DATE_TIME
-    * Для вариантов, когда не задан явно часовой пояс использовать таковой по умолчанию */
     public Insurance(String strStart, FormatStyle style){
         LocalDate localDate;
         LocalTime localTime;
