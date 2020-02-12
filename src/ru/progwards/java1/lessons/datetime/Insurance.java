@@ -2,8 +2,6 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAmount;
 
 public class Insurance {
@@ -56,13 +54,15 @@ public class Insurance {
     public void setDuration(String strDuration, FormatStyle style){
         switch (style){
             case SHORT:
-                duration = Duration.of(Long.parseLong(strDuration), ChronoUnit.HOURS);
+//                duration = Duration.of(Long.parseLong(strDuration), ChronoUnit.MILLIS);
+                duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-                duration = Duration.parse((CharSequence) DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+                // to millis -> to duration
                 break;
             case FULL:
-                duration = Duration.from((TemporalAmount) DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strDuration));
+                duration = Duration.parse(strDuration);
                 break;
         }
     }
@@ -84,9 +84,9 @@ public class Insurance {
         insurance.setDuration(Duration.ofDays(30));
         insurance.setDuration(ZonedDateTime.parse("2020-02-13T19:56:13.370819+03:00[Europe/Moscow]"));
         insurance.setDuration(1,5,7);
-//        String string = ZonedDateTime.now().toString();
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
-//        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-//        insurance.setDuration(string, Insurance.FormatStyle.SHORT);
+        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
+//        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2000-06-03T10:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//        System.out.println(zonedDateTime);
     }
 }
