@@ -35,35 +35,10 @@ public class Insurance {
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
-
-//                localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
-//                localTime = LocalTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
-
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-
-//                DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-//                ZonedDateTime dateTime = ZonedDateTime.parse(strStart, formatter);
-//                System.out.println(dateTime);
-
-//                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-//                LocalDateTime localDateTime = LocalDateTime.parse(strStart, dateTimeFormatter);
-//                start = ZonedDateTime.of(localDateTime);
-
-//                DateTimeFormatter fmt = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-//                ZonedDateTime zdt = ZonedDateTime.from(fmt.parse(strStart));
                 System.out.println(start);
                 break;
             case FULL:
-//                LocalDateTime localDT = LocalDateTime.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
-
-//                LocalDateTime localDT = LocalDateTime.parse(strStart);
-//                localDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
-
-//                localDate = LocalDate.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
-//                localTime = LocalTime.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
-
-//                start = ZonedDateTime.of(localDT, ZoneId.systemDefault());
-
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
                 System.out.println(start);
