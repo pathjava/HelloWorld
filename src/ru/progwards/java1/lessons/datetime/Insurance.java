@@ -89,7 +89,7 @@ public class Insurance {
     @Override
     public String toString() {
 //        return "Insurance issued on " + start;
-        return "Insurance issued on " + start + true;
+        return "Insurance issued on " + start + " is valid";
 //        return "Insurance issued on " + start + validStr;
     }
 
