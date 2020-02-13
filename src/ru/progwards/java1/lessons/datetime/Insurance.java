@@ -23,36 +23,21 @@ public class Insurance {
         LocalTime localTime;
         switch (style){
             case SHORT:
-//                DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneOffset.UTC);
-//                ZonedDateTime dateTime = ZonedDateTime.parse(strStart, formatter);
-//                start = ZonedDateTime.from(dateTime);
-
-//                ZonedDateTime zdt = ZonedDateTime.parse(strStart, DateTimeFormatter.ISO_LOCAL_DATE);
-//                start = zdt;
-
-//                LocalDateTime localDateTime = LocalDateTime.parse(strStart, DateTimeFormatter.ISO_LOCAL_DATE);
-//                localDate = LocalDate.parse(strStart, DateTimeFormatter.ISO_LOCAL_DATE);
-//                localTime = LocalTime.of(00,00,00);
-
-//                DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-//                LocalDateTime localDateTime = LocalDateTime.parse(strStart, formatter);
-//                System.out.println(localDateTime);
-
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.of("Europe/Moscow"));
 
-//                ZonedDateTime zonedDateTime = ZonedDateTime.parse("0000-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strStart, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
 //                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
 //                LocalDate date = Instant.ofEpochMilli(timeMillis).atZone(ZoneId.systemDefault()).toLocalDate();
 //                start = date.atStartOfDay(ZoneId.systemDefault());
-//                System.out.println(start);
+                System.out.println(start);
                 break;
             case LONG:
-                localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
-                localTime = LocalTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
-                start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-                System.out.println(start);
+//                localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
+//                localTime = LocalTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
+//                start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
+//                System.out.println(start);
                 break;
             case FULL:
 //                localDate = LocalDate.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(strStart));
@@ -110,9 +95,9 @@ public class Insurance {
 
     public static void main(String[] args) {
         Insurance insurance = new Insurance(ZonedDateTime.now());
-        Insurance insurance2 = new Insurance("0000-01-01T00:00:00", Insurance.FormatStyle.SHORT);
-        Insurance insurance3 = new Insurance("0000-01-01T00:00:00", FormatStyle.LONG);
-        Insurance insurance4 = new Insurance("0000-01-01T00:00:00", FormatStyle.FULL);
+        Insurance insurance2 = new Insurance("2020-02-13", Insurance.FormatStyle.SHORT);
+//        Insurance insurance3 = new Insurance("2020-02-13T19:48:15.2316539", FormatStyle.LONG);
+//        Insurance insurance4 = new Insurance("2020-02-13T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
         insurance.setDuration(Duration.ofDays(30));
         insurance.setDuration(ZonedDateTime.parse("2020-02-13T19:56:13.370819+03:00[Europe/Moscow]"));
         insurance.setDuration(1,5,7);
