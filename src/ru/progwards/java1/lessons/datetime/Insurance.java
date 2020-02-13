@@ -88,7 +88,8 @@ public class Insurance {
     * если страховка действительна на данный момент и " is not valid", если она недействительна */
     @Override
     public String toString() {
-        return "Insurance issued on " + start;
+//        return "Insurance issued on " + start;
+        return "Insurance issued on " + start + true;
 //        return "Insurance issued on " + start + validStr;
     }
 
