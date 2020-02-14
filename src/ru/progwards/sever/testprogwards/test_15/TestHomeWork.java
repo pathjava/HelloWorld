@@ -95,10 +95,10 @@ public class TestHomeWork {
 
 
 
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse("0000-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-        long timeMillis = zonedDateTime.toInstant().toEpochMilli();
-        LocalDate date = Instant.ofEpochMilli(timeMillis).atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println(date);
+//        ZonedDateTime zonedDateTime = ZonedDateTime.parse("0000-01-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//        long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+//        LocalDate date = Instant.ofEpochMilli(timeMillis).atZone(ZoneId.systemDefault()).toLocalDate();
+//        System.out.println(date);
 
 
 //        ZonedDateTime start;
@@ -113,8 +113,15 @@ public class TestHomeWork {
 //        ZonedDateTime dateTime = ZonedDateTime.parse("2019-03-27 10:15:30 AM +05:30", formatter);
 //        System.out.println(dateTime);
 
-        ZonedDateTime zdt = ZonedDateTime.parse("2000-06-03T10:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-        System.out.println(zdt);
+//        ZonedDateTime zdt = ZonedDateTime.parse("2000-06-03T10:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//        System.out.println(zdt);
+
+        ZoneId usCentral = ZoneId.of("America/Chicago");
+        LocalDateTime ldt = LocalDateTime.of(2012, Month.MARCH, 10, 7, 30);
+        ZonedDateTime zdt1 = ZonedDateTime.of(ldt, usCentral);
+        Duration d1 = Duration.ofHours(24);
+        ZonedDateTime zdt2 = zdt1.plus(d1);
+        System.out.println(zdt2);
 
     }
 }

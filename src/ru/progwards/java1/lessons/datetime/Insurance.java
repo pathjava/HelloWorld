@@ -21,17 +21,17 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-                System.out.println(start);
+//                System.out.println(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-                System.out.println(start);
+//                System.out.println(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-                System.out.println(start);
+//                System.out.println(start);
                 break;
         }
     }
@@ -57,44 +57,50 @@ public class Insurance {
             case SHORT:
 //                duration = Duration.of(Long.parseLong(strDuration), ChronoUnit.MILLIS);
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
-                System.out.println(duration);
+//                System.out.println(duration);
                 break;
             case LONG:
                 ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
                 long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
-                System.out.println(duration);
+//                System.out.println(duration);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
-                System.out.println(duration);
+//                System.out.println(duration);
                 break;
         }
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
-    boolean validStr;
     public boolean checkValid(ZonedDateTime dateTime){
 
-        ZonedDateTime end = start.plus(duration);
+        Duration d1 = Duration.ofHours(72);
+        ZonedDateTime end = start.plus(d1);
 
-        if (dateTime.getSecond() <= start.getSecond() && dateTime.getSecond() >= end.getSecond()){
-            validStr = Boolean.parseBoolean(" is valid");
-            return validStr;
+//        if (dateTime.getSecond() >= start.getSecond() && dateTime.getSecond() <= end.getSecond()){
+//        if (dateTime.isEqual(start) && dateTime.isEqual(end)){
+        if (!(dateTime.isBefore(start) && dateTime.isAfter(end))){
+//            validStr = Boolean.parseBoolean(" is valid");
+            return true;
         } else
-            validStr = Boolean.parseBoolean(" is not valid");
-            return validStr;
+//            validStr = Boolean.parseBoolean(" is not valid");
+            return false;
     }
+
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
     * если страховка действительна на данный момент и " is not valid", если она недействительна */
     @Override
     public String toString() {
 //        return "Insurance issued on " + start + " is valid";
-        return "Insurance issued on " + start + validStr;
+//        return "Insurance issued on " + start + validStr;
+        return "Insurance issued on " + start;
     }
 
 
     public static void main(String[] args) {
         Insurance insurance = new Insurance(ZonedDateTime.now());
+//        insurance.checkValid(ZonedDateTime.now().plusDays(1));
+        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(2)));
         Insurance insurance2 = new Insurance("2020-02-13", Insurance.FormatStyle.SHORT);
         Insurance insurance3 = new Insurance("2020-02-13T19:48:15.2316539", FormatStyle.LONG);
         Insurance insurance4 = new Insurance("2020-02-13T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
