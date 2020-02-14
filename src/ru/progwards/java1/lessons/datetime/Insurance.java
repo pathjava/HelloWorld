@@ -72,12 +72,14 @@ public class Insurance {
         }
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
+    boolean validStr = Boolean.parseBoolean(" is valid");
     public boolean checkValid(ZonedDateTime dateTime){
 
         ZonedDateTime end = start.plus(duration);
 
         if (dateTime.getSecond() <= start.getSecond() && dateTime.getSecond() >= end.getSecond()){
-            return Boolean.parseBoolean(" is valid");
+
+            return validStr;
         } else
             return Boolean.parseBoolean(" is not valid");
     }
@@ -86,8 +88,8 @@ public class Insurance {
     @Override
     public String toString() {
 //        return "Insurance issued on " + start;
-        return "Insurance issued on " + start + " is valid";
-//        return "Insurance issued on " + start + validStr;
+//        return "Insurance issued on " + start + " is valid";
+        return "Insurance issued on " + start + validStr;
     }
 
 
