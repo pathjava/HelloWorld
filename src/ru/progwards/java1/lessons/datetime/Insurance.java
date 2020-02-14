@@ -2,7 +2,6 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAmount;
 
 public class Insurance {
     public static enum FormatStyle {SHORT, LONG, FULL}
@@ -74,8 +73,9 @@ public class Insurance {
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     public boolean checkValid(ZonedDateTime dateTime){
 
-        Duration d1 = Duration.ofHours(72);
-        ZonedDateTime end = start.plus(d1);
+//        Duration d1 = Duration.ofHours(72);
+//        ZonedDateTime end = start.plus(d1);
+        ZonedDateTime end = start.plus(duration);
 
 //        if (dateTime.getSecond() >= start.getSecond() && dateTime.getSecond() <= end.getSecond()){
 //        if (dateTime.isEqual(start) && dateTime.isEqual(end)){
