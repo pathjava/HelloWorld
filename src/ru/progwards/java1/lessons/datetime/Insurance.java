@@ -67,14 +67,17 @@ public class Insurance {
             case SHORT:
 //                duration = Duration.of(Long.parseLong(strDuration), ChronoUnit.MILLIS);
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
+                System.out.println(duration);
                 break;
             case LONG:
                 ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
                 long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
+                System.out.println(duration);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
+                System.out.println(duration);
                 break;
         }
     }
@@ -97,13 +100,11 @@ public class Insurance {
         Insurance insurance2 = new Insurance("2020-02-13", Insurance.FormatStyle.SHORT);
         Insurance insurance3 = new Insurance("2020-02-13T19:48:15.2316539", FormatStyle.LONG);
         Insurance insurance4 = new Insurance("2020-02-13T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
-//        insurance.setDuration(Duration.ofDays(30));
-//        insurance.setDuration(ZonedDateTime.parse("2020-02-13T19:56:13.370819+03:00[Europe/Moscow]"));
-//        insurance.setDuration(1,5,7);
-//        insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
-//        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-//        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.FULL);
-//        ZonedDateTime zonedDateTime = ZonedDateTime.parse("2000-06-03T10:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-//        System.out.println(zonedDateTime);
+        insurance.setDuration(Duration.ofDays(2));
+        insurance.setDuration(ZonedDateTime.parse("2020-02-13T19:56:13.370819+03:00[Europe/Moscow]"));
+        insurance.setDuration(1,5,7);
+        insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
+        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
+        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.FULL);
     }
 }
