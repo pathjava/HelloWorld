@@ -13,11 +13,6 @@ public class Insurance {
     public Insurance(ZonedDateTime start) {
         this.start = start;
     }
-    /* установить дату-время начала действия страховки
-    * SHORT соответствует ISO_LOCAL_DATE
-    * LONG  - ISO_LOCAL_DATE_TIME
-    * FULL - ISO_ZONED_DATE_TIME
-    * Для вариантов, когда не задан явно часовой пояс использовать таковой по умолчанию. */
     public Insurance(String strStart, FormatStyle style){
         LocalDate localDate;
         LocalTime localTime;
@@ -26,11 +21,6 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-
-//                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strStart, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
-//                LocalDate date = Instant.ofEpochMilli(timeMillis).atZone(ZoneId.systemDefault()).toLocalDate();
-//                start = date.atStartOfDay(ZoneId.systemDefault());
                 System.out.println(start);
                 break;
             case LONG:
@@ -83,7 +73,13 @@ public class Insurance {
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     public boolean checkValid(ZonedDateTime dateTime){
-        return true;
+
+        ZonedDateTime end = start.plus(duration);
+
+        if (dateTime.getSecond() <= start.getSecond() && dateTime.getSecond() >= end.getSecond()){
+            return Boolean.parseBoolean(" is valid");
+        } else
+            return Boolean.parseBoolean(" is not valid");
     }
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
     * если страховка действительна на данный момент и " is not valid", если она недействительна */
@@ -105,6 +101,6 @@ public class Insurance {
         insurance.setDuration(1,5,7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.FULL);
+        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
     }
 }
