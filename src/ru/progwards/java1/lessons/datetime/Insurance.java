@@ -22,17 +22,14 @@ public class Insurance {
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
                 checkValid(start);
-//                System.out.println(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-//                System.out.println(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-//                System.out.println(start);
                 break;
         }
     }
