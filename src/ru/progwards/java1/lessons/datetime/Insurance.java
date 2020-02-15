@@ -113,7 +113,8 @@ public class Insurance {
         insurance.setDuration(0,5,7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
+        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
+//        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
         System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
     }
