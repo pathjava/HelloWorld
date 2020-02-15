@@ -21,7 +21,7 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-                checkValid(start);
+//                checkValid(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
