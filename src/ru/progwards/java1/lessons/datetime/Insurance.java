@@ -8,7 +8,7 @@ public class Insurance {
 
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
-    private String validStr;
+//    private String validStr;
 
     public Insurance(ZonedDateTime start) {
         this.start = start;
@@ -21,16 +21,19 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
+                checkValid(start);
 //                System.out.println(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
+                checkValid(start);
 //                System.out.println(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
+                checkValid(start);
 //                System.out.println(start);
                 break;
         }
@@ -72,7 +75,7 @@ public class Insurance {
         }
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
-//    String validStr;
+    private String validStr;
     public boolean checkValid(ZonedDateTime dateTime){
 //        Duration d1 = Duration.ofHours(72);
 //        ZonedDateTime end = start.plus(d1);
