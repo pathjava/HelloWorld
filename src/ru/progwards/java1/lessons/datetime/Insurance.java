@@ -72,13 +72,19 @@ public class Insurance {
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     public boolean checkValid(ZonedDateTime dateTime){
+//        Duration d1 = Duration.ofHours(72);
+//        ZonedDateTime end = start.plus(d1);
+
+//        long longDuration = duration.toSeconds();
+//        ZonedDateTime end = start.plusSeconds(longDuration);
 
         ZonedDateTime end = start.plus(duration);
 
-//        if (dateTime.getSecond() >= start.getSecond() && dateTime.getSecond() <= end.getSecond()){
-//        if (!(dateTime.isEqual(start) && dateTime.isEqual(end))){
+        long longEnd = end.toEpochSecond();
+        long longStart = start.toEpochSecond();
+        long longDateTime = dateTime.toEpochSecond();
 
-        if (!(dateTime.isBefore(start) && dateTime.isAfter(end))){
+        if (longDateTime >= longStart && longDateTime <= longEnd){
 //            validStr = Boolean.parseBoolean(" is valid");
             return true;
         } else
@@ -99,15 +105,16 @@ public class Insurance {
     public static void main(String[] args) {
         Insurance insurance = new Insurance(ZonedDateTime.now());
 //        insurance.checkValid(ZonedDateTime.now().plusDays(1));
+        Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
+        Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
+        Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
+        insurance.setDuration(Duration.ofDays(2));
+        insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
+        insurance.setDuration(0,5,7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
         insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
-        Insurance insurance2 = new Insurance("2020-02-13", Insurance.FormatStyle.SHORT);
-        Insurance insurance3 = new Insurance("2020-02-13T19:48:15.2316539", FormatStyle.LONG);
-        Insurance insurance4 = new Insurance("2020-02-13T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
-        insurance.setDuration(Duration.ofDays(2));
-        insurance.setDuration(ZonedDateTime.parse("2020-02-13T19:56:13.370819+03:00[Europe/Moscow]"));
-        insurance.setDuration(1,5,7);
-        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(2)));
+
+        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
     }
 }
