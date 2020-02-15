@@ -8,7 +8,7 @@ public class Insurance {
 
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
-    private String validStr = " is valid";
+    private String validStr;
 
     public Insurance(ZonedDateTime start) {
         this.start = start;
