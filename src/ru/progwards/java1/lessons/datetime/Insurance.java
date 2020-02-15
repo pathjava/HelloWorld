@@ -111,6 +111,6 @@ public class Insurance {
 //        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
         insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
-//        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
+        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
     }
 }
