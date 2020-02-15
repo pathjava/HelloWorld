@@ -27,13 +27,11 @@ public class Insurance {
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-                checkValid(start);
 //                System.out.println(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-                checkValid(start);
 //                System.out.println(start);
                 break;
         }
@@ -60,17 +58,14 @@ public class Insurance {
             case SHORT:
 //                duration = Duration.of(Long.parseLong(strDuration), ChronoUnit.MILLIS);
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
-//                System.out.println(duration);
                 break;
             case LONG:
                 ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
                 long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
-//                System.out.println(duration);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
-//                System.out.println(duration);
                 break;
         }
     }
@@ -119,6 +114,6 @@ public class Insurance {
 //        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
         insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
-        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
+//        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
     }
 }
