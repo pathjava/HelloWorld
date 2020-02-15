@@ -8,6 +8,7 @@ public class Insurance {
 
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
+    private String validStr;
 
     public Insurance(ZonedDateTime start) {
         this.start = start;
@@ -71,7 +72,7 @@ public class Insurance {
         }
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
-    String validStr;
+//    String validStr;
     public boolean checkValid(ZonedDateTime dateTime){
 //        Duration d1 = Duration.ofHours(72);
 //        ZonedDateTime end = start.plus(d1);
@@ -98,7 +99,6 @@ public class Insurance {
     @Override
     public String toString() {
         return "Insurance issued on " + start + validStr;
-//        return "Insurance issued on " + start;
     }
 
 
