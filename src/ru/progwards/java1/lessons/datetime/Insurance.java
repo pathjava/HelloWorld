@@ -71,6 +71,7 @@ public class Insurance {
         }
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
+    String validStr;
     public boolean checkValid(ZonedDateTime dateTime){
 //        Duration d1 = Duration.ofHours(72);
 //        ZonedDateTime end = start.plus(d1);
@@ -85,10 +86,10 @@ public class Insurance {
         long longDateTime = dateTime.toEpochSecond();
 
         if (longDateTime >= longStart && longDateTime <= longEnd){
-//            validStr = Boolean.parseBoolean(" is valid");
+            validStr = " is valid";
             return true;
         } else
-//            validStr = Boolean.parseBoolean(" is not valid");
+            validStr = " is not valid";
             return false;
     }
 
@@ -96,9 +97,8 @@ public class Insurance {
     * если страховка действительна на данный момент и " is not valid", если она недействительна */
     @Override
     public String toString() {
-//        return "Insurance issued on " + start + " is valid";
-//        return "Insurance issued on " + start + validStr;
-        return "Insurance issued on " + start;
+        return "Insurance issued on " + start + validStr;
+//        return "Insurance issued on " + start;
     }
 
 
@@ -113,8 +113,8 @@ public class Insurance {
         insurance.setDuration(0,5,7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
-//        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
+//        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
+        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
         System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
     }
