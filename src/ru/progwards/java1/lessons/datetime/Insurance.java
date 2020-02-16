@@ -78,14 +78,14 @@ public class Insurance {
 //        long longDuration = duration.toSeconds();
 //        ZonedDateTime end = start.plusSeconds(longDuration);
 
-//        ZonedDateTime end = start.plus(duration);
-//        long longEnd = end.toEpochSecond();
+        ZonedDateTime end = start.plus(duration);
+        long longEnd = end.toEpochSecond();
 
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (longDateTime >= longStart) {
-//        if (longDateTime >= longStart && longDateTime <= longEnd) {
+//        if (longDateTime >= longStart) {
+        if (longDateTime >= longStart && longDateTime <= longEnd) {
             validStr = " is valid";
             return true;
         } else
