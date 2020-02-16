@@ -21,17 +21,17 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-                checkValid(start);
+//                checkValid(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-                checkValid(start);
+//                checkValid(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-                checkValid(start);
+//                checkValid(start);
                 break;
         }
     }
@@ -70,27 +70,25 @@ public class Insurance {
     }
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     private String validStr;
-    public boolean checkValid(ZonedDateTime dateTime){
+    public boolean checkValid(ZonedDateTime dateTime) {
 //        Duration d1 = Duration.ofHours(72);
 //        ZonedDateTime end = start.plus(d1);
 
 //        long longDuration = duration.toSeconds();
 //        ZonedDateTime end = start.plusSeconds(longDuration);
 
-//        ZonedDateTime end = start.plus(duration);
-//        (start.plus(duration)).toEpochSecond();
-//        long longEnd = end.toEpochSecond();
+        ZonedDateTime end = start.plus(duration);
+
+        long longEnd = end.toEpochSecond();
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
-        if (longDateTime >= longStart){
-            validStr = " is valid";
-            return true;
-        } else if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()){
+
+        if (longDateTime >= longStart && longDateTime <= longEnd) {
             validStr = " is valid";
             return true;
         } else
             validStr = " is not valid";
-            return false;
+        return false;
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
