@@ -12,7 +12,7 @@ public class Insurance {
 
     public Insurance(ZonedDateTime start) {
         this.start = start;
-        checkValid(start);
+        checkValid(this.start);
     }
     public Insurance(String strStart, FormatStyle style){
         LocalDate localDate;
@@ -78,14 +78,16 @@ public class Insurance {
 //        long longDuration = duration.toSeconds();
 //        ZonedDateTime end = start.plusSeconds(longDuration);
 
-        ZonedDateTime end = start.plus(duration);
-        long longEnd = end.toEpochSecond();
-
+//        ZonedDateTime end = start.plus(duration);
+//        (start.plus(duration)).toEpochSecond();
+//        long longEnd = end.toEpochSecond();
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-//        if (longDateTime >= longStart) {
-        if (longDateTime >= longStart && longDateTime <= longEnd) {
+        if (longDateTime >= longStart){
+            validStr = " is valid";
+            return true;
+        } else if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()){
             validStr = " is valid";
             return true;
         } else
@@ -107,15 +109,17 @@ public class Insurance {
         Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
         Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
         Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
-        insurance.setDuration(Duration.ofDays(2));
+        insurance.setDuration(Duration.ofDays(1));
         insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
         insurance.setDuration(0,5,7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
+        insurance.setDuration("PT48H", Insurance.FormatStyle.FULL);
 //        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
-        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        ZonedDateTime testTime = dateTime.plusDays(3);
+        System.out.println(insurance.checkValid(testTime));
 
         // в ином порядке вызова
 //        Insurance insurance = new Insurance(ZonedDateTime.now());
