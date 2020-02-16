@@ -12,6 +12,7 @@ public class Insurance {
 
     public Insurance(ZonedDateTime start) {
         this.start = start;
+        checkValid(start);
     }
     public Insurance(String strStart, FormatStyle style){
         LocalDate localDate;
@@ -21,17 +22,17 @@ public class Insurance {
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-//                checkValid(start);
+                checkValid(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-//                checkValid(start);
+                checkValid(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-//                checkValid(start);
+                checkValid(start);
                 break;
         }
     }
@@ -77,14 +78,14 @@ public class Insurance {
 //        long longDuration = duration.toSeconds();
 //        ZonedDateTime end = start.plusSeconds(longDuration);
 
-        ZonedDateTime end = start.plus(duration);
+//        ZonedDateTime end = start.plus(duration);
+//        long longEnd = end.toEpochSecond();
 
-        long longEnd = end.toEpochSecond();
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-//        if (longDateTime >= longStart) {
-        if (longDateTime >= longStart && longDateTime <= longEnd) {
+        if (longDateTime >= longStart) {
+//        if (longDateTime >= longStart && longDateTime <= longEnd) {
             validStr = " is valid";
             return true;
         } else
