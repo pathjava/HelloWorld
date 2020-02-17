@@ -81,15 +81,16 @@ public class Insurance {
 //        ZonedDateTime end = start.plus(duration);
 //        (start.plus(duration)).toEpochSecond();
 //        long longEnd = end.toEpochSecond();
+        long longEnd = duration.toSeconds();
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (longDateTime >= longStart){
+        if (longDateTime >= longStart && longDateTime <= longEnd){
             validStr = " is valid";
             return true;
-        } else if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()){
-            validStr = " is valid";
-            return true;
+//        } else if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()){
+//            validStr = " is valid";
+//            return true;
         } else
             validStr = " is not valid";
         return false;
@@ -117,9 +118,9 @@ public class Insurance {
         insurance.setDuration("PT48H", Insurance.FormatStyle.FULL);
 //        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
-        ZonedDateTime dateTime = ZonedDateTime.now();
-        ZonedDateTime testTime = dateTime.plusDays(3);
-        System.out.println(insurance.checkValid(testTime));
+//        ZonedDateTime dateTime = ZonedDateTime.now();
+//        ZonedDateTime testTime = dateTime.plusDays(3);
+//        System.out.println(insurance.checkValid(testTime));
 
         // в ином порядке вызова
 //        Insurance insurance = new Insurance(ZonedDateTime.now());
