@@ -40,10 +40,9 @@ public class Insurance {
 
     /* установить продолжительность действия страховки, задав дату-время окончания */
     public void setDuration(ZonedDateTime expiration) {
-//        duration = Duration.between(expiration, start);
-//        long longStart = start.toEpochSecond();
-        duration = Duration.ofMillis(expiration.getSecond() - start.getSecond());
-//        duration = Duration.ofMillis(expiration.minus(start));
+        duration = Duration.between(expiration, start);
+
+//        duration = Duration.ofMillis(expiration.getSecond() - start.getSecond());
     }
 
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
@@ -63,8 +62,10 @@ public class Insurance {
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+                LocalDateTime localDateTime = LocalDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+                long timeMillis = localDateTime.getSecond();
+//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
                 break;
             case FULL:
