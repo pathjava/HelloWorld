@@ -108,6 +108,9 @@ Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
 //            return true;
 //        } else
 //            validStr = " is not valid";
+        if (duration == null){
+            return longDateTime >= longStart;
+        } else
         return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
