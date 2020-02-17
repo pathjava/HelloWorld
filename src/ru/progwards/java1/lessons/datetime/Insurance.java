@@ -8,21 +8,9 @@ public class Insurance {
 
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
-//    private String validStr;
-//    private String validStr = " is valid";
 
-    /* Задача 1. Класс Insurance: не пройдено, оценка: 0.0
-Комментарий:
-ERROR: Тест "Конструкторы" не пройден. Строковое значение Insurance имеет неверное значение.
-Экзепляр класса создан при помощи конструктора Insurance(ZonedDateTime start), где start - это дата, соответствующая "2020-02-15T12:32:12.792407+03:00[Europe/Moscow]"
-Возвращено значение:
-Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow]null
-Ожидалось:
-Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
-*/
     public Insurance(ZonedDateTime start) {
         this.start = start;
-//        checkValid(this.start);
     }
 
     public Insurance(String strStart, FormatStyle style) {
@@ -33,17 +21,14 @@ Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
                 localDate = LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(strStart));
                 localTime = LocalTime.of(0, 0, 0);
                 start = ZonedDateTime.of(localDate, localTime, ZoneId.systemDefault());
-//                checkValid(start);
                 break;
             case LONG:
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strStart));
                 start = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-//                checkValid(start);
                 break;
             case FULL:
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ISO_ZONED_DATE_TIME;
                 start = ZonedDateTime.parse(strStart, dtFormatter);
-//                checkValid(start);
                 break;
         }
     }
@@ -55,7 +40,10 @@ Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
 
     /* установить продолжительность действия страховки, задав дату-время окончания */
     public void setDuration(ZonedDateTime expiration) {
-        duration = Duration.between(expiration, start);
+//        duration = Duration.between(expiration, start);
+//        long longStart = start.toEpochSecond();
+        duration = Duration.ofMillis(expiration.getSecond() - start.getSecond());
+//        duration = Duration.ofMillis(expiration.minus(start));
     }
 
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
@@ -86,28 +74,11 @@ Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
     }
 
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
-//    private String validStr;
     public boolean checkValid(ZonedDateTime dateTime) {
-//        long longDuration = duration.toSeconds();
-//        ZonedDateTime end = start.plusSeconds(longDuration);
 
-//        ZonedDateTime end = start.plus(duration);
-//        (start.plus(duration)).toEpochSecond();
-//        long longEnd = end.toEpochSecond();
-
-//        long longEnd = duration.toSeconds();
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-//        if (longDateTime >= longStart && longDateTime <= longEnd){
-//            validStr = " is valid";
-//            return true;
-//        } else
-//        if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()) {
-//            validStr = " is valid";
-//            return true;
-//        } else
-//            validStr = " is not valid";
         if (duration == null){
             return longDateTime >= longStart;
         } else
@@ -131,33 +102,14 @@ Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
         Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
         insurance.setDuration(Duration.ofDays(1));
         insurance.setDuration(ZonedDateTime.now().plusDays(7));
-//        insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
+        insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
         insurance.setDuration(0, 5, 7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
         insurance.setDuration("PT48H", Insurance.FormatStyle.FULL);
 //        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
-//        ZonedDateTime dateTime = ZonedDateTime.now();
-//        ZonedDateTime testTime = dateTime.plusDays(1);
-//        System.out.println(insurance.checkValid(testTime));
         System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(5)));
 
-        // в ином порядке вызова
-//        Insurance insurance = new Insurance(ZonedDateTime.now());
-//        System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(1)));
-////        insurance.checkValid(ZonedDateTime.now().plusDays(1));
-//        insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
-//        insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-//        insurance.setDuration("PT24H", Insurance.FormatStyle.FULL);
-//
-//        Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
-//        Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
-//        Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
-//        insurance.setDuration(Duration.ofDays(2));
-//        insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
-//        insurance.setDuration(0,5,7);
-
-//        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
     }
 }
