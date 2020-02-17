@@ -8,8 +8,18 @@ public class Insurance {
 
     private ZonedDateTime start;
     private Duration duration; /* продолжительность действия */
-    private String validStr = " is valid";
+//    private String validStr;
+//    private String validStr = " is valid";
 
+    /* Задача 1. Класс Insurance: не пройдено, оценка: 0.0
+Комментарий:
+ERROR: Тест "Конструкторы" не пройден. Строковое значение Insurance имеет неверное значение.
+Экзепляр класса создан при помощи конструктора Insurance(ZonedDateTime start), где start - это дата, соответствующая "2020-02-15T12:32:12.792407+03:00[Europe/Moscow]"
+Возвращено значение:
+Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow]null
+Ожидалось:
+Insurance issued on 2020-02-15T12:32:12.792407+03:00[Europe/Moscow] is valid
+*/
     public Insurance(ZonedDateTime start) {
         this.start = start;
 //        checkValid(this.start);
@@ -78,9 +88,6 @@ public class Insurance {
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
 //    private String validStr;
     public boolean checkValid(ZonedDateTime dateTime) {
-//        Duration d1 = Duration.ofHours(72);
-//        ZonedDateTime end = start.plus(d1);
-
 //        long longDuration = duration.toSeconds();
 //        ZonedDateTime end = start.plusSeconds(longDuration);
 
@@ -96,18 +103,19 @@ public class Insurance {
 //            validStr = " is valid";
 //            return true;
 //        } else
-        if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()) {
-            validStr = " is valid";
-            return true;
-        } else
-            validStr = " is not valid";
-        return false;
+//        if (longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond()) {
+//            validStr = " is valid";
+//            return true;
+//        } else
+//            validStr = " is not valid";
+        return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
      * если страховка действительна на данный момент и " is not valid", если она недействительна */
     @Override
     public String toString() {
+        String validStr = checkValid(ZonedDateTime.now()) ? " is valid" : " is not valid";
         return "Insurance issued on " + start + validStr;
     }
 
