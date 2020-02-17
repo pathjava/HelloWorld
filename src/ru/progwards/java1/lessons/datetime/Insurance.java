@@ -62,10 +62,16 @@ public class Insurance {
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-                LocalDateTime localDateTime = LocalDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//                LocalDateTime localDateTime = LocalDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//                long timeMillis = localDateTime.getSecond();
+
 //                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-                long timeMillis = localDateTime.getSecond();
 //                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+
+//                duration = Duration.ofMillis(timeMillis);
+
+                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
+                long timeMillis = localDateTime.getSecond();
                 duration = Duration.ofMillis(timeMillis);
                 break;
             case FULL:
