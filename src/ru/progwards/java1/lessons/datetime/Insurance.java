@@ -39,14 +39,6 @@ public class Insurance {
         this.duration = duration;
     }
 
-    /* установить продолжительность действия страховки, задав дату-время окончания */
-    /*ERROR: Тест "Метод setDuration(ZonedDateTime expiration)" не пройден. Строковое значение Insurance имеет неверное значение.
-Экзепляр класса создан при помощи конструктора Insurance(ZonedDateTime start), где start - это дата, соответствующая "2020-02-16T20:32:14.045703+03:00[Europe/Moscow]"
-После этого вызван метод setDuration(ZonedDateTime.parse("2020-02-19T20:32:14.045751+03:00[Europe/Moscow]"))
-Возвращено значение:
-Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is not valid
-Ожидалось:
-Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
     public void setDuration(ZonedDateTime expiration) {
         duration = Duration.between(expiration, start);
 
@@ -97,8 +89,8 @@ Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
             return true;
         }
 
-        return longDateTime <= (start.plus(duration)).toEpochSecond();
-//        return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
+//        return longDateTime <= (start.plus(duration)).toEpochSecond();
+        return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
