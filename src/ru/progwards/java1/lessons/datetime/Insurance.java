@@ -90,9 +90,10 @@ public class Insurance {
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (duration == null || duration.isNegative()){
+        if (duration == null){
+//        if (duration == null || duration.isNegative()){
             return longDateTime >= longStart;
-        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
+        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond() || duration.isNegative()){
             return false;
         } else
         return longDateTime <= start.plus(duration).toEpochSecond();
