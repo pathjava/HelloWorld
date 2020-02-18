@@ -90,7 +90,7 @@ Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (longDateTime > longStart || longDateTime < (start.plus(duration)).toEpochSecond()){
+        if (longDateTime > longStart){
             return false;
         }
         if (duration == null){
