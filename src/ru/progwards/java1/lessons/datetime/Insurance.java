@@ -65,8 +65,10 @@ public class Insurance {
 //                duration = Duration.ofMillis(timeMillis);
 
                 LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
-                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
-                duration = Duration.of(timeMillis, ChronoUnit.MILLIS);
+                long timeMillis = localDateTime.getSecond();
+//                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
+                duration = Duration.ofMillis(timeMillis);
+//                duration = Duration.of(timeMillis, ChronoUnit.MILLIS);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
