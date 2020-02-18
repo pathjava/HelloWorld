@@ -60,9 +60,18 @@ public class Insurance {
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
-                duration = Duration.ofMillis(timeMillis);
+                ZonedDateTime inputDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+                ZonedDateTime endDateTime = start.plusYears(inputDateTime.getYear()).
+                        plusMonths(inputDateTime.getMonthValue()).
+                        plusDays(inputDateTime.getDayOfMonth()).
+                        plusHours(inputDateTime.getHour()).
+                        plusMinutes(inputDateTime.getMinute()).
+                        plusSeconds(inputDateTime.getSecond()).
+                        plusNanos(inputDateTime.getNano());
+//                ZonedDateTime zd = zonedDateTime.
+//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+                duration = Duration.between(start, endDateTime);
 
 //                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 //                LocalDateTime localDateTime = LocalDateTime.parse(strDuration, dateTimeFormatter);
@@ -133,6 +142,7 @@ public class Insurance {
 //        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
         System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(5)));
+        System.out.println(insurance);
 
     }
 }
