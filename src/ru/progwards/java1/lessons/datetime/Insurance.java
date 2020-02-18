@@ -39,6 +39,14 @@ public class Insurance {
         this.duration = duration;
     }
 
+    /* установить продолжительность действия страховки, задав дату-время окончания */
+    /*ERROR: Тест "Метод setDuration(ZonedDateTime expiration)" не пройден. Строковое значение Insurance имеет неверное значение.
+Экзепляр класса создан при помощи конструктора Insurance(ZonedDateTime start), где start - это дата, соответствующая "2020-02-16T20:32:14.045703+03:00[Europe/Moscow]"
+После этого вызван метод setDuration(ZonedDateTime.parse("2020-02-19T20:32:14.045751+03:00[Europe/Moscow]"))
+Возвращено значение:
+Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is not valid
+Ожидалось:
+Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
     public void setDuration(ZonedDateTime expiration) {
         duration = Duration.between(expiration, start);
 
@@ -82,14 +90,9 @@ public class Insurance {
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (longDateTime > longStart){
-            return false;
-        }
         if (duration == null){
-            return true;
-        }
-
-//        return longDateTime <= (start.plus(duration)).toEpochSecond();
+            return longDateTime >= longStart;
+        } else
         return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
@@ -110,7 +113,7 @@ public class Insurance {
         Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
         insurance.setDuration(Duration.ofDays(1));
         insurance.setDuration(ZonedDateTime.now().plusDays(7));
-        insurance.setDuration(ZonedDateTime.parse("2020-02-19T20:32:14.045751+03:00[Europe/Moscow]"));
+        insurance.setDuration(ZonedDateTime.parse("2020-02-16T19:56:13.370819+03:00[Europe/Moscow]"));
         insurance.setDuration(0, 5, 7);
         insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
