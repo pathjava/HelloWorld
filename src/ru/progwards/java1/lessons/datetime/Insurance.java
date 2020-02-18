@@ -90,13 +90,21 @@ public class Insurance {
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        if (duration == null || duration.isNegative()){
 //        if (duration == null || duration.isNegative()){
-            return longDateTime >= longStart;
-        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
+//        if (duration == null){
+//            return longDateTime >= longStart;
+//        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
+//            return false;
+//        } else
+//        return longDateTime <= start.plus(duration).toEpochSecond();
+
+        if (longDateTime < longStart){
             return false;
-        } else
-        return longDateTime <= start.plus(duration).toEpochSecond();
+        }
+        if (duration == null){
+            return true;
+        }
+        return longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
@@ -111,9 +119,9 @@ public class Insurance {
     public static void main(String[] args) {
 //        Insurance insurance = new Insurance(ZonedDateTime.now().minusDays(1));
         Insurance insurance = new Insurance(ZonedDateTime.now());
-        Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
-        Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
-        Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
+//        Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
+//        Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
+//        Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
 //        insurance.setDuration(Duration.ofDays(1));
 //        insurance.setDuration(ZonedDateTime.now().plusDays(7));
 //        insurance.setDuration(ZonedDateTime.parse("2020-02-20T09:00:14.722911+03:00[Europe/Moscow]"));
