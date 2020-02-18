@@ -60,14 +60,14 @@ public class Insurance {
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-//                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
-//                duration = Duration.ofMillis(timeMillis);
-
-                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
-                long timeMillis = localDateTime.getSecond();
-//                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
+
+//                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
+//                long timeMillis = localDateTime.getSecond();
+//                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
+//                duration = Duration.ofMillis(timeMillis);
 //                duration = Duration.of(timeMillis, ChronoUnit.MILLIS);
                 break;
             case FULL:
@@ -79,15 +79,16 @@ public class Insurance {
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     public boolean checkValid(ZonedDateTime dateTime) {
 
+        long longEnd = (start.plus(duration)).toEpochSecond();
+
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
+        //        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
         if (duration == null){
             return longDateTime >= longStart;
-        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
-            return false;
-        } else
-        return longDateTime <= start.plus(duration).toEpochSecond();
+        } else return longDateTime >= longStart && longDateTime <= longEnd;
+//        return longDateTime <= start.plus(duration).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
@@ -105,13 +106,14 @@ public class Insurance {
         Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
         Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
         Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
-        insurance.setDuration(Duration.ofDays(1));
-        insurance.setDuration(ZonedDateTime.now().plusDays(7));
-        insurance.setDuration(ZonedDateTime.parse("2020-02-20T09:00:14.722911+03:00[Europe/Moscow]"));
-        insurance.setDuration(0, 5, 7);
-        insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
+//        insurance.setDuration(Duration.ofDays(1));
+//        insurance.setDuration(ZonedDateTime.now().plusDays(7));
+//        insurance.setDuration(ZonedDateTime.parse("2020-02-20T09:00:14.722911+03:00[Europe/Moscow]"));
+//        insurance.setDuration(0, 5, 7);
+//        insurance.setDuration("1000000000", Insurance.FormatStyle.SHORT);
+//        insurance.setDuration("2020-01-01T11:30:00", Insurance.FormatStyle.LONG);
         insurance.setDuration("0000-01-01T00:00:00", Insurance.FormatStyle.LONG);
-        insurance.setDuration("PT48H", Insurance.FormatStyle.FULL);
+//        insurance.setDuration("PT48H", Insurance.FormatStyle.FULL);
 //        insurance.setDuration("P2DT3H4M", Insurance.FormatStyle.FULL);
 
         System.out.println(insurance.checkValid(ZonedDateTime.now().plusDays(5)));
