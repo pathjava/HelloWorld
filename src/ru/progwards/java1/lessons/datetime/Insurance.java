@@ -92,8 +92,11 @@ Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
 
         if (duration == null){
             return longDateTime >= longStart;
-        } else
-        return longDateTime >= longStart && longDateTime <= (start.plus(duration)).toEpochSecond();
+        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
+            return false;
+        }
+        else
+        return longDateTime <= start.plus(duration).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
