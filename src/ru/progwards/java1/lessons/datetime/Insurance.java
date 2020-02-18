@@ -64,6 +64,12 @@ public class Insurance {
                 long timeMillis = zonedDateTime.toInstant().toEpochMilli();
                 duration = Duration.ofMillis(timeMillis);
 
+//                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+//                LocalDateTime localDateTime = LocalDateTime.parse(strDuration, dateTimeFormatter);
+//                Instant millis = localDateTime.toInstant(ZoneOffset.UTC);
+//                Long ms = Long.parseLong(String.valueOf(millis.getEpochSecond()));
+//                duration = Duration.from(millis);
+
 //                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
 //                long timeMillis = localDateTime.getSecond();
 //                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
@@ -79,16 +85,17 @@ public class Insurance {
     /* проверить действительна ли страховка на указанную дату-время. Если продолжительность не задана считать страховку бессрочной */
     public boolean checkValid(ZonedDateTime dateTime) {
 
-        long longEnd = (start.plus(duration)).toEpochSecond();
+//        long longEnd = (start.plus(duration)).toEpochSecond();
 
         long longStart = start.toEpochSecond();
         long longDateTime = dateTime.toEpochSecond();
 
-        //        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
-        if (duration == null){
+        if (duration == null || duration.isNegative()){
             return longDateTime >= longStart;
-        } else return longDateTime >= longStart && longDateTime <= longEnd;
-//        return longDateTime <= start.plus(duration).toEpochSecond();
+        } else if (longDateTime < longStart || longDateTime > (start.plus(duration)).toEpochSecond()){
+            return false;
+        } else
+        return longDateTime <= start.plus(duration).toEpochSecond();
     }
 
     /* вернуть строку формата "Insurance issued on " + start + validStr, где validStr = " is valid",
