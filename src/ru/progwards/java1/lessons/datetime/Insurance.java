@@ -39,19 +39,8 @@ public class Insurance {
         this.duration = duration;
     }
 
-    /* установить продолжительность действия страховки, задав дату-время окончания */
-    /*ERROR: Тест "Метод setDuration(ZonedDateTime expiration)" не пройден. Строковое значение Insurance имеет неверное значение.
-Экзепляр класса создан при помощи конструктора Insurance(ZonedDateTime start), где start - это дата, соответствующая "2020-02-16T20:32:14.045703+03:00[Europe/Moscow]"
-После этого вызван метод setDuration(ZonedDateTime.parse("2020-02-19T20:32:14.045751+03:00[Europe/Moscow]"))
-Возвращено значение:
-Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is not valid
-Ожидалось:
-Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
     public void setDuration(ZonedDateTime expiration) {
         duration = Duration.between(start, expiration);
-//        duration = Duration.between(expiration, start);
-
-//        duration = Duration.ofMillis(expiration.getSecond() - start.getSecond());
     }
 
     /* установить продолжительность действия страховки, задав целыми числами количество месяцев, дней и часов */
@@ -71,13 +60,13 @@ Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
                 duration = Duration.ofMillis(Long.parseLong(strDuration));
                 break;
             case LONG:
-                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
-                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
-                duration = Duration.ofMillis(timeMillis);
+//                ZonedDateTime zonedDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
+//                long timeMillis = zonedDateTime.toInstant().toEpochMilli();
+//                duration = Duration.ofMillis(timeMillis);
 
-//                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
-//                long timeMillis = localDateTime.getSecond();
-//                duration = Duration.of(timeMillis, ChronoUnit.MILLIS);
+                LocalDateTime localDateTime = LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(strDuration));
+                long timeMillis = localDateTime.toEpochSecond(ZoneOffset.UTC);
+                duration = Duration.of(timeMillis, ChronoUnit.MILLIS);
                 break;
             case FULL:
                 duration = Duration.parse(strDuration);
@@ -109,8 +98,8 @@ Insurance issued on 2020-02-16T20:32:14.045703+03:00[Europe/Moscow] is valid*/
 
 
     public static void main(String[] args) {
-        Insurance insurance = new Insurance(ZonedDateTime.now().minusDays(1));
-//        Insurance insurance = new Insurance(ZonedDateTime.now());
+//        Insurance insurance = new Insurance(ZonedDateTime.now().minusDays(1));
+        Insurance insurance = new Insurance(ZonedDateTime.now());
         Insurance insurance2 = new Insurance("2020-02-16", Insurance.FormatStyle.SHORT);
         Insurance insurance3 = new Insurance("2020-02-16T19:48:15.2316539", FormatStyle.LONG);
         Insurance insurance4 = new Insurance("2020-02-16T19:49:38.3652724+03:00[Europe/Moscow]", FormatStyle.FULL);
