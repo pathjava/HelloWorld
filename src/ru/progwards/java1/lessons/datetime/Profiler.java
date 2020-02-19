@@ -5,23 +5,21 @@ import java.util.List;
 public class Profiler {
     /* войти в профилировочную секцию, замерить время входа */
     public static void enterSection(String name){
-
+        long start = System.currentTimeMillis();
+        StatisticInfo startInfo = new StatisticInfo(name);
+        startInfo.setStartTime(start);
     }
 
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
     public static void exitSection(String name){
-
+        long end = System.currentTimeMillis();
+        StatisticInfo endInfo = new StatisticInfo(name);
+        endInfo.setEndTime(end);
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
-//    public static List<StatisticInfo> getStatisticInfo(){
-//
-//    }
+    public static List<StatisticInfo> getStatisticInfo(){
 
-    public class StatisticInfo{
-        public String sectionName; /* имя секции */
-        public int fullTime; /* полное время выполнения секции в миллисекундах */
-        public int selfTime; /* чистое время выполнения секции в миллисекундах. Для вложенных секций, из времени выполнения внешней секции нужно вычисть времена выполнения вложенных секций */
-        public int count; /* количество вызовов. В случае, если вызовов более одного, fullTime и selfTime содержат суммарное время выполнения всех вызовов */
     }
+
 }
