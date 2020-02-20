@@ -21,13 +21,10 @@ public class Profiler {
     public static void exitSection(String name) {
         long end = System.currentTimeMillis();
         StatisticInfo statisticInfo = null;
-
-        for (Map.Entry<String, StatisticInfo> entry : treeStatic.entrySet()) {
-            if (entry.getKey().equals(name)) {
-                statisticInfo = entry.getValue();
-                treeStatic.put(name, statisticInfo);
-            }
+        if (treeStatic.containsKey(name)){
+            statisticInfo = treeStatic.get(name);
         }
+
         assert statisticInfo != null;
         statisticInfo.setEndTime(end);
         for (Map.Entry<String, StatisticInfo> entry : treeStatic.entrySet()) {
@@ -61,7 +58,7 @@ public class Profiler {
 
     public static void main(String[] args) throws InterruptedException {
         int timer = 50;
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 2; j++) {
             for (int i = 1; i <= 2; i++) {
                 enterSection("session" + i);
                 Thread.sleep(timer);
