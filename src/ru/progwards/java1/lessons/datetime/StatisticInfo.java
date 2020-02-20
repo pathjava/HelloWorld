@@ -15,12 +15,15 @@ public class StatisticInfo {
     public int selfTime;
 
     /* количество вызовов. В случае, если вызовов более одного, fullTime и selfTime содержат суммарное время выполнения всех вызовов */
-    public int count;
+    public int count = 1;
 
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-    private long startTime = 0;
-    private long endTime;
-    private long duration;
+    public long startTime = 0;
+    public long endTime;
+    public long duration;
 
     public void setStartTime(long startTime) {
         this.startTime = startTime;
@@ -42,6 +45,10 @@ public class StatisticInfo {
     public void setDuration(long duration) {
         this.duration = duration;
     }
+
+//    public long getDuration() {
+//        return duration;
+//    }
 
     @Override
     public String toString() {
