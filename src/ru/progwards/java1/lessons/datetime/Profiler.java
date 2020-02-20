@@ -7,13 +7,11 @@ public class Profiler {
     public static ArrayList<StatisticInfo> listStatic = new ArrayList<>();
 
     /* войти в профилировочную секцию, замерить время входа */
-    public static void enterSection(String name) throws InterruptedException {
+    public static void enterSection(String name) {
         long start = System.currentTimeMillis();
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setStartTime(start);
         listStatic.add(statisticInfo);
-        Thread.sleep(500);
-        System.out.println(start);
     }
 
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
@@ -28,8 +26,7 @@ public class Profiler {
         assert statisticInfo != null;
         statisticInfo.setEndTime(end);
         /* здесь надо - Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах*/
-        statisticInfo.setDuration(statisticInfo.getStartTime() - statisticInfo.getEndTime());
-        System.out.println(end);
+//        statisticInfo.setDuration(statisticInfo.getEndTime() - statisticInfo.getStartTime());
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
@@ -44,8 +41,17 @@ public class Profiler {
 
 
     public static void main(String[] args) throws InterruptedException {
-        enterSection("session1");
-        exitSection("session1");
+        int timer = 100;
+        for (int j = 0; j < 2; j++) {
+            for (int i = 1; i <= 5; i++) {
+                enterSection("session" + i);
+                Thread.sleep(timer);
+                exitSection("session" + i);
+                timer += 100;
+            }
+        }
+//        enterSection("session1");
+//        exitSection("session1");
 
 
 //        System.out.println(listTest);
