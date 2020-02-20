@@ -11,6 +11,10 @@ public class StatisticInfo {
     /* полное время выполнения секции в миллисекундах */
     public int fullTime;
 
+    public void setFullTime(int fullTime) {
+        this.fullTime = fullTime;
+    }
+
     /* чистое время выполнения секции в миллисекундах. Для вложенных секций, из времени выполнения внешней секции нужно вычисть времена выполнения вложенных секций */
     public int selfTime;
 
@@ -46,9 +50,9 @@ public class StatisticInfo {
         this.duration = duration;
     }
 
-//    public long getDuration() {
-//        return duration;
-//    }
+    public long getDuration() {
+        return duration;
+    }
 
     @Override
     public String toString() {
