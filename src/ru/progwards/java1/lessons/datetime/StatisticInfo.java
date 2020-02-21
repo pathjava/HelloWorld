@@ -8,6 +8,10 @@ public class StatisticInfo {
         this.sectionName = name;
     }
 
+    public String getSectionName() {
+        return sectionName;
+    }
+
     /* полное время выполнения секции в миллисекундах */
     public int fullTime;
 
@@ -20,6 +24,10 @@ public class StatisticInfo {
 
     /* количество вызовов. В случае, если вызовов более одного, fullTime и selfTime содержат суммарное время выполнения всех вызовов */
     public int count = 1;
+
+    public int getCount() {
+        return count;
+    }
 
     public void setCount(int count) {
         this.count = count;
