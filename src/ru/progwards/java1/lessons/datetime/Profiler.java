@@ -57,21 +57,21 @@ public class Profiler {
 
     public static void main(String[] args) throws InterruptedException {
         int timer = 50;
-//        for (int j = 0; j < 2; j++) {
-//            for (int i = 1; i <= 5; i++) {
-//                enterSection("session" + i);
-//                Thread.sleep(timer);
-//                exitSection("session" + i);
-//                timer += 35;
-//            }
-//        }
-        for (int i = 0; i < 10; i++) {
-            enterSection("session1");
-            Thread.sleep(timer);
-            timer += 25;
-            exitSection("session1");
-            timer += 35;
+        for (int j = 0; j < 2; j++) {
+            for (int i = 1; i <= 5; i++) {
+                enterSection("session" + i);
+                Thread.sleep(timer);
+                exitSection("session" + i);
+                timer += 35;
+            }
         }
+//        for (int i = 0; i < 10; i++) {
+//            enterSection("session1");
+//            Thread.sleep(timer);
+//            timer += 25;
+//            exitSection("session1");
+//            timer += 35;
+//        }
 
         for (StatisticInfo statisticInfo : listStatic) {
             System.out.println(statisticInfo);
