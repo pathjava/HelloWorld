@@ -47,9 +47,8 @@ public class Profiler {
             if (treeList.containsKey(sessionName)){
                 sessionCount += treeList.get(sessionName).sessionCount;
                 sessionDuration += treeList.get(sessionName).sessionDuration;
-                treeList.put(sessionName, new StaticSession(sessionName, sessionCount, sessionDuration));
-            } else
-                treeList.put(sessionName, new StaticSession(sessionName, sessionCount, sessionDuration));
+            }
+            treeList.put(sessionName, new StaticSession(sessionName, sessionCount, sessionDuration));
         }
         return treeList;
     }
