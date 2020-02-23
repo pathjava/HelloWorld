@@ -2,6 +2,7 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Profiler {
@@ -86,7 +87,10 @@ public class Profiler {
             System.out.println(statisticInfo);
         }
         System.out.println();
-        System.out.println(counter());
+
+        for (Map.Entry<String, StaticSession> entry : counter().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
     }
 
 }
