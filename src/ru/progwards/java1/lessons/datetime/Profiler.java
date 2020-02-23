@@ -17,11 +17,11 @@ public class Profiler {
     }
 
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
-    public static void exitSection(String name){
+    public static void exitSection(String name) {
         long end = System.currentTimeMillis();
         StatisticInfo statisticInfo = null;
         for (StatisticInfo info : listStatic) {
-            if (info.sectionName.equals(name)){
+            if (info.sectionName.equals(name)) {
                 statisticInfo = info;
             }
         }
@@ -32,20 +32,20 @@ public class Profiler {
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
-    public static List<StatisticInfo> getStatisticInfo(){
+    public static List<StatisticInfo> getStatisticInfo() {
         StatisticInfo listStat = new StatisticInfo("session1");
         ArrayList<StatisticInfo> list = new ArrayList<>();
         list.add(listStat);
         return list;
     }
 
-    private static TreeMap<String, StaticSession> counter(){
+    private static TreeMap<String, StaticSession> counter() {
         TreeMap<String, StaticSession> treeList = new TreeMap<>();
         for (StatisticInfo info : listStatic) {
             String sessionName = info.getSectionName();
             int sessionCount = info.getCount();
             Long sessionDuration = info.getDuration();
-            if (treeList.containsKey(sessionName)){
+            if (treeList.containsKey(sessionName)) {
                 sessionCount += treeList.get(sessionName).sessionCount;
                 sessionDuration += treeList.get(sessionName).sessionDuration;
             }
@@ -55,24 +55,32 @@ public class Profiler {
     }
 
 
-
     public static void main(String[] args) throws InterruptedException {
-        int timer = 50;
-        for (int j = 1; j <= 2; j++) {
-            enterSection("session" + j);
-            Thread.sleep(timer);
-            exitSection("session" + j);
-            timer += 35;
-            for (int i = 1; i <= 5; i++) {
-                enterSection("session" + i);
+        int timer = 30;
+        for (int k = 0; k < 2; k++) {
+            for (int j = 1; j <= 2; j++) {
+                enterSection("session-1");
                 Thread.sleep(timer);
-                exitSection("session" + i);
-                timer += 35;
+                for (int i = j + 1; i <= 3; i++) {
+                    enterSection("session-2");
+                    Thread.sleep(timer);
+                    for (int b = 1; b <= 2; b++) {
+                        enterSection("session-3");
+                        Thread.sleep(timer);
+                        exitSection("session-3");
+                        timer += 15;
+                    }
+                    exitSection("session-2");
+                    timer += 35;
+                }
+                enterSection("session-4");
+                Thread.sleep(timer);
+                exitSection("session-4");
+                timer += 25;
+
+                exitSection("session-1");
+                timer += 20;
             }
-//            enterSection("session" + j);
-//            Thread.sleep(timer);
-//            exitSection("session" + j);
-//            timer += 35;
         }
 
 //        for (int i = 0; i < 10; i++) {
