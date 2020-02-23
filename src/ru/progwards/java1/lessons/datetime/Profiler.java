@@ -1,6 +1,7 @@
 package ru.progwards.java1.lessons.datetime;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,13 +33,13 @@ public class Profiler {
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
-    public static ArrayList<StaticSession> getStatisticInfo() {
+    public static List<StatisticInfo> getStatisticInfo() {
 //        StatisticInfo listStat = new StatisticInfo("session1");
-        ArrayList<StaticSession> list = new ArrayList<>();
+        ArrayList<StatisticInfo> list = new ArrayList<>();
 //        list.add(listStat);
 //        return list;
         for (Map.Entry<String, StaticSession> entry : counter().entrySet()) {
-            list.add(entry.getValue());
+            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount));
         }
         return list;
     }

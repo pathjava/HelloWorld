@@ -8,6 +8,9 @@ public class StatisticInfo {
         this.sectionName = name;
     }
 
+    public StatisticInfo(String sessionName, long sessionDuration, int sessionCount) {
+    }
+
     public String getSectionName() {
         return sectionName;
     }
