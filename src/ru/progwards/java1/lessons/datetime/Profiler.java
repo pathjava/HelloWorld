@@ -14,6 +14,7 @@ public class Profiler {
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setStartTime(start);
         listStatic.add(statisticInfo);
+
     }
 
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
@@ -95,6 +96,7 @@ public class Profiler {
             System.out.println(statisticInfo);
         }
         System.out.println();
+
 
         for (Map.Entry<String, StaticSession> entry : counter().entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());

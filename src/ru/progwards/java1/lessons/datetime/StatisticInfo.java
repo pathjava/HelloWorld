@@ -46,16 +46,16 @@ public class StatisticInfo {
         setDuration(getEndTime() - getStartTime());
     }
 
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
     public long getStartTime() {
         return startTime;
     }
 
     public long getEndTime() {
         return endTime;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
     public long getDuration() {
