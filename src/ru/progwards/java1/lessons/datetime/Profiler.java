@@ -62,30 +62,48 @@ public class Profiler {
 
     public static void main(String[] args) throws InterruptedException {
         int timer = 30;
-        for (int k = 0; k < 2; k++) {
-            for (int j = 1; j <= 2; j++) {
-                enterSection("session-1");
-                Thread.sleep(timer);
-                for (int i = j + 1; i <= 3; i++) {
-                    enterSection("session-2");
-                    Thread.sleep(timer);
-                    for (int b = 1; b <= 2; b++) {
-                        enterSection("session-3");
-                        Thread.sleep(timer);
-                        exitSection("session-3");
-                        timer += 15;
-                    }
-                    exitSection("session-2");
-                    timer += 35;
-                }
-                enterSection("session-4");
-                Thread.sleep(timer);
-                exitSection("session-4");
-                timer += 25;
+//        for (int k = 0; k < 2; k++) {
+//            for (int j = 1; j <= 2; j++) {
+//                enterSection("session-1");
+//                Thread.sleep(timer);
+//                for (int i = j + 1; i <= 3; i++) {
+//                    enterSection("session-2");
+//                    Thread.sleep(timer);
+//                    for (int b = 1; b <= 2; b++) {
+//                        enterSection("session-3");
+//                        Thread.sleep(timer);
+//                        exitSection("session-3");
+//                        timer += 15;
+//                    }
+//                    exitSection("session-2");
+//                    timer += 35;
+//                }
+//                enterSection("session-4");
+//                Thread.sleep(timer);
+//                exitSection("session-4");
+//                timer += 25;
+//
+//                exitSection("session-1");
+//                timer += 20;
+//            }
+//        }
 
-                exitSection("session-1");
-                timer += 20;
+        for (int j = 1; j <= 2; j++) {
+            enterSection("session-1");
+            Thread.sleep(timer);
+            for (int i = 1; i <= 5; i++) {
+                enterSection("session-2");
+                Thread.sleep(timer);
+                exitSection("session-2");
+                timer += 15;
             }
+            enterSection("session-3");
+            Thread.sleep(timer);
+            exitSection("session-3");
+            timer += 20;
+
+            exitSection("session-1");
+            timer += 25;
         }
 
 //        for (int i = 0; i < 10; i++) {
@@ -104,6 +122,11 @@ public class Profiler {
 
         for (Map.Entry<String, StaticSession> entry : counter().entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+        System.out.println();
+
+        for (StatisticInfo info : getStatisticInfo()) {
+            System.out.println(info);
         }
     }
 

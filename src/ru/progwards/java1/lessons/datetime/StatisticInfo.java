@@ -9,6 +9,10 @@ public class StatisticInfo {
     }
 
     public StatisticInfo(String sessionName, long sessionDuration, int sessionCount) {
+        sectionName = sessionName;
+        fullTime = (int)sessionDuration;
+        selfTime = (int)sessionDuration;
+        count = sessionCount;
     }
 
     public String getSectionName() {
@@ -17,10 +21,6 @@ public class StatisticInfo {
 
     public int fullTime;
 
-    public void setFullTime(int fullTime) {
-        this.fullTime = fullTime;
-    }
-
     public int selfTime;
 
     public int count = 1;
@@ -28,11 +28,6 @@ public class StatisticInfo {
     public int getCount() {
         return count;
     }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
 
     public long startTime = 0;
     public long endTime;
@@ -70,9 +65,9 @@ public class StatisticInfo {
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", duration=" + duration +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", duration=" + duration +
                 '}';
     }
 }

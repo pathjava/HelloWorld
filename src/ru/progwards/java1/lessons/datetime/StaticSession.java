@@ -5,7 +5,6 @@ public class StaticSession {
     int sessionCount;
     long sessionDuration;
 
-
     public StaticSession(String sessionName, int sessionCount, long sessionDuration) {
         this.sessionName = sessionName;
         this.sessionCount = sessionCount;
@@ -15,7 +14,7 @@ public class StaticSession {
     @Override
     public String toString() {
         return "StaticSession{" +
-                "sessionName=" + sessionName +
+                "sessionName='" + sessionName + '\'' +
                 ", sessionCount=" + sessionCount +
                 ", sessionDuration=" + sessionDuration +
                 '}';
