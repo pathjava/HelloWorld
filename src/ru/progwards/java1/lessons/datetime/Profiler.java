@@ -14,7 +14,6 @@ public class Profiler {
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setStartTime(start);
         listStatic.add(statisticInfo);
-
     }
 
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
