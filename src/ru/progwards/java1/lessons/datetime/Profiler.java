@@ -29,7 +29,6 @@ public class Profiler {
         assert statisticInfo != null;
         statisticInfo.setEndTime(end);
         /* здесь надо - Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах*/
-//        statisticInfo.setDuration(statisticInfo.getEndTime() - statisticInfo.getStartTime());
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
