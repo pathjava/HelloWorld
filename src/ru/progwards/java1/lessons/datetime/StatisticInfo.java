@@ -1,7 +1,6 @@
 package ru.progwards.java1.lessons.datetime;
 
 public class StatisticInfo {
-    /* имя секции */
     public String sectionName;
 
     public StatisticInfo(String name) {
@@ -10,8 +9,8 @@ public class StatisticInfo {
 
     public StatisticInfo(String sessionName, long sessionDuration, int sessionCount) {
         sectionName = sessionName;
-        fullTime = (int)sessionDuration;
-        selfTime = (int)sessionDuration;
+        fullTime = (int) sessionDuration;
+        selfTime = (int) sessionDuration;
         count = sessionCount;
     }
 
@@ -20,9 +19,7 @@ public class StatisticInfo {
     }
 
     public int fullTime;
-
     public int selfTime;
-
     public int count = 1;
 
     public int getCount() {

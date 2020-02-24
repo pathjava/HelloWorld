@@ -34,10 +34,7 @@ public class Profiler {
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
     public static List<StatisticInfo> getStatisticInfo() {
-//        StatisticInfo listStat = new StatisticInfo("session1");
         ArrayList<StatisticInfo> list = new ArrayList<>();
-//        list.add(listStat);
-//        return list;
         for (Map.Entry<String, StaticSession> entry : counter().entrySet()) {
             list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount));
         }
