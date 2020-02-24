@@ -15,7 +15,7 @@ public class StaticSession {
     @Override
     public String toString() {
         return "StaticSession{" +
-                "sessionName='" + sessionName + '\'' +
+                "sessionName=" + sessionName +
                 ", sessionCount=" + sessionCount +
                 ", sessionDuration=" + sessionDuration +
                 '}';

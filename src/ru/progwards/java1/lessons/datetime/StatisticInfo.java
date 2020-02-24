@@ -15,17 +15,14 @@ public class StatisticInfo {
         return sectionName;
     }
 
-    /* полное время выполнения секции в миллисекундах */
     public int fullTime;
 
     public void setFullTime(int fullTime) {
         this.fullTime = fullTime;
     }
 
-    /* чистое время выполнения секции в миллисекундах. Для вложенных секций, из времени выполнения внешней секции нужно вычисть времена выполнения вложенных секций */
     public int selfTime;
 
-    /* количество вызовов. В случае, если вызовов более одного, fullTime и selfTime содержат суммарное время выполнения всех вызовов */
     public int count = 1;
 
     public int getCount() {
@@ -35,6 +32,7 @@ public class StatisticInfo {
     public void setCount(int count) {
         this.count = count;
     }
+
 
     public long startTime = 0;
     public long endTime;
@@ -68,7 +66,7 @@ public class StatisticInfo {
     @Override
     public String toString() {
         return "StatisticInfo{" +
-                "sectionName='" + sectionName + '\'' +
+                "sectionName=" + sectionName +
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
