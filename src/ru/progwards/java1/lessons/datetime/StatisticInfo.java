@@ -2,6 +2,14 @@ package ru.progwards.java1.lessons.datetime;
 
 public class StatisticInfo {
     public String sectionName;
+    public int fullTime;
+    public int selfTime;
+    public int count = 1;
+
+    public long startTime = 0;
+    public long endTime;
+    public long duration; // TODO: убрать лишние поля
+    public int level = 0;
 
     public StatisticInfo(String name) {
         this.sectionName = name;
@@ -18,41 +26,35 @@ public class StatisticInfo {
         return sectionName;
     }
 
-    public int fullTime;
-    public int selfTime;
-    public int count = 1;
-
     public int getCount() {
         return count;
     }
 
-    public long startTime = 0;
-    public long endTime;
-    public long duration;
-
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
-
+    public long getStartTime() {
+        return startTime;
+    }
     public void setEndTime(long endTime) {
         this.endTime = endTime;
         setDuration(getEndTime() - getStartTime());
     }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
     public long getEndTime() {
         return endTime;
     }
-
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
     public long getDuration() {
         return duration;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override
@@ -62,9 +64,10 @@ public class StatisticInfo {
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
-//                ", startTime=" + startTime +
-//                ", endTime=" + endTime +
-//                ", duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", duration=" + duration +
+                ", level=" + level +
                 '}';
     }
 }

@@ -1,14 +1,18 @@
 package ru.progwards.java1.lessons.datetime;
 
-public class StaticSession {
+public class StatisticSession {
     String sessionName;
     int sessionCount;
     long sessionDuration;
 
-    public StaticSession(String sessionName, int sessionCount, long sessionDuration) {
+    public StatisticSession(String sessionName, int sessionCount, long sessionDuration) {
         this.sessionName = sessionName;
         this.sessionCount = sessionCount;
         this.sessionDuration = sessionDuration;
+    }
+
+    public boolean isChild(StatisticSession statisticSession){
+        return false; // TODO: проверить, является ли сессия вложенной
     }
 
     @Override
