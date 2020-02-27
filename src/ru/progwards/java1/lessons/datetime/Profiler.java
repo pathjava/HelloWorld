@@ -40,28 +40,29 @@ public class Profiler {
         listStatic.get(0).setLevel(1);
 
         for (int i = 1; i < listStatic.size(); i++) {
-            int idLevel = listStatic.get(i-1).level;
-            long endPrevTime = listStatic.get(i-1).endTime;
-            long startCurrentTime = listStatic.get(i).startTime;
-            long startNextTime = 0;
-            if (i != listStatic.size()-1){
-                startNextTime = listStatic.get(i+1).startTime;
-            }
-            String previousName = listStatic.get(i-1).sectionName;
-            String currentName = listStatic.get(i).sectionName;
+            int idLevel = listStatic.get(i - 1).level;
+            long endPreviousTime = listStatic.get(i - 1).endTime;
+            long startCheckTime = listStatic.get(i).startTime;
+            long endCheckTime = listStatic.get(i).endTime;
+            long startNextTime = i != listStatic.size() - 1 ? listStatic.get(i + 1).startTime : 0;
+            String previousName = listStatic.get(i - 1).sectionName;
+            String checkName = listStatic.get(i).sectionName;
 
-            if (!(previousName.equals(currentName)) && startCurrentTime < endPrevTime){
-                listStatic.get(i).setLevel(idLevel+1);
-            } else if (previousName.equals(currentName) && startCurrentTime == endPrevTime){
+            if (!(previousName.equals(checkName)) && startCheckTime < endPreviousTime) {
+                listStatic.get(i).setLevel(idLevel + 1);
+            } else if (previousName.equals(checkName) && startCheckTime == endPreviousTime) {
                 listStatic.get(i).setLevel(idLevel);
-            } else if (!(previousName.equals(currentName)) && startCurrentTime == endPrevTime && listStatic.get(i).level == 0){
-                int temp = 0;
-                for (int j = listStatic.indexOf(listStatic.get(i)); j >= 0; j--) {
-                    if (listStatic.get(i).sectionName.equals(listStatic.get(j).sectionName)){
-                        temp = listStatic.get(j).level;
+            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && (endCheckTime == startNextTime || startNextTime == 0) && listStatic.get(i).level == 0) {
+                listStatic.get(i).setLevel(2);
+            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && listStatic.get(i).level == 0) {
+                boolean stopLoop = true;
+                for (int j = listStatic.indexOf(listStatic.get(i-1)); j >= 0 && stopLoop; j--) {
+                    if (listStatic.get(i).sectionName.equals(listStatic.get(j).sectionName)) {
+                        int temp = listStatic.get(j).level;
+                        listStatic.get(i).setLevel(temp);
+                        stopLoop = false;
                     }
                 }
-                listStatic.get(i).setLevel(temp);
             }
         }
         return listStatic;
@@ -134,6 +135,11 @@ public class Profiler {
             enterSection("session-5");
             Thread.sleep(timer);
             exitSection("session-5");
+            timer += 20;
+
+            enterSection("session-6");
+            Thread.sleep(timer);
+            exitSection("session-6");
             timer += 20;
 
             exitSection("session-1");
