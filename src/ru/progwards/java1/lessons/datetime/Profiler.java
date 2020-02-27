@@ -50,19 +50,20 @@ public class Profiler {
 
             if (!(previousName.equals(currentName)) && startCurrentTime < endPrevTime){
                 listStatic.get(i).setLevel(idLevel+1);
+                break;
             } else if (previousName.equals(currentName) && startCurrentTime == endPrevTime){
                 listStatic.get(i).setLevel(idLevel);
             } else if (!(previousName.equals(currentName)) && startCurrentTime == endPrevTime && startCurrentTime < startNextTime && listStatic.get(i).level == 0){
                 listStatic.get(i).setLevel(idLevel);
             }
         }
-//        System.out.println(listStatic);
+        System.out.println(listStatic);
         return levelList;
     }
 
     private static TreeMap<String, StatisticSession> counter() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
-        for (StatisticInfo info : findParent()) {
+        for (StatisticInfo info : listStatic) {
             String sessionName = info.getSectionName();
             int sessionCount = info.getCount();
             long sessionDuration = info.getDuration();
@@ -154,6 +155,8 @@ public class Profiler {
 //            timer += 35;
 //        }
 
+        findParent();
+
 //        for (StatisticInfo statisticInfo : listStatic) {
 //            System.out.println(statisticInfo);
 //        }
@@ -170,7 +173,7 @@ public class Profiler {
 //        }
 //        System.out.println();
 
-//        findParent();
+
     }
 
 }
