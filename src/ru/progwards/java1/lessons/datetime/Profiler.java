@@ -37,41 +37,48 @@ public class Profiler {
     }
 
     private static ArrayList<StatisticInfo> findParent() {
-        ArrayList<StatisticInfo> levelList = new ArrayList<>();
         listStatic.get(0).setLevel(1);
 
-        for (int i = 1; i < listStatic.size()-1; i++) {
+        for (int i = 1; i < listStatic.size(); i++) {
             int idLevel = listStatic.get(i-1).level;
             long endPrevTime = listStatic.get(i-1).endTime;
             long startCurrentTime = listStatic.get(i).startTime;
-            long startNextTime = listStatic.get(i+1).startTime;
+            long startNextTime = 0;
+            if (i != listStatic.size()-1){
+                startNextTime = listStatic.get(i+1).startTime;
+            }
             String previousName = listStatic.get(i-1).sectionName;
             String currentName = listStatic.get(i).sectionName;
 
             if (!(previousName.equals(currentName)) && startCurrentTime < endPrevTime){
                 listStatic.get(i).setLevel(idLevel+1);
-                break;
             } else if (previousName.equals(currentName) && startCurrentTime == endPrevTime){
                 listStatic.get(i).setLevel(idLevel);
-            } else if (!(previousName.equals(currentName)) && startCurrentTime == endPrevTime && startCurrentTime < startNextTime && listStatic.get(i).level == 0){
-                listStatic.get(i).setLevel(idLevel);
+            } else if (!(previousName.equals(currentName)) && startCurrentTime == endPrevTime && listStatic.get(i).level == 0){
+                int temp = 0;
+                for (int j = listStatic.indexOf(listStatic.get(i)); j >= 0; j--) {
+                    if (listStatic.get(i).sectionName.equals(listStatic.get(j).sectionName)){
+                        temp = listStatic.get(j).level;
+                    }
+                }
+                listStatic.get(i).setLevel(temp);
             }
         }
-        System.out.println(listStatic);
-        return levelList;
+        return listStatic;
     }
 
     private static TreeMap<String, StatisticSession> counter() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
-        for (StatisticInfo info : listStatic) {
+        for (StatisticInfo info : findParent()) {
             String sessionName = info.getSectionName();
+            int sessionLevel = info.getLevel();
             int sessionCount = info.getCount();
             long sessionDuration = info.getDuration();
             if (treeList.containsKey(sessionName)) {
                 sessionCount += treeList.get(sessionName).sessionCount;
                 sessionDuration += treeList.get(sessionName).sessionDuration;
             }
-            treeList.put(sessionName, new StatisticSession(sessionName, sessionCount, sessionDuration));
+            treeList.put(sessionName, new StatisticSession(sessionName, sessionCount, sessionDuration, sessionLevel));
         }
         return treeList;
     }
@@ -79,30 +86,28 @@ public class Profiler {
 
     public static void main(String[] args) throws InterruptedException {
         int timer = 30;
-//        for (int k = 0; k < 2; k++) {
-//            for (int j = 1; j <= 2; j++) {
-//                enterSection("session-1");
+//        for (int j = 1; j <= 2; j++) {
+//            enterSection("session-1");
+//            Thread.sleep(timer);
+//            for (int i = 1; i <= 3; i++) {
+//                enterSection("session-2");
 //                Thread.sleep(timer);
-//                for (int i = j + 1; i <= 3; i++) {
-//                    enterSection("session-2");
+//                for (int k = 1; k <= 2; k++) {
+//                    enterSection("session-3");
 //                    Thread.sleep(timer);
-//                    for (int b = 1; b <= 2; b++) {
-//                        enterSection("session-3");
-//                        Thread.sleep(timer);
-//                        exitSection("session-3");
-//                        timer += 15;
-//                    }
-//                    exitSection("session-2");
-//                    timer += 35;
+//                    exitSection("session-3");
+//                    timer += 15;
 //                }
-//                enterSection("session-4");
-//                Thread.sleep(timer);
-//                exitSection("session-4");
-//                timer += 25;
-//
-//                exitSection("session-1");
-//                timer += 20;
+//                exitSection("session-2");
+//                timer += 15;
 //            }
+//            enterSection("session-4");
+//            Thread.sleep(timer);
+//            exitSection("session-4");
+//            timer += 20;
+//
+//            exitSection("session-1");
+//            timer += 25;
 //        }
 
         for (int j = 1; j <= 2; j++) {
@@ -114,15 +119,21 @@ public class Profiler {
                 for (int k = 1; k <= 2; k++) {
                     enterSection("session-3");
                     Thread.sleep(timer);
+                    for (int f = 1; f <= 2; f++) {
+                        enterSection("session-4");
+                        Thread.sleep(timer);
+                        exitSection("session-4");
+                        timer += 15;
+                    }
                     exitSection("session-3");
                     timer += 15;
                 }
                 exitSection("session-2");
                 timer += 15;
             }
-            enterSection("session-4");
+            enterSection("session-5");
             Thread.sleep(timer);
-            exitSection("session-4");
+            exitSection("session-5");
             timer += 20;
 
             exitSection("session-1");
@@ -157,16 +168,16 @@ public class Profiler {
 
         findParent();
 
-//        for (StatisticInfo statisticInfo : listStatic) {
-//            System.out.println(statisticInfo);
-//        }
-//        System.out.println();
+        for (StatisticInfo statisticInfo : listStatic) {
+            System.out.println(statisticInfo);
+        }
+        System.out.println();
 //
 //
-//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-//            System.out.println(entry.getKey() + " : " + entry.getValue());
-//        }
-//        System.out.println();
+        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+        System.out.println();
 //
 //        for (StatisticInfo info : getStatisticInfo()) {
 //            System.out.println(info);

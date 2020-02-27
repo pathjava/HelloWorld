@@ -4,11 +4,13 @@ public class StatisticSession {
     String sessionName;
     int sessionCount;
     long sessionDuration;
+    int sessionLevel;
 
-    public StatisticSession(String sessionName, int sessionCount, long sessionDuration) {
+    public StatisticSession(String sessionName, int sessionCount, long sessionDuration, int sessionLevel) {
         this.sessionName = sessionName;
         this.sessionCount = sessionCount;
         this.sessionDuration = sessionDuration;
+        this.sessionLevel = sessionLevel;
     }
 
     public boolean isChild(StatisticSession statisticSession){
@@ -17,10 +19,11 @@ public class StatisticSession {
 
     @Override
     public String toString() {
-        return "StaticSession{" +
+        return "StatisticSession{" +
                 "sessionName='" + sessionName + '\'' +
                 ", sessionCount=" + sessionCount +
                 ", sessionDuration=" + sessionDuration +
+                ", sessionLevel=" + sessionLevel +
                 '}';
     }
 }
