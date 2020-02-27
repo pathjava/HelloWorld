@@ -55,9 +55,9 @@ public class Profiler {
                 listStatic.get(i).setLevel(idLevel + 1);
             } else if (previousName.equals(checkName) && startCheckTime == 0 || previousName.equals(checkName) && startPreviousTime == 0 && startCheckTime == endPreviousTime){
                 listStatic.get(i).setLevel(idLevel);
-            } else if (!(previousName.equals(checkName)) && startCheckTime == 0 && startPreviousTime == 0){
+            } else if (!previousName.equals(checkName) && startCheckTime == 0 && startPreviousTime == 0){
                 listStatic.get(i).setLevel(idLevel-1);
-            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && startPreviousTime == 0){
+            } else if (!previousName.equals(checkName) && startCheckTime == endPreviousTime && startPreviousTime == 0){
                 listStatic.get(i).setLevel(idLevel);
             }
         }
