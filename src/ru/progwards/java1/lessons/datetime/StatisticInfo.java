@@ -38,7 +38,7 @@ public class StatisticInfo {
     }
     public void setEndTime(long endTime) {
         this.endTime = endTime;
-        setDuration(getEndTime() - getStartTime());
+//        setDuration(getEndTime() - getStartTime());
     }
     public long getEndTime() {
         return endTime;

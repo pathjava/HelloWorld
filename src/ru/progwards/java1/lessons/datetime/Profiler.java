@@ -16,14 +16,16 @@ public class Profiler {
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
     public static void exitSection(String name) {
         long end = System.currentTimeMillis();
-        StatisticInfo statisticInfo = null;
-        for (StatisticInfo info : listStatic) {
-            if (info.sectionName.equals(name)) {
-                statisticInfo = info;
-            }
-        }
-        assert statisticInfo != null;
+//        StatisticInfo statisticInfo = null;
+//        for (StatisticInfo info : listStatic) {
+//            if (info.sectionName.equals(name)) {
+//                statisticInfo = info;
+//            }
+//        }
+//        assert statisticInfo != null;
+        StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setEndTime(end);
+        listStatic.add(statisticInfo);
         /* здесь надо - Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах*/
     }
 
@@ -41,28 +43,22 @@ public class Profiler {
 
         for (int i = 1; i < listStatic.size(); i++) {
             int idLevel = listStatic.get(i - 1).level;
+            long startPreviousTime = listStatic.get(i-1).startTime;
             long endPreviousTime = listStatic.get(i - 1).endTime;
             long startCheckTime = listStatic.get(i).startTime;
-            long endCheckTime = listStatic.get(i).endTime;
-            long startNextTime = i != listStatic.size() - 1 ? listStatic.get(i + 1).startTime : 0;
+//            long endCheckTime = listStatic.get(i).endTime;
+//            long startNextTime = i != listStatic.size() - 1 ? listStatic.get(i + 1).startTime : 0;
             String previousName = listStatic.get(i - 1).sectionName;
             String checkName = listStatic.get(i).sectionName;
 
-            if (!(previousName.equals(checkName)) && startCheckTime < endPreviousTime) {
+            if (!(previousName.equals(checkName)) && startCheckTime > endPreviousTime) {
                 listStatic.get(i).setLevel(idLevel + 1);
-            } else if (previousName.equals(checkName) && startCheckTime == endPreviousTime) {
+            } else if (previousName.equals(checkName) && startCheckTime == 0 || previousName.equals(checkName) && startPreviousTime == 0 && startCheckTime == endPreviousTime){
                 listStatic.get(i).setLevel(idLevel);
-            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && (endCheckTime == startNextTime || startNextTime == 0) && listStatic.get(i).level == 0) {
-                listStatic.get(i).setLevel(2);
-            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && listStatic.get(i).level == 0) {
-                boolean stopLoop = true;
-                for (int j = listStatic.indexOf(listStatic.get(i-1)); j >= 0 && stopLoop; j--) {
-                    if (listStatic.get(i).sectionName.equals(listStatic.get(j).sectionName)) {
-                        int temp = listStatic.get(j).level;
-                        listStatic.get(i).setLevel(temp);
-                        stopLoop = false;
-                    }
-                }
+            } else if (!(previousName.equals(checkName)) && startCheckTime == 0 && startPreviousTime == 0){
+                listStatic.get(i).setLevel(idLevel-1);
+            } else if (!(previousName.equals(checkName)) && startCheckTime == endPreviousTime && startPreviousTime == 0){
+                listStatic.get(i).setLevel(idLevel);
             }
         }
         return listStatic;
@@ -86,7 +82,7 @@ public class Profiler {
 
 
     public static void main(String[] args) throws InterruptedException {
-        int timer = 30;
+        int timer = 15;
 //        for (int j = 1; j <= 2; j++) {
 //            enterSection("session-1");
 //            Thread.sleep(timer);
@@ -124,26 +120,38 @@ public class Profiler {
                         enterSection("session-4");
                         Thread.sleep(timer);
                         exitSection("session-4");
-                        timer += 15;
+                        timer += 5;
                     }
                     exitSection("session-3");
-                    timer += 15;
+                    timer += 10;
                 }
                 exitSection("session-2");
-                timer += 15;
+                timer += 7;
             }
             enterSection("session-5");
             Thread.sleep(timer);
             exitSection("session-5");
-            timer += 20;
+            timer += 11;
 
             enterSection("session-6");
             Thread.sleep(timer);
+            for (int t = 1; t <= 2; t++) {
+                enterSection("session-7");
+                Thread.sleep(timer);
+                for (int f = 1; f <= 2; f++) {
+                    enterSection("session-8");
+                    Thread.sleep(timer);
+                    exitSection("session-8");
+                    timer += 5;
+                }
+                exitSection("session-7");
+                timer += 5;
+            }
             exitSection("session-6");
-            timer += 20;
+            timer += 6;
 
             exitSection("session-1");
-            timer += 25;
+            timer += 8;
         }
 
 //        for (int j = 1; j <= 2; j++) {
@@ -180,10 +188,10 @@ public class Profiler {
         System.out.println();
 //
 //
-        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-        System.out.println();
+//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
+//        }
+//        System.out.println();
 //
 //        for (StatisticInfo info : getStatisticInfo()) {
 //            System.out.println(info);
