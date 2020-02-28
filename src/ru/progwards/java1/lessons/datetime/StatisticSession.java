@@ -3,14 +3,21 @@ package ru.progwards.java1.lessons.datetime;
 public class StatisticSession {
     String sessionName;
     int sessionCount;
-    long sessionDuration;
+    long startDuration;
+    long endDuration;
     int sessionLevel;
+    long sessionDuration;
 
-    public StatisticSession(String sessionName, int sessionCount, long sessionDuration, int sessionLevel) {
+    public StatisticSession(String sessionName, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         this.sessionName = sessionName;
         this.sessionCount = sessionCount;
-        this.sessionDuration = sessionDuration;
+        this.startDuration = startDuration;
+        this.endDuration = endDuration;
         this.sessionLevel = sessionLevel;
+    }
+
+    public void setSessionDuration(long sessionDuration) {
+        this.sessionDuration = sessionDuration;
     }
 
     public boolean isChild(StatisticSession statisticSession){
@@ -20,10 +27,12 @@ public class StatisticSession {
     @Override
     public String toString() {
         return "StatisticSession{" +
-                "sessionName='" + sessionName + '\'' +
+                "sessionName=" + sessionName +
                 ", sessionCount=" + sessionCount +
-                ", sessionDuration=" + sessionDuration +
+                ", startDuration=" + startDuration +
+                ", endDuration=" + endDuration +
                 ", sessionLevel=" + sessionLevel +
+                ", sessionDuration=" + sessionDuration +
                 '}';
     }
 }

@@ -8,7 +8,6 @@ public class StatisticInfo {
 
     public long startTime = 0;
     public long endTime;
-    public long duration; // TODO: убрать лишние поля
     public int level = 0;
 
     public StatisticInfo(String name) {
@@ -30,6 +29,10 @@ public class StatisticInfo {
         return count;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
@@ -38,16 +41,9 @@ public class StatisticInfo {
     }
     public void setEndTime(long endTime) {
         this.endTime = endTime;
-//        setDuration(getEndTime() - getStartTime());
     }
     public long getEndTime() {
         return endTime;
-    }
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-    public long getDuration() {
-        return duration;
     }
 
     public int getLevel() {
@@ -66,7 +62,6 @@ public class StatisticInfo {
                 ", count=" + count +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", duration=" + duration +
                 ", level=" + level +
                 '}';
     }
