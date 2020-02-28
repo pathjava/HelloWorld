@@ -16,17 +16,9 @@ public class Profiler {
     /* выйти из профилировочной секции. Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах */
     public static void exitSection(String name) {
         long end = System.currentTimeMillis();
-//        StatisticInfo statisticInfo = null;
-//        for (StatisticInfo info : listStatic) {
-//            if (info.sectionName.equals(name)) {
-//                statisticInfo = info;
-//            }
-//        }
-//        assert statisticInfo != null;
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setEndTime(end);
         listStatistic.add(statisticInfo);
-        /* здесь надо - Замерить время выхода, вычислить промежуток времени между входом и выходом в миллисекундах*/
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
@@ -38,7 +30,7 @@ public class Profiler {
         return list;
     }
 
-    private static List<StatisticInfo> findParent() {
+    private static List<StatisticInfo> findLevel() {
         listStatistic.get(0).setLevel(1);
 
         for (int i = 1; i < listStatistic.size(); i++) {
@@ -68,7 +60,7 @@ public class Profiler {
 
     private static TreeMap<String, StatisticSession> counter() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
-        for (StatisticInfo info : findParent()) {
+        for (StatisticInfo info : findLevel()) {
             String sessionName = info.getSectionName();
             int sessionLevel = info.getLevel();
             int sessionCount = info.getCount();
@@ -189,7 +181,7 @@ public class Profiler {
 //            timer += 35;
 //        }
 
-        findParent();
+        findLevel();
 
         for (StatisticInfo statisticInfo : listStatistic) {
             System.out.println(statisticInfo);
