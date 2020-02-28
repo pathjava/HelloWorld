@@ -7,6 +7,7 @@ public class StatisticSession {
     long endDuration;
     int sessionLevel;
     long sessionDuration;
+    long selfSession;
 
     public StatisticSession(String sessionName, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         this.sessionName = sessionName;
@@ -18,6 +19,10 @@ public class StatisticSession {
 
     public void setSessionDuration(long sessionDuration) {
         this.sessionDuration = sessionDuration;
+    }
+
+    public void setSelfSession(long selfSession) {
+        this.selfSession = selfSession;
     }
 
     public boolean isChild(StatisticSession statisticSession){
@@ -33,6 +38,7 @@ public class StatisticSession {
                 ", endDuration=" + endDuration +
                 ", sessionLevel=" + sessionLevel +
                 ", sessionDuration=" + sessionDuration +
+                ", selfSession=" + selfSession +
                 '}';
     }
 }

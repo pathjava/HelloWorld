@@ -25,7 +25,7 @@ public class Profiler {
     public static List<StatisticInfo> getStatisticInfo() {
         ArrayList<StatisticInfo> list = new ArrayList<>();
         for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().startDuration, entry.getValue().sessionCount));
+            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount));
         }
         return list;
     }
@@ -75,8 +75,32 @@ public class Profiler {
         }
         for (Map.Entry<String, StatisticSession> entry : treeList.entrySet()) {
             StatisticSession statisticSession = entry.getValue();
-            long duration = statisticSession.endDuration - statisticSession.startDuration;
-            statisticSession.setSessionDuration(duration);
+            long fullDuration = statisticSession.endDuration - statisticSession.startDuration;
+            statisticSession.setSessionDuration(fullDuration);
+        }
+
+
+        int id = 1;
+        for (Map.Entry<String, StatisticSession> entry : treeList.entrySet()) {
+            long first = 0;
+            long second = 0;
+            StatisticSession session = entry.getValue();
+            for (Map.Entry<String, StatisticSession> sessionEntry : treeList.entrySet()) {
+                StatisticSession statisticSession = sessionEntry.getValue();
+                if (statisticSession.sessionLevel == id) {
+                    first += statisticSession.sessionDuration;
+                }
+            }
+            id++;
+            for (Map.Entry<String, StatisticSession> sessionEntry : treeList.entrySet()) {
+                StatisticSession statisticSession = sessionEntry.getValue();
+                if (statisticSession.sessionLevel == id) {
+                    second += statisticSession.sessionDuration;
+                }
+            }
+            long self = first - second;
+            session.setSelfSession(self);
+//            id++;
         }
         return treeList;
     }
@@ -194,10 +218,10 @@ public class Profiler {
         }
         System.out.println();
 //
-//        for (StatisticInfo info : getStatisticInfo()) {
-//            System.out.println(info);
-//        }
-//        System.out.println();
+        for (StatisticInfo info : getStatisticInfo()) {
+            System.out.println(info);
+        }
+        System.out.println();
 
 
     }
