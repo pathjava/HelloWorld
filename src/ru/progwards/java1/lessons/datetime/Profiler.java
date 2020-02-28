@@ -3,7 +3,7 @@ package ru.progwards.java1.lessons.datetime;
 import java.util.*;
 
 public class Profiler {
-    public static ArrayList<StatisticInfo> listStatic = new ArrayList<>();
+    public static List<StatisticInfo> listStatic = new ArrayList<>();
 
     /* войти в профилировочную секцию, замерить время входа */
     public static void enterSection(String name) {
@@ -38,26 +38,23 @@ public class Profiler {
         return list;
     }
 
-    private static ArrayList<StatisticInfo> findParent() {
+    private static List<StatisticInfo> findParent() {
         listStatic.get(0).setLevel(1);
 
         for (int i = 1; i < listStatic.size(); i++) {
             int idLevel = listStatic.get(i - 1).level;
-            long startPreviousTime = listStatic.get(i-1).startTime;
+            long startPreviousTime = listStatic.get(i - 1).startTime;
             long endPreviousTime = listStatic.get(i - 1).endTime;
             long startCheckTime = listStatic.get(i).startTime;
-//            long endCheckTime = listStatic.get(i).endTime;
-//            long startNextTime = i != listStatic.size() - 1 ? listStatic.get(i + 1).startTime : 0;
-            String previousName = listStatic.get(i - 1).sectionName;
-            String checkName = listStatic.get(i).sectionName;
+            long endCheckTime = listStatic.get(i).endTime;
 
-            if (!(previousName.equals(checkName)) && startCheckTime > endPreviousTime) {
+            if (startCheckTime > endPreviousTime && endPreviousTime == 0 && endCheckTime == 0) {
                 listStatic.get(i).setLevel(idLevel + 1);
-            } else if (previousName.equals(checkName) && startCheckTime == 0 || previousName.equals(checkName) && startPreviousTime == 0 && startCheckTime == endPreviousTime){
+            } else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0 || startCheckTime == endPreviousTime && endCheckTime == 0) {
                 listStatic.get(i).setLevel(idLevel);
-            } else if (!previousName.equals(checkName) && startCheckTime == 0 && startPreviousTime == 0){
-                listStatic.get(i).setLevel(idLevel-1);
-            } else if (!previousName.equals(checkName) && startCheckTime == endPreviousTime && startPreviousTime == 0){
+            } else if (startCheckTime == 0 && startPreviousTime == 0 && endCheckTime != 0) {
+                listStatic.get(i).setLevel(idLevel - 1);
+            } else if (startCheckTime == endPreviousTime && startPreviousTime == 0) {
                 listStatic.get(i).setLevel(idLevel);
             }
         }
