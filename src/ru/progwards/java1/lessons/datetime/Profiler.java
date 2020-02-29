@@ -215,10 +215,10 @@ public class Profiler {
 //        }
 //        System.out.println();
 
-        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-        System.out.println();
+//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
+//        }
+//        System.out.println();
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
