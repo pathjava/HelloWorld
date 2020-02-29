@@ -40,7 +40,7 @@ public class Profiler {
 
             if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).level > 1 && checkStart < previousStart && checkStart < previousEnd) {
+            } else if (list.get(i).level > 1 && checkStart < previousStart && checkStart < previousEnd && list.get(i-1).level == list.get(i).level-1) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd && list.get(i-1).level == list.get(i).level-1){
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
@@ -183,32 +183,11 @@ public class Profiler {
 //            timer += 8;
 //        }
 
-        for (int j = 1; j <= 4; j++) {
-            enterSection("session-1");
-            Thread.sleep(timer);
-            if (j == 1) {
-                for (int i = 1; i <= 4; i++) {
-                    enterSection("session-2");
-                    Thread.sleep(timer);
-                    for (int k = 1; k <= 1; k++) {
-                        enterSection("session-3");
-                        Thread.sleep(timer);
-                        exitSection("session-3");
-                        timer += 20;
-                    }
-                    exitSection("session-2");
-                    timer += 15;
-                }
-            }
-            exitSection("session-1");
-            timer += 25;
-        }
-
-//        for (int j = 1; j <= 3; j++) {
+//        for (int j = 1; j <= 4; j++) {
 //            enterSection("session-1");
 //            Thread.sleep(timer);
-//            if (j == 3) {
-//                for (int i = 1; i <= 2; i++) {
+//            if (j == 1) {
+//                for (int i = 1; i <= 4; i++) {
 //                    enterSection("session-2");
 //                    Thread.sleep(timer);
 //                    for (int k = 1; k <= 1; k++) {
@@ -224,6 +203,27 @@ public class Profiler {
 //            exitSection("session-1");
 //            timer += 25;
 //        }
+
+        for (int j = 1; j <= 3; j++) {
+            enterSection("session-1");
+            Thread.sleep(timer);
+            if (j == 3) {
+                for (int i = 1; i <= 2; i++) {
+                    enterSection("session-2");
+                    Thread.sleep(timer);
+                    for (int k = 1; k <= 1; k++) {
+                        enterSection("session-3");
+                        Thread.sleep(timer);
+                        exitSection("session-3");
+                        timer += 20;
+                    }
+                    exitSection("session-2");
+                    timer += 15;
+                }
+            }
+            exitSection("session-1");
+            timer += 25;
+        }
 
 //        for (int j = 1; j <= 3; j++) {
 //            enterSection("session-1");
