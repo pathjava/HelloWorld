@@ -64,20 +64,6 @@ public class StatisticInfo {
         this.level = level;
     }
 
-//    @Override
-//    public String toString() {
-//        return "StatisticInfo{" +
-//                "sectionName=" + sectionName +
-//                ", fullTime=" + fullTime +
-//                ", selfTime=" + selfTime +
-//                ", count=" + count +
-//                ", startTime=" + startTime +
-//                ", endTime=" + endTime +
-//                ", level=" + level +
-//                '}';
-//    }
-
-
     @Override
     public String toString() {
         return "StatisticInfo{" +
@@ -85,9 +71,9 @@ public class StatisticInfo {
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
-//                ", startTime=" + startTime +
-//                ", endTime=" + endTime +
-//                ", level=" + level +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", level=" + level +
                 '}';
     }
 }

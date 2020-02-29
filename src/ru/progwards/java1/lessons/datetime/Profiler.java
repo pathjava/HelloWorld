@@ -40,6 +40,8 @@ public class Profiler {
 
             if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
+            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd && list.get(i-1).level == list.get(i).level-1){
+                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
                 boolean stop = true;
                 for (int j = i - 1; j >= 0 && stop; j--) {
@@ -179,6 +181,27 @@ public class Profiler {
 //            timer += 8;
 //        }
 
+//        for (int j = 1; j <= 3; j++) {
+//            enterSection("session-1");
+//            Thread.sleep(timer);
+//            if (j == 3) {
+//                for (int i = 1; i <= 2; i++) {
+//                    enterSection("session-2");
+//                    Thread.sleep(timer);
+//                    for (int k = 1; k <= 1; k++) {
+//                        enterSection("session-3");
+//                        Thread.sleep(timer);
+//                        exitSection("session-3");
+//                        timer += 20;
+//                    }
+//                    exitSection("session-2");
+//                    timer += 15;
+//                }
+//            }
+//            exitSection("session-1");
+//            timer += 25;
+//        }
+
         for (int j = 1; j <= 3; j++) {
             enterSection("session-1");
             Thread.sleep(timer);
@@ -206,17 +229,17 @@ public class Profiler {
 //            timer += 35;
 //        }
 
-//        findLevel();
-//
-//        for (StatisticInfo statisticInfo : listStatistic) {
-//            System.out.println(statisticInfo);
-//        }
-//        System.out.println();
+        findLevel();
 
-//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-//            System.out.println(entry.getKey() + " : " + entry.getValue());
-//        }
-//        System.out.println();
+        for (StatisticInfo statisticInfo : listStatistic) {
+            System.out.println(statisticInfo);
+        }
+        System.out.println();
+
+        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+        System.out.println();
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);

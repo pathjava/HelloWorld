@@ -20,16 +20,16 @@ public class StatisticSession {
         this.sessionDuration = sessionDuration;
     }
 
-//    @Override
-//    public String toString() {
-//        return "StatisticSession{" +
-//                "sessionName=" + sessionName +
-//                ", sessionCount=" + sessionCount +
-//                ", startDuration=" + startDuration +
-//                ", endDuration=" + endDuration +
-//                ", sessionLevel=" + sessionLevel +
-//                ", sessionDuration=" + sessionDuration +
-////                ", selfSession=" + selfSession +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "StatisticSession{" +
+                "sessionName=" + sessionName +
+                ", sessionCount=" + sessionCount +
+                ", startDuration=" + startDuration +
+                ", endDuration=" + endDuration +
+                ", sessionLevel=" + sessionLevel +
+                ", sessionDuration=" + sessionDuration +
+//                ", selfSession=" + selfSession +
+                '}';
+    }
 }
