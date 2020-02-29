@@ -29,7 +29,6 @@ public class StatisticSession {
                 ", endDuration=" + endDuration +
                 ", sessionLevel=" + sessionLevel +
                 ", sessionDuration=" + sessionDuration +
-//                ", selfSession=" + selfSession +
                 '}';
     }
 }

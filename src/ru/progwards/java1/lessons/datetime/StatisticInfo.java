@@ -71,9 +71,9 @@ public class StatisticInfo {
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", level=" + level +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", level=" + level +
                 '}';
     }
 }
