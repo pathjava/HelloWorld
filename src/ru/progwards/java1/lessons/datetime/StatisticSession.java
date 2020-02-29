@@ -7,7 +7,7 @@ public class StatisticSession {
     long endDuration;
     int sessionLevel;
     long sessionDuration;
-    long selfSession;
+//    long selfSession;
 
     public StatisticSession(String sessionName, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         this.sessionName = sessionName;
@@ -21,9 +21,9 @@ public class StatisticSession {
         this.sessionDuration = sessionDuration;
     }
 
-    public void setSelfSession(long selfSession) {
-        this.selfSession = selfSession;
-    }
+//    public void setSelfSession(long selfSession) {
+//        this.selfSession = selfSession;
+//    }
 
     public boolean isChild(StatisticSession statisticSession){
         return false; // TODO: проверить, является ли сессия вложенной
@@ -38,7 +38,7 @@ public class StatisticSession {
                 ", endDuration=" + endDuration +
                 ", sessionLevel=" + sessionLevel +
                 ", sessionDuration=" + sessionDuration +
-                ", selfSession=" + selfSession +
+//                ", selfSession=" + selfSession +
                 '}';
     }
 }

@@ -14,11 +14,22 @@ public class StatisticInfo {
         this.sectionName = name;
     }
 
-    public StatisticInfo(String sessionName, long sessionDuration, int sessionCount) {
+    public StatisticInfo(String sessionName, long sessionDuration, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         sectionName = sessionName;
         fullTime = (int) sessionDuration;
-        selfTime = (int) sessionDuration;
+//        selfTime = (int) sessionDuration;
         count = sessionCount;
+        startTime = startDuration;
+        endTime = endDuration;
+        level = sessionLevel;
+    }
+
+    public void setFullTime(int fullTime) {
+        this.fullTime = fullTime;
+    }
+
+    public void setSelfTime(int selfTime) {
+        this.selfTime = selfTime;
     }
 
     public String getSectionName() {
@@ -53,6 +64,20 @@ public class StatisticInfo {
         this.level = level;
     }
 
+//    @Override
+//    public String toString() {
+//        return "StatisticInfo{" +
+//                "sectionName=" + sectionName +
+//                ", fullTime=" + fullTime +
+//                ", selfTime=" + selfTime +
+//                ", count=" + count +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", level=" + level +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "StatisticInfo{" +
@@ -60,9 +85,9 @@ public class StatisticInfo {
                 ", fullTime=" + fullTime +
                 ", selfTime=" + selfTime +
                 ", count=" + count +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", level=" + level +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", level=" + level +
                 '}';
     }
 }
