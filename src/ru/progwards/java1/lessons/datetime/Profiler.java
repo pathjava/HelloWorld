@@ -28,32 +28,30 @@ public class Profiler {
             list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount, entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setSelfTime(list.get(i).fullTime);
+        for (StatisticInfo statisticInfo : list) {
+            statisticInfo.setSelfTime(statisticInfo.fullTime);
         }
 
         for (int i = 1; i < list.size(); i++) {
-            int idLevel = list.get(i).level;
+//            int idLevel = list.get(i).level;
             long checkStart = (list.get(i).startTime / list.get(i).count);
             long previousStart = (list.get(i-1).startTime / list.get(i-1).count);
             long previousEnd = (list.get(i-1).endTime / list.get(i-1).count);
-            int prevDuration = list.get(i-1).fullTime;
-            int checkDuration = list.get(i).fullTime;
+//            int prevDuration = list.get(i-1).fullTime;
+//            int checkDuration = list.get(i).fullTime;
 
-            if (idLevel > 1 && checkStart > previousStart && checkStart < previousEnd){
-                list.get(i-1).setSelfTime(prevDuration - list.get(i).fullTime);
-            } else if (idLevel > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd){
-//                list.get(i-1).setSelfTime(list.get(i-1).fullTime);
+            if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd){
+                list.get(i-1).setSelfTime(list.get(i-1).fullTime - list.get(i).fullTime);
+            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd){
                 boolean stop = true;
                 for (int j = i-1; j >= 0 && stop; j--) {
                     if (checkStart < (list.get(j).endTime / list.get(j).count)){
-                        list.get(j).setSelfTime(list.get(j).selfTime - checkDuration);
+                        list.get(j).setSelfTime(list.get(j).selfTime - list.get(i).fullTime);
                         stop = false;
                     }
                 }
             }
         }
-
         return list;
     }
 
@@ -106,50 +104,6 @@ public class Profiler {
             long fullDuration = statisticSession.endDuration - statisticSession.startDuration;
             statisticSession.setSessionDuration(fullDuration);
         }
-
-//        int id = 3;
-//        Map.Entry<String, StatisticSession> entryFirst = treeList.entrySet().iterator().next();
-//        StatisticSession sessionFirst = entryFirst.getValue();
-//
-//        long first = sessionFirst.sessionDuration;
-//
-//        for (Map.Entry<String, StatisticSession> entry : treeList.entrySet()) {
-//            StatisticSession session = entry.getValue();
-//            if (session.sessionLevel == 2){
-//                first -= session.sessionDuration;
-//                sessionFirst.setSelfSession(first);
-//            } else if (session.sessionLevel == id){
-//                for (Map.Entry<String, StatisticSession> sessionEntry : treeList.entrySet()) {
-//                    StatisticSession statisticSession = sessionEntry.getValue();
-//                    if (statisticSession.sessionLevel == id-1){
-//                        long self = statisticSession.sessionDuration - session.sessionDuration;
-//                        statisticSession.setSelfSession(self);
-//                    }
-//                }id++;
-//            }
-//        }
-
-//        for (Map.Entry<String, StatisticSession> entry : treeList.entrySet()) {
-//            StatisticSession session = entry.getValue();
-//            long first = 0;
-//            for (Map.Entry<String, StatisticSession> sessionEntry : treeList.entrySet()) {
-//                StatisticSession statisticSession = sessionEntry.getValue();
-//                if (statisticSession.sessionLevel == id) {
-//                    first += statisticSession.sessionDuration;
-//                }
-//            }
-//            id++;
-//            long second = 0;
-//            for (Map.Entry<String, StatisticSession> sessionEntry : treeList.entrySet()) {
-//                StatisticSession statisticSession = sessionEntry.getValue();
-//                if (statisticSession.sessionLevel == id) {
-//                    second += statisticSession.sessionDuration;
-//                }
-//            }
-//            long self = first - second;
-//            session.setSelfSession(self);
-//        }
-
         return treeList;
     }
 
@@ -180,70 +134,71 @@ public class Profiler {
 //            timer += 25;
 //        }
 
-        for (int j = 1; j <= 2; j++) {
-            enterSection("session-1");
-            Thread.sleep(timer);
-            for (int i = 1; i <= 3; i++) {
-                enterSection("session-2");
-                Thread.sleep(timer);
-                for (int k = 1; k <= 2; k++) {
-                    enterSection("session-3");
-                    Thread.sleep(timer);
-                    for (int f = 1; f <= 2; f++) {
-                        enterSection("session-4");
-                        Thread.sleep(timer);
-                        exitSection("session-4");
-                        timer += 5;
-                    }
-                    exitSection("session-3");
-                    timer += 10;
-                }
-                exitSection("session-2");
-                timer += 7;
-            }
-            enterSection("session-5");
-            Thread.sleep(timer);
-            exitSection("session-5");
-            timer += 11;
-
-            enterSection("session-6");
-            Thread.sleep(timer);
-            for (int t = 1; t <= 2; t++) {
-                enterSection("session-7");
-                Thread.sleep(timer);
-                for (int f = 1; f <= 2; f++) {
-                    enterSection("session-8");
-                    Thread.sleep(timer);
-                    exitSection("session-8");
-                    timer += 5;
-                }
-                exitSection("session-7");
-                timer += 5;
-            }
-            exitSection("session-6");
-            timer += 6;
-
-            exitSection("session-1");
-            timer += 8;
-        }
-
 //        for (int j = 1; j <= 2; j++) {
 //            enterSection("session-1");
 //            Thread.sleep(timer);
 //            for (int i = 1; i <= 3; i++) {
 //                enterSection("session-2");
 //                Thread.sleep(timer);
+//                for (int k = 1; k <= 2; k++) {
+//                    enterSection("session-3");
+//                    Thread.sleep(timer);
+//                    for (int f = 1; f <= 2; f++) {
+//                        enterSection("session-4");
+//                        Thread.sleep(timer);
+//                        exitSection("session-4");
+//                        timer += 5;
+//                    }
+//                    exitSection("session-3");
+//                    timer += 10;
+//                }
 //                exitSection("session-2");
-//                timer += 15;
+//                timer += 7;
 //            }
-//            enterSection("session-3");
+//            enterSection("session-5");
 //            Thread.sleep(timer);
-//            exitSection("session-3");
-//            timer += 20;
+//            exitSection("session-5");
+//            timer += 11;
+//
+//            enterSection("session-6");
+//            Thread.sleep(timer);
+//            for (int t = 1; t <= 2; t++) {
+//                enterSection("session-7");
+//                Thread.sleep(timer);
+//                for (int f = 1; f <= 2; f++) {
+//                    enterSection("session-8");
+//                    Thread.sleep(timer);
+//                    exitSection("session-8");
+//                    timer += 5;
+//                }
+//                exitSection("session-7");
+//                timer += 5;
+//            }
+//            exitSection("session-6");
+//            timer += 6;
 //
 //            exitSection("session-1");
-//            timer += 25;
+//            timer += 8;
 //        }
+
+        for (int j = 1; j <= 3; j++) {
+            enterSection("session-1");
+            Thread.sleep(timer);
+            for (int i = 1; i <= 4; i++) {
+                enterSection("session-2");
+                Thread.sleep(timer);
+                for (int k = 1; k <= 1; k++) {
+                    enterSection("session-3");
+                    Thread.sleep(timer);
+                    exitSection("session-3");
+                    timer += 20;
+                }
+                exitSection("session-2");
+                timer += 15;
+            }
+            exitSection("session-1");
+            timer += 25;
+        }
 
 //        for (int i = 0; i < 10; i++) {
 //            enterSection("session1");
@@ -253,12 +208,12 @@ public class Profiler {
 //            timer += 35;
 //        }
 
-        findLevel();
-
-        for (StatisticInfo statisticInfo : listStatistic) {
-            System.out.println(statisticInfo);
-        }
-        System.out.println();
+//        findLevel();
+//
+//        for (StatisticInfo statisticInfo : listStatistic) {
+//            System.out.println(statisticInfo);
+//        }
+//        System.out.println();
 
         for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
