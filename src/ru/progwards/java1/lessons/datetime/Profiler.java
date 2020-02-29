@@ -25,7 +25,8 @@ public class Profiler {
     public static List<StatisticInfo> getStatisticInfo() {
         ArrayList<StatisticInfo> list = new ArrayList<>();
         for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount, entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
+            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount,
+                    entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
         }
 
         for (StatisticInfo statisticInfo : list) {
@@ -33,19 +34,16 @@ public class Profiler {
         }
 
         for (int i = 1; i < list.size(); i++) {
-//            int idLevel = list.get(i).level;
             long checkStart = (list.get(i).startTime / list.get(i).count);
-            long previousStart = (list.get(i-1).startTime / list.get(i-1).count);
-            long previousEnd = (list.get(i-1).endTime / list.get(i-1).count);
-//            int prevDuration = list.get(i-1).fullTime;
-//            int checkDuration = list.get(i).fullTime;
+            long previousStart = (list.get(i - 1).startTime / list.get(i - 1).count);
+            long previousEnd = (list.get(i - 1).endTime / list.get(i - 1).count);
 
-            if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd){
-                list.get(i-1).setSelfTime(list.get(i-1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd){
+            if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd) {
+                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
+            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
                 boolean stop = true;
-                for (int j = i-1; j >= 0 && stop; j--) {
-                    if (checkStart < (list.get(j).endTime / list.get(j).count)){
+                for (int j = i - 1; j >= 0 && stop; j--) {
+                    if (checkStart < (list.get(j).endTime / list.get(j).count)) {
                         list.get(j).setSelfTime(list.get(j).selfTime - list.get(i).fullTime);
                         stop = false;
                     }
