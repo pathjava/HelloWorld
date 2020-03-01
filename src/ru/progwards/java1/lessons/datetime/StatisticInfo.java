@@ -1,10 +1,10 @@
 package ru.progwards.java1.lessons.datetime;
 
 public class StatisticInfo {
-    private String sectionName;
-    private int fullTime;
-    private int selfTime;
-    private int count = 1;
+    public String sectionName;
+    public int fullTime;
+    public int selfTime;
+    public int count = 1;
 
     private long startTime = 0;
     private long endTime;
@@ -23,24 +23,10 @@ public class StatisticInfo {
         level = sessionLevel;
     }
 
-    public int getFullTime() {
-        return fullTime;
-    }
-
-    public int getSelfTime() {
-        return selfTime;
-    }
     public void setSelfTime(int selfTime) {
         this.selfTime = selfTime;
     }
 
-    public String getSectionName() {
-        return sectionName;
-    }
-
-    public int getCount() {
-        return count;
-    }
     public void setCount(int count) {
         this.count = count;
     }

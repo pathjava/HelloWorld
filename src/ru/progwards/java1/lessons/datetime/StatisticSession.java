@@ -1,12 +1,12 @@
 package ru.progwards.java1.lessons.datetime;
 
 public class StatisticSession {
-    String sessionName;
-    int sessionCount;
-    long startDuration;
-    long endDuration;
-    int sessionLevel;
-    long sessionDuration;
+    public String sessionName;
+    public int sessionCount;
+    public long startDuration;
+    public long endDuration;
+    public int sessionLevel;
+    public long sessionDuration;
 
     public StatisticSession(String sessionName, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         this.sessionName = sessionName;

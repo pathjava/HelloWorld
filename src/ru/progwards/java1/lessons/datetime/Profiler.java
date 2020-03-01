@@ -30,24 +30,24 @@ public class Profiler {
         }
 
         for (StatisticInfo statisticInfo : list) {
-            statisticInfo.setSelfTime(statisticInfo.getFullTime());
+            statisticInfo.setSelfTime(statisticInfo.fullTime);
         }
 
         for (int i = 1; i < list.size(); i++) {
-            long checkStart = (list.get(i).getStartTime() / list.get(i).getCount());
-            long previousStart = (list.get(i - 1).getStartTime() / list.get(i - 1).getCount());
-            long previousEnd = (list.get(i - 1).getEndTime() / list.get(i - 1).getCount());
+            long checkStart = (list.get(i).getStartTime() / list.get(i).count);
+            long previousStart = (list.get(i - 1).getStartTime() / list.get(i - 1).count);
+            long previousEnd = (list.get(i - 1).getEndTime() / list.get(i - 1).count);
 
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
                     || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart < previousStart && checkStart == previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
-                list.get(i - 1).setSelfTime(list.get(i - 1).getFullTime() - list.get(i).getFullTime());
+                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
                 boolean stop = true;
                 for (int j = i - 1; j >= 0 && stop; j--) {
-                    if (checkStart < (list.get(j).getEndTime() / list.get(j).getCount())) {
-                        list.get(j).setSelfTime(list.get(j).getSelfTime() - list.get(i).getFullTime());
+                    if (checkStart < (list.get(j).getEndTime() / list.get(j).count)) {
+                        list.get(j).setSelfTime(list.get(j).selfTime - list.get(i).fullTime);
                         stop = false;
                     }
                 }
@@ -87,9 +87,9 @@ public class Profiler {
     private static TreeMap<String, StatisticSession> counter() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
         for (StatisticInfo info : findLevel()) {
-            String sessionName = info.getSectionName();
+            String sessionName = info.sectionName;
             int sessionLevel = info.getLevel();
-            int sessionCount = info.getCount();
+            int sessionCount = info.count;
             long startDuration = info.getStartTime();
             long endDuration = info.getEndTime();
             if (treeList.containsKey(sessionName)) {
