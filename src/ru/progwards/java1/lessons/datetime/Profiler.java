@@ -38,11 +38,9 @@ public class Profiler {
             long previousStart = (list.get(i - 1).startTime / list.get(i - 1).count);
             long previousEnd = (list.get(i - 1).endTime / list.get(i - 1).count);
 
-            if (list.get(i).level > 1 && checkStart > previousStart && checkStart < previousEnd) {
-                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).level > 1 && checkStart < previousStart && checkStart < previousEnd && list.get(i-1).level == list.get(i).level-1) {
-                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd && list.get(i-1).level == list.get(i).level-1){
+            if (list.get(i).level > 1 && ((checkStart > previousStart && checkStart < previousEnd)
+                    || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).level == list.get(i).level - 1)
+                    || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).level == list.get(i).level - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
                 boolean stop = true;
