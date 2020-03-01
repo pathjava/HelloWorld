@@ -182,25 +182,25 @@ public class Profiler {
 //            timer += 8;
 //        }
 
-        for (int j = 1; j <= 3; j++) {
-            enterSection("session-1");
-//            Thread.sleep(100);
-            if (j == 1) {
-                for (int i = 1; i <= 2; i++) {
-                    enterSection("session-2");
-                    Thread.sleep(200);
-                    for (int k = 1; k <= 1; k++) {
-                        enterSection("session-3");
-                        Thread.sleep(100);
-                        exitSection("session-3");
-                    }
+//        for (int j = 1; j <= 3; j++) {
+//            enterSection("session-1");
+////            Thread.sleep(100);
+//            if (j == 3) {
+//                for (int i = 1; i <= 2; i++) {
+//                    enterSection("session-2");
 //                    Thread.sleep(200);
-                    exitSection("session-2");
-                }
-            }
-            Thread.sleep(100);
-            exitSection("session-1");
-        }
+//                    for (int k = 1; k <= 1; k++) {
+//                        enterSection("session-3");
+//                        Thread.sleep(100);
+//                        exitSection("session-3");
+//                    }
+////                    Thread.sleep(200);
+//                    exitSection("session-2");
+//                }
+//            }
+//            Thread.sleep(100);
+//            exitSection("session-1");
+//        }
 
 //        for (int j = 1; j <= 4; j++) {
 //            enterSection("session-1");
@@ -338,17 +338,55 @@ public class Profiler {
 //        exitSection("session-1");
 
 
-        findLevel();
+        enterSection("session-1");
+        enterSection("session-2");
+        enterSection("session-3");
+        Thread.sleep(100);
+        exitSection("session-3");
+        Thread.sleep(200);
+        exitSection("session-2");
+        enterSection("session-2");
+        enterSection("session-3");
+        Thread.sleep(100);
+        exitSection("session-3");
+        Thread.sleep(200);
+        exitSection("session-2");
+        enterSection("session-2");
+        Thread.sleep(200);
+        enterSection("session-3");
+        Thread.sleep(100);
+        exitSection("session-3");
+        exitSection("session-2");
+        enterSection("session-2");
+        Thread.sleep(200);
+        enterSection("session-3");
+        Thread.sleep(100);
+        exitSection("session-3");
+        exitSection("session-2");
+        Thread.sleep(100);
+        exitSection("session-1");
+        enterSection("session-1");
+        Thread.sleep(100);
+        exitSection("session-1");
+        enterSection("session-1");
+        Thread.sleep(100);
+        exitSection("session-1");
+        enterSection("session-1");
+        Thread.sleep(100);
+        exitSection("session-1");
 
-        for (StatisticInfo statisticInfo : listStatistic) {
-            System.out.println(statisticInfo);
-        }
-        System.out.println();
 
-        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-        System.out.println();
+//        findLevel();
+//
+//        for (StatisticInfo statisticInfo : listStatistic) {
+//            System.out.println(statisticInfo);
+//        }
+//        System.out.println();
+//
+//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
+//        }
+//        System.out.println();
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
