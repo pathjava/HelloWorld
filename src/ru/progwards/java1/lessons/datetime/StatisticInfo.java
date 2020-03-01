@@ -30,7 +30,6 @@ public class StatisticInfo {
     public int getSelfTime() {
         return selfTime;
     }
-
     public void setSelfTime(int selfTime) {
         this.selfTime = selfTime;
     }
@@ -42,22 +41,22 @@ public class StatisticInfo {
     public int getCount() {
         return count;
     }
-
     public void setCount(int count) {
         this.count = count;
     }
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
     public long getStartTime() {
         return startTime;
     }
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
+
     public long getEndTime() {
         return endTime;
+    }
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public int getLevel() {
