@@ -41,6 +41,9 @@ public class Profiler {
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
                     || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart < previousStart && checkStart == previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart > previousStart && checkStart == previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart == previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart == previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
