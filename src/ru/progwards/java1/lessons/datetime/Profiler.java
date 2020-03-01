@@ -110,7 +110,7 @@ public class Profiler {
 
 
     public static void main(String[] args) throws InterruptedException {
-        int timer = 10;
+//        int timer = 10;
 //        for (int j = 1; j <= 2; j++) {
 //            enterSection("session-1");
 //            Thread.sleep(timer);
@@ -339,6 +339,7 @@ public class Profiler {
 
 
         enterSection("session-1");
+        Thread.sleep(100);
         enterSection("session-2");
         enterSection("session-3");
         Thread.sleep(100);
@@ -346,10 +347,10 @@ public class Profiler {
         Thread.sleep(200);
         exitSection("session-2");
         enterSection("session-2");
+        Thread.sleep(200);
         enterSection("session-3");
         Thread.sleep(100);
         exitSection("session-3");
-        Thread.sleep(200);
         exitSection("session-2");
         enterSection("session-2");
         Thread.sleep(200);
@@ -372,7 +373,6 @@ public class Profiler {
         Thread.sleep(100);
         exitSection("session-1");
         enterSection("session-1");
-        Thread.sleep(100);
         exitSection("session-1");
 
 
