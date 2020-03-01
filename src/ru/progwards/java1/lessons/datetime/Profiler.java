@@ -40,6 +40,7 @@ public class Profiler {
 
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
                     || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart < previousStart && checkStart == previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).getFullTime() - list.get(i).getFullTime());
             } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
@@ -184,7 +185,7 @@ public class Profiler {
         for (int j = 1; j <= 3; j++) {
             enterSection("session-1");
             Thread.sleep(100);
-            if (j == 3) {
+            if (j == 1) {
                 for (int i = 1; i <= 2; i++) {
                     enterSection("session-2");
                     Thread.sleep(200);
@@ -276,10 +277,10 @@ public class Profiler {
 //        }
 //        System.out.println();
 //
-//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-//            System.out.println(entry.getKey() + " : " + entry.getValue());
-//        }
-//        System.out.println();
+        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+        System.out.println();
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
