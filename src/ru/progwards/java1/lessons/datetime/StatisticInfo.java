@@ -1,14 +1,14 @@
 package ru.progwards.java1.lessons.datetime;
 
 public class StatisticInfo {
-    public String sectionName;
-    public int fullTime;
-    public int selfTime;
-    public int count = 1;
+    private String sectionName;
+    private int fullTime;
+    private int selfTime;
+    private int count = 1;
 
-    public long startTime = 0;
-    public long endTime;
-    public int level = 0;
+    private long startTime = 0;
+    private long endTime;
+    private int level = 0;
 
     public StatisticInfo(String name) {
         this.sectionName = name;
@@ -17,15 +17,18 @@ public class StatisticInfo {
     public StatisticInfo(String sessionName, long sessionDuration, int sessionCount, long startDuration, long endDuration, int sessionLevel) {
         sectionName = sessionName;
         fullTime = (int) sessionDuration;
-//        selfTime = (int) sessionDuration;
         count = sessionCount;
         startTime = startDuration;
         endTime = endDuration;
         level = sessionLevel;
     }
 
-    public void setFullTime(int fullTime) {
-        this.fullTime = fullTime;
+    public int getFullTime() {
+        return fullTime;
+    }
+
+    public int getSelfTime() {
+        return selfTime;
     }
 
     public void setSelfTime(int selfTime) {

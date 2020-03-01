@@ -30,23 +30,23 @@ public class Profiler {
         }
 
         for (StatisticInfo statisticInfo : list) {
-            statisticInfo.setSelfTime(statisticInfo.fullTime);
+            statisticInfo.setSelfTime(statisticInfo.getFullTime());
         }
 
         for (int i = 1; i < list.size(); i++) {
-            long checkStart = (list.get(i).startTime / list.get(i).count);
-            long previousStart = (list.get(i - 1).startTime / list.get(i - 1).count);
-            long previousEnd = (list.get(i - 1).endTime / list.get(i - 1).count);
+            long checkStart = (list.get(i).getStartTime() / list.get(i).getCount());
+            long previousStart = (list.get(i - 1).getStartTime() / list.get(i - 1).getCount());
+            long previousEnd = (list.get(i - 1).getEndTime() / list.get(i - 1).getCount());
 
-            if (list.get(i).level > 1 && ((checkStart > previousStart && checkStart < previousEnd)
-                    || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).level == list.get(i).level - 1)
-                    || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).level == list.get(i).level - 1))) {
-                list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).level > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
+            if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
+                    || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
+                list.get(i - 1).setSelfTime(list.get(i - 1).getFullTime() - list.get(i).getFullTime());
+            } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
                 boolean stop = true;
                 for (int j = i - 1; j >= 0 && stop; j--) {
-                    if (checkStart < (list.get(j).endTime / list.get(j).count)) {
-                        list.get(j).setSelfTime(list.get(j).selfTime - list.get(i).fullTime);
+                    if (checkStart < (list.get(j).getEndTime() / list.get(j).getCount())) {
+                        list.get(j).setSelfTime(list.get(j).getSelfTime() - list.get(i).getFullTime());
                         stop = false;
                     }
                 }
@@ -59,11 +59,11 @@ public class Profiler {
         listStatistic.get(0).setLevel(1);
 
         for (int i = 1; i < listStatistic.size(); i++) {
-            int idLevel = listStatistic.get(i - 1).level;
-            long startPreviousTime = listStatistic.get(i - 1).startTime;
-            long endPreviousTime = listStatistic.get(i - 1).endTime;
-            long startCheckTime = listStatistic.get(i).startTime;
-            long endCheckTime = listStatistic.get(i).endTime;
+            int idLevel = listStatistic.get(i - 1).getLevel();
+            long startPreviousTime = listStatistic.get(i - 1).getStartTime();
+            long endPreviousTime = listStatistic.get(i - 1).getEndTime();
+            long startCheckTime = listStatistic.get(i).getStartTime();
+            long endCheckTime = listStatistic.get(i).getEndTime();
 
             if (startCheckTime > endPreviousTime && endPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel + 1);
@@ -76,7 +76,7 @@ public class Profiler {
             }
         }
         for (StatisticInfo statisticInfo : listStatistic) {
-            if (statisticInfo.startTime == 0) {
+            if (statisticInfo.getStartTime() == 0) {
                 statisticInfo.setCount(0);
             }
         }
