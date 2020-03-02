@@ -304,22 +304,22 @@ public class Profiler {
 
 //        int p1 = 4;
 //        int p2 = 2;
-        for (int i = 0; i < 4; i++) {
-            Profiler.enterSection("Process1");
-//            p1++;
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
-
-            for (int n = 0; n < i; n++){
-                Profiler.enterSection("Process2");
-//                p2++;
-                try { Thread.sleep(200); } catch (InterruptedException e) {}
-                Profiler.enterSection("Process3");
-                try { Thread.sleep(100); } catch (InterruptedException e) {}
-                Profiler.exitSection("Process3");
-                Profiler.exitSection("Process2");
-            }
-            Profiler.exitSection("Process1");
-        }
+//        for (int i = 0; i < 4; i++) {
+//            Profiler.enterSection("Process1");
+////            p1++;
+//            try { Thread.sleep(100); } catch (InterruptedException e) {}
+//
+//            for (int n = 0; n < i; n++){
+//                Profiler.enterSection("Process2");
+////                p2++;
+//                try { Thread.sleep(200); } catch (InterruptedException e) {}
+//                Profiler.enterSection("Process3");
+//                try { Thread.sleep(100); } catch (InterruptedException e) {}
+//                Profiler.exitSection("Process3");
+//                Profiler.exitSection("Process2");
+//            }
+//            Profiler.exitSection("Process1");
+//        }
 
 //        findLevel();
 //
@@ -332,6 +332,25 @@ public class Profiler {
 //            System.out.println(entry.getKey() + " : " + entry.getValue());
 //        }
 //        System.out.println();
+
+        Profiler.enterSection("Process1");
+        Thread.sleep(100);
+        Profiler.exitSection("Process1");
+
+        Thread.sleep(100);
+
+        Profiler.enterSection("Process1");
+        try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+        for (int n = 0; n < 4; n++){
+            Profiler.enterSection("Process2");
+            try { Thread.sleep(200); } catch (InterruptedException e) {}
+            Profiler.enterSection("Process3");
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            Profiler.exitSection("Process3");
+            Profiler.exitSection("Process2");
+        }
+        Profiler.exitSection("Process1");
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
