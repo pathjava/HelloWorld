@@ -40,6 +40,7 @@ public class Profiler {
 
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
                     || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart < previousStart && checkStart < previousEnd && checkStart == list.get(i).getEndTime())
                     || (checkStart == previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
@@ -266,7 +267,12 @@ public class Profiler {
 
 
         enterSection("session-1");
+        enterSection("session-2");
+        Thread.sleep(200);
+        enterSection("session-3");
         Thread.sleep(100);
+        exitSection("session-3");
+        exitSection("session-2");
         enterSection("session-2");
         enterSection("session-3");
         Thread.sleep(100);
@@ -285,12 +291,7 @@ public class Profiler {
         Thread.sleep(100);
         exitSection("session-3");
         exitSection("session-2");
-        enterSection("session-2");
-        Thread.sleep(200);
-        enterSection("session-3");
         Thread.sleep(100);
-        exitSection("session-3");
-        exitSection("session-2");
         exitSection("session-1");
         enterSection("session-1");
         Thread.sleep(100);
