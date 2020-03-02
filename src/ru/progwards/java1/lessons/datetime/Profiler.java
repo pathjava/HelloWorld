@@ -23,8 +23,8 @@ public class Profiler {
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
     public static List<StatisticInfo> getStatisticInfo() {
-        ArrayList<StatisticInfo> list = new ArrayList<>();
-        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
+        List<StatisticInfo> list = new ArrayList<>();
+        for (Map.Entry<String, StatisticSession> entry : sortedDate().entrySet()) {
             list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount,
                     entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
         }
@@ -84,7 +84,7 @@ public class Profiler {
         return listStatistic;
     }
 
-    private static TreeMap<String, StatisticSession> counter() {
+    private static TreeMap<String, StatisticSession> sortedDate() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
         for (StatisticInfo info : findLevel()) {
             String sessionName = info.sectionName;
