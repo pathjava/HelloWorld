@@ -291,7 +291,6 @@ public class Profiler {
         Thread.sleep(100);
         exitSection("session-3");
         exitSection("session-2");
-        Thread.sleep(100);
         exitSection("session-1");
         enterSection("session-1");
         Thread.sleep(100);
@@ -300,6 +299,7 @@ public class Profiler {
         Thread.sleep(100);
         exitSection("session-1");
         enterSection("session-1");
+        Thread.sleep(100);
         exitSection("session-1");
 
 
