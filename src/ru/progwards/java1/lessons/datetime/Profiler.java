@@ -265,43 +265,61 @@ public class Profiler {
 //        }
 
 
-        enterSection("session-1");
-        enterSection("session-2");
-        Thread.sleep(200);
-        enterSection("session-3");
-        Thread.sleep(100);
-        exitSection("session-3");
-        exitSection("session-2");
-        enterSection("session-2");
-        enterSection("session-3");
-        Thread.sleep(100);
-        exitSection("session-3");
-        Thread.sleep(200);
-        exitSection("session-2");
-        enterSection("session-2");
-        Thread.sleep(200);
-        enterSection("session-3");
-        Thread.sleep(100);
-        exitSection("session-3");
-        exitSection("session-2");
-        enterSection("session-2");
-        Thread.sleep(200);
-        enterSection("session-3");
-        Thread.sleep(100);
-        exitSection("session-3");
-        exitSection("session-2");
-        Thread.sleep(100);
-        exitSection("session-1");
-        enterSection("session-1");
-        Thread.sleep(100);
-        exitSection("session-1");
-        enterSection("session-1");
-        Thread.sleep(100);
-        exitSection("session-1");
-        enterSection("session-1");
-        Thread.sleep(100);
-        exitSection("session-1");
+//        enterSection("session-1");
+//        enterSection("session-2");
+//        Thread.sleep(200);
+//        enterSection("session-3");
+//        Thread.sleep(100);
+//        exitSection("session-3");
+//        exitSection("session-2");
+//        enterSection("session-2");
+//        enterSection("session-3");
+//        Thread.sleep(100);
+//        exitSection("session-3");
+//        Thread.sleep(200);
+//        exitSection("session-2");
+//        enterSection("session-2");
+//        Thread.sleep(200);
+//        enterSection("session-3");
+//        Thread.sleep(100);
+//        exitSection("session-3");
+//        exitSection("session-2");
+//        enterSection("session-2");
+//        Thread.sleep(200);
+//        enterSection("session-3");
+//        Thread.sleep(100);
+//        exitSection("session-3");
+//        exitSection("session-2");
+//        Thread.sleep(100);
+//        exitSection("session-1");
+//        enterSection("session-1");
+//        Thread.sleep(100);
+//        exitSection("session-1");
+//        enterSection("session-1");
+//        Thread.sleep(100);
+//        exitSection("session-1");
+//        enterSection("session-1");
+//        Thread.sleep(100);
+//        exitSection("session-1");
 
+//        int p1 = 4;
+//        int p2 = 2;
+        for (int i = 0; i < 4; i++) {
+            Profiler.enterSection("Process1");
+//            p1++;
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+            for (int n = 0; n < i; n++){
+                Profiler.enterSection("Process2");
+//                p2++;
+                try { Thread.sleep(200); } catch (InterruptedException e) {}
+                Profiler.enterSection("Process3");
+                try { Thread.sleep(100); } catch (InterruptedException e) {}
+                Profiler.exitSection("Process3");
+                Profiler.exitSection("Process2");
+            }
+            Profiler.exitSection("Process1");
+        }
 
 //        findLevel();
 //
