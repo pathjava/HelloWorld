@@ -68,7 +68,9 @@ public class Profiler {
 
             if (startCheckTime > endPreviousTime && endPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel + 1);
-            } else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0 || startCheckTime == endPreviousTime && endCheckTime == 0) {
+            } else if (startCheckTime > endPreviousTime && startPreviousTime == 0 && endCheckTime == 0){
+                listStatistic.get(i).setLevel(idLevel);
+            }else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0 || startCheckTime == endPreviousTime && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel);
             } else if (startCheckTime == 0 && startPreviousTime == 0 && endCheckTime != 0) {
                 listStatistic.get(i).setLevel(idLevel - 1);
@@ -321,36 +323,38 @@ public class Profiler {
 //            Profiler.exitSection("Process1");
 //        }
 
-//        findLevel();
-//
-//        for (StatisticInfo statisticInfo : listStatistic) {
-//            System.out.println(statisticInfo);
-//        }
-//        System.out.println();
-//
-//        for (Map.Entry<String, StatisticSession> entry : counter().entrySet()) {
-//            System.out.println(entry.getKey() + " : " + entry.getValue());
-//        }
-//        System.out.println();
-
-        Profiler.enterSection("Process1");
+        Profiler.enterSection("Process-1");
         Thread.sleep(100);
-        Profiler.exitSection("Process1");
+        Profiler.exitSection("Process-1");
 
         Thread.sleep(100);
 
-        Profiler.enterSection("Process1");
+        Profiler.enterSection("Process-1");
         try { Thread.sleep(100); } catch (InterruptedException e) {}
 
         for (int n = 0; n < 4; n++){
-            Profiler.enterSection("Process2");
+            Profiler.enterSection("Process-2");
             try { Thread.sleep(200); } catch (InterruptedException e) {}
-            Profiler.enterSection("Process3");
+            Profiler.enterSection("Process-3");
             try { Thread.sleep(100); } catch (InterruptedException e) {}
-            Profiler.exitSection("Process3");
-            Profiler.exitSection("Process2");
+            Profiler.exitSection("Process-3");
+            Profiler.exitSection("Process-2");
         }
-        Profiler.exitSection("Process1");
+        Profiler.exitSection("Process-1");
+
+
+        findLevel();
+
+        for (StatisticInfo statisticInfo : listStatistic) {
+            System.out.println(statisticInfo);
+        }
+        System.out.println();
+
+        for (Map.Entry<String, StatisticSession> entry : sortedDate().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+        System.out.println();
+
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
