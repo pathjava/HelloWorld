@@ -68,9 +68,9 @@ public class Profiler {
 
             if (startCheckTime > endPreviousTime && endPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel + 1);
-            } else if (startCheckTime > endPreviousTime && startPreviousTime == 0 && endCheckTime == 0){
-                listStatistic.get(i).setLevel(idLevel);
-            }else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0 || startCheckTime == endPreviousTime && endCheckTime == 0) {
+            } else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0
+                    || startCheckTime == endPreviousTime && endCheckTime == 0
+                    || startCheckTime > endPreviousTime && startPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel);
             } else if (startCheckTime == 0 && startPreviousTime == 0 && endCheckTime != 0) {
                 listStatistic.get(i).setLevel(idLevel - 1);
