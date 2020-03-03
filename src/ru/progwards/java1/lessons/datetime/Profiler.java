@@ -3,6 +3,7 @@ package ru.progwards.java1.lessons.datetime;
 import java.util.*;
 
 public class Profiler {
+    /* массив для хранения данных из входа и ваыхода профилировочных секций */
     public static List<StatisticInfo> listStatistic = new ArrayList<>();
 
     /* войти в профилировочную секцию, замерить время входа */
@@ -10,6 +11,7 @@ public class Profiler {
         long start = System.currentTimeMillis();
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setStartTime(start);
+        /* добавляем в массив данные со стартом профилировочной сессии */
         listStatistic.add(statisticInfo);
     }
 
@@ -18,32 +20,38 @@ public class Profiler {
         long end = System.currentTimeMillis();
         StatisticInfo statisticInfo = new StatisticInfo(name);
         statisticInfo.setEndTime(end);
+        /* добавляем в массив данные с окончанием профилировочной сессии */
         listStatistic.add(statisticInfo);
     }
 
     /* получить профилировочную статистику, отсортировать по наименованию секции */
     public static List<StatisticInfo> getStatisticInfo() {
         List<StatisticInfo> list = new ArrayList<>();
+        /* перегоняем отсортированные данные из метода sortedDate() в массив list = new ArrayList<>() */
         for (Map.Entry<String, StatisticSession> entry : sortedDate().entrySet()) {
             list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount,
                     entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
         }
-
+        /* заполняем все поля selfTime значениями fullTime - на тот случай, если сессия одноуровневая и временные показатели равны */
         for (StatisticInfo statisticInfo : list) {
             statisticInfo.setSelfTime(statisticInfo.fullTime);
         }
-
+        /* исходя из уровней вложенности и времени старта и окончания профилировочной сессии
+         * рассчитываем чистое время каждой сессии */
         for (int i = 1; i < list.size(); i++) {
+            /* для получения времени checkStart делим общее время всех циклов сессии на количество циклов */
             long checkStart = (list.get(i).getStartTime() / list.get(i).count);
             long previousStart = (list.get(i - 1).getStartTime() / list.get(i - 1).count);
             long previousEnd = (list.get(i - 1).getEndTime() / list.get(i - 1).count);
 
+            /* в условиях по времени проверяем, рассчитываем и устанавливаем чистое время каждой сессии */
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
                     || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart == previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
                     || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
             } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
+                /* переменная boolean отвечает за остановку цикла когда найден первый удовлетворяющий условия результат */
                 boolean stop = true;
                 for (int j = i - 1; j >= 0 && stop; j--) {
                     if (checkStart < (list.get(j).getEndTime() / list.get(j).count)) {
@@ -56,6 +64,7 @@ public class Profiler {
         return list;
     }
 
+    /* метод определения и установки значения int согласно вложенности сессии */
     private static List<StatisticInfo> findLevel() {
         listStatistic.get(0).setLevel(1);
 
@@ -66,18 +75,21 @@ public class Profiler {
             long startCheckTime = listStatistic.get(i).getStartTime();
             long endCheckTime = listStatistic.get(i).getEndTime();
 
+            /* по временным показателям определяем и устанавливаем уровень вложенности сессии */
             if (startCheckTime > endPreviousTime && endPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel + 1);
             } else if (startCheckTime == 0 && endPreviousTime == 0 && endCheckTime != 0
                     || startCheckTime == endPreviousTime && endCheckTime == 0
+                    || startCheckTime == endPreviousTime && startPreviousTime == 0
                     || startCheckTime > endPreviousTime && startPreviousTime == 0 && endCheckTime == 0) {
                 listStatistic.get(i).setLevel(idLevel);
             } else if (startCheckTime == 0 && startPreviousTime == 0 && endCheckTime != 0) {
                 listStatistic.get(i).setLevel(idLevel - 1);
-            } else if (startCheckTime == endPreviousTime && startPreviousTime == 0) {
-                listStatistic.get(i).setLevel(idLevel);
             }
         }
+        /* для корректного расчета количества повторяющихся сессий для значений массива,
+        * содержащих только время окончания сессии устанавливаем значение в 0, таким образом,
+        * в дальнейшем подсчитываем только значения по стартам сессий */
         for (StatisticInfo statisticInfo : listStatistic) {
             if (statisticInfo.getStartTime() == 0) {
                 statisticInfo.setCount(0);
@@ -86,6 +98,8 @@ public class Profiler {
         return listStatistic;
     }
 
+    /* складываем и сортируем данные, полученные из массива начала и окончания профилировочных сессий
+    * и прошедших метод определения уровня вложенности */
     private static TreeMap<String, StatisticSession> sortedDate() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
         for (StatisticInfo info : findLevel()) {
@@ -94,6 +108,8 @@ public class Profiler {
             int sessionCount = info.count;
             long startDuration = info.getStartTime();
             long endDuration = info.getEndTime();
+            /* если в treeList уже содержится ключ (имя сессии) тогда складываем количества запусков сессии,
+            * временные показатели начала и окончания профилировочной сессии */
             if (treeList.containsKey(sessionName)) {
                 sessionCount += treeList.get(sessionName).sessionCount;
                 startDuration += treeList.get(sessionName).startDuration;
@@ -102,6 +118,7 @@ public class Profiler {
             treeList.put(sessionName, new StatisticSession(sessionName, sessionCount, startDuration, endDuration, sessionLevel));
         }
 
+        /* отнимая от времени полного окончания сессии полное время начала сессии получаем полное время сессии и устанавливаем его */
         for (Map.Entry<String, StatisticSession> entry : treeList.entrySet()) {
             StatisticSession statisticSession = entry.getValue();
             long fullDuration = statisticSession.endDuration - statisticSession.startDuration;
@@ -304,8 +321,6 @@ public class Profiler {
 //        Thread.sleep(100);
 //        exitSection("session-1");
 
-//        int p1 = 4;
-//        int p2 = 2;
 //        for (int i = 0; i < 4; i++) {
 //            Profiler.enterSection("Process1");
 ////            p1++;
@@ -330,13 +345,22 @@ public class Profiler {
         Thread.sleep(100);
 
         Profiler.enterSection("Process-1");
-        try { Thread.sleep(100); } catch (InterruptedException e) {}
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
 
-        for (int n = 0; n < 4; n++){
+        for (int n = 0; n < 4; n++) {
             Profiler.enterSection("Process-2");
-            try { Thread.sleep(200); } catch (InterruptedException e) {}
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+            }
             Profiler.enterSection("Process-3");
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+            }
             Profiler.exitSection("Process-3");
             Profiler.exitSection("Process-2");
         }
