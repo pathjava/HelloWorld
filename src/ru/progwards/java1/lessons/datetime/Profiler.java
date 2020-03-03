@@ -88,8 +88,8 @@ public class Profiler {
             }
         }
         /* для корректного расчета количества повторяющихся сессий для значений массива,
-        * содержащих только время окончания сессии устанавливаем значение в 0, таким образом,
-        * в дальнейшем подсчитываем только значения по стартам сессий */
+         * содержащих только время окончания сессии устанавливаем значение в 0, таким образом,
+         * в дальнейшем подсчитываем только значения по стартам сессий */
         for (StatisticInfo statisticInfo : listStatistic) {
             if (statisticInfo.getStartTime() == 0) {
                 statisticInfo.setCount(0);
@@ -99,7 +99,7 @@ public class Profiler {
     }
 
     /* складываем и сортируем данные, полученные из массива начала и окончания профилировочных сессий
-    * и прошедших метод определения уровня вложенности */
+     * и прошедших метод определения уровня вложенности */
     private static TreeMap<String, StatisticSession> sortedDate() {
         TreeMap<String, StatisticSession> treeList = new TreeMap<>();
         for (StatisticInfo info : findLevel()) {
@@ -109,7 +109,7 @@ public class Profiler {
             long startDuration = info.getStartTime();
             long endDuration = info.getEndTime();
             /* если в treeList уже содержится ключ (имя сессии) тогда складываем количества запусков сессии,
-            * временные показатели начала и окончания профилировочной сессии */
+             * временные показатели начала и окончания профилировочной сессии */
             if (treeList.containsKey(sessionName)) {
                 sessionCount += treeList.get(sessionName).sessionCount;
                 startDuration += treeList.get(sessionName).startDuration;
