@@ -14,13 +14,13 @@ public class SessionManager {
 
     }
 
-//    public UserSession find(String userName){
-//
-//    }
-//
-//    public UserSession get(int sessionHandle){
-//
-//    }
+    public UserSession find(String userName){
+
+    }
+
+    public UserSession get(int sessionHandle){
+
+    }
 
     public void delete(int sessionHandle){
 

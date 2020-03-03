@@ -10,18 +10,7 @@ public class UserSession {
     private String userName;
     private ZonedDateTime lastAccess;
 
-//    List<Integer> randomList = new ArrayList<>();
-
     public UserSession(String userName) {
-//        Random random = new Random();
-//        sessionHandle = random.nextInt();
-//        for (int i = 1000; i < 9999; i++) {
-//            randomList.add(i);
-//        }
-//        Collections.shuffle(randomList);
-//        for (Integer integer : randomList) {
-//            sessionHandle = integer;
-//        }
         sessionHandle = randomHandle();
         this.userName = userName;
         lastAccess = ZonedDateTime.now();
