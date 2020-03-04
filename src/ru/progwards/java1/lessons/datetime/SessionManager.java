@@ -2,6 +2,7 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SessionManager {
@@ -65,7 +66,8 @@ public class SessionManager {
     }
 
     public void deleteExpired() {
-        for (UserSession session : sessions) {
+        for (Iterator<UserSession> iterator = sessions.iterator(); iterator.hasNext(); ) {
+            UserSession session = iterator.next();
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {
