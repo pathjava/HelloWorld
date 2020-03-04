@@ -61,13 +61,14 @@ public class SessionManager {
     }
 
     public void deleteExpired() {
-        sessions.forEach(session -> {
+        for (int i = 0, sessionsSize = sessions.size(); i < sessionsSize; i++) {
+            UserSession session = sessions.get(i);
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {
                 sessions.remove(session);
             }
-        });
+        }
     }
 
 
