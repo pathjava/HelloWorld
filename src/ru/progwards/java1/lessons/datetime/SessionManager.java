@@ -61,8 +61,9 @@ public class SessionManager {
     }
 
     public void deleteExpired() {
-        for (int i = 0, sessionsSize = sessions.size(); i < sessionsSize; i++) {
-            UserSession session = sessions.get(i);
+        Iterator<UserSession> iterator = sessions.iterator();
+        while (iterator.hasNext()) {
+            UserSession session = iterator.next();
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {
