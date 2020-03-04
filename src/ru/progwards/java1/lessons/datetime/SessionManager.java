@@ -57,23 +57,17 @@ public class SessionManager {
     }
 
     public void delete(int sessionHandle) {
-        for (int i = 0; i < sessions.size(); i++) {
-            UserSession session = sessions.get(i);
-            if (session.getSessionHandle() == sessionHandle) {
-                sessions.remove(session);
-            }
-        }
+        sessions.stream().filter(session -> session.getSessionHandle() == sessionHandle).forEachOrdered(session -> sessions.remove(session));
     }
 
     public void deleteExpired() {
-        for (Iterator<UserSession> iterator = sessions.iterator(); iterator.hasNext(); ) {
-            UserSession session = iterator.next();
+        sessions.forEach(session -> {
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {
                 sessions.remove(session);
             }
-        }
+        });
     }
 
 
