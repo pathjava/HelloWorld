@@ -11,8 +11,8 @@ public class UserSession {
     private ZonedDateTime lastAccess;
 
     public UserSession(String userName) {
-        sessionHandle = randomHandle();
         this.userName = userName;
+        sessionHandle = randomHandle();
         lastAccess = ZonedDateTime.now();
     }
 
@@ -47,6 +47,6 @@ public class UserSession {
 
 //    public static void main(String[] args) {
 //        UserSession userSession = new UserSession("Bob");
-//        System.out.println(userSession.sessionHandle);
+//        System.out.println(userSession.lastAccess);
 //    }
 }
