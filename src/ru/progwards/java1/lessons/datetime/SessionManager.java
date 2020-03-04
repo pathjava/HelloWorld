@@ -2,7 +2,6 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SessionManager {
@@ -19,29 +18,41 @@ public class SessionManager {
     }
 
     public UserSession find(String userName) {
+        UserSession result = null;
         for (UserSession session : sessions) {
-            ZonedDateTime currentTime = ZonedDateTime.now();
-            ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
-            if ((session.getUserName().contains(userName) && currentTime.isAfter(lastAccessTime)) || session.getUserName() == null) {
-                return null;
-            } else if (session.getUserName().contains(userName) && currentTime.isBefore(lastAccessTime)){
-//                    UserSession userSession = new UserSession(session.getUserName());
-//                    userSession.updateLastAccess();
-                session.updateLastAccess();
+            if (session.getUserName().equals(userName)) {
+                result = session;
+                break;
             }
         }
+        return validSession(result);
     }
 
-    public UserSession get(int sessionHandle){
+    public UserSession get(int sessionHandle) {
+        UserSession result = null;
         for (UserSession session : sessions) {
-            ZonedDateTime currentTime = ZonedDateTime.now();
-            ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
-            if (((session.getSessionHandle() == sessionHandle) && currentTime.isAfter(lastAccessTime)) || session.getSessionHandle() == 0){
-                return null;
-            } else if (session.getSessionHandle() == sessionHandle && currentTime.isBefore(lastAccessTime)){
-                session.updateLastAccess();
+            if (session.getSessionHandle() == sessionHandle) {
+                result = session;
+                break;
             }
         }
+        return validSession(result);
+    }
+
+    public UserSession validSession(UserSession session){
+        /* проверка на существование сессии с именем userName */
+        if (session == null) {
+            return null;
+        }
+        /* проверка на валидность сессии */
+        ZonedDateTime currentTime = ZonedDateTime.now();
+        ZonedDateTime validTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
+        if (currentTime.isAfter(validTime)){
+            return null;
+        }
+        /* обновление даты доступа */
+        session.updateLastAccess();
+        return session;
     }
 
     public void delete(int sessionHandle) {
@@ -57,7 +68,7 @@ public class SessionManager {
         for (UserSession session : sessions) {
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
-            if (currentTime.isAfter(lastAccessTime)){
+            if (currentTime.isAfter(lastAccessTime)) {
                 sessions.remove(session);
             }
         }
