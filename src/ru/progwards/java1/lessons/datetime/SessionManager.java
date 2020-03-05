@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class SessionManager {
     private List<UserSession> sessions;
@@ -57,16 +58,36 @@ public class SessionManager {
     }
 
     public void delete(int sessionHandle) {
-        sessions.stream().filter(session -> session.getSessionHandle() == sessionHandle).forEachOrdered(session -> sessions.remove(session));
+//        for (int i = 0; i < sessions.size(); i++) {
+//            UserSession session = sessions.get(i);
+//            if (session.getSessionHandle() == sessionHandle) {
+//                sessions.remove(session);
+//            }
+//        }
+        Iterator<UserSession> iterator = sessions.iterator();
+        while (iterator.hasNext()){
+            int handle = iterator.next().getSessionHandle();
+            if (sessionHandle == handle){
+                iterator.remove();
+            }
+        }
     }
 
     public void deleteExpired() {
-        for (Iterator<UserSession> iterator = sessions.iterator(); iterator.hasNext(); ) {
-            UserSession session = iterator.next();
+//        for (UserSession session : sessions) {
+//            ZonedDateTime currentTime = ZonedDateTime.now();
+//            ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
+//            if (currentTime.isAfter(lastAccessTime)) {
+//                sessions.remove(session);
+//            }
+//        }
+
+        Iterator<UserSession> iterator = sessions.iterator();
+        while(iterator.hasNext()){
             ZonedDateTime currentTime = ZonedDateTime.now();
-            ZonedDateTime lastAccessTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
+            ZonedDateTime lastAccessTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {
-                sessions.remove(session);
+                iterator.remove();
             }
         }
     }
