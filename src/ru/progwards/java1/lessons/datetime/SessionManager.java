@@ -50,8 +50,6 @@ public class SessionManager {
             return null;
         }
         /* проверка на валидность сессии */
-        /* переменной currentTime присваиваем текущее время */
-//        ZonedDateTime currentTime = ZonedDateTime.now();
         /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
         ZonedDateTime validTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
         /* если текущее время опережает сумму времени из validTime, значит сесссия истекла */
@@ -78,18 +76,76 @@ public class SessionManager {
         /* через итератор ищем все сессии с истекшим сроком валидности и удаляем их */
         Iterator<UserSession> iterator = sessions.iterator();
         while (iterator.hasNext()) {
-            /* переменной currentTime присваиваем текущее время */
-//            ZonedDateTime currentTime = ZonedDateTime.now();
             /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
             ZonedDateTime validTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
+            /* если текущее время опережает сумму времени из validTime, значит сесссия истекла */
             if (ZonedDateTime.now().isAfter(validTime)) {
                 iterator.remove();
             }
         }
     }
 
+    @Override
+    public String toString() {
+        return "SessionManager{" + sessions + '}';
+    }
 
     public static void main(String[] args) {
-        SessionManager test = new SessionManager(180);
+        SessionManager testSession = new SessionManager(3);
+        testSession.sessionValid = 3;
+        String nameUser = "user-1";
+        UserSession user1 = new UserSession(nameUser);
+        if (testSession.find(nameUser) == null) testSession.add(user1);
+        System.out.println(testSession.get(user1.getSessionHandle()));
+        System.out.println(testSession.get(user1.getSessionHandle()));
+        System.out.println(testSession.get(user1.getSessionHandle()));
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(testSession.get(user1.getSessionHandle()));
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println();
+        System.out.println("null=" + testSession.get(user1.getSessionHandle()));
+        System.out.println();
+
+        UserSession user2 = new UserSession("user-2");
+        testSession.add(user2);
+        for (UserSession session : testSession.sessions) {
+            System.out.println(session);
+        }
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        UserSession user3 = new UserSession("user-3");
+        testSession.add(user3);
+        for (UserSession session : testSession.sessions) {
+            System.out.println(session);
+        }
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for (UserSession session : testSession.sessions) {
+            System.out.println(session);
+        }
+
+        System.out.println();
+        System.out.println("запуск метода - deleteExpired()");
+        testSession.deleteExpired();
+
+        System.out.println();
+        System.out.println(testSession);
+        testSession.delete(user3.getSessionHandle());
+        System.out.println(testSession);
     }
 }

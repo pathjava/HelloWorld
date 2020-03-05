@@ -49,4 +49,13 @@ public class UserSession {
     public ZonedDateTime getLastAccess() {
         return lastAccess;
     }
+
+    @Override
+    public String toString() {
+        return "UserSession{" +
+                "sessionHandle=" + sessionHandle +
+                ", userName='" + userName + '\'' +
+                ", lastAccess=" + lastAccess +
+                '}';
+    }
 }
