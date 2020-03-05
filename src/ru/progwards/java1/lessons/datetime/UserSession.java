@@ -12,16 +12,20 @@ public class UserSession {
 
     public UserSession(String userName) {
         this.userName = userName;
+        /* присваиваем sessionHandle одно из случайных чисел, извлекаемых из ArrayList */
         sessionHandle = randomHandle();
+        /* присваиваем времени прошлой сессии текущее время */
         lastAccess = ZonedDateTime.now();
     }
 
+    /* генерируем хэндлы */
     private int randomHandle() {
         List<Integer> randomList = new ArrayList<>();
         int randomInt = 0;
         for (int i = 1000; i <= 9999; i++) {
             randomList.add(i);
         }
+        /* сгенерированные циклом и добавленные в ArrayList числа перемешиваем в ArrayList в случайном порядке */
         Collections.shuffle(randomList);
         for (Integer integer : randomList) {
             randomInt = integer;
@@ -29,6 +33,7 @@ public class UserSession {
         return randomInt;
     }
 
+    /* присваиваем времени прошлой сессии текущее время - обновляем время */
     public void updateLastAccess() {
         lastAccess = ZonedDateTime.now();
     }

@@ -14,12 +14,15 @@ public class SessionManager {
         sessions = new ArrayList<>();
     }
 
+    /* добавляем новую пользовательскую сессию в ArrayList */
     public void add(UserSession userSession) {
         sessions.add(userSession);
     }
 
     public UserSession find(String userName) {
+        /* заводим переменную типа и присваиваем ей null */
         UserSession result = null;
+        /* в цикле по массиву sessions ищем имя userName и в случае обнаружения присваиваем сессию в result, после чего прерываем цикл */
         for (UserSession session : sessions) {
             if (session.getUserName().equals(userName)) {
                 result = session;
@@ -31,6 +34,7 @@ public class SessionManager {
 
     public UserSession get(int sessionHandle) {
         UserSession result = null;
+        /* в цикле по массиву sessions ищем хэндл sessionHandle и в случае обнаружения присваиваем сессию в result, после чего прерываем цикл */
         for (UserSession session : sessions) {
             if (session.getSessionHandle() == sessionHandle) {
                 result = session;
@@ -41,22 +45,26 @@ public class SessionManager {
     }
 
     public UserSession validSession(UserSession session) {
-        /* проверка на существование сессии с именем userName */
+        /* проверка на существование сессии с именем userName или с хэндл sessionHandle */
         if (session == null) {
             return null;
         }
         /* проверка на валидность сессии */
+        /* переменной currentTime присваиваем текущее время */
         ZonedDateTime currentTime = ZonedDateTime.now();
+        /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
         ZonedDateTime validTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
+        /* если текущее время опережает сумму времени из validTime, значит сесссия истекла */
         if (currentTime.isAfter(validTime)) {
             return null;
         }
-        /* обновление даты доступа */
+        /* обновление время доступа */
         session.updateLastAccess();
         return session;
     }
 
     public void delete(int sessionHandle) {
+        /* через итератор ищем сессию по sessionHandle и в случае равенства удаляем сессию */
         Iterator<UserSession> iterator = sessions.iterator();
         while (iterator.hasNext()) {
             int handle = iterator.next().getSessionHandle();
@@ -67,11 +75,14 @@ public class SessionManager {
     }
 
     public void deleteExpired() {
+        /* через итератор ищем все сессии с истекшим сроком валидности и удаляем их */
         Iterator<UserSession> iterator = sessions.iterator();
         while (iterator.hasNext()) {
+            /* переменной currentTime присваиваем текущее время */
             ZonedDateTime currentTime = ZonedDateTime.now();
-            ZonedDateTime lastAccessTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
-            if (currentTime.isAfter(lastAccessTime)) {
+            /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
+            ZonedDateTime validTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
+            if (currentTime.isAfter(validTime)) {
                 iterator.remove();
             }
         }
@@ -80,6 +91,5 @@ public class SessionManager {
 
     public static void main(String[] args) {
         SessionManager test = new SessionManager(180);
-
     }
 }
