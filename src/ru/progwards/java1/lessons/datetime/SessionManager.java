@@ -51,11 +51,11 @@ public class SessionManager {
         }
         /* проверка на валидность сессии */
         /* переменной currentTime присваиваем текущее время */
-        ZonedDateTime currentTime = ZonedDateTime.now();
+//        ZonedDateTime currentTime = ZonedDateTime.now();
         /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
         ZonedDateTime validTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
         /* если текущее время опережает сумму времени из validTime, значит сесссия истекла */
-        if (currentTime.isAfter(validTime)) {
+        if (ZonedDateTime.now().isAfter(validTime)) {
             return null;
         }
         /* обновление время доступа */
@@ -79,10 +79,10 @@ public class SessionManager {
         Iterator<UserSession> iterator = sessions.iterator();
         while (iterator.hasNext()) {
             /* переменной currentTime присваиваем текущее время */
-            ZonedDateTime currentTime = ZonedDateTime.now();
+//            ZonedDateTime currentTime = ZonedDateTime.now();
             /* переменной validTime присваиваем результат сложения: время последней сессии + время валидности сессии */
             ZonedDateTime validTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
-            if (currentTime.isAfter(validTime)) {
+            if (ZonedDateTime.now().isAfter(validTime)) {
                 iterator.remove();
             }
         }
