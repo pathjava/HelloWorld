@@ -40,7 +40,7 @@ public class SessionManager {
         return validSession(result);
     }
 
-    public UserSession validSession(UserSession session){
+    public UserSession validSession(UserSession session) {
         /* проверка на существование сессии с именем userName */
         if (session == null) {
             return null;
@@ -48,7 +48,7 @@ public class SessionManager {
         /* проверка на валидность сессии */
         ZonedDateTime currentTime = ZonedDateTime.now();
         ZonedDateTime validTime = ZonedDateTime.from(session.getLastAccess().plusSeconds(sessionValid));
-        if (currentTime.isAfter(validTime)){
+        if (currentTime.isAfter(validTime)) {
             return null;
         }
         /* обновление даты доступа */
@@ -58,9 +58,9 @@ public class SessionManager {
 
     public void delete(int sessionHandle) {
         Iterator<UserSession> iterator = sessions.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             int handle = iterator.next().getSessionHandle();
-            if (sessionHandle == handle){
+            if (sessionHandle == handle) {
                 iterator.remove();
             }
         }
@@ -68,7 +68,7 @@ public class SessionManager {
 
     public void deleteExpired() {
         Iterator<UserSession> iterator = sessions.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             ZonedDateTime currentTime = ZonedDateTime.now();
             ZonedDateTime lastAccessTime = ZonedDateTime.from(iterator.next().getLastAccess().plusSeconds(sessionValid));
             if (currentTime.isAfter(lastAccessTime)) {

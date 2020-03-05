@@ -16,7 +16,7 @@ public class UserSession {
         lastAccess = ZonedDateTime.now();
     }
 
-    private int randomHandle(){
+    private int randomHandle() {
         List<Integer> randomList = new ArrayList<>();
         int randomInt = 0;
         for (int i = 1000; i <= 9999; i++) {
@@ -29,7 +29,7 @@ public class UserSession {
         return randomInt;
     }
 
-    public void updateLastAccess(){
+    public void updateLastAccess() {
         lastAccess = ZonedDateTime.now();
     }
 
@@ -44,9 +44,4 @@ public class UserSession {
     public ZonedDateTime getLastAccess() {
         return lastAccess;
     }
-
-//    public static void main(String[] args) {
-//        UserSession userSession = new UserSession("Bob");
-//        System.out.println(userSession.lastAccess);
-//    }
 }
