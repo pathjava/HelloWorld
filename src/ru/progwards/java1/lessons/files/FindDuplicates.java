@@ -61,13 +61,13 @@ public class FindDuplicates {
                 assert firstLastMod != null;
                 assert firstContent != null;
                 if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent) && firstSize == secondSize) {
-                    if (j - 1 == i) innerList.add("" + firstPath);
+                     innerList.add("" + firstPath);
                     innerList.add("" + secondPath);
                 }
             }
             if (!innerList.isEmpty()) outerList.add(innerList);
         }
-        temporaryList.clear();
+//        temporaryList.clear();
         return outerList;
     }
 
@@ -76,12 +76,13 @@ public class FindDuplicates {
         FindDuplicates test = new FindDuplicates();
 //        test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\datetime");
 //
-//        for (String s : test.temporaryList) {
-//            System.out.println(s);
-//        }
-
-        for (List<String> duplicate : test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\sever\\testprogwards\\test_16")) {
+        for (List<String> duplicate : test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\sever\\testprogwards\\test_16\\rootdir")) {
             System.out.println(duplicate);
+        }
+
+        System.out.println("--------------------------");
+        for (Path s : test.temporaryList) {
+            System.out.println(s);
         }
     }
 }
