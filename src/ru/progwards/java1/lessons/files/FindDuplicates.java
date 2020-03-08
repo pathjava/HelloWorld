@@ -4,26 +4,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FindDuplicates {
 
-    List<String> temporaryList = new ArrayList<>();
+    List<Path> temporaryList = new ArrayList<>();
 
     public List<List<String>> findDuplicates(String startPath) {
         try {
             Files.walkFileTree(Paths.get(startPath), new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                    String tempString = null;
-                    try {
-                        tempString = Files.readString(path);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    temporaryList.add(tempString);
-                    System.out.println(path);
+                    temporaryList.add(path);
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -39,44 +34,52 @@ public class FindDuplicates {
     }
 
     private List<List<String>> sameFile() {
-        List<List<String>> outerList = new ArrayList<List<String>>();
+        List<List<String>> outerList = new ArrayList<>();
         List<String> innerList;
-        String firstLastMod = null;
-        String secondLastMod = null;
+        Object firstLastMod = null;
+        Object secondLastMod = null;
         String firstContent = null;
         String secondContent = null;
         for (int i = 0; i < temporaryList.size(); i++) {
-            Path firstPath = Paths.get(temporaryList.get(i));
+            innerList = new ArrayList<>();
+            Path firstPath = temporaryList.get(i);
             try {
-                firstLastMod = (String) Files.getAttribute(firstPath, "basic:lastModifiedTime");
+                firstLastMod = Files.getAttribute(firstPath, "basic:lastModifiedTime");
                 firstContent = Files.readString(firstPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for (int j = i+1; j < temporaryList.size(); j++) {
-                Path secondPath = Paths.get(temporaryList.get(j));
+            for (int j = i + 1; j < temporaryList.size(); j++) {
+                Path secondPath = temporaryList.get(j);
                 try {
-                    secondLastMod = (String) Files.getAttribute(secondPath, "basic:size");
+                    secondLastMod = Files.getAttribute(secondPath, "basic:lastModifiedTime");
                     secondContent = Files.readString(secondPath);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 assert firstLastMod != null;
                 assert firstContent != null;
-                if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent)){
-
+                if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent)) {
+                    if (j - 1 == i) innerList.add(firstPath.getFileName() + " : " + firstPath);
+                    innerList.add(secondPath.getFileName() + " : " + secondPath);
                 }
             }
+            if (!innerList.isEmpty()) outerList.add(innerList);
         }
+        return outerList;
     }
 
 
     public static void main(String[] args) {
         FindDuplicates test = new FindDuplicates();
-        test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\datetime");
+//        test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\datetime");
+//
+//        for (String s : test.temporaryList) {
+//            System.out.println(s);
+//        }
 
-        for (String s : test.temporaryList) {
-            System.out.println(s);
+        for (List<String> duplicate : test.findDuplicates("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\sever\\testprogwards\\test_16")) {
+            System.out.println(duplicate);
         }
     }
 }
