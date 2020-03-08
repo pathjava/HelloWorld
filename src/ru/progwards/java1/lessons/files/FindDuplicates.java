@@ -61,8 +61,8 @@ public class FindDuplicates {
                 assert firstLastMod != null;
                 assert firstContent != null;
                 if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent) && firstSize == secondSize) {
-                    if (j - 1 == i) innerList.add(firstPath.getFileName() + " : " + firstPath);
-                    innerList.add(secondPath.getFileName() + " : " + secondPath);
+                    if (j - 1 == i) innerList.add("" + firstPath);
+                    innerList.add("" + secondPath);
                 }
             }
             if (!innerList.isEmpty()) outerList.add(innerList);
