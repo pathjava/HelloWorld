@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Objects;
 
 public class Test_03 {
     public static void main(String args[]) {
@@ -20,7 +21,7 @@ public class Test_03 {
 //        }
 
         try {
-            Files.walkFileTree(Paths.get("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\sever\\testprogwards"), new SimpleFileVisitor<Path>() {
+            Files.walkFileTree(Paths.get("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards"), new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     System.out.println(path);
@@ -35,5 +36,11 @@ public class Test_03 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        File folder = new File("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1");
+//        for (File file : Objects.requireNonNull(folder.listFiles())) {
+//            System.out.println(file.getParent());
+//            System.out.println(file.isDirectory());
+//        }
     }
 }
