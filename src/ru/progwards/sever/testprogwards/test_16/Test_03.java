@@ -37,6 +37,7 @@ public class Test_03 {
             e.printStackTrace();
         }
 
+
 //        File folder = new File("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1");
 //        for (File file : Objects.requireNonNull(folder.listFiles())) {
 //            System.out.println(file.getParent());
