@@ -1,12 +1,9 @@
 package ru.progwards.java1.lessons.files;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FindDuplicates {
@@ -40,12 +37,15 @@ public class FindDuplicates {
         Object secondLastMod = null;
         String firstContent = null;
         String secondContent = null;
+        long firstSize = 0;
+        long secondSize = 0;
         for (int i = 0; i < temporaryList.size(); i++) {
             innerList = new ArrayList<>();
             Path firstPath = temporaryList.get(i);
             try {
                 firstLastMod = Files.getAttribute(firstPath, "basic:lastModifiedTime");
                 firstContent = Files.readString(firstPath);
+                firstSize = Files.size(firstPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,18 +54,20 @@ public class FindDuplicates {
                 try {
                     secondLastMod = Files.getAttribute(secondPath, "basic:lastModifiedTime");
                     secondContent = Files.readString(secondPath);
+                    secondSize = Files.size(secondPath);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 assert firstLastMod != null;
                 assert firstContent != null;
-                if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent)) {
+                if (firstPath.getFileName().equals(secondPath.getFileName()) && firstLastMod.equals(secondLastMod) && firstContent.equals(secondContent) && firstSize == secondSize) {
                     if (j - 1 == i) innerList.add(firstPath.getFileName() + " : " + firstPath);
                     innerList.add(secondPath.getFileName() + " : " + secondPath);
                 }
             }
             if (!innerList.isEmpty()) outerList.add(innerList);
         }
+        temporaryList.clear();
         return outerList;
     }
 
