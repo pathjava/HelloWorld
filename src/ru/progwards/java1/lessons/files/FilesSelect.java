@@ -13,9 +13,28 @@ public class FilesSelect {
             Files.walkFileTree(Paths.get(inFolder), new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                    if (pathMatcher.matches(path))
-                        checkFile(path, outFolder, keys);
-                        System.out.println(path);
+                    if (pathMatcher.matches(path)){
+                        String fileContent = null;
+                        try {
+                            fileContent = Files.readString(path);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        for (String key : keys) {
+                            if (fileContent != null && fileContent.contains(key)){
+                                Path directoryOut = Paths.get(outFolder).resolve(key);
+                                try {
+                                    Files.createDirectory(directoryOut);
+                                    Path destination = directoryOut.resolve(path.getFileName());
+                                    Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+//                        checkFile(path, outFolder, keys);
+//                        System.out.println(path);
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -29,27 +48,27 @@ public class FilesSelect {
         }
     }
 
-    private void checkFile(Path path,String out, List<String> keys){
-        String fileContent = null;
-        try {
-            fileContent = Files.readString(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert fileContent != null;
-        for (String key : keys) {
-            if (fileContent.contains(key)){
-                Path directoryOut = Paths.get(out).resolve(key);
-                try {
-                    Files.createDirectory(directoryOut);
-                    Path destination = directoryOut.resolve(path.getFileName());
-                    Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    private void checkFile(Path path,String out, List<String> keys){
+//        String fileContent = null;
+//        try {
+//            fileContent = Files.readString(path);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        assert fileContent != null;
+//        for (String key : keys) {
+//            if (fileContent.contains(key)){
+//                Path directoryOut = Paths.get(out).resolve(key);
+//                try {
+//                    Files.createDirectory(directoryOut);
+//                    Path destination = directoryOut.resolve(path.getFileName());
+//                    Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
 
     public static void main(String[] args) {
