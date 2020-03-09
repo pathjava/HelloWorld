@@ -41,12 +41,21 @@ public class FilesSelect {
             for (String key : keys) {
                 if (fileContent != null && fileContent.contains(key)) {
                     Path directoryOut = Paths.get(outFolder).resolve(key);
-                    try {
-                        Files.createDirectory(directoryOut);
+                    if (!Files.exists(directoryOut)) {
+                        try {
+                            Files.createDirectory(directoryOut);
+                            Path destination = directoryOut.resolve(path.getFileName());
+                            Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         Path destination = directoryOut.resolve(path.getFileName());
-                        Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        try {
+                            Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
