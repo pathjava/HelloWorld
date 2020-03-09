@@ -1,0 +1,1 @@
+Files.walkFileTree(Paths.get(inFolder), new SimpleFileVisitor<Path>()

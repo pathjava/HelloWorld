@@ -1,0 +1,2 @@
+FindDuplicates test = new FindDuplicates();
+6
