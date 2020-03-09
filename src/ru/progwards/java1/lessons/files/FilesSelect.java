@@ -42,7 +42,11 @@ public class FilesSelect {
                     if (!Files.exists(directoryOut)) {
                         try {
                             Files.createDirectory(directoryOut);
-                            Path destination = directoryOut.resolve(path.getFileName());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Path destination = directoryOut.resolve(path.getFileName());
+                        try {
                             Files.copy(path, destination, StandardCopyOption.REPLACE_EXISTING);
                         } catch (IOException e) {
                             e.printStackTrace();
