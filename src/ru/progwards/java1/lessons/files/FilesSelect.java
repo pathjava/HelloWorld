@@ -64,7 +64,7 @@ public class FilesSelect {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        /* если директория существует, то просто копируем файл в неё */
+                        /* если директория существует, то просто копируем файл в неё, а если файл существует, то перезаписываем его */
                     } else {
                         Path destination = directoryOut.resolve(path.getFileName());
                         try {
