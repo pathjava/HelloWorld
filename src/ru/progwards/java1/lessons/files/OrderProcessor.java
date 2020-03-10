@@ -8,13 +8,13 @@ import java.time.*;
 
 public class OrderProcessor {
     Path startPath;
+    int errorFile = 0;
 
     public OrderProcessor(String startPath) {
         this.startPath = Paths.get(startPath);
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.csv");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
@@ -22,7 +22,8 @@ public class OrderProcessor {
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModified(path, start, finish)) {
                         System.out.println(path);
-                    }
+                    } else
+                        errorFile++;
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -34,13 +35,11 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return 0;
+        return errorFile;
     }
 
     private boolean checkTimeModified(Path path, LocalDate start, LocalDate finish) {
         boolean checkTime = false;
-
         String checkLengthFileName = path.getFileName().toString();
 
         FileTime fileTime = null;
@@ -62,7 +61,6 @@ public class OrderProcessor {
         } else if (checkLengthFileName.length() == 19 && localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
             checkTime = true;
         }
-
         return checkTime;
     }
 
@@ -70,6 +68,6 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        test.loadOrders(null, LocalDate.now(), "S02");
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(1), LocalDate.now(), "S02"));
     }
 }
