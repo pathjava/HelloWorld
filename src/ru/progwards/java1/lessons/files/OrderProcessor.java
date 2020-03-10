@@ -20,7 +20,7 @@ public class OrderProcessor {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                    if (pathMatcher.matches(path) && checkTimeModified(path, start, finish)) {
+                    if (pathMatcher.matches(path) && checkTimeModified(path, start, finish, shopId)) {
                         System.out.println(path);
                     }
                     return FileVisitResult.CONTINUE;
@@ -37,13 +37,14 @@ public class OrderProcessor {
         return errorFile;
     }
 
-    private boolean checkTimeModified(Path path, LocalDate start, LocalDate finish) {
+    private boolean checkTimeModified(Path path, LocalDate start, LocalDate finish, String shopId) {
         boolean checkTime = false;
         String checkLengthFileName = path.getFileName().toString();
         if (!(checkLengthFileName.length() == 19)) {
             errorFile++;
             return false;
         }
+        String checkShopId = path.getFileName().toString().substring(0, 3);
         FileTime fileTime = null;
         try {
             fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
@@ -53,14 +54,14 @@ public class OrderProcessor {
         assert fileTime != null;
         LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
         if (start == null) {
-            if (localDate.compareTo(finish) <= 0) {
+            if (localDate.compareTo(finish) <= 0 && checkShopId.equals(shopId)) {
                 checkTime = true;
             }
         } else if (finish == null) {
-            if (localDate.compareTo(start) >= 0) {
+            if (localDate.compareTo(start) >= 0 && checkShopId.equals(shopId)) {
                 checkTime = true;
             }
-        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
+        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0 && checkShopId.equals(shopId)) {
             checkTime = true;
         }
         return checkTime;
