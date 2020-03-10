@@ -41,7 +41,7 @@ public class OrderProcessor {
     private boolean checkTimeModified(Path path, LocalDate start, LocalDate finish) {
         boolean checkTime = false;
 
-        String checkLengthFileName = path.getFileName().toString().substring(0, 15);
+        String checkLengthFileName = path.getFileName().toString();
 
         FileTime fileTime = null;
         try {
@@ -51,15 +51,15 @@ public class OrderProcessor {
         }
         assert fileTime != null;
         LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-        if (start == null) {
+        if (start == null && checkLengthFileName.length() == 19) {
             if (localDate.compareTo(finish) <= 0) {
                 checkTime = true;
             }
-        } else if (finish == null) {
+        } else if (finish == null && checkLengthFileName.length() == 19) {
             if (localDate.compareTo(start) >= 0) {
                 checkTime = true;
             }
-        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
+        } else if (checkLengthFileName.length() == 19 && localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
             checkTime = true;
         }
 
