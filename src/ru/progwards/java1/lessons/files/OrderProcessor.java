@@ -11,6 +11,7 @@ import java.util.List;
 public class OrderProcessor {
     Path startPath;
     int errorFile = 0;
+    Order order;
     public List<Order> listOrder = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
@@ -74,7 +75,7 @@ public class OrderProcessor {
         } else
             return false;
 
-        Order order = new Order();
+        order = new Order();
         order.setShopId(checkShopId);
         order.setOrderId(path.getFileName().toString().substring(4, 10));
         order.setCustomerId(path.getFileName().toString().substring(11, 15));
