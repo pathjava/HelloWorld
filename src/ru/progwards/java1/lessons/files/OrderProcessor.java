@@ -22,8 +22,7 @@ public class OrderProcessor {
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModified(path, start, finish)) {
                         System.out.println(path);
-                    } else
-                        errorFile++;
+                    }
                     return FileVisitResult.CONTINUE;
                 }
 
@@ -41,7 +40,10 @@ public class OrderProcessor {
     private boolean checkTimeModified(Path path, LocalDate start, LocalDate finish) {
         boolean checkTime = false;
         String checkLengthFileName = path.getFileName().toString();
-
+        if (!(checkLengthFileName.length() == 19)) {
+            errorFile++;
+            return false;
+        }
         FileTime fileTime = null;
         try {
             fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
@@ -50,15 +52,15 @@ public class OrderProcessor {
         }
         assert fileTime != null;
         LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-        if (start == null && checkLengthFileName.length() == 19) {
+        if (start == null) {
             if (localDate.compareTo(finish) <= 0) {
                 checkTime = true;
             }
-        } else if (finish == null && checkLengthFileName.length() == 19) {
+        } else if (finish == null) {
             if (localDate.compareTo(start) >= 0) {
                 checkTime = true;
             }
-        } else if (checkLengthFileName.length() == 19 && localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
+        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
             checkTime = true;
         }
         return checkTime;
