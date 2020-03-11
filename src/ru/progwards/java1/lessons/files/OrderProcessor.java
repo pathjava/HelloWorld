@@ -14,6 +14,7 @@ public class OrderProcessor {
     public Order order;
     private List<Order> listOrder = new ArrayList<>();
     private List<OrderItem> listItem;
+    private List<Path> notValidFiles = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
         this.startPath = Paths.get(startPath);
@@ -63,8 +64,9 @@ public class OrderProcessor {
         boolean checkTime = false;
 
         String checkLengthFileName = path.getFileName().toString();
-        if (!(checkLengthFileName.length() == 19)) {
+        if (checkLengthFileName.length() != 19) {
             errorFile++;
+            notValidFiles.add(path);
             return false;
         }
         String checkShopId = path.getFileName().toString().substring(0, 3);
@@ -105,8 +107,9 @@ public class OrderProcessor {
         }
         for (String s : temporaryItem) {
             String[] item = s.split(",");
-            if (!(item.length == 3)) {
+            if (item.length != 3) {
                 errorFile++;
+                notValidFiles.add(path);
                 return false;
             }
             orderItem = new OrderItem();
@@ -142,6 +145,11 @@ public class OrderProcessor {
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
 //        }
+
+        System.out.println("-----------------------------");
+        for (Path notValidFile : test.notValidFiles) {
+            System.out.println(notValidFile);
+        }
 
         System.out.println("-----------------------------");
         for (Order order : test.listOrder) {
