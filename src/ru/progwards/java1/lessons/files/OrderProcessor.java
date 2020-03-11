@@ -25,7 +25,7 @@ public class OrderProcessor {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
-                        if (checkOrderItem()) {
+                        if (checkOrderItem(path)) {
                             System.out.println(path);
                         }
                     }
@@ -86,8 +86,27 @@ public class OrderProcessor {
         return checkTime;
     }
 
-    private boolean checkOrderItem(){
-
+    private boolean checkOrderItem(Path path) {
+        boolean checkItem = false;
+        List<String> listItem = new ArrayList<>();
+        try {
+            listItem = Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String s : listItem) {
+            String[] item = s.split(",");
+            if (!(item.length == 3)) {
+                errorFile++;
+                return false;
+            } else {
+                for (int i = 0; i < item.length; i++) {
+                    String itemName = item[0];
+                    int countItem = Integer.parseInt(item[1]);
+                    double sumItem = Double.parseDouble(item[2]);
+                }
+            }
+        }
 
         return true;
     }
