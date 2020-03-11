@@ -175,8 +175,7 @@ public class OrderProcessor {
     public Map<LocalDate, Double> statisticsByDay() {
         Map<LocalDate, Double> salesDateList = new TreeMap<>();
         for (Order order : listOrder) {
-            LocalDateTime localDateTime = order.getDatetime();
-            LocalDate localDate = localDateTime.toLocalDate();
+            LocalDate localDate = order.getDatetime().toLocalDate();
             double fullSum = order.getSum();
             if (salesDateList.containsKey(localDate)) {
                 fullSum += salesDateList.get(localDate);
