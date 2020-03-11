@@ -28,7 +28,6 @@ public class OrderProcessor {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
                         if (checkOrderItem(path)) {
                             order = new Order();
-
                             order.setShopId(path.getFileName().toString().substring(0, 3));
                             order.setOrderId(path.getFileName().toString().substring(4, 10));
                             order.setCustomerId(path.getFileName().toString().substring(11, 15));
