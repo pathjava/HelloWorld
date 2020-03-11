@@ -40,6 +40,14 @@ public class Order {
         return shopId;
     }
 
+    public double getSum() {
+        return sum;
+    }
+
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
+
     public static class ShopIdComparator implements Comparator<Order> {
         @Override
         public int compare(Order o1, Order o2) {

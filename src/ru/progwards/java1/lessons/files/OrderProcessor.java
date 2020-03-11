@@ -1,14 +1,13 @@
 package ru.progwards.java1.lessons.files;
 
+import ru.progwards.java1.lessons.datetime.StatisticSession;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class OrderProcessor {
     private Path startPath;
@@ -109,7 +108,7 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (temporaryItem.isEmpty()){
+        if (temporaryItem.isEmpty()) {
             errorFile++;
             notValidFiles.add(path);
             return false;
@@ -142,12 +141,12 @@ public class OrderProcessor {
     }
 
 
-    public List<Order> process(String shopId){
+    public List<Order> process(String shopId) {
         List<Order> sortedList = new ArrayList<>();
         for (Order sortTime : listOrder) {
-            if (shopId == null){
+            if (shopId == null) {
                 sortedList.add(sortTime);
-            } else if (sortTime.getShopId().equals(shopId)){
+            } else if (sortTime.getShopId().equals(shopId)) {
                 sortedList.add(sortTime);
             }
         }
@@ -155,13 +154,42 @@ public class OrderProcessor {
         return sortedList;
     }
 
-    public Map<String, Double> statisticsByShop(){
+    public Map<String, Double> statisticsByShop() {
         Map<String, Double> salesVolumesList = new TreeMap<>();
         for (Order order : listOrder) {
-
+            double fullSum = order.getSum();
+            if (salesVolumesList.containsKey(order.getShopId())) {
+                fullSum += salesVolumesList.get(order.getShopId());
+            }
+            salesVolumesList.put(order.getShopId(), fullSum);
         }
-
         return salesVolumesList;
+    }
+
+    public Map<String, Double> statisticsByGoods(){
+        Map<String, Double> salesGoodsList = new TreeMap<>();
+        for (Order order : listOrder) {
+            double fullSum = order.getSum();
+            if (salesGoodsList.containsKey(order.items.listIterator().next().googsName)) {
+                fullSum += salesGoodsList.get(order.items.listIterator().next().googsName);
+            }
+            salesGoodsList.put(order.items.listIterator().next().googsName, fullSum);
+        }
+        return salesGoodsList;
+    }
+
+    public Map<LocalDate, Double> statisticsByDay(){
+        Map<LocalDate, Double> salesDateList = new TreeMap<>();
+        for (Order order : listOrder) {
+            LocalDateTime localDateTime = order.getDatetime();
+            LocalDate localDate = localDateTime.toLocalDate();
+            double fullSum = order.getSum();
+            if (salesDateList.containsKey(localDate)) {
+                fullSum += salesDateList.get(localDate);
+            }
+            salesDateList.put(localDate, fullSum);
+        }
+        return salesDateList;
     }
 
 
@@ -178,6 +206,21 @@ public class OrderProcessor {
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
 //        }
+
+        System.out.println("-----------------------------");
+        for (Map.Entry<String, Double> entry : test.statisticsByShop().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+
+        System.out.println("-----------------------------");
+        for (Map.Entry<String, Double> entry : test.statisticsByGoods().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+
+        System.out.println("-----------------------------");
+        for (Map.Entry<LocalDate, Double> entry : test.statisticsByDay().entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
 
         System.out.println("-----------------------------");
         for (Order sort : test.process("S02")) {
