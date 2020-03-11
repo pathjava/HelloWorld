@@ -13,6 +13,7 @@ public class OrderProcessor {
     private int errorFile = 0;
     public Order order;
     private List<Order> listOrder = new ArrayList<>();
+    private List<OrderItem> listItem;
 
     public OrderProcessor(String startPath) {
         this.startPath = Paths.get(startPath);
@@ -87,27 +88,27 @@ public class OrderProcessor {
     }
 
     private boolean checkOrderItem(Path path) {
-        boolean checkItem = false;
-        List<String> listItem = new ArrayList<>();
+        List<String> temporaryItem = new ArrayList<>();
+        OrderItem orderItem;
+        listItem = new ArrayList<>();
         try {
-            listItem = Files.readAllLines(path);
+            temporaryItem = Files.readAllLines(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (String s : listItem) {
+        for (String s : temporaryItem) {
             String[] item = s.split(",");
             if (!(item.length == 3)) {
                 errorFile++;
                 return false;
-            } else {
-                for (int i = 0; i < item.length; i++) {
-                    String itemName = item[0];
-                    int countItem = Integer.parseInt(item[1]);
-                    double sumItem = Double.parseDouble(item[2]);
-                }
             }
+            orderItem = new OrderItem();
+            orderItem.setGoogsName(item[0]);
+            orderItem.setCount(Integer.parseInt(item[1]));
+            orderItem.setPrice(Double.parseDouble(item[2]));
+            listItem.add(orderItem);
         }
-
+        temporaryItem.clear();
         return true;
     }
 
@@ -117,8 +118,12 @@ public class OrderProcessor {
 
         System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), "S02"));
 
-        for (Order s : test.listOrder) {
-            System.out.println(s);
+//        for (Order s : test.listOrder) {
+//            System.out.println(s);
+//        }
+        System.out.println("-----------------------------");
+        for (OrderItem orderItem : test.listItem) {
+            System.out.println(orderItem);
         }
     }
 }
