@@ -192,10 +192,6 @@ public class OrderProcessor {
 
         System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), null));
 
-//        for (Order s : test.listOrder) {
-//            System.out.println(s);
-//        }
-
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
@@ -221,10 +217,10 @@ public class OrderProcessor {
             System.out.println(sort);
         }
 
-//        System.out.println("-----------------------------");
-//        for (Path notValidFile : test.notValidFiles) {
-//            System.out.println(notValidFile);
-//        }
+        System.out.println("-----------------------------");
+        for (Path notValidFile : test.notValidFiles) {
+            System.out.println(notValidFile);
+        }
 
         System.out.println("-----------------------------");
         for (Order order : test.listOrder) {
