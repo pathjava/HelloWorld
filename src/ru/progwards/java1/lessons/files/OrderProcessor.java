@@ -27,7 +27,23 @@ public class OrderProcessor {
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
                         if (checkOrderItem(path)) {
-                            System.out.println(path);
+                            order = new Order();
+
+                            order.setShopId(path.getFileName().toString().substring(0, 3));
+                            order.setOrderId(path.getFileName().toString().substring(4, 10));
+                            order.setCustomerId(path.getFileName().toString().substring(11, 15));
+                            FileTime fileTime = null;
+                            try {
+                                fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            assert fileTime != null;
+                            LocalDateTime localDateTime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+                            order.setDatetime(localDateTime);
+                            order.setItems(listItem);
+
+                            listOrder.add(order);
                         }
                     }
                     return FileVisitResult.CONTINUE;
@@ -73,16 +89,8 @@ public class OrderProcessor {
             if (localDate.compareTo(start) >= 0) {
                 checkTime = true;
             }
-        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
+        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0)
             checkTime = true;
-        } else
-            return false;
-
-        order = new Order();
-        order.setShopId(checkShopId);
-        order.setOrderId(path.getFileName().toString().substring(4, 10));
-        order.setCustomerId(path.getFileName().toString().substring(11, 15));
-        listOrder.add(order);
 
         return checkTime;
     }
@@ -121,9 +129,14 @@ public class OrderProcessor {
 //        for (Order s : test.listOrder) {
 //            System.out.println(s);
 //        }
+//        System.out.println("-----------------------------");
+//        for (OrderItem orderItem : test.listItem) {
+//            System.out.println(orderItem);
+//        }
+
         System.out.println("-----------------------------");
-        for (OrderItem orderItem : test.listItem) {
-            System.out.println(orderItem);
+        for (Order order : test.listOrder) {
+            System.out.println(order);
         }
     }
 }

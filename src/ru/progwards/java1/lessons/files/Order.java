@@ -23,12 +23,26 @@ public class Order {
         this.customerId = customerId;
     }
 
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public void setSum(double sum) {
+        this.sum = sum;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "shopId='" + shopId + '\'' +
                 ", orderId='" + orderId + '\'' +
                 ", customerId='" + customerId + '\'' +
+                ", datetime=" + datetime +
+                ", items=" + items +
                 '}';
     }
 }
