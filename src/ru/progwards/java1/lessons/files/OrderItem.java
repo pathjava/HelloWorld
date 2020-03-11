@@ -25,10 +25,6 @@ public class OrderItem {
         return price;
     }
 
-    public String getGoogsName() {
-        return googsName;
-    }
-
     @Override
     public String toString() {
         return "OrderItem{" +
