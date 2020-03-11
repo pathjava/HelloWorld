@@ -7,6 +7,8 @@ import java.nio.file.attribute.FileTime;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class OrderProcessor {
     private Path startPath;
@@ -153,17 +155,25 @@ public class OrderProcessor {
         return sortedList;
     }
 
+    public Map<String, Double> statisticsByShop(){
+        Map<String, Double> salesVolumesList = new TreeMap<>();
+        for (Order order : listOrder) {
+
+        }
+
+        return salesVolumesList;
+    }
+
 
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
         System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), null));
 
-//        test.process("S02");
-
 //        for (Order s : test.listOrder) {
 //            System.out.println(s);
 //        }
+
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
@@ -174,10 +184,10 @@ public class OrderProcessor {
             System.out.println(sort);
         }
 
-        System.out.println("-----------------------------");
-        for (Path notValidFile : test.notValidFiles) {
-            System.out.println(notValidFile);
-        }
+//        System.out.println("-----------------------------");
+//        for (Path notValidFile : test.notValidFiles) {
+//            System.out.println(notValidFile);
+//        }
 
         System.out.println("-----------------------------");
         for (Order order : test.listOrder) {
