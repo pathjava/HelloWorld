@@ -119,7 +119,7 @@ public class OrderProcessor {
         return true;
     }
 
-    private double fullSumCostItems(List<OrderItem> listItem){
+    private double fullSumCostItems(List<OrderItem> listItem) {
         double fullSum = 0.0;
         for (OrderItem item : listItem) {
             int count = item.getCount();
