@@ -186,6 +186,15 @@ public class OrderProcessor {
         return salesDateList;
     }
 
+//    Задача 3, Класс OrderProcessor: не пройдено, оценка: 0.0
+//    Комментарий:
+//    ERROR: Тест "Метод loadOrders(LocalDate start, LocalDate finish, String shopId)" не пройден. Во время выполнения возникло исключение java.lang.NullPointerException
+//    ERROR: Тест "Метод process(String shopId)" не пройден. Во время выполнения возникло исключение java.lang.NullPointerException
+//    ERROR: Тест "Метод statisticsByShop()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
+//    ERROR: Тест "Метод statisticsByGoods()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
+//    ERROR: Тест "Метод statisticsByDay()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
+//    По данной задаче в целом не зачет, решение возвращено на доработку. Задача выполнена на 0.00%
+
 
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
