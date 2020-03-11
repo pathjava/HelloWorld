@@ -199,7 +199,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), null));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), "S02"));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
