@@ -43,6 +43,7 @@ public class Order {
                 ", customerId='" + customerId + '\'' +
                 ", datetime=" + datetime +
                 ", items=" + items +
+                ", sum=" + sum +
                 '}';
     }
 }

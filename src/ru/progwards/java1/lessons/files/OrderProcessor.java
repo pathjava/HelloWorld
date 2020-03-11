@@ -42,7 +42,7 @@ public class OrderProcessor {
                             LocalDateTime localDateTime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
                             order.setDatetime(localDateTime);
                             order.setItems(listItem);
-
+                            order.setSum(fullSumCostItems(listItem));
                             listOrder.add(order);
                         }
                     }
@@ -118,6 +118,16 @@ public class OrderProcessor {
         }
         temporaryItem.clear();
         return true;
+    }
+
+    private double fullSumCostItems(List<OrderItem> listItem){
+        double fullSum = 0.0;
+        for (OrderItem item : listItem) {
+            int count = item.getCount();
+            double cost = item.getPrice();
+            fullSum += (cost * count);
+        }
+        return fullSum;
     }
 
 

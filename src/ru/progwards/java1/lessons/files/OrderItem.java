@@ -17,6 +17,14 @@ public class OrderItem {
         this.price = price;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     @Override
     public String toString() {
         return "OrderItem{" +
