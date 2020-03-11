@@ -70,28 +70,30 @@ public class OrderProcessor {
             return false;
         }
         String checkShopId = path.getFileName().toString().substring(0, 3);
-        if (!(checkShopId.equals(shopId))) {
-            return false;
-        }
+//        if (!(checkShopId.equals(shopId))) {
+//            return false;
+//        }
 
-        FileTime fileTime = null;
-        try {
-            fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (checkShopId.equals(shopId) || shopId == null) {
+            FileTime fileTime = null;
+            try {
+                fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert fileTime != null;
+            LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+            if (start == null) {
+                if (localDate.compareTo(finish) <= 0) {
+                    checkTime = true;
+                }
+            } else if (finish == null) {
+                if (localDate.compareTo(start) >= 0) {
+                    checkTime = true;
+                }
+            } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0)
+                checkTime = true;
         }
-        assert fileTime != null;
-        LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-        if (start == null) {
-            if (localDate.compareTo(finish) <= 0) {
-                checkTime = true;
-            }
-        } else if (finish == null) {
-            if (localDate.compareTo(start) >= 0) {
-                checkTime = true;
-            }
-        } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0)
-            checkTime = true;
 
         return checkTime;
     }
@@ -104,6 +106,11 @@ public class OrderProcessor {
             temporaryItem = Files.readAllLines(path);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (temporaryItem.isEmpty()){
+            errorFile++;
+            notValidFiles.add(path);
+            return false;
         }
         for (String s : temporaryItem) {
             String[] item = s.split(",");
@@ -136,7 +143,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), "S02"));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), null));
 
 //        for (Order s : test.listOrder) {
 //            System.out.println(s);
