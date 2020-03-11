@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.files;
 
-import ru.progwards.java1.lessons.datetime.StatisticSession;
-
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -71,9 +69,6 @@ public class OrderProcessor {
             return false;
         }
         String checkShopId = path.getFileName().toString().substring(0, 3);
-//        if (!(checkShopId.equals(shopId))) {
-//            return false;
-//        }
 
         if (checkShopId.equals(shopId) || shopId == null) {
             FileTime fileTime = null;
