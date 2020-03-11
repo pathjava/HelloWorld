@@ -140,10 +140,26 @@ public class OrderProcessor {
     }
 
 
+    public List<Order> process(String shopId){
+        List<Order> sortedList = new ArrayList<>();
+        for (Order sortTime : listOrder) {
+            if (shopId == null){
+                sortedList.add(sortTime);
+            } else if (sortTime.getShopId().equals(shopId)){
+                sortedList.add(sortTime);
+            }
+        }
+        sortedList.sort(new Order.ShopIdComparator());
+        return sortedList;
+    }
+
+
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
         System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), null));
+
+//        test.process("S02");
 
 //        for (Order s : test.listOrder) {
 //            System.out.println(s);
@@ -152,6 +168,11 @@ public class OrderProcessor {
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
 //        }
+
+        System.out.println("-----------------------------");
+        for (Order sort : test.process("S02")) {
+            System.out.println(sort);
+        }
 
         System.out.println("-----------------------------");
         for (Path notValidFile : test.notValidFiles) {

@@ -1,6 +1,7 @@
 package ru.progwards.java1.lessons.files;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 public class Order {
@@ -33,6 +34,17 @@ public class Order {
 
     public void setSum(double sum) {
         this.sum = sum;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public static class ShopIdComparator implements Comparator<Order> {
+        @Override
+        public int compare(Order o1, Order o2) {
+            return o1.datetime.compareTo(o2.datetime);
+        }
     }
 
     @Override
