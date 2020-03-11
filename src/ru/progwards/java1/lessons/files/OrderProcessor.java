@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderProcessor {
-    Path startPath;
-    int errorFile = 0;
-    Order order;
-    public List<Order> listOrder = new ArrayList<>();
+    private Path startPath;
+    private int errorFile = 0;
+    public Order order;
+    private List<Order> listOrder = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
         this.startPath = Paths.get(startPath);
@@ -25,7 +25,9 @@ public class OrderProcessor {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
-                        System.out.println(path);
+                        if (checkOrderItem()) {
+                            System.out.println(path);
+                        }
                     }
                     return FileVisitResult.CONTINUE;
                 }
@@ -84,11 +86,17 @@ public class OrderProcessor {
         return checkTime;
     }
 
+    private boolean checkOrderItem(){
+
+
+        return true;
+    }
+
 
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(1), LocalDate.now(), "S02"));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), "S02"));
 
         for (Order s : test.listOrder) {
             System.out.println(s);

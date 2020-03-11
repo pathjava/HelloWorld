@@ -46,7 +46,9 @@ public class FindDuplicates {
             /* получаем путь из ArrayList */
             Path firstPath = temporaryList.get(i);
             try {
-                /* получаем атрибут - дату последнего изменения файла */
+                /* получаем атрибут - дату последнего изменения файла
+                 * уже при написании 3-й задачи узнал, что есть более удобный способ
+                 * получить аргумент даты изменения файла - метод Files.getLastModifiedTime */
                 firstLastMod = Files.getAttribute(firstPath, "basic:lastModifiedTime");
                 /* получаем все содержимое файла */
                 firstContent = Files.readString(firstPath);
