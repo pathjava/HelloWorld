@@ -135,7 +135,6 @@ public class OrderProcessor {
         return fullSum;
     }
 
-
     public List<Order> process(String shopId) {
         List<Order> sortedList = new ArrayList<>();
         for (Order sortTime : listOrder) {
@@ -161,7 +160,7 @@ public class OrderProcessor {
         return salesVolumesList;
     }
 
-    public Map<String, Double> statisticsByGoods(){
+    public Map<String, Double> statisticsByGoods() {
         Map<String, Double> salesGoodsList = new TreeMap<>();
         for (Order order : listOrder) {
             double fullSum = order.getSum();
@@ -173,7 +172,7 @@ public class OrderProcessor {
         return salesGoodsList;
     }
 
-    public Map<LocalDate, Double> statisticsByDay(){
+    public Map<LocalDate, Double> statisticsByDay() {
         Map<LocalDate, Double> salesDateList = new TreeMap<>();
         for (Order order : listOrder) {
             LocalDateTime localDateTime = order.getDatetime();
