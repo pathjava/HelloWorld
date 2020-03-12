@@ -146,7 +146,11 @@ public class OrderProcessor {
             }
         }
         sortedList.sort(new Order.ShopIdComparator());
+        for (Order order1 : sortedList) {
+            System.out.println(order1);
+        }
         return sortedList;
+
     }
 
     public Map<String, Double> statisticsByShop() {
@@ -183,9 +187,6 @@ public class OrderProcessor {
             }
             salesDateList.put(localDate, fullSum);
         }
-        for (Order sort : process("S02")) {
-            System.out.println(sort);
-        }
         return salesDateList;
     }
 
@@ -199,6 +200,8 @@ public class OrderProcessor {
 //        for (OrderItem orderItem : test.listItem) {
 //            System.out.println(orderItem);
 //        }
+
+        test.process("S02");
 
         System.out.println("-----------------------------");
         for (Map.Entry<String, Double> entry : test.statisticsByShop().entrySet()) {
@@ -220,10 +223,10 @@ public class OrderProcessor {
 //            System.out.println(sort);
 //        }
 
-        System.out.println("-----------------------------");
-        for (Path notValidFile : test.notValidFiles) {
-            System.out.println(notValidFile);
-        }
+//        System.out.println("-----------------------------");
+//        for (Path notValidFile : test.notValidFiles) {
+//            System.out.println(notValidFile);
+//        }
 
 //        System.out.println("-----------------------------");
 //        for (Order order : test.listOrder) {
