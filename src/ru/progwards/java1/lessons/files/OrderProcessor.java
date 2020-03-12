@@ -69,15 +69,16 @@ public class OrderProcessor {
 
     private boolean checkTimeModifiedAndShopId(Path path, LocalDate start, LocalDate finish, String shopId) {
         boolean checkTime = false;
-
+        System.out.println("checkTimeModifiedAndShopId-1");
         String checkLengthFileName = path.getFileName().toString();
         if (checkLengthFileName.length() != 19) {
             errorFile++;
             notValidFiles.add(path);
             return false;
         }
+        System.out.println("checkTimeModifiedAndShopId-2");
         String checkShopId = path.getFileName().toString().substring(0, 3);
-
+        System.out.println("checkTimeModifiedAndShopId-3");
         if (checkShopId.equals(shopId) || shopId == null) {
             FileTime fileTime = null;
             try {
