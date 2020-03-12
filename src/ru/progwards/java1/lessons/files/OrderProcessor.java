@@ -128,9 +128,7 @@ public class OrderProcessor {
     private double fullSumCostItems(List<OrderItem> listItem) {
         double fullSum = 0.0;
         for (OrderItem item : listItem) {
-            int count = item.getCount();
-            double cost = item.getPrice();
-            fullSum += (cost * count);
+            fullSum += (item.getPrice() * item.getCount());
         }
         return fullSum;
     }
@@ -198,7 +196,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(2), LocalDate.now(), "S02"));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(3), LocalDate.now(), "S02"));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
