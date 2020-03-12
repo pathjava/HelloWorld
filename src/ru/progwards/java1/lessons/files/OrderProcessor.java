@@ -144,6 +144,19 @@ public class OrderProcessor {
         }
         sortedList.sort(new Order.ShopIdComparator());
         return sortedList;
+//        Collections.sort(listOrder, new Comparator<Order>() {
+//            @Override
+//            public int compare(Order o1, Order o2) {
+//                if (shopId == null){
+//                    return o1.datetime.compareTo(o2.datetime);
+//                }
+//                if (shopId.equals(listOrder.listIterator().next().shopId)){
+//                    return o1.datetime.compareTo(o2.datetime);
+//                }
+//                return 0;
+//            }
+//        });
+//        return listOrder;
     }
 
     public Map<String, Double> statisticsByShop() {
