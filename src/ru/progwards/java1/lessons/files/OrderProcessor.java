@@ -83,11 +83,13 @@ public class OrderProcessor {
             FileTime fileTime = null;
             try {
                 fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
+                System.out.println("checkTimeModifiedAndShopId-4");
             } catch (IOException e) {
                 e.printStackTrace();
             }
             assert fileTime != null;
             LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+            System.out.println("checkTimeModifiedAndShopId-5");
             if (start == null) {
                 if (localDate.compareTo(finish) <= 0) {
                     checkTime = true;
