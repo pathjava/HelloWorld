@@ -144,6 +144,7 @@ public class OrderProcessor {
         }
         sortedList.sort(new Order.ShopIdComparator());
         return sortedList;
+
 //        Collections.sort(listOrder, new Comparator<Order>() {
 //            @Override
 //            public int compare(Order o1, Order o2) {
@@ -209,7 +210,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(3), LocalDate.now(), "S02"));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(3), LocalDate.now(), null));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
