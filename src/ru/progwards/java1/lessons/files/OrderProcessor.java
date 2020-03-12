@@ -53,6 +53,9 @@ public class OrderProcessor {
                     return FileVisitResult.CONTINUE;
                 }
             });
+            for (Order order : listOrder) {
+                System.out.println(order);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,20 +147,6 @@ public class OrderProcessor {
         }
         sortedList.sort(new Order.ShopIdComparator());
         return sortedList;
-
-//        Collections.sort(listOrder, new Comparator<Order>() {
-//            @Override
-//            public int compare(Order o1, Order o2) {
-//                if (shopId == null){
-//                    return o1.datetime.compareTo(o2.datetime);
-//                }
-//                if (shopId.equals(listOrder.listIterator().next().shopId)){
-//                    return o1.datetime.compareTo(o2.datetime);
-//                }
-//                return 0;
-//            }
-//        });
-//        return listOrder;
     }
 
     public Map<String, Double> statisticsByShop() {
@@ -197,15 +186,6 @@ public class OrderProcessor {
         return salesDateList;
     }
 
-//    Задача 3, Класс OrderProcessor: не пройдено, оценка: 0.0
-//    Комментарий:
-//    ERROR: Тест "Метод loadOrders(LocalDate start, LocalDate finish, String shopId)" не пройден. Во время выполнения возникло исключение java.lang.NullPointerException
-//    ERROR: Тест "Метод process(String shopId)" не пройден. Во время выполнения возникло исключение java.lang.NullPointerException
-//    ERROR: Тест "Метод statisticsByShop()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
-//    ERROR: Тест "Метод statisticsByGoods()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
-//    ERROR: Тест "Метод statisticsByDay()" не пройден. Во время выполнения возникло исключение java.lang.NumberFormatException: For input string: " 1"
-//    По данной задаче в целом не зачет, решение возвращено на доработку. Задача выполнена на 0.00%
-
 
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
@@ -242,9 +222,9 @@ public class OrderProcessor {
             System.out.println(notValidFile);
         }
 
-        System.out.println("-----------------------------");
-        for (Order order : test.listOrder) {
-            System.out.println(order);
-        }
+//        System.out.println("-----------------------------");
+//        for (Order order : test.listOrder) {
+//            System.out.println(order);
+//        }
     }
 }
