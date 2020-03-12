@@ -16,10 +16,12 @@ public class OrderProcessor {
     private List<Path> notValidFiles = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
+        System.out.println("cons");
         this.startPath = Paths.get(startPath);
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
+        System.out.println("loadOrders");
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.csv");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
@@ -137,6 +139,7 @@ public class OrderProcessor {
     }
 
     public List<Order> process(String shopId) {
+        System.out.println("process");
         List<Order> sortedList = new ArrayList<>();
         for (Order sortTime : listOrder) {
             if (shopId == null) {
