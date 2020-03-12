@@ -183,6 +183,9 @@ public class OrderProcessor {
             }
             salesDateList.put(localDate, fullSum);
         }
+        for (Order sort : process("S02")) {
+            System.out.println(sort);
+        }
         return salesDateList;
     }
 
@@ -212,10 +215,10 @@ public class OrderProcessor {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
 
-        System.out.println("-----------------------------");
-        for (Order sort : test.process("S02")) {
-            System.out.println(sort);
-        }
+//        System.out.println("-----------------------------");
+//        for (Order sort : test.process("S02")) {
+//            System.out.println(sort);
+//        }
 
         System.out.println("-----------------------------");
         for (Path notValidFile : test.notValidFiles) {
