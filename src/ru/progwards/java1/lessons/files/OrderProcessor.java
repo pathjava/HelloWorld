@@ -92,14 +92,18 @@ public class OrderProcessor {
             System.out.println("checkTimeModifiedAndShopId-5");
             if (start == null) {
                 if (localDate.compareTo(finish) <= 0) {
+                    System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
             } else if (finish == null) {
                 if (localDate.compareTo(start) >= 0) {
+                    System.out.println("checkTimeModifiedAndShopId-7");
                     checkTime = true;
                 }
-            } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0)
+            } else if (localDate.compareTo(start) >= 0 && localDate.compareTo(finish) <= 0) {
+                System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
+            }
         }
 
         return checkTime;
