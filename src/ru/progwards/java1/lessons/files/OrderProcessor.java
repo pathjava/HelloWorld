@@ -58,6 +58,9 @@ public class OrderProcessor {
                     return FileVisitResult.CONTINUE;
                 }
             });
+            for (Order order : listOrder) {
+                System.out.println(order);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,25 +88,20 @@ public class OrderProcessor {
                 e.printStackTrace();
             }
             assert fileTime != null;
-            System.out.println("checkTimeModifiedAndShopId-4-1");
             LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-            System.out.println("checkTimeModifiedAndShopId-4-2");
-            LocalDate startDate = start.atStartOfDay().toLocalDate();
-            System.out.println("checkTimeModifiedAndShopId-4-3");
-            LocalDate finishDate = finish.atStartOfDay().toLocalDate();
             System.out.println("checkTimeModifiedAndShopId-5");
-            if (startDate == null) {
+            if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
-                if (modifiedDate.compareTo(finishDate) <= 0) {
+                if (modifiedDate.compareTo(finish) <= 0) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
-            } else if (finishDate == null) {
-                if (modifiedDate.compareTo(startDate) >= 0) {
+            } else if (finish == null) {
+                if (modifiedDate.compareTo(start) >= 0) {
                     System.out.println("checkTimeModifiedAndShopId-7");
                     checkTime = true;
                 }
-            } else if (modifiedDate.compareTo(startDate) >= 0 && modifiedDate.compareTo(finishDate) <= 0) {
+            } else if (modifiedDate.compareTo(start) >= 0 && modifiedDate.compareTo(finish) <= 0) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
             }
@@ -209,7 +207,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(5), LocalDate.now(), null));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(3), LocalDate.now(), null));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
