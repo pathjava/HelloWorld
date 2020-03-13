@@ -41,7 +41,7 @@ public class OrderProcessor {
                                 e.printStackTrace();
                             }
                             assert fileTime != null;
-                            order.datetime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+                            order.datetime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneId.systemDefault());
                             order.items = listItem;
                             order.sum = fullSumCostItems(listItem);
                             listOrder.add(order);
