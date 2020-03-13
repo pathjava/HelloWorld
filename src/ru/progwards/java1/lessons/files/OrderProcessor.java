@@ -112,6 +112,9 @@ public class OrderProcessor {
         System.out.println("checkOrderItem - 2");
         for (String s : temporaryItem) {
             String[] item = s.split(",");
+            for (String s1 : item) {
+                System.out.println(s1);
+            }
             if (item.length != 3) {
                 errorFile++;
                 notValidFiles.add(path);
@@ -122,6 +125,7 @@ public class OrderProcessor {
             System.out.println("checkOrderItem - 4");
             orderItem.googsName = item[0];
             System.out.println("checkOrderItem - 5");
+            System.out.println(Integer.parseInt(item[1]));
             orderItem.count = Integer.parseInt(item[1]);
             System.out.println("checkOrderItem - 6");
             orderItem.price = Double.parseDouble(item[2]);
