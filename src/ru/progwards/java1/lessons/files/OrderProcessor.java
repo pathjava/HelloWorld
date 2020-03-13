@@ -101,22 +101,19 @@ public class OrderProcessor {
             }
 
             System.out.println("checkTimeModifiedAndShopId-5");
-            if (start == null && finish != null) {
+            if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
                 if (timeInSeconds <= finishInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
-            } else if (finish == null && start != null) {
+            } else if (finish == null) {
                 System.out.println("checkTimeModifiedAndShopId-6-1");
                 if (timeInSeconds >= startInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-7");
                     checkTime = true;
                 }
                 System.out.println("checkTimeModifiedAndShopId-7-1");
-            } else if (start == null && finish == null){
-                System.out.println("checkTimeModifiedAndShopId-8-1");
-                checkTime = true;
             } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
