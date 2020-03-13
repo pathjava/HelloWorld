@@ -81,30 +81,17 @@ public class OrderProcessor {
             if (finish != null) {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-
-//            System.out.println("checkTimeModifiedAndShopId-4-0");
-//            System.out.println(startInSeconds + " " + finishInSeconds);
-//            if (startInSeconds == 0 && finishInSeconds == 0) return true;
+//            System.out.println("4: " + startInSeconds + " " + finishInSeconds);
+            if (startInSeconds == 0 && finishInSeconds == 0) return true;
             System.out.println("checkTimeModifiedAndShopId-5-0");
-            if (startInSeconds == 0) {
-                System.out.println("checkTimeModifiedAndShopId-5-1");
-                if (timeInSeconds <= finishInSeconds) {
-                    System.out.println("checkTimeModifiedAndShopId-6");
-                    checkTime = true;
-                }
-            } else if (finishInSeconds == 0) {
-                System.out.println("checkTimeModifiedAndShopId-6-1");
-                if (timeInSeconds >= startInSeconds) {
-                    System.out.println("checkTimeModifiedAndShopId-7");
-                    checkTime = true;
-                }
-                System.out.println("checkTimeModifiedAndShopId-7-1");
-            } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
-                System.out.println("checkTimeModifiedAndShopId-8");
-                checkTime = true;
-            }
+            if (startInSeconds == 0 && timeInSeconds <= finishInSeconds) checkTime = true;
+            System.out.println("checkTimeModifiedAndShopId-5-1");
+            if (finishInSeconds == 0 && timeInSeconds >= startInSeconds) checkTime = true;
+            System.out.println("checkTimeModifiedAndShopId-6-1");
+            if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) checkTime = true;
+            System.out.println("checkTimeModifiedAndShopId-7-1");
         }
-        System.out.println("checkTimeModifiedAndShopId-9");
+        System.out.println("checkTimeModifiedAndShopId-8");
         return checkTime;
     }
 
