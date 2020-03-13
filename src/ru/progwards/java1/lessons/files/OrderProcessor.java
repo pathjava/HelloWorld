@@ -85,8 +85,11 @@ public class OrderProcessor {
                 e.printStackTrace();
             }
             assert fileTime != null;
+            System.out.println("checkTimeModifiedAndShopId-4-1");
             LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+            System.out.println("checkTimeModifiedAndShopId-4-2");
             LocalDate startDate = start.atStartOfDay().toLocalDate();
+            System.out.println("checkTimeModifiedAndShopId-4-3");
             LocalDate finishDate = finish.atStartOfDay().toLocalDate();
             System.out.println("checkTimeModifiedAndShopId-5");
             if (startDate == null) {
