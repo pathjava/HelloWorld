@@ -155,7 +155,17 @@ public class OrderProcessor {
                 sortedList.add(sortTime);
             }
         }
-        sortedList.sort(new Order.ShopIdComparator());
+        Collections.sort(sortedList, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                int value = o1.datetime.compareTo(o2.datetime);
+                if (value == 0){
+                    return o1.items.listIterator().next().googsName.compareTo(o2.items.listIterator().next().googsName);
+                }
+                return value;
+            }
+        });
+//        sortedList.sort(new Order.ShopIdComparator());
         return sortedList;
     }
 
