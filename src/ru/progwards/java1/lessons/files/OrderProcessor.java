@@ -113,7 +113,7 @@ public class OrderProcessor {
         for (String s : temporaryItem) {
             String[] item = s.split(",");
             for (String s1 : item) {
-                System.out.println(s1);
+                System.out.println(s1.trim());
             }
             if (item.length != 3) {
                 errorFile++;
