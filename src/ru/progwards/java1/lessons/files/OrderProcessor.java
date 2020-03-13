@@ -88,24 +88,31 @@ public class OrderProcessor {
                 e.printStackTrace();
             }
             assert fileTime != null;
-//            LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-            long test = fileTime.toInstant().getEpochSecond();
-//            LocalDate modifiedDate = LocalDate.
-            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(test), ZoneId.systemDefault());
-            LocalDate modifiedDate = localDateTime.toLocalDate();
+            LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+
+            long timeInSeconds = modifiedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+            long startInSeconds = 0;
+            if (start != null) {
+                startInSeconds = start.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+            }
+            long finishInSeconds = 0;
+            if (finish != null) {
+                finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+            }
+
             System.out.println("checkTimeModifiedAndShopId-5");
             if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
-                if (modifiedDate.compareTo(finish) <= 0) {
+                if (timeInSeconds <= finishInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
             } else if (finish == null) {
-                if (modifiedDate.compareTo(start) >= 0) {
+                if (timeInSeconds >= startInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-7");
                     checkTime = true;
                 }
-            } else if (modifiedDate.compareTo(start) >= 0 && modifiedDate.compareTo(finish) <= 0) {
+            } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
             }
