@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.files;
 
-import org.apache.logging.log4j.core.util.JsonUtils;
-
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
