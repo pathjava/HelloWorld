@@ -100,7 +100,7 @@ public class OrderProcessor {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
             System.out.println("checkTimeModifiedAndShopId-4-1");
-            if (start == null && finish == null){
+            if (start == null && finish == null && shopId == null){
                 return true;
             }
             System.out.println("checkTimeModifiedAndShopId-4-2");
