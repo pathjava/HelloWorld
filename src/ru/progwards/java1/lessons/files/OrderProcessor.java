@@ -108,10 +108,12 @@ public class OrderProcessor {
                     checkTime = true;
                 }
             } else if (finish == null) {
+                System.out.println("checkTimeModifiedAndShopId-6-1");
                 if (timeInSeconds >= startInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-7");
                     checkTime = true;
                 }
+                System.out.println("checkTimeModifiedAndShopId-7-1");
             } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
