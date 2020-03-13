@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.files;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -103,11 +105,13 @@ public class OrderProcessor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("checkOrderItem - 1");
         if (temporaryItem.isEmpty()) {
             errorFile++;
             notValidFiles.add(path);
             return false;
         }
+        System.out.println("checkOrderItem - 2");
         for (String s : temporaryItem) {
             String[] item = s.split(",");
             if (item.length != 3) {
@@ -115,6 +119,7 @@ public class OrderProcessor {
                 notValidFiles.add(path);
                 return false;
             }
+            System.out.println("checkOrderItem - 3");
             OrderItem orderItem = new OrderItem();
             orderItem.googsName = item[0];
             orderItem.count = Integer.parseInt(item[1]);
@@ -122,6 +127,7 @@ public class OrderProcessor {
             listItem.add(orderItem);
         }
         temporaryItem.clear();
+        System.out.println("checkOrderItem - 4");
         return true;
     }
 
