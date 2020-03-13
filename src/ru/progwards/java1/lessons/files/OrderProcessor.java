@@ -82,11 +82,11 @@ public class OrderProcessor {
             if (finish != null) {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-            if (startInSeconds == 0 && finishInSeconds == 0) checkTime = true;
+            if (startInSeconds == 0 && finishInSeconds == 0) return true;
             System.out.println("checkTimeModifiedAndShopId - 1");
-            if (startInSeconds == 0 && timeInSeconds <= finishInSeconds) checkTime = true;
+            if (startInSeconds == 0 && timeInSeconds <= finishInSeconds) return true;
             System.out.println("checkTimeModifiedAndShopId - 2");
-            if (finishInSeconds == 0 && timeInSeconds >= startInSeconds) checkTime = true;
+            if (finishInSeconds == 0 && timeInSeconds >= startInSeconds) return true;
             System.out.println("checkTimeModifiedAndShopId - 3");
             if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) checkTime = true;
             System.out.println("checkTimeModifiedAndShopId - 4");
@@ -119,13 +119,17 @@ public class OrderProcessor {
             }
             System.out.println("checkOrderItem - 3");
             OrderItem orderItem = new OrderItem();
+            System.out.println("checkOrderItem - 4");
             orderItem.googsName = item[0];
+            System.out.println("checkOrderItem - 5");
             orderItem.count = Integer.parseInt(item[1]);
+            System.out.println("checkOrderItem - 6");
             orderItem.price = Double.parseDouble(item[2]);
+            System.out.println("checkOrderItem - 7");
             listItem.add(orderItem);
+            System.out.println("checkOrderItem - 8");
         }
         temporaryItem.clear();
-        System.out.println("checkOrderItem - 4");
         return true;
     }
 
