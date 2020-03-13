@@ -73,7 +73,6 @@ public class OrderProcessor {
             }
             assert fileTime != null;
             LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-
             long timeInSeconds = modifiedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             long startInSeconds = 0;
             if (start != null) {
@@ -83,17 +82,16 @@ public class OrderProcessor {
             if (finish != null) {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-//            System.out.println("4: " + startInSeconds + " " + finishInSeconds);
-            if (startInSeconds == 0 && finishInSeconds == 0) return true;
-            System.out.println("checkTimeModifiedAndShopId-5-0");
+            if (startInSeconds == 0 && finishInSeconds == 0) checkTime = true;
+            System.out.println("checkTimeModifiedAndShopId - 1");
             if (startInSeconds == 0 && timeInSeconds <= finishInSeconds) checkTime = true;
-            System.out.println("checkTimeModifiedAndShopId-5-1");
+            System.out.println("checkTimeModifiedAndShopId - 2");
             if (finishInSeconds == 0 && timeInSeconds >= startInSeconds) checkTime = true;
-            System.out.println("checkTimeModifiedAndShopId-6-1");
+            System.out.println("checkTimeModifiedAndShopId - 3");
             if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) checkTime = true;
-            System.out.println("checkTimeModifiedAndShopId-7-1");
+            System.out.println("checkTimeModifiedAndShopId - 4");
         }
-        System.out.println("checkTimeModifiedAndShopId-8");
+        System.out.println("checkTimeModifiedAndShopId - 5");
         return checkTime;
     }
 
