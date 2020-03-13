@@ -118,6 +118,7 @@ public class OrderProcessor {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
             } else
+                System.out.println("checkTimeModifiedAndShopId-8-1");
                 checkTime = true;
         }
         System.out.println("checkTimeModifiedAndShopId-9");
