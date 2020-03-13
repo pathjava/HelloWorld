@@ -101,6 +101,10 @@ public class OrderProcessor {
             }
 
             System.out.println("checkTimeModifiedAndShopId-5");
+            if (start == null && finish == null){
+                return true;
+            }
+            System.out.println("checkTimeModifiedAndShopId-5-0");
             if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
                 if (timeInSeconds <= finishInSeconds) {
