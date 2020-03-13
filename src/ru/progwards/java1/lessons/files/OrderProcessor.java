@@ -26,7 +26,9 @@ public class OrderProcessor {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
+                        System.out.println("loadOrders - 1");
                         if (checkOrderItem(path)) {
+                            System.out.println("loadOrders - 2");
                             Order order = new Order();
                             String[] segmentsFileName = path.getFileName().toString().substring(0, path.getFileName().toString().lastIndexOf(".")).split("-");
                             if (segmentsFileName[0].length() == 3) order.shopId = segmentsFileName[0];
