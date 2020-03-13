@@ -113,7 +113,7 @@ public class OrderProcessor {
         for (String s : temporaryItem) {
             String[] item = s.split(",");
             for (String s1 : item) {
-                System.out.println(s1.trim());
+                System.out.println(s1);
             }
             if (item.length != 3) {
                 errorFile++;
@@ -123,12 +123,13 @@ public class OrderProcessor {
             System.out.println("checkOrderItem - 3");
             OrderItem orderItem = new OrderItem();
             System.out.println("checkOrderItem - 4");
+            System.out.println(item[0]);
             orderItem.googsName = item[0];
             System.out.println("checkOrderItem - 5");
-            System.out.println(Integer.parseInt(item[1]));
-            orderItem.count = Integer.parseInt(item[1]);
+            System.out.println(Integer.parseInt(item[1].trim()));
+            orderItem.count = Integer.parseInt(item[1].trim());
             System.out.println("checkOrderItem - 6");
-            orderItem.price = Double.parseDouble(item[2]);
+            orderItem.price = Double.parseDouble(item[2].trim());
             System.out.println("checkOrderItem - 7");
             listItem.add(orderItem);
             System.out.println("checkOrderItem - 8");
