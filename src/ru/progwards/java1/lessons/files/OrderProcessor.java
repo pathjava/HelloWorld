@@ -19,7 +19,7 @@ public class OrderProcessor {
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-        System.out.println(start + " " + finish +" "+ shopId);
+        System.out.println(start + " " + finish + " " + shopId);
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
@@ -89,7 +89,9 @@ public class OrderProcessor {
 //            }
 //            System.out.println("checkTimeModifiedAndShopId-4-2");
 
-            if (startInSeconds == 0 && finishInSeconds == 0)return true;
+            System.out.println("checkTimeModifiedAndShopId-4-0");
+            System.out.println(startInSeconds +" "+ finishInSeconds);
+            if (startInSeconds == 0 && finishInSeconds == 0) return true;
             System.out.println("checkTimeModifiedAndShopId-5-0");
             if (startInSeconds == 0) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
