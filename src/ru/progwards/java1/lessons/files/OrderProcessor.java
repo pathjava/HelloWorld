@@ -114,12 +114,13 @@ public class OrderProcessor {
                     checkTime = true;
                 }
                 System.out.println("checkTimeModifiedAndShopId-7-1");
+            } else if (start == null && finish == null){
+                System.out.println("checkTimeModifiedAndShopId-8-1");
+                checkTime = true;
             } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
-            } else
-                System.out.println("checkTimeModifiedAndShopId-8-1");
-                checkTime = true;
+            }
         }
         System.out.println("checkTimeModifiedAndShopId-9");
         return checkTime;
