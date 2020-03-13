@@ -91,6 +91,7 @@ public class OrderProcessor {
             LocalDate localDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
             System.out.println("checkTimeModifiedAndShopId-5");
             if (start == null) {
+                System.out.println("checkTimeModifiedAndShopId-5-1");
                 if (localDate.compareTo(finish) <= 0) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
