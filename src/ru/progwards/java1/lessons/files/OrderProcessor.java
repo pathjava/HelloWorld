@@ -21,6 +21,7 @@ public class OrderProcessor {
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
+        System.out.println(start + " " + finish +" "+ shopId);
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
