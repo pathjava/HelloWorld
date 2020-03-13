@@ -101,13 +101,13 @@ public class OrderProcessor {
             }
 
             System.out.println("checkTimeModifiedAndShopId-5");
-            if (start == null) {
+            if (start == null && finish != null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
                 if (timeInSeconds <= finishInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
-            } else if (finish == null) {
+            } else if (finish == null && start != null) {
                 System.out.println("checkTimeModifiedAndShopId-6-1");
                 if (timeInSeconds >= startInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-7");
@@ -117,7 +117,8 @@ public class OrderProcessor {
             } else if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) {
                 System.out.println("checkTimeModifiedAndShopId-8");
                 checkTime = true;
-            }
+            } else
+                checkTime = true;
         }
         System.out.println("checkTimeModifiedAndShopId-9");
         return checkTime;
@@ -220,7 +221,8 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(5), LocalDate.now(), null));
+        System.out.println(test.loadOrders(null, null, null));
+//        System.out.println(test.loadOrders(LocalDate.now().minusDays(5), LocalDate.now(), null));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
