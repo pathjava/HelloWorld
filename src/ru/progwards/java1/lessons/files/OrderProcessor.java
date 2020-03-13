@@ -27,9 +27,10 @@ public class OrderProcessor {
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
                         if (checkOrderItem(path)) {
                             Order order = new Order();
-                            order.shopId = path.getFileName().toString().substring(0, 3);
-                            order.orderId = path.getFileName().toString().substring(4, 10);
-                            order.customerId = path.getFileName().toString().substring(11, 15);
+                            String[] segmentsFileName = path.getFileName().toString().substring(0, path.getFileName().toString().lastIndexOf(".")).split("-");
+                            if (segmentsFileName[0].length() == 3) order.shopId = segmentsFileName[0];
+                            if (segmentsFileName[1].length() == 6) order.orderId = segmentsFileName[1];
+                            if (segmentsFileName[2].length() == 4) order.customerId = segmentsFileName[2];
                             FileTime fileTime = null;
                             try {
                                 fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
