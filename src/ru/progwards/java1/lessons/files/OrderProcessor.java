@@ -88,7 +88,11 @@ public class OrderProcessor {
                 e.printStackTrace();
             }
             assert fileTime != null;
-            LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+//            LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+            long test = fileTime.toInstant().getEpochSecond();
+//            LocalDate modifiedDate = LocalDate.
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(test), ZoneId.systemDefault());
+            LocalDate modifiedDate = localDateTime.toLocalDate();
             System.out.println("checkTimeModifiedAndShopId-5");
             if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
@@ -207,7 +211,7 @@ public class OrderProcessor {
     public static void main(String[] args) {
         OrderProcessor test = new OrderProcessor("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java1\\lessons\\files\\orders");
 
-        System.out.println(test.loadOrders(LocalDate.now().minusDays(3), LocalDate.now(), null));
+        System.out.println(test.loadOrders(LocalDate.now().minusDays(5), LocalDate.now(), null));
 
 //        System.out.println("-----------------------------");
 //        for (OrderItem orderItem : test.listItem) {
