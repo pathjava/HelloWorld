@@ -81,6 +81,8 @@ public class OrderProcessor {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
             System.out.println("checkTimeModifiedAndShopId-4-1");
+            System.out.println(start);
+            System.out.println(finish);
             if (start == null && finish == null) {
                 return true;
             }
