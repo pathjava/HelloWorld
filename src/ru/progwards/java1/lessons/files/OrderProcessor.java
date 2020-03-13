@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.files;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -80,17 +82,19 @@ public class OrderProcessor {
             if (finish != null) {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-            System.out.println("checkTimeModifiedAndShopId-4-1");
-            System.out.println(start);
-            System.out.println(finish);
-            if (start == null && finish == null) {
-                return true;
-            }
-            System.out.println("checkTimeModifiedAndShopId-4-2");
+//            System.out.println("checkTimeModifiedAndShopId-4-1");
+//            System.out.println(start);
+//            System.out.println(finish);
+//            if (start == null && finish == null) {
+//                return true;
+//            }
+//            System.out.println("checkTimeModifiedAndShopId-4-2");
 
             System.out.println("checkTimeModifiedAndShopId-5-0");
             if (start == null) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
+                System.out.println(timeInSeconds);
+                System.out.println(finishInSeconds);
                 if (timeInSeconds <= finishInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
