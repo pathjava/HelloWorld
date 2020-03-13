@@ -21,7 +21,7 @@ public class OrderProcessor {
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
         System.out.println("loadOrders");
-        PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.csv");
+        PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
         System.out.println("loadOrders-1");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
@@ -58,9 +58,6 @@ public class OrderProcessor {
                     return FileVisitResult.CONTINUE;
                 }
             });
-            for (Order order : listOrder) {
-                System.out.println(order);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,14 +66,6 @@ public class OrderProcessor {
 
     private boolean checkTimeModifiedAndShopId(Path path, LocalDate start, LocalDate finish, String shopId) {
         boolean checkTime = false;
-        System.out.println("checkTimeModifiedAndShopId-1");
-        String checkLengthFileName = path.getFileName().toString();
-        if (checkLengthFileName.length() != 19) {
-            errorFile++;
-            notValidFiles.add(path);
-            return false;
-        }
-        System.out.println("checkTimeModifiedAndShopId-2");
         String checkShopId = path.getFileName().toString().substring(0, 3);
         System.out.println("checkTimeModifiedAndShopId-3");
         if (checkShopId.equals(shopId) || shopId == null) {
@@ -100,7 +89,7 @@ public class OrderProcessor {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
             System.out.println("checkTimeModifiedAndShopId-4-1");
-            if (start == null && finish == null && shopId == null){
+            if (start == null && finish == null){
                 return true;
             }
             System.out.println("checkTimeModifiedAndShopId-4-2");
@@ -260,9 +249,9 @@ public class OrderProcessor {
 //            System.out.println(notValidFile);
 //        }
 
-//        System.out.println("-----------------------------");
-//        for (Order order : test.listOrder) {
-//            System.out.println(order);
-//        }
+        System.out.println("-----------------------------");
+        for (Order order : test.listOrder) {
+            System.out.println(order);
+        }
     }
 }
