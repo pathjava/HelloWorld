@@ -19,18 +19,13 @@ public class OrderProcessor {
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-        System.out.println("loadOrders");
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
-        System.out.println("loadOrders-1");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                    System.out.println("loadOrders-2");
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
-                        System.out.println("loadOrders-3");
                         if (checkOrderItem(path)) {
-                            System.out.println("loadOrders-4");
                             Order order = new Order();
                             order.shopId = path.getFileName().toString().substring(0, 3);
                             order.orderId = path.getFileName().toString().substring(4, 10);
@@ -65,12 +60,10 @@ public class OrderProcessor {
     private boolean checkTimeModifiedAndShopId(Path path, LocalDate start, LocalDate finish, String shopId) {
         boolean checkTime = false;
         String checkShopId = path.getFileName().toString().substring(0, 3);
-        System.out.println("checkTimeModifiedAndShopId-3");
         if (checkShopId.equals(shopId) || shopId == null) {
             FileTime fileTime = null;
             try {
                 fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
-                System.out.println("checkTimeModifiedAndShopId-4");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,7 +80,7 @@ public class OrderProcessor {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
             System.out.println("checkTimeModifiedAndShopId-4-1");
-            if (start == null && finish == null){
+            if (start == null && finish == null) {
                 return true;
             }
             System.out.println("checkTimeModifiedAndShopId-4-2");
