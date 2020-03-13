@@ -87,11 +87,6 @@ public class OrderProcessor {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("checkTimeModifiedAndShopId-4-1");
-            if (start == null && finish == null){
-                return true;
-            }
-            System.out.println("checkTimeModifiedAndShopId-4-2");
             assert fileTime != null;
             LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
 
@@ -104,6 +99,11 @@ public class OrderProcessor {
             if (finish != null) {
                 finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
+            System.out.println("checkTimeModifiedAndShopId-4-1");
+            if (start == null && finish == null){
+                return true;
+            }
+            System.out.println("checkTimeModifiedAndShopId-4-2");
 
             System.out.println("checkTimeModifiedAndShopId-5-0");
             if (start == null) {
