@@ -89,16 +89,15 @@ public class OrderProcessor {
 //            }
 //            System.out.println("checkTimeModifiedAndShopId-4-2");
 
+            if (startInSeconds == 0 && finishInSeconds == 0)return true;
             System.out.println("checkTimeModifiedAndShopId-5-0");
-            if (start == null) {
+            if (startInSeconds == 0) {
                 System.out.println("checkTimeModifiedAndShopId-5-1");
-                System.out.println(timeInSeconds);
-                System.out.println(finishInSeconds);
                 if (timeInSeconds <= finishInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-6");
                     checkTime = true;
                 }
-            } else if (finish == null) {
+            } else if (finishInSeconds == 0) {
                 System.out.println("checkTimeModifiedAndShopId-6-1");
                 if (timeInSeconds >= startInSeconds) {
                     System.out.println("checkTimeModifiedAndShopId-7");
