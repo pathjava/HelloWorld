@@ -12,30 +12,6 @@ public class Order {
     public List<OrderItem> items;
     public double sum;
 
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
-    }
-
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
-    }
-
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
-
     public String getShopId() {
         return shopId;
     }

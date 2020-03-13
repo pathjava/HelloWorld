@@ -10,7 +10,6 @@ import java.util.*;
 public class OrderProcessor {
     private Path startPath;
     private int errorFile = 0;
-    public Order order;
     private List<Order> listOrder = new ArrayList<>();
     private List<OrderItem> listItem;
     private List<Path> notValidFiles = new ArrayList<>();
@@ -32,10 +31,10 @@ public class OrderProcessor {
                         System.out.println("loadOrders-3");
                         if (checkOrderItem(path)) {
                             System.out.println("loadOrders-4");
-                            order = new Order();
-                            order.setShopId(path.getFileName().toString().substring(0, 3));
-                            order.setOrderId(path.getFileName().toString().substring(4, 10));
-                            order.setCustomerId(path.getFileName().toString().substring(11, 15));
+                            Order order = new Order();
+                            order.shopId = path.getFileName().toString().substring(0, 3);
+                            order.orderId = path.getFileName().toString().substring(4, 10);
+                            order.customerId = path.getFileName().toString().substring(11, 15);
                             FileTime fileTime = null;
                             try {
                                 fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
@@ -43,10 +42,9 @@ public class OrderProcessor {
                                 e.printStackTrace();
                             }
                             assert fileTime != null;
-                            LocalDateTime localDateTime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
-                            order.setDatetime(localDateTime);
-                            order.setItems(listItem);
-                            order.setSum(fullSumCostItems(listItem));
+                            order.datetime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+                            order.items = listItem;
+                            order.sum = fullSumCostItems(listItem);
                             listOrder.add(order);
                         }
                     }
@@ -119,7 +117,6 @@ public class OrderProcessor {
 
     private boolean checkOrderItem(Path path) {
         List<String> temporaryItem = new ArrayList<>();
-        OrderItem orderItem;
         listItem = new ArrayList<>();
         try {
             temporaryItem = Files.readAllLines(path);
@@ -138,10 +135,10 @@ public class OrderProcessor {
                 notValidFiles.add(path);
                 return false;
             }
-            orderItem = new OrderItem();
-            orderItem.setGoogsName(item[0]);
-            orderItem.setCount(Integer.parseInt(item[1]));
-            orderItem.setPrice(Double.parseDouble(item[2]));
+            OrderItem orderItem = new OrderItem();
+            orderItem.googsName = item[0];
+            orderItem.count = Integer.parseInt(item[1]);
+            orderItem.price = Double.parseDouble(item[2]);
             listItem.add(orderItem);
         }
         temporaryItem.clear();
@@ -166,11 +163,7 @@ public class OrderProcessor {
             }
         }
         sortedList.sort(new Order.ShopIdComparator());
-        for (Order order1 : sortedList) {
-            System.out.println(order1);
-        }
         return sortedList;
-
     }
 
     public Map<String, Double> statisticsByShop() {
@@ -222,8 +215,6 @@ public class OrderProcessor {
 //            System.out.println(orderItem);
 //        }
 
-        test.process("S02");
-
         System.out.println("-----------------------------");
         for (Map.Entry<String, Double> entry : test.statisticsByShop().entrySet()) {
             System.out.println(entry.getKey() + " : " + entry.getValue());
@@ -239,10 +230,10 @@ public class OrderProcessor {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
 
-//        System.out.println("-----------------------------");
-//        for (Order sort : test.process("S02")) {
-//            System.out.println(sort);
-//        }
+        System.out.println("-----------------------------");
+        for (Order sort : test.process("S02")) {
+            System.out.println(sort);
+        }
 
 //        System.out.println("-----------------------------");
 //        for (Path notValidFile : test.notValidFiles) {
