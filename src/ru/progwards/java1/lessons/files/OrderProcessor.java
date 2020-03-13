@@ -134,6 +134,12 @@ public class OrderProcessor {
             listItem.add(orderItem);
             System.out.println("checkOrderItem - 8");
         }
+        Collections.sort(listItem, new Comparator<OrderItem>() {
+            @Override
+            public int compare(OrderItem o1, OrderItem o2) {
+                return o1.googsName.compareTo(o2.googsName);
+            }
+        });
         temporaryItem.clear();
         return true;
     }
@@ -158,11 +164,7 @@ public class OrderProcessor {
         Collections.sort(sortedList, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                int value = o1.datetime.compareTo(o2.datetime);
-                if (value == 0){
-                    return o1.items.listIterator().next().googsName.compareTo(o2.items.listIterator().next().googsName);
-                }
-                return value;
+                return o1.datetime.compareTo(o2.datetime);
             }
         });
 //        sortedList.sort(new Order.ShopIdComparator());
