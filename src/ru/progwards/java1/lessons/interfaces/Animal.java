@@ -8,31 +8,36 @@ public class Animal implements FoodCompare, CompareWeight {
         this.weight = weight;
     }
 
-    enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK;}
-    public AnimalKind getKind(){
+    enum AnimalKind {ANIMAL, COW, HAMSTER, DUCK;}
+
+    public AnimalKind getKind() {
         return AnimalKind.ANIMAL;
     }
 
-    enum FoodKind{UNKNOWN, HAY, CORN;}
-    public FoodKind getFoodKind(){
+    enum FoodKind {UNKNOWN, HAY, CORN;}
+
+    public FoodKind getFoodKind() {
         return FoodKind.UNKNOWN;
     }
 
-    public String toString(){
+    public String toString() {
         return "I am " + getKind() + ", eat " + getFoodKind();
     }
 
     //метод calculateFoodWeight
-    public double getWeight(){
+    public double getWeight() {
         return weight;
     }
-    public double getFoodCoeff(){
+
+    public double getFoodCoeff() {
         return 0.02;
     }
-    public double calculateFoodWeight(){
+
+    public double calculateFoodWeight() {
         return getWeight() * getFoodCoeff();
     }
-    public String toStringFull(){
+
+    public String toStringFull() {
         return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
     }
 
@@ -48,8 +53,8 @@ public class Animal implements FoodCompare, CompareWeight {
     }
 
     //возвращает информацию о цене 1 кг еды
-    public double getFood1kgPrice(){
-        switch (getFoodKind()){
+    public double getFood1kgPrice() {
+        switch (getFoodKind()) {
             case HAY:
                 return 20;
             case CORN:
@@ -61,7 +66,7 @@ public class Animal implements FoodCompare, CompareWeight {
     }
 
     //возвращает информацию о цене еды для данного животного по формуле calculateFoodWeight() * getFood1kgPrice()
-    public double getFoodPrice(){
+    public double getFoodPrice() {
         return calculateFoodWeight() * getFood1kgPrice();
     }
 

@@ -6,15 +6,16 @@ public class Cow extends Animal {
     }
 
     @Override
-    public AnimalKind getKind(){
+    public AnimalKind getKind() {
         return AnimalKind.COW;
     }
+
     @Override
-    public FoodKind getFoodKind(){
+    public FoodKind getFoodKind() {
         return FoodKind.HAY;
     }
 
-    public double getFoodCoeff(){
+    public double getFoodCoeff() {
         return 0.05;
     }
 

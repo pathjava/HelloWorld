@@ -2,15 +2,15 @@ package ru.progwards.java1.lessons.interfaces;
 
 import java.util.Arrays;
 
-public class ArraySort  {
-    public static void sort(CompareWeight[] a){
+public class ArraySort {
+    public static void sort(CompareWeight[] a) {
         int n = a.length;
-        for (int i = 0; i < n-1; i++){
-            for (int j = 0; j < n-i-1; j++){
-                if (a[j].compareWeight(a[j+1]) == CompareWeight.CompareResult.GREATER){
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (a[j].compareWeight(a[j + 1]) == CompareWeight.CompareResult.GREATER) {
                     CompareWeight temp = a[j];
-                    a[j] = a[j+1];
-                    a[j+1] = temp;
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
                 }
             }
         }
@@ -22,13 +22,13 @@ public class ArraySort  {
         Hamster animal2 = new Hamster(150);
         Duck animal3 = new Duck(100);
 
-        CompareWeight [] a = new CompareWeight[4];
+        CompareWeight[] a = new CompareWeight[4];
         a[1] = animal;
         a[2] = animal1;
         a[3] = animal2;
         a[0] = animal3;
 
-        CompareWeight [] a2 = new CompareWeight[4];
+        CompareWeight[] a2 = new CompareWeight[4];
         a2[0] = new Food(60);
         a2[1] = new Food(90);
         a2[2] = new Food(45);
