@@ -22,18 +22,17 @@ public class ExampleBot extends ProgwardsTelegramBot {
         // проверить что все 4 группы блюд в заказе
         // если какой-то группы нет && бот не предлагал
         // то предложить и учтановить ключ, что бы не предлагать 2 раза
-        if (getUserData(userid, "Pizza") == null){
+        if (getUserData(userid, "Pizza") == null) {
             setUserData(userid, "Pizza", "2");
             return "Вы не заказали ни одной пиццы!";
-        }
-        else if (getUserData(userid, "Beverages") == null){
+        } else if (getUserData(userid, "Beverages") == null) {
             setUserData(userid, "Beverages", "2");
             return "Вы не заказали ни одного напитка!";
         }
 
         // спросить адрес доставки
         // проверить что заказ не пуст
-        if (getUserData(userid, addressKey) == null ) {
+        if (getUserData(userid, addressKey) == null) {
             setUserData(userid, addressKey, "*");
 
             return "Укажите, пожалуйста адрес доставки";
@@ -76,6 +75,7 @@ public class ExampleBot extends ProgwardsTelegramBot {
 
     /**
      * Метод, который возвращает ответ бота
+     *
      * @return ответ
      */
     @Override
@@ -107,9 +107,9 @@ public class ExampleBot extends ProgwardsTelegramBot {
             // если отказывается - сохранить флажок, что бы бесконечно не предлагать
             // дополнительно 2
             // реализовать отмену позиции заказа
-            if (checkLastFound(tags, "Пицца гавайская")||checkLastFound(tags,"Пицца маргарита")||checkLastFound(tags,"Пицца пеперони")||checkLastFound(tags,"Пицца Магия")||checkLastFound(tags,"Пицца Тарантелла"))
+            if (checkLastFound(tags, "Пицца гавайская") || checkLastFound(tags, "Пицца маргарита") || checkLastFound(tags, "Пицца пеперони") || checkLastFound(tags, "Пицца Магия") || checkLastFound(tags, "Пицца Тарантелла"))
                 setUserData(userid, "Pizza", "1");
-            if (checkLastFound(tags, "Кола")||checkLastFound(tags,"Холодный чай")||checkLastFound(tags,"Сок")||checkLastFound(tags,"Коктейль молочный")||checkLastFound(tags,"Коктейль молочный банановый")||checkLastFound(tags,"Коктейль молочный шоколадный"))
+            if (checkLastFound(tags, "Кола") || checkLastFound(tags, "Холодный чай") || checkLastFound(tags, "Сок") || checkLastFound(tags, "Коктейль молочный") || checkLastFound(tags, "Коктейль молочный банановый") || checkLastFound(tags, "Коктейль молочный шоколадный"))
                 setUserData(userid, "Beverages", "1");
 
             saveOrderItem(userid, tags);
