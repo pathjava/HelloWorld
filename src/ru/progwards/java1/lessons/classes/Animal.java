@@ -8,29 +8,36 @@ public class Animal {
         this.weight = weight;
     }
 
-    static enum AnimalKind{ANIMAL, COW, HAMSTER, DUCK,}
-    public AnimalKind getKind(){
+    static enum AnimalKind {ANIMAL, COW, HAMSTER, DUCK,}
+
+    public AnimalKind getKind() {
         return AnimalKind.ANIMAL;
     }
-    static enum FoodKind{UNKNOWN, HAY, CORN,}
-    public FoodKind getFoodKind(){
+
+    static enum FoodKind {UNKNOWN, HAY, CORN,}
+
+    public FoodKind getFoodKind() {
         return FoodKind.UNKNOWN;
     }
-    public String toString(){
+
+    public String toString() {
         return "I am " + getKind() + ", eat " + getFoodKind();
     }
 
     //метод calculateFoodWeight
-    public double getWeight(){
+    public double getWeight() {
         return weight;
     }
-    public double getFoodCoeff(){
+
+    public double getFoodCoeff() {
         return 0.02;
     }
-    public double calculateFoodWeight(){
-         return getWeight() * getFoodCoeff();
+
+    public double calculateFoodWeight() {
+        return getWeight() * getFoodCoeff();
     }
-    public String toStringFull(){
+
+    public String toStringFull() {
         return "I am " + getKind() + ", eat " + getFoodKind() + " " + calculateFoodWeight();
     }
 
