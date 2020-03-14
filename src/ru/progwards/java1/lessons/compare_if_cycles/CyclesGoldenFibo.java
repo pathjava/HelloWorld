@@ -2,7 +2,7 @@ package ru.progwards.java1.lessons.compare_if_cycles;
 
 public class CyclesGoldenFibo {
     // решение дал Григорий
-    public static boolean containsDigit(int number, int digit){
+    public static boolean containsDigit(int number, int digit) {
         if (number == 0 && digit == 0) return true;
         int n = number;
         while (n > 0) {
@@ -12,7 +12,7 @@ public class CyclesGoldenFibo {
         return false;
     }
 
-    public static int fiboNumber(int n){
+    public static int fiboNumber(int n) {
         if (n == 0) {
             return 0;
         } else if (n == 1) {
@@ -23,14 +23,14 @@ public class CyclesGoldenFibo {
     }
 
     // решение дал Григорий
-    public static boolean isGoldenTriangle(int a, int b, int c){
+    public static boolean isGoldenTriangle(int a, int b, int c) {
         float k = 0;
         if (a == b)
-            k = (float)a / c;
+            k = (float) a / c;
         else if (b == c)
-            k = (float)b / a;
+            k = (float) b / a;
         else if (a == c)
-            k = (float)a / b;
+            k = (float) a / b;
         return k > 1.61703f && k < 1.61903f;
     }
 
