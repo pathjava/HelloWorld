@@ -249,10 +249,10 @@ public class OrderProcessor {
             System.out.println(sort);
         }
 
-//        System.out.println("-----------------------------");
-//        for (Path notValidFile : test.notValidFiles) {
-//            System.out.println(notValidFile);
-//        }
+        System.out.println("-----------------------------");
+        for (Path notValidFile : test.notValidFiles) {
+            System.out.println(notValidFile);
+        }
 
         System.out.println("-----------------------------");
         for (Order order : test.listOrder) {
