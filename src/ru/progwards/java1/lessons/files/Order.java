@@ -24,12 +24,12 @@ public class Order {
         return datetime;
     }
 
-    public static class ShopIdComparator implements Comparator<Order> {
-        @Override
-        public int compare(Order o1, Order o2) {
-            return o1.datetime.compareTo(o2.datetime);
-        }
-    }
+//    public static class ShopIdComparator implements Comparator<Order> {
+//        @Override
+//        public int compare(Order o1, Order o2) {
+//            return o1.datetime.compareTo(o2.datetime);
+//        }
+//    }
 
     @Override
     public String toString() {
