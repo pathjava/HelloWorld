@@ -9,11 +9,9 @@ import java.util.*;
 
 public class OrderProcessor {
     private Path startPath;
-    /* поле для подсчета ошибочных файлов */
     private int errorFile = 0;
     private List<Order> listOrder = new ArrayList<>();
     private List<OrderItem> listItem;
-    /* ArrayList для сохранения путей на ошибочные файлы */
     private List<Path> notValidFiles = new ArrayList<>();
 
     public OrderProcessor(String startPath) {
@@ -21,28 +19,21 @@ public class OrderProcessor {
     }
 
     public int loadOrders(LocalDate start, LocalDate finish, String shopId) {
-        /* шаблон для определения файла по расширению и имени */
+        System.out.println(start + " " + finish + " " + shopId);
         PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/???-??????-????.csv");
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-                    /* проверка совпадения условий на файл по шаблону и по параметрам в методе checkTimeModifiedAndShopId() */
                     if (pathMatcher.matches(path) && checkTimeModifiedAndShopId(path, start, finish, shopId)) {
-                        /* проверка совпадения условий в методе checkOrderItem() */
+                        System.out.println("loadOrders - 1");
                         if (checkOrderItem(path)) {
-                            /* создаем объект Order */
+                            System.out.println("loadOrders - 2");
                             Order order = new Order();
-                            /* разбиваем имя файла и помещаем сегменты в массив */
                             String[] segmentsFileName = path.getFileName().toString().substring(0, path.getFileName().toString().lastIndexOf(".")).split("-");
-                            /* если каждый из сегментов соответствует условию, присваиваем значение полю объекта */
-                            if (segmentsFileName[0].length() == 3)
-                                order.shopId = segmentsFileName[0];
-                            if (segmentsFileName[1].length() == 6)
-                                order.orderId = segmentsFileName[1];
-                            if (segmentsFileName[2].length() == 4)
-                                order.customerId = segmentsFileName[2];
-                            /* получаем Last Modified из файла */
+                            if (segmentsFileName[0].length() == 3) order.shopId = segmentsFileName[0];
+                            if (segmentsFileName[1].length() == 6) order.orderId = segmentsFileName[1];
+                            if (segmentsFileName[2].length() == 4) order.customerId = segmentsFileName[2];
                             FileTime fileTime = null;
                             try {
                                 fileTime = Files.getLastModifiedTime(Paths.get(String.valueOf(path)));
@@ -51,11 +42,8 @@ public class OrderProcessor {
                             }
                             assert fileTime != null;
                             order.datetime = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneId.systemDefault());
-                            /* присваиваем List<OrderItem> listItem в поле объекта */
                             order.items = listItem;
-                            /* в методе fullSumCostItems() считаем сумму заказов и присваиваем полю объекта */
                             order.sum = fullSumCostItems(listItem);
-                            /* помещаем объект order в ArrayList */
                             listOrder.add(order);
                         }
                     }
@@ -74,9 +62,8 @@ public class OrderProcessor {
     }
 
     private boolean checkTimeModifiedAndShopId(Path path, LocalDate start, LocalDate finish, String shopId) {
-        /* получаем shopId из имени файла */
+        boolean checkTime = false;
         String checkShopId = path.getFileName().toString().substring(0, 3);
-        /* проверяем на условие shopId */
         if (checkShopId.equals(shopId) || shopId == null) {
             FileTime fileTime = null;
             try {
@@ -85,70 +72,74 @@ public class OrderProcessor {
                 e.printStackTrace();
             }
             assert fileTime != null;
-            long timeModifiedInSeconds = fileTime.toInstant().toEpochMilli();
-            long startDateInSeconds = 0;
+            LocalDate modifiedDate = LocalDate.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
+            long timeInSeconds = modifiedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+            long startInSeconds = 0;
             if (start != null) {
-                startDateInSeconds = start.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+                startInSeconds = start.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-            long finishDateInSeconds = 0;
+            long finishInSeconds = 0;
             if (finish != null) {
-                finishDateInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
+                finishInSeconds = finish.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
             }
-
-            if (startDateInSeconds == 0 && finishDateInSeconds == 0)
-                return true;
-            if (startDateInSeconds == 0 && timeModifiedInSeconds <= finishDateInSeconds)
-                return true;
-            if (finishDateInSeconds == 0 && timeModifiedInSeconds >= startDateInSeconds)
-                return true;
-            return timeModifiedInSeconds >= startDateInSeconds && timeModifiedInSeconds <= finishDateInSeconds;
+            if (startInSeconds == 0 && finishInSeconds == 0) return true;
+            System.out.println("checkTimeModifiedAndShopId - 1");
+            if (startInSeconds == 0 && timeInSeconds <= finishInSeconds) return true;
+            System.out.println("checkTimeModifiedAndShopId - 2");
+            if (finishInSeconds == 0 && timeInSeconds >= startInSeconds) return true;
+            System.out.println("checkTimeModifiedAndShopId - 3");
+            if (timeInSeconds >= startInSeconds && timeInSeconds <= finishInSeconds) checkTime = true;
+            System.out.println("checkTimeModifiedAndShopId - 4");
         }
-        return false;
+        System.out.println("checkTimeModifiedAndShopId - 5");
+        return checkTime;
     }
 
     private boolean checkOrderItem(Path path) {
-        /* заводим временный массив ArrayList */
         List<String> temporaryItem = new ArrayList<>();
         listItem = new ArrayList<>();
         try {
-            /* считываем содержимое файла в массив ArrayList */
             temporaryItem = Files.readAllLines(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /* проверяем, пустой массив ArrayList или нет */
+        System.out.println("checkOrderItem - 1");
         if (temporaryItem.isEmpty()) {
             errorFile++;
             notValidFiles.add(path);
             return false;
         }
-        /* считываем содержимое массива ArrayList */
+        System.out.println("checkOrderItem - 2");
         for (String s : temporaryItem) {
-            /* делим строки по запятой и помещаем в ячейки массива строк */
             String[] item = s.split(",");
-            /* проверяем, является ли длина массива трём */
+            for (String s1 : item) {
+                System.out.println(s1);
+            }
             if (item.length != 3) {
                 errorFile++;
                 notValidFiles.add(path);
                 return false;
             }
-            /* создаем объект класса OrderItem и присваиваем полям значения ячеек массива строк item */
+            System.out.println("checkOrderItem - 3");
             OrderItem orderItem = new OrderItem();
+            System.out.println("checkOrderItem - 4");
+            System.out.println(item[0]);
             orderItem.googsName = item[0];
-            /* методом trim() сжимаем - удаляем лишние пробелы */
+            System.out.println("checkOrderItem - 5");
+            System.out.println(Integer.parseInt(item[1].trim()));
             orderItem.count = Integer.parseInt(item[1].trim());
+            System.out.println("checkOrderItem - 6");
             orderItem.price = Double.parseDouble(item[2].trim());
-            /* добавляем объект в массив */
+            System.out.println("checkOrderItem - 7");
             listItem.add(orderItem);
+            System.out.println("checkOrderItem - 8");
         }
-        /* переопределяем компаратор через анонимный класс и сортирует массив по именам товаров */
-        listItem.sort(new Comparator<OrderItem>() {
+        Collections.sort(listItem, new Comparator<OrderItem>() {
             @Override
             public int compare(OrderItem o1, OrderItem o2) {
                 return o1.googsName.compareTo(o2.googsName);
             }
         });
-        /* очищаем временный массив */
         temporaryItem.clear();
         return true;
     }
@@ -156,7 +147,6 @@ public class OrderProcessor {
     private double fullSumCostItems(List<OrderItem> listItem) {
         double fullSum = 0.0;
         for (OrderItem item : listItem) {
-            /* получаем стоимость товара и умножаем на количество купленных товаров */
             fullSum += (item.getPrice() * item.getCount());
         }
         return fullSum;
@@ -171,19 +161,20 @@ public class OrderProcessor {
                 sortedList.add(sortTime);
             }
         }
-        /* в данном случае сортировка через переопределенный компаратор, находящийся в классе Order
-        * вариант выше и этот отличаются реализацией - это только для себя - для отработки */
-        sortedList.sort(new Order.ShopIdComparator());
+        Collections.sort(sortedList, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o1.datetime.compareTo(o2.datetime);
+            }
+        });
+//        sortedList.sort(new Order.ShopIdComparator());
         return sortedList;
     }
 
     public Map<String, Double> statisticsByShop() {
-        /* заводим TreeMap */
         Map<String, Double> salesVolumesList = new TreeMap<>();
         for (Order order : listOrder) {
-            /* получаем сумму заказов */
             double fullSum = order.getSum();
-            /* если ключ уже есть в TreeMap, то к ранее полученной сумме складываем сумму из TreeMap */
             if (salesVolumesList.containsKey(order.getShopId())) {
                 fullSum += salesVolumesList.get(order.getShopId());
             }
@@ -249,10 +240,10 @@ public class OrderProcessor {
             System.out.println(sort);
         }
 
-        System.out.println("-----------------------------");
-        for (Path notValidFile : test.notValidFiles) {
-            System.out.println(notValidFile);
-        }
+//        System.out.println("-----------------------------");
+//        for (Path notValidFile : test.notValidFiles) {
+//            System.out.println(notValidFile);
+//        }
 
         System.out.println("-----------------------------");
         for (Order order : test.listOrder) {
