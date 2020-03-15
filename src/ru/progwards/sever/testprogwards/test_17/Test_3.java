@@ -8,7 +8,8 @@ public class Test_3 {
     public static void printPersons(Person[] persons) {
         Locale locale = new Locale("ru", "RU");
         for (Person person : persons) {
-            System.out.format(locale, "|%-10s|%td/%tm/%tY|%,10.2f|\n", person.name, person.birth, person.birth, person.birth, person.salary);
+            System.out.format(locale, "|%-10s|%td/%tm/%tY|%,10.2f|\n",
+                    person.name, person.birth, person.birth, person.birth, person.salary);
         }
     }
 
