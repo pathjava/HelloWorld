@@ -13,13 +13,13 @@ public class DoubleNumber extends Number {
             Double nn = number * Integer.parseInt(num.toString());
             return newNumber(nn.toString());
         }*/
-        double nn = number * ((DoubleNumber)num).number;
+        double nn = number * ((DoubleNumber) num).number;
         return new DoubleNumber(nn);
     }
 
     @Override
     public Number div(Number num) {
-        double nn = number / ((DoubleNumber)num).number;
+        double nn = number / ((DoubleNumber) num).number;
         return new DoubleNumber(nn);
     }
 
@@ -30,13 +30,13 @@ public class DoubleNumber extends Number {
 
     @Override
     public String toString() {
-        return ((Double)number).toString();
+        return ((Double) number).toString();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != getClass())
             return false;
-        return this.number == ((DoubleNumber)obj).number;
+        return this.number == ((DoubleNumber) obj).number;
     }
 }
