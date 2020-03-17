@@ -4,6 +4,7 @@ public class DoubleNumber extends Number {
     public double num;
 
     public DoubleNumber(double num) {
+        super();
         this.num = num;
     }
 

@@ -5,6 +5,7 @@ public class IntNumber extends Number {
     public IntNumber(int num){
         super("" + num, TypeNumber.INTEGER);
     }
+
     @Override
     public Number mul(Number num) {
         return this.mul(num);
