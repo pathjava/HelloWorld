@@ -1,6 +1,20 @@
 package ru.progwards.java1.lessons.abstractnum;
 
-public class Number {
+public abstract class  Number {
+
+    String stringNumber = null;
+    enum TypeNumber {INTEGER, DOUBLE}
+    TypeNumber typeNumber = null;
+
+    public Number(String stringNumber) {
+        this.stringNumber = stringNumber;
+    }
+
+    public Number(String stringNumber, TypeNumber typeNumber) {
+        this.stringNumber = stringNumber;
+        this.typeNumber = typeNumber;
+    }
+
     public Number mul(Number num){
         return null;
     }
