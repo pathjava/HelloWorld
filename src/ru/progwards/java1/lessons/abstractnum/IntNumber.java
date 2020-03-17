@@ -2,27 +2,42 @@ package ru.progwards.java1.lessons.abstractnum;
 
 public class IntNumber extends Number {
 
-    public IntNumber(int num){
-        super("" + num, TypeNumber.INTEGER);
+    private int number;
+
+    public IntNumber(int num) {
+        number = num;
     }
 
     @Override
     public Number mul(Number num) {
-        return this.mul(num);
+        /*if (num == null || num.getClass() != getClass()) {
+            Integer nn = number * Integer.parseInt(num.toString());
+            return newNumber(nn.toString());
+        }*/
+        int nn = number * ((IntNumber)num).number;
+        return new IntNumber(nn);
     }
 
     @Override
     public Number div(Number num) {
-        return super.div(num);
+        int nn = number / ((IntNumber)num).number;
+        return new IntNumber(nn);
     }
 
     @Override
     public Number newNumber(String strNum) {
-        return super.newNumber(strNum);
+        return new IntNumber(Integer.parseInt(strNum));
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return ((Integer)number).toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass())
+            return false;
+        return this.number == ((IntNumber)obj).number;
     }
 }
