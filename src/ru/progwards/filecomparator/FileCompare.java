@@ -6,11 +6,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FileCompare {
 
     List<String> listOne = new ArrayList<>();
     List<String> listTwo = new ArrayList<>();
+    private Map<Integer, List<String>> listMapOne;
+    private Map<Integer, List<String>> listMapTwo;
 
     public void readFiles(String pathOne, String pathTwo) {
         Path pathFileOne = null;
@@ -43,5 +46,13 @@ public class FileCompare {
         FileCompare test = new FileCompare();
         test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+
+        for (String s : test.listOne) {
+            System.out.println(s);
+        }
+        System.out.println("-----------------------");
+        for (String s : test.listTwo) {
+            System.out.println(s);
+        }
     }
 }
