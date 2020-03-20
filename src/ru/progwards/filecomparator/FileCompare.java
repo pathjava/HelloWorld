@@ -11,14 +11,15 @@ public class FileCompare {
     private Map<Integer, String> listMapTwo = new TreeMap<>();
 
     public void readFiles(String pathOne, String pathTwo) {
-        if (pathOne == null || pathTwo == null){
+        if (pathOne == null || pathOne.equals("") || pathTwo == null || pathTwo.equals("")) {
             System.out.println("Не выбран файл!");
             return;
         }
-        try(BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))){
+
+        try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             int numberLineOne = 0;
-            while ((lineOne = readerOne.readLine()) != null){
+            while ((lineOne = readerOne.readLine()) != null) {
                 listMapOne.put(numberLineOne, lineOne);
                 numberLineOne++;
             }
@@ -26,16 +27,20 @@ public class FileCompare {
             e.printStackTrace();
         }
 
-        try(BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))){
+        try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             int numberLineTwo = 0;
-            while ((lineTwo = readerTwo.readLine()) != null){
+            while ((lineTwo = readerTwo.readLine()) != null) {
                 listMapTwo.put(numberLineTwo, lineTwo);
                 numberLineTwo++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void compareFiles(){
+
     }
 
 
@@ -46,14 +51,14 @@ public class FileCompare {
 
         System.out.println("-----------One------------");
         for (Map.Entry<Integer, String> entry : test.listMapOne.entrySet()) {
-            System.out.format("%-2d", entry.getKey());
-            System.out.println(" : " + entry.getValue());
+            System.out.format("%3d", entry.getKey());
+            System.out.println(": " + entry.getValue());
         }
 
         System.out.println("-----------Two------------");
         for (Map.Entry<Integer, String> entry : test.listMapTwo.entrySet()) {
-            System.out.format("%-2d", entry.getKey());
-            System.out.println(" : " + entry.getValue());
+            System.out.format("%3d", entry.getKey());
+            System.out.println(": " + entry.getValue());
         }
     }
 }
