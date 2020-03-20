@@ -18,7 +18,7 @@ public class FileCompare {
 
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
-            int numberLineOne = 0;
+            int numberLineOne = 1;
             while ((lineOne = readerOne.readLine()) != null) {
                 listMapOne.put(numberLineOne, lineOne);
                 numberLineOne++;
@@ -29,7 +29,7 @@ public class FileCompare {
 
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
-            int numberLineTwo = 0;
+            int numberLineTwo = 1;
             while ((lineTwo = readerTwo.readLine()) != null) {
                 listMapTwo.put(numberLineTwo, lineTwo);
                 numberLineTwo++;
@@ -39,7 +39,7 @@ public class FileCompare {
         }
     }
 
-    public void compareFiles(){
+    public void compareFiles() {
 
     }
 
