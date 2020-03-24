@@ -7,8 +7,8 @@ import java.util.*;
 
 public class FileCompare {
 
-    private List<String> listMapOne = new ArrayList<>();
-    private List<String> listMapTwo = new ArrayList<>();
+    private List<String> listOne = new ArrayList<>();
+    private List<String> listTwo = new ArrayList<>();
 
     public void readFiles(String pathOne, String pathTwo) {
         if (pathOne == null || pathOne.equals("") || pathTwo == null || pathTwo.equals("")) {
@@ -19,7 +19,7 @@ public class FileCompare {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
-                listMapOne.add(lineOne);
+                listOne.add(lineOne);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,27 +28,28 @@ public class FileCompare {
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             while ((lineTwo = readerTwo.readLine()) != null) {
-                listMapTwo.add(lineTwo);
+                listTwo.add(lineTwo);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> compareFiles() {
-        List<String> patchList = new ArrayList<>();
+    public Map<Integer, String> compareFiles() {
+        Map<Integer, String> fileMap = new TreeMap<>();
 
-        for (int i = 0; i < listMapOne.size(); i++) {
-            for (int j = 0; j < listMapTwo.size(); j++) {
-                if (!(listMapOne.get(i).equals(listMapTwo.get(j)))) {
-                    patchList.add("+");
-                } else  {
-                    patchList.add(listMapOne.get(i));
-                    i++;
+        int count = 0;
+        for (int i = 0; i < listOne.size(); i++) {
+            for (int j = 0; j < listTwo.size(); j++) {
+                if (!(listOne.get(i).equals(listTwo.get(j)))) {
+                    if (listTwo.get(j).isEmpty())
+                        fileMap.put(j, "+");
+                    else
+                        fileMap.put(j, "+" + listTwo.get(j));
                 }
             }
         }
-        return patchList;
+        return fileMap;
     }
 
 
@@ -59,7 +60,7 @@ public class FileCompare {
 
         System.out.println("-----------One------------");
         int countOne = 1;
-        for (String s : test.listMapOne) {
+        for (String s : test.listOne) {
             System.out.format("%3d", countOne);
             System.out.println(": " + s);
             countOne++;
@@ -67,15 +68,16 @@ public class FileCompare {
 
         System.out.println("-----------Two------------");
         int countTwo = 1;
-        for (String s : test.listMapTwo) {
+        for (String s : test.listTwo) {
             System.out.format("%3d", countTwo);
             System.out.println(": " + s);
             countTwo++;
         }
 
         System.out.println("-----------Patch------------");
-        for (String patch : test.compareFiles()) {
-            System.out.println(patch);
+        for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
+            System.out.format("%3d", entry.getKey());
+            System.out.println(": " + entry.getValue());
         }
     }
 }
