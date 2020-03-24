@@ -66,21 +66,21 @@ public class FileCompare {
         test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
-        System.out.println("-----------One------------");
-        int countOne = 1;
-        for (String s : test.listOne) {
-            System.out.format("%3d", countOne);
-            System.out.println(": " + s);
-            countOne++;
-        }
-
-        System.out.println("-----------Two------------");
-        int countTwo = 1;
-        for (String s : test.listTwo) {
-            System.out.format("%3d", countTwo);
-            System.out.println(": " + s);
-            countTwo++;
-        }
+//        System.out.println("-----------One------------");
+//        int countOne = 1;
+//        for (String s : test.listOne) {
+//            System.out.format("%3d", countOne);
+//            System.out.println(": " + s);
+//            countOne++;
+//        }
+//
+//        System.out.println("-----------Two------------");
+//        int countTwo = 1;
+//        for (String s : test.listTwo) {
+//            System.out.format("%3d", countTwo);
+//            System.out.println(": " + s);
+//            countTwo++;
+//        }
 
         System.out.println("-----------Patch------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
