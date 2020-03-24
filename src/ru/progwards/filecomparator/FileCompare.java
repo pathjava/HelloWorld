@@ -42,9 +42,11 @@ public class FileCompare {
             fileFinalMap.put(i, "null");
         }
 
+        int temp = 0;
         for (int i = 0; i < listOne.size(); i++) {
-            for (int j = 0; j < listTwo.size(); j++) {
+            for (int j = temp; j < listTwo.size(); j++) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
+                    if (j < i) j = i;
                 } else {
                     if (listOne.get(i).equals(listTwo.get(j)))
                         if (i + 1 < listOne.size() && j + 1 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 1))))
@@ -53,7 +55,8 @@ public class FileCompare {
                                 fileFinalMap.put(j + 1, listOne.get(i + 1));
                                 fileFinalMap.put(j + 2, listOne.get(i + 2));
                                 i++;
-                }
+                                temp = j;
+                            }
                 }
             }
         }
