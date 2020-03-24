@@ -44,9 +44,9 @@ public class FileCompare {
 
         int temp = 0;
         for (int i = 0; i < listOne.size(); i++) {
+            if (temp < i) temp = i;
             for (int j = temp; j < listTwo.size(); j++) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                    if (j < i) j = i;
                 } else {
                     if (listOne.get(i).equals(listTwo.get(j)))
                         if (i + 1 < listOne.size() && j + 1 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 1))))
