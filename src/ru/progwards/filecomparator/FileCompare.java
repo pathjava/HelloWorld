@@ -98,7 +98,7 @@ public class FileCompare {
 //            countTwo++;
 //        }
 
-        System.out.println("-----------Patch------------");
+        System.out.println("----------- Patch ------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
             System.out.format("%3d", entry.getKey());
             System.out.println(": " + entry.getValue());
