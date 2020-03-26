@@ -46,7 +46,7 @@ public class FileCompare {
             for (int j = 0; j < listTwo.size(); j++) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
                     if (j + 1 < listTwo.size() && (listOne.get(i).equals(listTwo.get(j + 1))))
-                        if (i + 1 < listOne.size() && j + 2 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 2))))
+                        if (i + 1 < listOne.size() && j + 2 < listTwo.size() && ((listOne.get(i + 1).equals(listTwo.get(j + 2)) || (listOne.get(i + 1).isEmpty() && (listTwo.get(j + 2)).isEmpty()))))
                             if (i + 2 < listOne.size() && j + 3 < listTwo.size() && (listOne.get(i + 2).equals(listTwo.get(j + 3)))) {
                                 fileFinalMap.put(j + 1, listOne.get(i));
                                 fileFinalMap.put(j + 2, listOne.get(i + 1));
@@ -79,8 +79,8 @@ public class FileCompare {
 
     public static void main(String[] args) {
         FileCompare test = new FileCompare();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
