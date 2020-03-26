@@ -51,7 +51,6 @@ public class FileCompare {
                                 fileFinalMap.put(j + 1, listOne.get(i));
                                 fileFinalMap.put(j + 2, listOne.get(i + 1));
                                 fileFinalMap.put(j + 3, listOne.get(i + 2));
-//                                if (i < listOne.size() && j <= i) j = i;
                             }
                 } else {
                     if (i < listOne.size() - 1) i++;
@@ -64,8 +63,8 @@ public class FileCompare {
 
     public static void main(String[] args) {
         FileCompare test = new FileCompare();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
