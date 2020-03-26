@@ -57,14 +57,30 @@ public class FileCompare {
                 }
             }
         }
+
+        for (int i = listOne.size() - 1; i >= 0; i--) {
+            for (int j = listTwo.size() - 1; j >= 0; j--) {
+                if (!(listOne.get(i).equals(listTwo.get(j)))) {
+                    if (j - 1 >= 0 && (listOne.get(i).equals(listTwo.get(j - 1))))
+                        if (i - 1 >= 0 && j - 2 >= 0 && (listOne.get(i - 1).equals(listTwo.get(j - 2))))
+                            if (i - 2 >= 0 && j - 3 >= 0 && (listOne.get(i - 2).equals(listTwo.get(j - 3)))) {
+                                fileFinalMap.put(j - 1, listOne.get(i));
+                                fileFinalMap.put(j - 2, listOne.get(i - 1));
+                                fileFinalMap.put(j - 3, listOne.get(i - 2));
+                            }
+                } else {
+                    if (i >= 1) i--;
+                }
+            }
+        }
         return fileFinalMap;
     }
 
 
     public static void main(String[] args) {
         FileCompare test = new FileCompare();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
