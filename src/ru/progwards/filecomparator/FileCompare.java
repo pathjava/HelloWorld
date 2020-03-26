@@ -39,25 +39,25 @@ public class FileCompare {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
         Map<Integer, String> fileFinalMap = new TreeMap<>();
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
-            fileFinalMap.put(i, "null");
+            fileFinalMap.put(i, "+");
         }
 
-        int temp = 0;
         for (int i = 0; i < listOne.size(); i++) {
-            if (temp < i) temp = i;
-            for (int j = temp; j < listTwo.size(); j++) {
+            int j = 0;
+            if (j > i)j=i;
+            while (j < listTwo.size()) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                } else {
-                    if (listOne.get(i).equals(listTwo.get(j)))
-                        if (i + 1 < listOne.size() && j + 1 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 1))))
-                            if (i + 2 < listOne.size() && j + 2 < listTwo.size() && (listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-                                fileFinalMap.put(j, listOne.get(i));
-                                fileFinalMap.put(j + 1, listOne.get(i + 1));
-                                fileFinalMap.put(j + 2, listOne.get(i + 2));
-                                i++;
-                                temp = j;
+                    if (j + 1 < listTwo.size() && (listOne.get(i).equals(listTwo.get(j + 1))))
+                        if (i + 1 < listOne.size() && j + 2 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 2))))
+                            if (i + 2 < listOne.size() && j + 3 < listTwo.size() && (listOne.get(i + 2).equals(listTwo.get(j + 3)))) {
+                                fileFinalMap.put(j + 1, listOne.get(i));
+                                fileFinalMap.put(j + 2, listOne.get(i + 1));
+                                fileFinalMap.put(j + 3, listOne.get(i + 2));
                             }
+                } else {
+                    i++;
                 }
+                j++;
             }
         }
         return fileFinalMap;
