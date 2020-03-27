@@ -50,9 +50,21 @@ public class FileCompare {
         return fileFinalMap;
     }
 
+    private void searchAnchorForwardByCount() {
+        int j = 0;
+        int count = 0;
+        for (int i = 0; i < listOne.size(); i++) {
+            while (j < listTwo.size())
+                if (!(listOne.get(i).equals(listTwo.get(j))))
+                    j++;
+            count++;
+        }
+    }
+
     private void searchAnchorForward() {
         for (int i = 0; i < listOne.size(); i++) {
             for (int j = 0; j < listTwo.size(); j++) {
+                if (i < listTwo.size() && j < i) j = i - 1;
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
                     if (j + 1 < listTwo.size() && (listOne.get(i).equals(listTwo.get(j + 1))))
                         if (i + 1 < listOne.size() && j + 2 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 2))))
@@ -60,6 +72,8 @@ public class FileCompare {
                                 fileFinalMap.put(j + 1, listOne.get(i));
                                 fileFinalMap.put(j + 2, listOne.get(i + 1));
                                 fileFinalMap.put(j + 3, listOne.get(i + 2));
+                                i++;
+                                j++;
                             }
                 } else {
                     if (i < listOne.size() - 1) i++;
@@ -78,6 +92,8 @@ public class FileCompare {
                                 fileFinalMap.put(j - 1, listOne.get(i));
                                 fileFinalMap.put(j - 2, listOne.get(i - 1));
                                 fileFinalMap.put(j - 3, listOne.get(i - 2));
+                                i--;
+                                j--;
                             }
                 } else {
                     if (i >= 1) i--;
