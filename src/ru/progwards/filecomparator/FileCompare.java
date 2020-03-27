@@ -35,13 +35,22 @@ public class FileCompare {
         }
     }
 
+    private Map<Integer, String> fileFinalMap = new TreeMap<>();
+
     public Map<Integer, String> compareFiles() {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
-        Map<Integer, String> fileFinalMap = new TreeMap<>();
+
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "+");
         }
 
+        searchAnchorForward();
+        searchAnchorBack();
+
+        return fileFinalMap;
+    }
+
+    private void searchAnchorForward() {
         for (int i = 0; i < listOne.size(); i++) {
             for (int j = 0; j < listTwo.size(); j++) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
@@ -57,7 +66,9 @@ public class FileCompare {
                 }
             }
         }
+    }
 
+    private void searchAnchorBack() {
         for (int i = listOne.size() - 1; i >= 0; i--) {
             for (int j = listTwo.size() - 1; j >= 0; j--) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
@@ -73,7 +84,6 @@ public class FileCompare {
                 }
             }
         }
-        return fileFinalMap;
     }
 
 
