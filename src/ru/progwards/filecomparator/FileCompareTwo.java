@@ -38,7 +38,7 @@ public class FileCompareTwo {
         }
     }
 
-    private Map<Integer, String> fileFinalMap = new TreeMap<>();
+    private Map<Integer, String> fileFinalMap = new HashMap<>();
 
     public Map<Integer, String> compareFiles() {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
