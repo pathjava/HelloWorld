@@ -45,15 +45,13 @@ public class FileCompareTwo {
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "+");
         }
-
         searchAnchorForward();
         searchAnchorBack();
-
         return fileFinalMap;
     }
 
     private void searchAnchorForward() {
-        for (int i = 0; i < listOne.size(); i++) {
+        for (int i = 0; i < listOne.size(); i++)
             for (int j = 0; j < listTwo.size(); j++) {
                 if (i < listTwo.size() && j < i)
                     j = i - 1;
@@ -67,7 +65,6 @@ public class FileCompareTwo {
                     if (i < listOne.size() - 1) i++;
                 }
             }
-        }
     }
 
     private boolean equalsThreeLinesForward(int one, int two) {
@@ -101,8 +98,8 @@ public class FileCompareTwo {
     }
 
     private void searchAnchorBack() {
-        for (int i = listOne.size() - 1; i >= 0; i--) {
-            for (int j = listTwo.size() - 1; j >= 0; j--) {
+        for (int i = listOne.size() - 1; i >= 0; i--)
+            for (int j = listTwo.size() - 1; j >= 0; j--)
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
                     if (equalsThreeLinesBack(i, j)) {
                         addLinesBack(i, j);
@@ -112,8 +109,6 @@ public class FileCompareTwo {
                 } else {
                     if (i >= 1) i--;
                 }
-            }
-        }
     }
 
     private boolean equalsThreeLinesBack(int one, int two) {
