@@ -48,7 +48,7 @@ public class FileCompareTwo {
         }
 
         searchAnchorForward();
-        searchAnchorBack();
+//        searchAnchorBack();
 
         return fileFinalMap;
     }
@@ -58,7 +58,7 @@ public class FileCompareTwo {
             for (int j = 0; j < listTwo.size(); j++) {
                 if (i < listTwo.size() && j < i) j = i - 1;
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                    if (comparisonThreeLines(i, j)) {
+                    if (equalsThreeLinesForward(i, j)) {
                         fileFinalMap.put(j + 1, listOne.get(i));
                         fileFinalMap.put(j + 2, listOne.get(i + 1));
                         fileFinalMap.put(j + 3, listOne.get(i + 2));
@@ -72,20 +72,24 @@ public class FileCompareTwo {
         }
     }
 
-    private boolean comparisonThreeLines(int one, int two) {
-        StringBuilder stringOne = new StringBuilder();
-        StringBuilder stringTwo = new StringBuilder();
+    private boolean equalsThreeLinesForward(int one, int two) {
         int countOne = 0;
         int countTwo = 1;
-        for (int i = 0; i <= 2; i++) {
-            if ((one + countOne) < listOne.size() && (two + (countTwo)) < listTwo.size()) {
-                stringOne.append(listOne.get(one+i));
-                stringTwo.append(listTwo.get(two+i));
-                countOne++;
-                countTwo++;
+        int i = 0;
+        while (i <= 2) {
+            if ((one + countOne) < listOne.size() && (two + countTwo) < listTwo.size()) {
+                if (listOne.get(one + countOne).equals(listTwo.get(two + countTwo))) {
+                    countOne++;
+                    countTwo++;
+                }
+                else
+                    return false;
             }
+            else
+                return false;
+            i++;
         }
-        return stringOne.toString().equals(stringTwo.toString());
+        return true;
     }
 
     private void searchAnchorBack() {
@@ -121,7 +125,7 @@ public class FileCompareTwo {
 //            System.out.println(": " + s);
 //            countOne++;
 //        }
-//
+
 //        System.out.println("-----------Two------------");
 //        int countTwo = 1;
 //        for (String s : test.listTwo) {
