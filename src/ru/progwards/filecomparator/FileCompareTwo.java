@@ -18,7 +18,9 @@ public class FileCompareTwo {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
-                listOne.add(lineOne);
+                if (lineOne.isEmpty() || lineOne.isBlank())
+                    listOne.add("emptyString");
+                else listOne.add(lineOne);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +29,9 @@ public class FileCompareTwo {
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             while ((lineTwo = readerTwo.readLine()) != null) {
-                listTwo.add(lineTwo);
+                if (lineTwo.isEmpty() || lineTwo.isBlank())
+                    listTwo.add("emptyString");
+                else listTwo.add(lineTwo);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,37 +53,39 @@ public class FileCompareTwo {
         return fileFinalMap;
     }
 
-    private void searchAnchorForwardByCount() {
-        int j = 0;
-        int count = 0;
-        for (int i = 0; i < listOne.size(); i++) {
-            while (j < listTwo.size()) {
-                if (!(listOne.get(i).equals(listTwo.get(j))))
-                    j++;
-                count++;
-            }
-        }
-    }
-
     private void searchAnchorForward() {
         for (int i = 0; i < listOne.size(); i++) {
             for (int j = 0; j < listTwo.size(); j++) {
                 if (i < listTwo.size() && j < i) j = i - 1;
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                    if (j + 1 < listTwo.size() && (listOne.get(i).equals(listTwo.get(j + 1))))
-                        if (i + 1 < listOne.size() && j + 2 < listTwo.size() && (listOne.get(i + 1).equals(listTwo.get(j + 2))))
-                            if (i + 2 < listOne.size() && j + 3 < listTwo.size() && (listOne.get(i + 2).equals(listTwo.get(j + 3)))) {
-                                fileFinalMap.put(j + 1, listOne.get(i));
-                                fileFinalMap.put(j + 2, listOne.get(i + 1));
-                                fileFinalMap.put(j + 3, listOne.get(i + 2));
-                                i++;
-                                j++;
-                            }
+                    if (comparisonThreeLines(i, j)) {
+                        fileFinalMap.put(j + 1, listOne.get(i));
+                        fileFinalMap.put(j + 2, listOne.get(i + 1));
+                        fileFinalMap.put(j + 3, listOne.get(i + 2));
+                        i++;
+                        j++;
+                    }
                 } else {
                     if (i < listOne.size() - 1) i++;
                 }
             }
         }
+    }
+
+    private boolean comparisonThreeLines(int one, int two) {
+        StringBuilder stringOne = new StringBuilder();
+        StringBuilder stringTwo = new StringBuilder();
+        int countOne = 0;
+        int countTwo = 1;
+        for (int i = 0; i <= 2; i++) {
+            if ((one + countOne) < listOne.size() && (two + (countTwo)) < listTwo.size()) {
+                stringOne.append(listOne.get(one+i));
+                stringTwo.append(listTwo.get(two+i));
+                countOne++;
+                countTwo++;
+            }
+        }
+        return stringOne.toString().equals(stringTwo.toString());
     }
 
     private void searchAnchorBack() {
@@ -105,8 +111,8 @@ public class FileCompareTwo {
 
     public static void main(String[] args) {
         FileCompareTwo test = new FileCompareTwo();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
@@ -115,7 +121,7 @@ public class FileCompareTwo {
 //            System.out.println(": " + s);
 //            countOne++;
 //        }
-
+//
 //        System.out.println("-----------Two------------");
 //        int countTwo = 1;
 //        for (String s : test.listTwo) {
