@@ -42,7 +42,6 @@ public class FileCompareTwo {
 
     public Map<Integer, String> compareFiles() {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
-
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "+");
         }
@@ -56,12 +55,11 @@ public class FileCompareTwo {
     private void searchAnchorForward() {
         for (int i = 0; i < listOne.size(); i++) {
             for (int j = 0; j < listTwo.size(); j++) {
-                if (i < listTwo.size() && j < i) j = i - 1;
+                if (i < listTwo.size() && j < i)
+                    j = i - 1;
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
                     if (equalsThreeLinesForward(i, j)) {
-                        fileFinalMap.put(j + 1, listOne.get(i));
-                        fileFinalMap.put(j + 2, listOne.get(i + 1));
-                        fileFinalMap.put(j + 3, listOne.get(i + 2));
+                        addLinesForward(i, j);
                         i++;
                         j++;
                     }
@@ -90,14 +88,24 @@ public class FileCompareTwo {
         return true;
     }
 
+    private void addLinesForward(int iForward, int jForward) {
+        int countOne = 0;
+        int countTwo = 1;
+        int i = 0;
+        while (i <= 2) {
+            fileFinalMap.put(jForward + countTwo, listOne.get(iForward + countOne));
+            countOne++;
+            countTwo++;
+            i++;
+        }
+    }
+
     private void searchAnchorBack() {
         for (int i = listOne.size() - 1; i >= 0; i--) {
             for (int j = listTwo.size() - 1; j >= 0; j--) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
                     if (equalsThreeLinesBack(i, j)) {
-                        fileFinalMap.put(j - 1, listOne.get(i));
-                        fileFinalMap.put(j - 2, listOne.get(i - 1));
-                        fileFinalMap.put(j - 3, listOne.get(i - 2));
+                        addLinesBack(i, j);
                         i--;
                         j--;
                     }
@@ -124,6 +132,18 @@ public class FileCompareTwo {
             i++;
         }
         return true;
+    }
+
+    private void addLinesBack(int iBack, int jBack) {
+        int countOne = 0;
+        int countTwo = 1;
+        int i = 0;
+        while (i <= 2) {
+            fileFinalMap.put(jBack - countTwo, listOne.get(iBack - countOne));
+            countOne++;
+            countTwo++;
+            i++;
+        }
     }
 
 
