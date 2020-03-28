@@ -5,8 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class FileCompare {
-
+public class FileCompareTwo {
     private List<String> listOne = new ArrayList<>();
     private List<String> listTwo = new ArrayList<>();
 
@@ -105,7 +104,7 @@ public class FileCompare {
 
 
     public static void main(String[] args) {
-        FileCompare test = new FileCompare();
+        FileCompareTwo test = new FileCompareTwo();
         test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
