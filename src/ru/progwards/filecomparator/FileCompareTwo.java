@@ -48,7 +48,7 @@ public class FileCompareTwo {
         }
 
         searchAnchorForward();
-//        searchAnchorBack();
+        searchAnchorBack();
 
         return fileFinalMap;
     }
@@ -77,14 +77,12 @@ public class FileCompareTwo {
         int countTwo = 1;
         int i = 0;
         while (i <= 2) {
-            if ((one + countOne) < listOne.size() && (two + countTwo) < listTwo.size()) {
+            if ((one + countOne) < listOne.size() && (two + countTwo) < listTwo.size())
                 if (listOne.get(one + countOne).equals(listTwo.get(two + countTwo))) {
                     countOne++;
                     countTwo++;
-                }
-                else
+                } else
                     return false;
-            }
             else
                 return false;
             i++;
@@ -96,15 +94,13 @@ public class FileCompareTwo {
         for (int i = listOne.size() - 1; i >= 0; i--) {
             for (int j = listTwo.size() - 1; j >= 0; j--) {
                 if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                    if (j - 1 >= 0 && (listOne.get(i).equals(listTwo.get(j - 1))))
-                        if (i - 1 >= 0 && j - 2 >= 0 && (listOne.get(i - 1).equals(listTwo.get(j - 2))))
-                            if (i - 2 >= 0 && j - 3 >= 0 && (listOne.get(i - 2).equals(listTwo.get(j - 3)))) {
-                                fileFinalMap.put(j - 1, listOne.get(i));
-                                fileFinalMap.put(j - 2, listOne.get(i - 1));
-                                fileFinalMap.put(j - 3, listOne.get(i - 2));
-                                i--;
-                                j--;
-                            }
+                    if (equalsThreeLinesBack(i, j)) {
+                        fileFinalMap.put(j - 1, listOne.get(i));
+                        fileFinalMap.put(j - 2, listOne.get(i - 1));
+                        fileFinalMap.put(j - 3, listOne.get(i - 2));
+                        i--;
+                        j--;
+                    }
                 } else {
                     if (i >= 1) i--;
                 }
@@ -112,11 +108,29 @@ public class FileCompareTwo {
         }
     }
 
+    private boolean equalsThreeLinesBack(int one, int two) {
+        int countOne = 0;
+        int countTwo = 1;
+        int i = 0;
+        while (i <= 2) {
+            if ((one - countOne) >= 0 && (two - countTwo) >= 0)
+                if (listOne.get(one - countOne).equals(listTwo.get(two - countTwo))) {
+                    countOne++;
+                    countTwo++;
+                } else
+                    return false;
+            else
+                return false;
+            i++;
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         FileCompareTwo test = new FileCompareTwo();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
