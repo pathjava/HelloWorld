@@ -54,10 +54,11 @@ public class FileCompare {
         int j = 0;
         int count = 0;
         for (int i = 0; i < listOne.size(); i++) {
-            while (j < listTwo.size())
+            while (j < listTwo.size()) {
                 if (!(listOne.get(i).equals(listTwo.get(j))))
                     j++;
-            count++;
+                count++;
+            }
         }
     }
 
