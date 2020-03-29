@@ -86,6 +86,22 @@ public class FileCompareThree {
             i++;
         }
         return true;
+
+//        StringBuilder stringOne = new StringBuilder();
+//        StringBuilder stringTwo = new StringBuilder();
+//        int countOne = 0;
+//        int countTwo = 1;
+//        int i = 0;
+//        while (i <= 2) {
+//            if ((one + countOne) < listOne.size() && (two + countTwo) < listTwo.size()) {
+//                stringOne.append(listOne.get(one + countOne));
+//                stringTwo.append(listTwo.get(two + countTwo));
+//                countOne++;
+//                countTwo++;
+//            }
+//            i++;
+//        }
+//        return stringOne.toString().equals(stringTwo.toString());
     }
 
     private void addLinesForward(int iForward, int jForward) {
