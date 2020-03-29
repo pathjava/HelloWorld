@@ -18,7 +18,7 @@ public class FileCompareTwo {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
-                if (lineOne.isEmpty() || lineOne.isBlank())
+                if (lineOne.isEmpty())
                     listOne.add("emptyString");
                 else listOne.add(lineOne);
             }
@@ -29,7 +29,7 @@ public class FileCompareTwo {
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             while ((lineTwo = readerTwo.readLine()) != null) {
-                if (lineTwo.isEmpty() || lineTwo.isBlank())
+                if (lineTwo.isEmpty())
                     listTwo.add("emptyString");
                 else listTwo.add(lineTwo);
             }
@@ -144,8 +144,8 @@ public class FileCompareTwo {
 
     public static void main(String[] args) {
         FileCompareTwo test = new FileCompareTwo();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
