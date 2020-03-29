@@ -44,7 +44,7 @@ public class FileCompareThree {
     public Map<Integer, FileCompareAnchors> compareFiles() {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
         fileDifferentDate = new FileCompareAnchors();
-        for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
+        for (int i = 1; i < MAX_SIZE_ARRAY; i++) {
             fileDifferentDate.lineFromFile = "+";
             fileFinalMap.put(i, fileDifferentDate);
         }
@@ -96,7 +96,7 @@ public class FileCompareThree {
             fileDifferentDate = new FileCompareAnchors();
             fileDifferentDate.lineFromFile = listOne.get(iForward + countOne);
             fileDifferentDate.startLineBefore = iForward + countOne + 1;
-            fileFinalMap.put(jForward + countTwo, fileDifferentDate);
+            fileFinalMap.put(jForward + countTwo + 1, fileDifferentDate);
             countOne++;
             countTwo++;
             i++;
@@ -142,7 +142,8 @@ public class FileCompareThree {
         while (i <= 2) {
             fileDifferentDate = new FileCompareAnchors();
             fileDifferentDate.lineFromFile = listOne.get(iBack - countOne);
-            fileFinalMap.put(jBack - countTwo, fileDifferentDate);
+            fileDifferentDate.finishLineBefore = iBack - countOne + 1;
+            fileFinalMap.put(jBack - countTwo + 1, fileDifferentDate);
             countOne++;
             countTwo++;
             i++;
