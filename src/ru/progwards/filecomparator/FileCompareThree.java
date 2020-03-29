@@ -99,6 +99,8 @@ public class FileCompareThree {
 //                countOne++;
 //                countTwo++;
 //            }
+//            else
+//                return false;
 //            i++;
 //        }
 //        return stringOne.toString().equals(stringTwo.toString());
@@ -149,6 +151,23 @@ public class FileCompareThree {
             i++;
         }
         return true;
+
+//        StringBuilder stringOne = new StringBuilder();
+//        StringBuilder stringTwo = new StringBuilder();
+//        int countOne = 0;
+//        int countTwo = 1;
+//        int i = 0;
+//        while (i <= 2) {
+//            if ((one - countOne) >= 0 && (two - countTwo) >= 0) {
+//                stringOne.append(listOne.get(one - countOne));
+//                stringTwo.append(listTwo.get(two - countTwo));
+//                countOne++;
+//                countTwo++;
+//            } else
+//                return false;
+//            i++;
+//        }
+//        return stringOne.toString().equals(stringTwo.toString());
     }
 
     private void addLinesBack(int iBack, int jBack) {
@@ -169,8 +188,8 @@ public class FileCompareThree {
 
     public static void main(String[] args) {
         FileCompareThree test = new FileCompareThree();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
