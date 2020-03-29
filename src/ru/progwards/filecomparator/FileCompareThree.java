@@ -95,7 +95,7 @@ public class FileCompareThree {
         while (i <= 2) {
             fileDifferentDate = new FileCompareAnchors();
             fileDifferentDate.lineFromFile = listOne.get(iForward + countOne);
-            fileDifferentDate.startLineBefore = iForward+countOne;
+            fileDifferentDate.startLineBefore = iForward + countOne + 1;
             fileFinalMap.put(jForward + countTwo, fileDifferentDate);
             countOne++;
             countTwo++;
