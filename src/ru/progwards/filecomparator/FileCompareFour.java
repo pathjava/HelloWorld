@@ -65,14 +65,14 @@ public class FileCompareFour {
                         i++;
                     else {
                         i += 2;
-                        j += countBefore - 1;
+                        j += countBefore - 1; //TODO исправить
                         countBefore = 0;
                     }
                 } else if (countAfter != 0) {
                     addLinesBefore(j);
                     countAfter = 0;
                 } else
-                    countBefore++;
+                    countBefore++; //TODO переделать на true / false
             }
         }
     }
