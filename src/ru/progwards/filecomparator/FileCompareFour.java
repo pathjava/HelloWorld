@@ -8,7 +8,6 @@ import java.util.*;
 public class FileCompareFour {
     private List<String> listOne = new ArrayList<>();
     private List<String> listTwo = new ArrayList<>();
-    public FileCompareAnchors fileDifferentDate;
 
     public void readFiles(String pathOne, String pathTwo) {
         if (pathOne == null || pathOne.equals("") || pathTwo == null || pathTwo.equals("")) {
@@ -39,14 +38,12 @@ public class FileCompareFour {
         }
     }
 
-    private Map<Integer, FileCompareAnchors> fileFinalMap = new HashMap<>();
+    private Map<Integer, String> fileFinalMap = new HashMap<>();
 
-    public Map<Integer, FileCompareAnchors> compareFiles() {
+    public Map<Integer, String> compareFiles() {
         final int MAX_SIZE_ARRAY = Math.max(listOne.size(), listTwo.size());
-        fileDifferentDate = new FileCompareAnchors();
-        for (int i = 1; i < MAX_SIZE_ARRAY; i++) {
-            fileDifferentDate.lineFromFile = "+";
-            fileFinalMap.put(i, fileDifferentDate);
+        for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
+            fileFinalMap.put(i, "+");
         }
         searchAnchorForward();
 //        searchAnchorBack();
@@ -54,20 +51,27 @@ public class FileCompareFour {
     }
 
     private void searchAnchorForward() {
-        for (int i = 0; i < listOne.size(); i++)
+//        int count = 0;
+        for (int i = 0; i < listOne.size(); i++) {
+            int count = 0;
             for (int j = 0; j < listTwo.size(); j++) {
-                if (i < listTwo.size() && j < i)
-                    j = i - 1;
-                if (!(listOne.get(i).equals(listTwo.get(j)))) {
-                    if (equalsThreeLinesForward(i, j)) {
-                        addLinesForward(i, j);
+                if (j == 0) j = i;
+                if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+                        && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+                        && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+                    if (count != 0)
+                        addLinesForward(j);
+                    if (count == 0)
                         i++;
-                        j++;
+                    else {
+                        i += count;
+                        j += count - 1;
+                        count = 0;
                     }
-                } else {
-                    if (i < listOne.size() - 1) i++;
-                }
+                } else
+                    count++;
             }
+        }
     }
 
     private boolean equalsThreeLinesForward(int iForward, int jForward) {
@@ -106,17 +110,10 @@ public class FileCompareFour {
 //        return stringOne.toString().equals(stringTwo.toString());
     }
 
-    private void addLinesForward(int iForward, int jForward) {
-        int countOne = 0;
-        int countTwo = 1;
+    private void addLinesForward(int jForward) {
         int i = 0;
         while (i <= 2) {
-            fileDifferentDate = new FileCompareAnchors();
-            fileDifferentDate.lineFromFile = listOne.get(iForward + countOne);
-            fileDifferentDate.startLineBefore = iForward + countOne + 1;
-            fileFinalMap.put(jForward + countTwo + 1, fileDifferentDate);
-            countOne++;
-            countTwo++;
+            fileFinalMap.put(jForward + i, listTwo.get(jForward + i));
             i++;
         }
     }
@@ -208,7 +205,7 @@ public class FileCompareFour {
 //        }
 
         System.out.println("----------- Patch ------------");
-        for (Map.Entry<Integer, FileCompareAnchors> entry : test.compareFiles().entrySet()) {
+        for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
             System.out.format("%3d", entry.getKey());
             System.out.println(": " + entry.getValue());
         }
