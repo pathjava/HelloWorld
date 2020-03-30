@@ -51,63 +51,31 @@ public class FileCompareFour {
     }
 
     private void searchAnchorForward() {
-//        int count = 0;
         for (int i = 0; i < listOne.size(); i++) {
-            int count = 0;
+            int countBefore = 0;
+            int countAfter = 0;
             for (int j = 0; j < listTwo.size(); j++) {
                 if (j == 0) j = i;
                 if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                         && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                         && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-                    if (count != 0)
+                    countAfter++;
+                    if (countBefore != 0)
                         addLinesForward(j);
-                    if (count == 0)
+                    if (countBefore == 0)
                         i++;
                     else {
-                        i += count;
-                        j += count - 1;
-                        count = 0;
+                        i += countBefore;
+                        j += countBefore - 1;
+                        countBefore = 0;
                     }
+                } else if (countAfter != 0) {
+                    addLinesBack(j);
+                    countAfter = 0;
                 } else
-                    count++;
+                    countBefore++;
             }
         }
-    }
-
-    private boolean equalsThreeLinesForward(int iForward, int jForward) {
-        int countOne = 0;
-        int countTwo = 1;
-        int i = 0;
-        while (i <= 2) {
-            if ((iForward + countOne) < listOne.size() && (jForward + countTwo) < listTwo.size())
-                if (listOne.get(iForward + countOne).equals(listTwo.get(jForward + countTwo))) {
-                    countOne++;
-                    countTwo++;
-                } else
-                    return false;
-            else
-                return false;
-            i++;
-        }
-        return true;
-
-//        StringBuilder stringOne = new StringBuilder();
-//        StringBuilder stringTwo = new StringBuilder();
-//        int countOne = 0;
-//        int countTwo = 1;
-//        int i = 0;
-//        while (i <= 2) {
-//            if ((one + countOne) < listOne.size() && (two + countTwo) < listTwo.size()) {
-//                stringOne.append(listOne.get(one + countOne));
-//                stringTwo.append(listTwo.get(two + countTwo));
-//                countOne++;
-//                countTwo++;
-//            }
-//            else
-//                return false;
-//            i++;
-//        }
-//        return stringOne.toString().equals(stringTwo.toString());
     }
 
     private void addLinesForward(int jForward) {
@@ -118,69 +86,13 @@ public class FileCompareFour {
         }
     }
 
-//    private void searchAnchorBack() {
-//        for (int i = listOne.size() - 1; i >= 0; i--)
-//            for (int j = listTwo.size() - 1; j >= 0; j--)
-//                if (!(listOne.get(i).equals(listTwo.get(j)))) {
-//                    if (equalsThreeLinesBack(i, j)) {
-//                        addLinesBack(i, j);
-//                        i--;
-//                        j--;
-//                    }
-//                } else {
-//                    if (i >= 1) i--;
-//                }
-//    }
-
-//    private boolean equalsThreeLinesBack(int one, int two) {
-//        int countOne = 0;
-//        int countTwo = 1;
-//        int i = 0;
-//        while (i <= 2) {
-//            if ((one - countOne) >= 0 && (two - countTwo) >= 0)
-//                if (listOne.get(one - countOne).equals(listTwo.get(two - countTwo))) {
-//                    countOne++;
-//                    countTwo++;
-//                } else
-//                    return false;
-//            else
-//                return false;
-//            i++;
-//        }
-//        return true;
-//
-////        StringBuilder stringOne = new StringBuilder();
-////        StringBuilder stringTwo = new StringBuilder();
-////        int countOne = 0;
-////        int countTwo = 1;
-////        int i = 0;
-////        while (i <= 2) {
-////            if ((one - countOne) >= 0 && (two - countTwo) >= 0) {
-////                stringOne.append(listOne.get(one - countOne));
-////                stringTwo.append(listTwo.get(two - countTwo));
-////                countOne++;
-////                countTwo++;
-////            } else
-////                return false;
-////            i++;
-////        }
-////        return stringOne.toString().equals(stringTwo.toString());
-//    }
-
-//    private void addLinesBack(int iBack, int jBack) {
-//        int countOne = 0;
-//        int countTwo = 1;
-//        int i = 0;
-//        while (i <= 2) {
-//            fileDifferentDate = new FileCompareAnchors();
-//            fileDifferentDate.lineFromFile = listOne.get(iBack - countOne);
-//            fileDifferentDate.finishLineBefore = iBack - countOne + 1;
-//            fileFinalMap.put(jBack - countTwo + 1, fileDifferentDate);
-//            countOne++;
-//            countTwo++;
-//            i++;
-//        }
-//    }
+    private void addLinesBack(int jForward) {
+        int i = 0;
+        while (i <= 2) {
+            fileFinalMap.put(jForward - i+1, listTwo.get(jForward - i+1));
+            i++;
+        }
+    }
 
 
     public static void main(String[] args) {
