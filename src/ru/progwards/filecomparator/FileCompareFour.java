@@ -45,32 +45,31 @@ public class FileCompareFour {
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "+");
         }
-        searchAnchorForward();
-//        searchAnchorBack();
+        searchAnchor();
         return fileFinalMap;
     }
 
-    private void searchAnchorForward() {
+    private void searchAnchor() {
         for (int i = 0; i < listOne.size(); i++) {
             int countBefore = 0;
             int countAfter = 0;
             for (int j = 0; j < listTwo.size(); j++) {
-                if (j == 0) j = i;
+                if (j == 0 && i < listTwo.size() - 1) j = i;
                 if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                         && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                         && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
                     countAfter++;
                     if (countBefore != 0)
-                        addLinesForward(j);
+                        addLinesAfter(j);
                     if (countBefore == 0)
                         i++;
                     else {
-                        i += countBefore;
+                        i += 2;
                         j += countBefore - 1;
                         countBefore = 0;
                     }
                 } else if (countAfter != 0) {
-                    addLinesBack(j);
+                    addLinesBefore(j);
                     countAfter = 0;
                 } else
                     countBefore++;
@@ -78,7 +77,7 @@ public class FileCompareFour {
         }
     }
 
-    private void addLinesForward(int jForward) {
+    private void addLinesAfter(int jForward) {
         int i = 0;
         while (i <= 2) {
             fileFinalMap.put(jForward + i, listTwo.get(jForward + i));
@@ -86,10 +85,10 @@ public class FileCompareFour {
         }
     }
 
-    private void addLinesBack(int jForward) {
+    private void addLinesBefore(int jForward) {
         int i = 0;
         while (i <= 2) {
-            fileFinalMap.put(jForward - i+1, listTwo.get(jForward - i+1));
+            fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
             i++;
         }
     }
@@ -97,8 +96,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
