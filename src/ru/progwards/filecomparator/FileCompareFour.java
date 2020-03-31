@@ -51,7 +51,7 @@ public class FileCompareFour {
 
     private void searchAnchor() {
         for (int i = 0; i < listOne.size(); i++) {
-            int countBefore = 0;
+            boolean modifiedRow = false;
             int countAfter = 0;
             for (int j = 0; j < listTwo.size(); j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
@@ -59,20 +59,20 @@ public class FileCompareFour {
                         && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                         && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
                     countAfter++;
-                    if (countBefore != 0)
+                    if (modifiedRow)
                         addLinesAfter(j);
-                    if (countBefore == 0)
+                    if (!modifiedRow)
                         i++;
                     else {
-                        i += 2;
-                        j += countBefore - 1; //TODO исправить
-                        countBefore = 0;
+                        if (i + 2 < listOne.size()) i += 2;
+                        if (j + 2 < listTwo.size()) j += 1;
+                        modifiedRow = false;
                     }
                 } else if (countAfter != 0) {
                     addLinesBefore(j);
                     countAfter = 0;
                 } else
-                    countBefore++; //TODO переделать на true / false
+                    modifiedRow = true;
             }
         }
     }
@@ -88,7 +88,10 @@ public class FileCompareFour {
     private void addLinesBefore(int jForward) {
         int i = 0;
         while (i <= 2) {
-            fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
+            if (jForward - i + 1 < listTwo.size())
+                fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
+            else
+                fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
             i++;
         }
     }
