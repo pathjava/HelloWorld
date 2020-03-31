@@ -52,25 +52,25 @@ public class FileCompareFour {
     private void searchAnchor() {
         for (int i = 0; i < listOne.size(); i++) {
             boolean modifiedRow = false;
-            int countAfter = 0;
+            boolean nonModifiedRow = false;
             for (int j = 0; j < listTwo.size(); j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
                 if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                         && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                         && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-                    countAfter++;
+                    nonModifiedRow = true;
                     if (modifiedRow)
                         addLinesAfter(j);
-                    if (!modifiedRow)
-                        i++;
-                    else {
+                    if (!modifiedRow) {
+                        if (i + 1 < listOne.size()) i++;
+                    } else {
                         if (i + 2 < listOne.size()) i += 2;
                         if (j + 2 < listTwo.size()) j += 1;
                         modifiedRow = false;
                     }
-                } else if (countAfter != 0) {
+                } else if (nonModifiedRow) {
                     addLinesBefore(j);
-                    countAfter = 0;
+                    nonModifiedRow = false;
                 } else
                     modifiedRow = true;
             }
