@@ -50,10 +50,10 @@ public class FileCompareFour {
     }
 
     private void searchAnchor() {
-        for (int i = 0; i < listOne.size(); i++) {
-            boolean modifiedRow = false;
-            boolean nonModifiedRow = false;
-            for (int j = 0; j < listTwo.size(); j++) {
+        boolean modifiedRow = false;
+        boolean nonModifiedRow = false;
+        for (int i = 0; i < listOne.size() - 2; i++) {
+            for (int j = 0; j < listTwo.size() - 2; j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
                 if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                         && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
@@ -65,7 +65,7 @@ public class FileCompareFour {
                         if (i + 1 < listOne.size()) i++;
                     } else {
                         if (i + 2 < listOne.size()) i += 2;
-                        if (j + 2 < listTwo.size()) j += 1;
+                        if (j + 1 < listTwo.size()) j += 1;
                         modifiedRow = false;
                     }
                 } else if (nonModifiedRow) {
@@ -88,10 +88,14 @@ public class FileCompareFour {
     private void addLinesBefore(int jForward) {
         int i = 0;
         while (i <= 2) {
+//            if (jForward == listTwo.size() - 3 && listOne.get(listOne.size() - 3).equals(listTwo.get(listTwo.size() - 3)))
+//                fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
+//            else {
             if (jForward - i + 1 < listTwo.size())
                 fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
             else
                 fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
+//            }
             i++;
         }
     }
