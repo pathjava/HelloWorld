@@ -88,14 +88,10 @@ public class FileCompareFour {
     private void addLinesBefore(int jForward) {
         int i = 0;
         while (i <= 2) {
-//            if (jForward == listTwo.size() - 3 && listOne.get(listOne.size() - 3).equals(listTwo.get(listTwo.size() - 3)))
-//                fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
-//            else {
             if (jForward - i + 1 < listTwo.size())
                 fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
             else
                 fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
-//            }
             i++;
         }
     }
@@ -103,8 +99,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
