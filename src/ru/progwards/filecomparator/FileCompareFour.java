@@ -56,9 +56,7 @@ public class FileCompareFour {
             for (int j = 0; j < listTwo.size() - 2; j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
                 if (checkEachLine) {
-                    if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-                            && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-                            && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+                    if (checkEqualsLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
                     } else {
                         if (i > 2) addLinesBefore(j);
@@ -68,9 +66,7 @@ public class FileCompareFour {
                     }
                 }
                 if (checkThreeLines) {
-                    if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-                            && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-                            && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+                    if (checkEqualsLines(i, j)) {
                         addLinesAfter(j);
                         checkEachLine = true;
                         checkThreeLines = false;
@@ -79,7 +75,6 @@ public class FileCompareFour {
                 }
             }
         }
-
 //        boolean modifiedRow = false;
 //        boolean nonModifiedRow = false;
 //        for (int i = 0; i < listOne.size() - 2; i++) {
@@ -107,6 +102,12 @@ public class FileCompareFour {
 //        }
     }
 
+    private boolean checkEqualsLines(int i, int j){
+        return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+                && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+                && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
+    }
+
     private void addLinesAfter(int jForward) {
         int i = 0;
         while (i <= 2) {
@@ -129,8 +130,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
