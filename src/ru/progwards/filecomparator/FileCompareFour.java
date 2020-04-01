@@ -54,6 +54,7 @@ public class FileCompareFour {
         boolean nextThreeLines = false;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
+                if (j == 0 && i < listTwo.size() - 1) j = i;
                 if (eachLine) {
                     if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                             && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
