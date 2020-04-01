@@ -56,18 +56,18 @@ public class FileCompareFour {
             for (int j = 0; j < listTwo.size() - 2; j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
                 if (checkInOneLine) {
-                    if (checkEqualsLines(i, j)) {
+                    if (checkingCoincidenceLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
                     } else {
-                        if (i > 2) addLinesBefore(j);
+                        if (i > 2) addLinesBeforeMatching(j);
                         checkInThreeLines = true;
                         checkInOneLine = false;
                         if (i > 2 && i + 2 < listOne.size()) i += 2;
                     }
                 }
                 if (checkInThreeLines) {
-                    if (checkEqualsLines(i, j)) {
-                        addLinesAfter(j);
+                    if (checkingCoincidenceLines(i, j)) {
+                        addLinesAfterMismatch(j);
                         checkInOneLine = true;
                         checkInThreeLines = false;
                         if (i + 1 < listOne.size()) i++;
@@ -102,13 +102,13 @@ public class FileCompareFour {
 //        }
     }
 
-    private boolean checkEqualsLines(int i, int j) {
+    private boolean checkingCoincidenceLines(int i, int j) {
         return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                 && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                 && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
     }
 
-    private void addLinesAfter(int jForward) {
+    private void addLinesAfterMismatch(int jForward) {
         int i = 0;
         while (i <= 2) {
             fileFinalMap.put(jForward + i, listTwo.get(jForward + i));
@@ -116,7 +116,7 @@ public class FileCompareFour {
         }
     }
 
-    private void addLinesBefore(int jForward) {
+    private void addLinesBeforeMatching(int jForward) {
         int i = 0;
         while (i <= 2) {
             if (jForward - i + 1 < listTwo.size())
