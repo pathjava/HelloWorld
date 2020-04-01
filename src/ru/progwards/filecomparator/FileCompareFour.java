@@ -54,15 +54,19 @@ public class FileCompareFour {
         boolean checkThreeLines = false;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
-                if (j == 0 && i < listTwo.size() - 1) j = i;
+                if (j == 0 && i < listTwo.size() - 1)
+                    j = i;
                 if (checkEachLine) {
                     if (checkEqualsLines(i, j)) {
-                        if (i + 1 < listOne.size()) i++;
+                        if (i + 1 < listOne.size())
+                            i++;
                     } else {
-                        if (i > 2) addLinesBefore(j);
+                        if (i > 2)
+                            addLinesBefore(j);
                         checkThreeLines = true;
                         checkEachLine = false;
-                        if (i > 2 && i + 2 < listOne.size()) i += 2;
+                        if (i > 2 && i + 2 < listOne.size())
+                            i += 2;
                     }
                 }
                 if (checkThreeLines) {
@@ -70,7 +74,8 @@ public class FileCompareFour {
                         addLinesAfter(j);
                         checkEachLine = true;
                         checkThreeLines = false;
-                        if (i + 1 < listOne.size()) i++;
+                        if (i + 1 < listOne.size())
+                            i++;
                     }
                 }
             }
@@ -102,7 +107,7 @@ public class FileCompareFour {
 //        }
     }
 
-    private boolean checkEqualsLines(int i, int j){
+    private boolean checkEqualsLines(int i, int j) {
         return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                 && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                 && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
@@ -130,8 +135,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
