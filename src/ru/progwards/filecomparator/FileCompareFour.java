@@ -50,31 +50,31 @@ public class FileCompareFour {
     }
 
     private void searchAnchor() {
-        boolean eachLine = true;
-        boolean nextThreeLines = false;
+        boolean checkEachLine = true;
+        boolean checkThreeLines = false;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
-                if (eachLine) {
+                if (checkEachLine) {
                     if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                             && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                             && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-                        i++;
+                        if (i + 1 < listOne.size()) i++;
                     } else {
-                        addLinesBefore(j);
-                        nextThreeLines = true;
-                        eachLine = false;
-                        i += 2;
+                        if (i > 2) addLinesBefore(j);
+                        checkThreeLines = true;
+                        checkEachLine = false;
+                        if (i > 2 && i + 2 < listOne.size()) i += 2;
                     }
                 }
-                if (nextThreeLines) {
+                if (checkThreeLines) {
                     if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
                             && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
                             && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
                         addLinesAfter(j);
-                        eachLine = true;
-                        nextThreeLines = false;
-                        i++;
+                        checkEachLine = true;
+                        checkThreeLines = false;
+                        if (i + 1 < listOne.size()) i++;
                     }
                 }
             }
