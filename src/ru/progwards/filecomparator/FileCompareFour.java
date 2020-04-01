@@ -45,31 +45,31 @@ public class FileCompareFour {
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "+");
         }
-        searchAnchor();
+        searchAnchorLines();
         return fileFinalMap;
     }
 
-    private void searchAnchor() {
-        boolean checkEachLine = true;
-        boolean checkThreeLines = false;
+    private void searchAnchorLines() {
+        boolean checkInOneLine = true;
+        boolean checkInThreeLines = false;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
                 if (j == 0 && i < listTwo.size() - 1) j = i;
-                if (checkEachLine) {
+                if (checkInOneLine) {
                     if (checkEqualsLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
                     } else {
                         if (i > 2) addLinesBefore(j);
-                        checkThreeLines = true;
-                        checkEachLine = false;
+                        checkInThreeLines = true;
+                        checkInOneLine = false;
                         if (i > 2 && i + 2 < listOne.size()) i += 2;
                     }
                 }
-                if (checkThreeLines) {
+                if (checkInThreeLines) {
                     if (checkEqualsLines(i, j)) {
                         addLinesAfter(j);
-                        checkEachLine = true;
-                        checkThreeLines = false;
+                        checkInOneLine = true;
+                        checkInThreeLines = false;
                         if (i + 1 < listOne.size()) i++;
                     }
                 }
