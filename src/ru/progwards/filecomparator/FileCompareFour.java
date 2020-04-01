@@ -52,9 +52,10 @@ public class FileCompareFour {
     private void searchAnchorLines() {
         boolean checkInOneLine = true;
         boolean checkInThreeLines = false;
+        int temp = 0;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
-                if (j == 0 && i < listTwo.size() - 1) j = i;
+                if (j < temp) j = temp;
                 if (checkInOneLine) {
                     if (checkingCoincidenceLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
@@ -71,6 +72,7 @@ public class FileCompareFour {
                         checkInOneLine = true;
                         checkInThreeLines = false;
                         if (i + 1 < listOne.size()) i++;
+                        temp = j;
                     }
                 }
             }
