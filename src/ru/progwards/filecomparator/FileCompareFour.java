@@ -50,31 +50,60 @@ public class FileCompareFour {
     }
 
     private void searchAnchor() {
-        boolean modifiedRow = false;
-        boolean nonModifiedRow = false;
+        boolean eachLine = true;
+        boolean nextThreeLines = false;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
-                if (j == 0 && i < listTwo.size() - 1) j = i;
-                if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-                        && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-                        && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-                    nonModifiedRow = true;
-                    if (modifiedRow)
-                        addLinesAfter(j);
-                    if (!modifiedRow) {
-                        if (i + 1 < listOne.size()) i++;
+                if (eachLine) {
+                    if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+                            && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+                            && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+                        i++;
                     } else {
-                        if (i + 2 < listOne.size()) i += 2;
-                        if (j + 1 < listTwo.size()) j += 1;
-                        modifiedRow = false;
+                        addLinesBefore(j);
+                        nextThreeLines = true;
+                        eachLine = false;
+                        i += 2;
                     }
-                } else if (nonModifiedRow) {
-                    addLinesBefore(j);
-                    nonModifiedRow = false;
-                } else
-                    modifiedRow = true;
+                }
+                if (nextThreeLines) {
+                    if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+                            && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+                            && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+                        addLinesAfter(j);
+                        eachLine = true;
+                        nextThreeLines = false;
+                        i++;
+                    }
+                }
             }
         }
+
+//        boolean modifiedRow = false;
+//        boolean nonModifiedRow = false;
+//        for (int i = 0; i < listOne.size() - 2; i++) {
+//            for (int j = 0; j < listTwo.size() - 2; j++) {
+//                if (j == 0 && i < listTwo.size() - 1) j = i;
+//                if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+//                        && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+//                        && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
+//                    nonModifiedRow = true;
+//                    if (modifiedRow)
+//                        addLinesAfter(j);
+//                    if (!modifiedRow) {
+//                        if (i + 1 < listOne.size()) i++;
+//                    } else {
+//                        if (i + 2 < listOne.size()) i += 2;
+//                        if (j + 1 < listTwo.size()) j += 1;
+//                        modifiedRow = false;
+//                    }
+//                } else if (nonModifiedRow) {
+//                    addLinesBefore(j);
+//                    nonModifiedRow = false;
+//                } else
+//                    modifiedRow = true;
+//            }
+//        }
     }
 
     private void addLinesAfter(int jForward) {
