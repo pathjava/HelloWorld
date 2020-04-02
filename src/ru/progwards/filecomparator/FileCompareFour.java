@@ -107,9 +107,18 @@ public class FileCompareFour {
     }
 
     private boolean checkingCoincidenceLines(int i, int j) {
-        return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-                && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-                && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
+        int count = 0;
+        while (count < 3) {
+            if (i + count < listOne.size() && j + count < listTwo.size()
+                    && listOne.get(i + count).equals(listTwo.get(j + count)))
+                count++;
+            else
+                return false;
+        }
+        return true;
+//        return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
+//                && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
+//                && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
     }
 
     private void addLinesAfterMismatch(int jForward) {
@@ -134,8 +143,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
