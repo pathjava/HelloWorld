@@ -113,11 +113,9 @@ public class FileCompareFour {
         if (jForward < listTwo.size() - 3) n = 3;
         else if (jForward == listTwo.size() - 2) n = 2;
         else n = 1;
-        while (i <= n) {
+        while (i < n) {
             if (jForward - i + 1 < listTwo.size())
                 fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
-//            else
-//                fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
             i++;
         }
     }
@@ -125,8 +123,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
