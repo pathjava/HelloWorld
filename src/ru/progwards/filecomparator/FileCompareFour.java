@@ -55,7 +55,6 @@ public class FileCompareFour {
         int temp = 0;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
-//                if (j == 0 && i < listTwo.size() - 1) j = i;
                 if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
                     if (checkingCoincidenceLines(i, j)) {
@@ -135,8 +134,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
