@@ -83,7 +83,7 @@ public class FileCompareFour {
 
     private boolean checkingCoincidenceLines(int i, int j) {
         int count = 0;
-        int n = 0;
+        int n;
         if (i < listOne.size() - 3 && j < listTwo.size() - 3) n = 3;
         else if (i == listOne.size() - 2 && j == listTwo.size() - 2) n = 2;
         else n = 1;
@@ -109,11 +109,15 @@ public class FileCompareFour {
 
     private void addLinesBeforeMatching(int jForward) {
         int i = 0;
-        while (i <= 2) {
+        int n;
+        if (jForward < listTwo.size() - 3) n = 3;
+        else if (jForward == listTwo.size() - 2) n = 2;
+        else n = 1;
+        while (i <= n) {
             if (jForward - i + 1 < listTwo.size())
                 fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
-            else
-                fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
+//            else
+//                fileFinalMap.put(jForward - i, listTwo.get(jForward - i));
             i++;
         }
     }
@@ -121,8 +125,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
