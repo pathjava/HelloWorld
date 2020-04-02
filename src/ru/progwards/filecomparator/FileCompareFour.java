@@ -55,7 +55,8 @@ public class FileCompareFour {
         int temp = 0;
         for (int i = 0; i < listOne.size() - 2; i++) {
             for (int j = 0; j < listTwo.size() - 2; j++) {
-                if (j < temp) j = temp;
+//                if (j == 0 && i < listTwo.size() - 1) j = i;
+                if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
                     if (checkingCoincidenceLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
@@ -64,6 +65,8 @@ public class FileCompareFour {
                         checkInThreeLines = true;
                         checkInOneLine = false;
                         if (i > 2 && i + 2 < listOne.size()) i += 2;
+                        if (j > 2 && j + 2 < listOne.size()) j += 2;
+                        temp = j;
                     }
                 }
                 if (checkInThreeLines) {
@@ -132,8 +135,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
