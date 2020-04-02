@@ -53,8 +53,8 @@ public class FileCompareFour {
         boolean checkInOneLine = true;
         boolean checkInThreeLines = false;
         int temp = 0;
-        for (int i = 0; i < listOne.size() - 2; i++) {
-            for (int j = 0; j < listTwo.size() - 2; j++) {
+        for (int i = 0; i < listOne.size(); i++) {
+            for (int j = 0; j < listTwo.size(); j++) {
                 if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
                     if (checkingCoincidenceLines(i, j)) {
@@ -79,46 +79,24 @@ public class FileCompareFour {
                 }
             }
         }
-//        boolean modifiedRow = false;
-//        boolean nonModifiedRow = false;
-//        for (int i = 0; i < listOne.size() - 2; i++) {
-//            for (int j = 0; j < listTwo.size() - 2; j++) {
-//                if (j == 0 && i < listTwo.size() - 1) j = i;
-//                if ((i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-//                        && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-//                        && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)))) {
-//                    nonModifiedRow = true;
-//                    if (modifiedRow)
-//                        addLinesAfter(j);
-//                    if (!modifiedRow) {
-//                        if (i + 1 < listOne.size()) i++;
-//                    } else {
-//                        if (i + 2 < listOne.size()) i += 2;
-//                        if (j + 1 < listTwo.size()) j += 1;
-//                        modifiedRow = false;
-//                    }
-//                } else if (nonModifiedRow) {
-//                    addLinesBefore(j);
-//                    nonModifiedRow = false;
-//                } else
-//                    modifiedRow = true;
-//            }
-//        }
     }
 
     private boolean checkingCoincidenceLines(int i, int j) {
         int count = 0;
-        while (count < 3) {
-            if (i + count < listOne.size() && j + count < listTwo.size()
-                    && listOne.get(i + count).equals(listTwo.get(j + count)))
-                count++;
-            else
-                return false;
+        int n = 0;
+        if (i < listOne.size() - 3 && j < listTwo.size() - 3) n = 3;
+        else if (i == listOne.size() - 2 && j == listTwo.size() - 2) n = 2;
+        else n = 1;
+
+        while (count < n) {
+            if (i + count < listOne.size() && j + count < listTwo.size()) {
+                if (listOne.get(i + count).equals(listTwo.get(j + count)))
+                    count++;
+                else
+                    return false;
+            }
         }
         return true;
-//        return (i < listOne.size() && listOne.get(i).equals(listTwo.get(j)))
-//                && (i + 1 < listOne.size() && j + 1 < listTwo.size() && listOne.get(i + 1).equals(listTwo.get(j + 1)))
-//                && (i + 2 < listOne.size() && j + 2 < listTwo.size() && listOne.get(i + 2).equals(listTwo.get(j + 2)));
     }
 
     private void addLinesAfterMismatch(int jForward) {
@@ -143,8 +121,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
