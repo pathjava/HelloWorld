@@ -90,14 +90,13 @@ public class FileCompareFour {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
                 if (listOne.get(i + count).equals(listTwo.get(j + count))) {
                     count++;
-                    if (globalCount > 3)
+                    if (globalCount >= 3)
                         globalCount = 3;
                     else
                         globalCount++;
                 } else
                     return false;
-            } else
-                return false;
+            }
         }
         return true;
     }
