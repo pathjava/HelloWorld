@@ -49,6 +49,8 @@ public class FileCompareFour {
         return fileFinalMap;
     }
 
+    private int globalCount = 0;
+
     private void searchAnchorLines() {
         boolean checkInOneLine = true;
         boolean checkInThreeLines = false;
@@ -83,18 +85,18 @@ public class FileCompareFour {
 
     private boolean checkingCoincidenceLines(int i, int j) {
         int count = 0;
-        int n;
-        if (i == 0 && j == 0) n = 1;
-        else if (i == 1 && j == 1) n = 1;
-        else if (i < listOne.size() - 2 && j < listTwo.size() - 2) n = 3;
-        else if (i == listOne.size() - 1 && j == listTwo.size() - 1) n = 2;
-        else n = 1;
-
-        while (count < n) {
+//        int n;
+//        if (i == 0 && j == 0) n = 1;
+//        else if (i == 1 && j == 1) n = 1;
+//        else if (i < listOne.size() - 2 && j < listTwo.size() - 2) n = 3;
+//        else if (i == listOne.size() - 1 && j == listTwo.size() - 1) n = 2;
+//        else n = 1;
+        while (count < 3) {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
-                if (listOne.get(i + count).equals(listTwo.get(j + count)))
+                if (listOne.get(i + count).equals(listTwo.get(j + count))) {
                     count++;
-                else
+                    globalCount++;
+                } else
                     return false;
             }
         }
@@ -104,31 +106,37 @@ public class FileCompareFour {
     private void addLinesAfterMismatch(int j) {
         int count = 0;
         int n;
-        if (j < listTwo.size() - 3) n = 3;
-        else if (j == listTwo.size() - 2) n = 2;
+//        if (j < listTwo.size() - 3) n = 3;
+//        else if (j == listTwo.size() - 2) n = 2;
+//        else n = 1;
+        if (globalCount >= 3) n = 3;
+        else if (globalCount == 2) n = 2;
         else n = 1;
 
         while (count < n) {
             fileFinalMap.put(j + count, listTwo.get(j + count));
             count++;
         }
+        globalCount = 0;
     }
 
     private void addLinesBeforeMatching(int j) {
         int count = 0;
         int n;
-        if (j == 0) return;
-        if (j == 1) n = 1;
-        else if (j == 2) n = 2;
-        else n = 3;
+//        if (j == 0) return;
+//        if (j == 1) n = 1;
+//        else if (j == 2) n = 2;
+//        else n = 3;
+        if (globalCount >= 3) n = 3;
+        else if (globalCount == 2) n = 2;
+        else n = 1;
 
         while (count < n) {
-            if (j - count + 1 < listTwo.size() && n < 3)
-                fileFinalMap.put(j - (count + 1), listTwo.get(j - (count + 1)));
-            else if (j - count + 1 < listTwo.size())
-                fileFinalMap.put(j - count + 1, listTwo.get(j - count + 1));
+            if (j - count + 1 < listTwo.size())
+                fileFinalMap.put(j - count, listTwo.get(j - count));
             count++;
         }
+        globalCount = 0;
     }
 
 
