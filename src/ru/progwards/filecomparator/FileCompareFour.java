@@ -60,7 +60,7 @@ public class FileCompareFour {
                     if (checkingCoincidenceLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
                     } else {
-                        if (i > 2) addLinesBeforeMatching(j);
+                        addLinesBeforeMatching(j);
                         checkInThreeLines = true;
                         checkInOneLine = false;
                         if (i > 2 && i + 2 < listOne.size()) i += 2;
@@ -84,8 +84,10 @@ public class FileCompareFour {
     private boolean checkingCoincidenceLines(int i, int j) {
         int count = 0;
         int n;
-        if (i < listOne.size() - 3 && j < listTwo.size() - 3) n = 3;
-        else if (i == listOne.size() - 2 && j == listTwo.size() - 2) n = 2;
+        if (i == 0 && j == 0) n = 1;
+        else if (i == 1 && j == 1) n = 1;
+        else if (i < listOne.size() - 2 && j < listTwo.size() - 2) n = 3;
+        else if (i == listOne.size() - 1 && j == listTwo.size() - 1) n = 2;
         else n = 1;
 
         while (count < n) {
@@ -99,30 +101,33 @@ public class FileCompareFour {
         return true;
     }
 
-    private void addLinesAfterMismatch(int jForward) {
-        int i = 0;
+    private void addLinesAfterMismatch(int j) {
+        int count = 0;
         int n;
-        if (jForward < listTwo.size() - 3) n = 3;
-        else if (jForward == listTwo.size() - 2) n = 2;
+        if (j < listTwo.size() - 3) n = 3;
+        else if (j == listTwo.size() - 2) n = 2;
         else n = 1;
 
-        while (i < n) {
-            fileFinalMap.put(jForward + i, listTwo.get(jForward + i));
-            i++;
+        while (count < n) {
+            fileFinalMap.put(j + count, listTwo.get(j + count));
+            count++;
         }
     }
 
-    private void addLinesBeforeMatching(int jForward) {
-        int i = 0;
+    private void addLinesBeforeMatching(int j) {
+        int count = 0;
         int n;
-        if (jForward == 2) n = 1;
-        else if (jForward == 3) n = 2;
+        if (j == 0) return;
+        if (j == 1) n = 1;
+        else if (j == 2) n = 2;
         else n = 3;
 
-        while (i < n) {
-            if (jForward - i + 1 < listTwo.size())
-                fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
-            i++;
+        while (count < n) {
+            if (j - count + 1 < listTwo.size() && n < 3)
+                fileFinalMap.put(j - (count + 1), listTwo.get(j - (count + 1)));
+            else if (j - count + 1 < listTwo.size())
+                fileFinalMap.put(j - count + 1, listTwo.get(j - count + 1));
+            count++;
         }
     }
 
