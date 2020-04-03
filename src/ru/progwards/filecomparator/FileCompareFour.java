@@ -85,12 +85,7 @@ public class FileCompareFour {
 
     private boolean checkingCoincidenceLines(int i, int j) {
         int count = 0;
-//        int n;
-//        if (i == 0 && j == 0) n = 1;
-//        else if (i == 1 && j == 1) n = 1;
-//        else if (i < listOne.size() - 2 && j < listTwo.size() - 2) n = 3;
-//        else if (i == listOne.size() - 1 && j == listTwo.size() - 1) n = 2;
-//        else n = 1;
+
         while (count < 3) {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
                 if (listOne.get(i + count).equals(listTwo.get(j + count))) {
@@ -110,9 +105,6 @@ public class FileCompareFour {
     private void addLinesAfterMismatch(int j) {
         int count = 0;
         int n;
-//        if (j < listTwo.size() - 3) n = 3;
-//        else if (j == listTwo.size() - 2) n = 2;
-//        else n = 1;
         if (globalCount >= 3) n = 3;
         else if (globalCount == 2) n = 2;
         else n = 1;
