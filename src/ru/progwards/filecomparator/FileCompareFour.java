@@ -101,7 +101,12 @@ public class FileCompareFour {
 
     private void addLinesAfterMismatch(int jForward) {
         int i = 0;
-        while (i <= 2) {
+        int n;
+        if (jForward < listTwo.size() - 3) n = 3;
+        else if (jForward == listTwo.size() - 2) n = 2;
+        else n = 1;
+
+        while (i < n) {
             fileFinalMap.put(jForward + i, listTwo.get(jForward + i));
             i++;
         }
@@ -110,9 +115,10 @@ public class FileCompareFour {
     private void addLinesBeforeMatching(int jForward) {
         int i = 0;
         int n;
-        if (jForward < listTwo.size() - 3) n = 3;
-        else if (jForward == listTwo.size() - 2) n = 2;
-        else n = 1;
+        if (jForward == 2) n = 1;
+        else if (jForward == 3) n = 2;
+        else n = 3;
+
         while (i < n) {
             if (jForward - i + 1 < listTwo.size())
                 fileFinalMap.put(jForward - i + 1, listTwo.get(jForward - i + 1));
@@ -123,8 +129,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
