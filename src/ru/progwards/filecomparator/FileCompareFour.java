@@ -95,10 +95,14 @@ public class FileCompareFour {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
                 if (listOne.get(i + count).equals(listTwo.get(j + count))) {
                     count++;
-                    globalCount++;
+                    if (globalCount > 3)
+                        globalCount = 3;
+                    else
+                        globalCount++;
                 } else
                     return false;
-            }
+            } else
+                return false;
         }
         return true;
     }
@@ -122,19 +126,19 @@ public class FileCompareFour {
 
     private void addLinesBeforeMatching(int j) {
         int count = 0;
-        int n;
-//        if (j == 0) return;
-//        if (j == 1) n = 1;
-//        else if (j == 2) n = 2;
-//        else n = 3;
-        if (globalCount >= 3) n = 3;
-        else if (globalCount == 2) n = 2;
-        else n = 1;
+        int countRow;
+        if (globalCount == 3)
+            countRow = (j + 1);
+        else if (globalCount == 2)
+            countRow = (j + 1);
+        else
+            countRow = j;
 
-        while (count < n) {
-            if (j - count + 1 < listTwo.size())
-                fileFinalMap.put(j - count, listTwo.get(j - count));
+        while (count < globalCount) {
+            if (countRow + 1 < listTwo.size())
+                fileFinalMap.put(countRow, listTwo.get(countRow));
             count++;
+            countRow--;
         }
         globalCount = 0;
     }
