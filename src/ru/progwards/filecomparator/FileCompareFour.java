@@ -49,8 +49,6 @@ public class FileCompareFour {
         return fileFinalMap;
     }
 
-    private int globalCount = 0;
-
     private void searchAnchorLines() {
         boolean checkInOneLine = true;
         boolean checkInThreeLines = false;
@@ -59,7 +57,7 @@ public class FileCompareFour {
             for (int j = 0; j < listTwo.size(); j++) {
                 if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
-                    if (checkingCoincidenceLines(i, j)) {
+                    if (checkCoincidenceLines(i, j)) {
                         if (i + 1 < listOne.size()) i++;
                     } else {
                         addLinesBeforeMatching(j);
@@ -71,7 +69,7 @@ public class FileCompareFour {
                     }
                 }
                 if (checkInThreeLines) {
-                    if (checkingCoincidenceLines(i, j)) {
+                    if (checkCoincidenceLines(i, j)) {
                         addLinesAfterMismatch(j);
                         checkInOneLine = true;
                         checkInThreeLines = false;
@@ -83,10 +81,16 @@ public class FileCompareFour {
         }
     }
 
-    private boolean checkingCoincidenceLines(int i, int j) {
-        int count = 0;
+    private int globalCount = 0;
 
-        while (count < 3) {
+    private boolean checkCoincidenceLines(int i, int j) {
+        int count = 0;
+        int n;
+        if (i < listOne.size() - 2 || j < listTwo.size() - 2) n = 3;
+        else if (i == listOne.size() - 2 || j == listTwo.size() - 2) n = 2;
+        else n = 1;
+
+        while (count < n) {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
                 if (listOne.get(i + count).equals(listTwo.get(j + count))) {
                     count++;
@@ -103,14 +107,12 @@ public class FileCompareFour {
 
     private void addLinesAfterMismatch(int j) {
         int count = 0;
-        int n;
-        if (globalCount >= 3) n = 3;
-        else if (globalCount == 2) n = 2;
-        else n = 1;
+        int countRow = j;
 
-        while (count < n) {
-            fileFinalMap.put(j + count, listTwo.get(j + count));
+        while (count < globalCount) {
+            fileFinalMap.put(countRow, listTwo.get(countRow));
             count++;
+            countRow++;
         }
         globalCount = 0;
     }
