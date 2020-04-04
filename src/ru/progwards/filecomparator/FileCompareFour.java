@@ -85,10 +85,10 @@ public class FileCompareFour {
 
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
-        int n=0;
+        int n;
         if (i <= listOne.size() - 3 && j <= listTwo.size() - 3) n = 3;
-//        else if (i <= listOne.size() - 2 && j <= listTwo.size() - 2) n = 2;
-//        else n = 1;
+        else if (i <= listOne.size() - 2 && j <= listTwo.size() - 2) n = 2;
+        else n = 1;
 
         while (count < n) {
             if (i + count < listOne.size() && j + count < listTwo.size()) {
