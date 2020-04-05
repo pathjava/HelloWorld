@@ -101,8 +101,9 @@ public class FileCompareFour {
             } else
                 return false;
         }
-//        if (listOne.get(listOneSize - 4).equals(listTwo.get(listTwoSize - 4)))
-//            countMatches = 0;
+        if (i == listOneSize - 3 && j == listTwoSize - 3
+                && listOne.get(listOneSize - 4).equals(listTwo.get(listTwoSize - 4)))
+            countMatches = 0;
         return true;
     }
 
