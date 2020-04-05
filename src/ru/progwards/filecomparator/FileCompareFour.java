@@ -85,22 +85,16 @@ public class FileCompareFour {
 
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
-        int n;
-        if (i <= listOne.size() - 3 && j <= listTwo.size() - 3) n = 3;
-        else if (i <= listOne.size() - 2 && j <= listTwo.size() - 2) n = 2;
-        else n = 1;
-
-        while (count < n) {
-            if (i + count < listOne.size() && j + count < listTwo.size()) {
-                if (listOne.get(i + count).equals(listTwo.get(j + count))) {
-                    count++;
-                    if (countMatches >= 3)
-                        countMatches = 3;
-                    else
-                        countMatches++;
-                } else
-                    return false;
-            }
+        while (count < 3) {
+            if (i + count < listOne.size() && j + count < listTwo.size()
+                    && listOne.get(i + count).equals(listTwo.get(j + count))) {
+                count++;
+                if (countMatches >= 3)
+                    countMatches = 3;
+                else
+                    countMatches++;
+            } else
+                return false;
         }
         return true;
     }
@@ -119,28 +113,29 @@ public class FileCompareFour {
 
     private void addLinesBeforeMatching(int j) {
         int count = 0;
-        int line;
+        int line = 0;
         if (countMatches == 3)
             line = (j + 1);
-        else if (countMatches == 2)
-            line = (j + 1);
-        else
-            line = j;
+//        else if (countMatches == 2)
+//            line = (j + 1);
+//        else
+//            line = j;
 
-        while (count < countMatches) {
-            if (line + 1 < listTwo.size())
-                fileFinalMap.put(line, listTwo.get(line));
-            count++;
-            line--;
-        }
+        if (countMatches == 3)
+            while (count < countMatches) {
+                if (line + 1 < listTwo.size())
+                    fileFinalMap.put(line, listTwo.get(line));
+                count++;
+                line--;
+            }
         countMatches = 0;
     }
 
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
