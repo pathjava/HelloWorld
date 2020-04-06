@@ -21,9 +21,10 @@ public class FileCompareFour {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
-                if (lineOne.isEmpty())
-                    listOne.add("emptyString");
-                else listOne.add(lineOne);
+//                if (lineOne.isEmpty())
+//                    listOne.add("isEmpty");
+//                else
+                listOne.add(lineOne);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,9 +33,10 @@ public class FileCompareFour {
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             while ((lineTwo = readerTwo.readLine()) != null) {
-                if (lineTwo.isEmpty())
-                    listTwo.add("emptyString");
-                else listTwo.add(lineTwo);
+//                if (lineTwo.isEmpty())
+//                    listTwo.add("isEmpty");
+//                else
+                listTwo.add(lineTwo);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,7 +50,7 @@ public class FileCompareFour {
         listTwoSize = listTwo.size();
         final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
-            fileFinalMap.put(i, "+");
+            fileFinalMap.put(i, "#");
         }
         searchAnchorLines();
         return fileFinalMap;
@@ -61,6 +63,8 @@ public class FileCompareFour {
         for (int i = 0; i < listOneSize; i++) {
             for (int j = 0; j < listTwoSize; j++) {
                 if (j < temp && temp != 0) j = temp;
+                i = checkOne(i);
+                j = checkTwo(j);
                 if (checkInOneLine) {
                     if (checkCoincidenceLines(i, j)) {
                         if (i + 1 < listOneSize) i++;
@@ -86,11 +90,37 @@ public class FileCompareFour {
         }
     }
 
+    private int checkOne(int i) {
+        int one = i;
+        while (one < listOneSize) {
+            if (listOne.get(one).isEmpty())
+                one++;
+            else
+                break;
+        }
+        return one;
+    }
+
+    private int checkTwo(int j) {
+        int two = j;
+        while (two < listTwoSize) {
+            if (listTwo.get(two).isEmpty())
+                two++;
+            else
+                break;
+        }
+        return two;
+    }
+
     private int countMatches = 0;
 
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
+
         while (count < 3) {
+//            if (listOne.get(i + count).isEmpty() && listTwo.get(j + count).isEmpty()) {
+//                continue;
+//            }
             if (i + count < listOneSize && j + count < listTwoSize
                     && listOne.get(i + count).equals(listTwo.get(j + count))) {
                 count++;
@@ -142,8 +172,8 @@ public class FileCompareFour {
 
     public static void main(String[] args) {
         FileCompareFour test = new FileCompareFour();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
