@@ -62,9 +62,7 @@ public class FileCompareFour {
         int temp = 0;
         for (int i = 0; i < listOneSize; i++) {
             for (int j = 0; j < listTwoSize; j++) {
-                if (j < temp && temp != 0) j = temp;
-                i = checkOne(i);
-                j = checkTwo(j);
+//                if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
                     if (checkCoincidenceLines(i, j)) {
                         if (i + 1 < listOneSize) i++;
@@ -90,27 +88,35 @@ public class FileCompareFour {
         }
     }
 
-    private int checkOne(int i) {
-        int one = i;
-        while (one < listOneSize) {
-            if (listOne.get(one).isEmpty())
-                one++;
-            else
-                break;
-        }
-        return one;
-    }
-
-    private int checkTwo(int j) {
-        int two = j;
-        while (two < listTwoSize) {
-            if (listTwo.get(two).isEmpty())
-                two++;
-            else
-                break;
-        }
-        return two;
-    }
+//    private int checkOne(int i) {
+//        int one = i;
+//        int count = 0;
+//        while (one < listOneSize) {
+//            if (listOne.get(one).isEmpty()) {
+//                one++;
+//                count++;
+//            } else
+//                break;
+//        }
+//        if (count > 1)
+//            return one;
+//        return i;
+//    }
+//
+//    private int checkTwo(int j) {
+//        int two = j;
+//        int count = 0;
+//        while (two < listTwoSize) {
+//            if (listTwo.get(two).isEmpty()) {
+//                two++;
+//                count++;
+//            } else
+//                break;
+//        }
+//        if (count > 1)
+//            return two;
+//        return j;
+//    }
 
     private int countMatches = 0;
 
@@ -118,9 +124,6 @@ public class FileCompareFour {
         int count = 0;
 
         while (count < 3) {
-//            if (listOne.get(i + count).isEmpty() && listTwo.get(j + count).isEmpty()) {
-//                continue;
-//            }
             if (i + count < listOneSize && j + count < listTwoSize
                     && listOne.get(i + count).equals(listTwo.get(j + count))) {
                 count++;
