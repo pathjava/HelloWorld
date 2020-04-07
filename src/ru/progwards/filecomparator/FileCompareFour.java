@@ -62,7 +62,7 @@ public class FileCompareFour {
         int temp = 0;
         for (int i = 0; i < listOneSize; i++) {
             for (int j = 0; j < listTwoSize; j++) {
-//                if (j < temp && temp != 0) j = temp;
+                if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
                     if (checkCoincidenceLines(i, j)) {
                         if (i + 1 < listOneSize) i++;
