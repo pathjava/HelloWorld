@@ -61,7 +61,7 @@ public class FileCompareFive {
     private void searchAnchorLines() {
         int i = 0;
         while (i < listOneSize - 3) {
-            for (int j = 0; j < listTwoSize; j++) {
+            for (int j = 0; j < listTwoSize - 2; j++) {
                 i = searchThreeNonEmptyLines(i);
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
@@ -101,18 +101,52 @@ public class FileCompareFive {
 
     private void checkAndAddAnchors(int i, int j) {
         int count = 0;
-        int line = j;
-        while (count < 3) {
-            fileFinalMap.put(line, listTwo.get(line));
-            count++;
-            if (line + 1 < listTwoSize) line++;
+
+        if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
+            while (count < 3) {
+                fileFinalMap.put(j + count, listTwo.get(j + count));
+                count++;
+            }
+        }
+        if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0)) {
+            if (!listOne.get(i + 3).equals(listTwo.get(j + 3)))
+                while (count < 3) {
+                    fileFinalMap.put(j + count, listTwo.get(j + count));
+                    count++;
+                }
+        }
+        if ((i > 0 && j > 0) && (i < listOneSize - 3 && j < listTwoSize - 3)) {
+            if (!listOne.get(i - 1).equals(listTwo.get(j - 1)))
+                while (count < 3) {
+                    fileFinalMap.put(j + count, listTwo.get(j + count));
+                    count++;
+                }
+            if (!listOne.get(i + 3).equals(listTwo.get(j + 3)))
+                while (count < 3) {
+                    fileFinalMap.put(j + count, listTwo.get(j + count));
+                    count++;
+                }
+        }
+        if ((i == listOneSize - 3 && j == listTwoSize - 3) || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
+            if (!listOne.get(i - 1).equals(listTwo.get(j - 1)))
+                while (count < 3) {
+                    fileFinalMap.put(j + count, listTwo.get(j + count));
+                    count++;
+                }
+        }
+        if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
+            while (count < 3) {
+                fileFinalMap.put(j + count, listTwo.get(j + count));
+                count++;
+            }
         }
     }
 
+
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
