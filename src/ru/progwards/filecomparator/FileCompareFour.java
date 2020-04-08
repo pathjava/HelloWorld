@@ -64,29 +64,29 @@ public class FileCompareFour {
             for (int j = 0; j < listTwoSize; j++) {
                 if (j < temp && temp != 0) j = temp;
                 if (checkInOneLine) {
-                    if (checkEmptyLines(i, j)) {
-                        if (checkCoincidenceLines(i, j)) {
-                            if (i + 1 < listOneSize) i++;
-                        } else {
-                            addLinesBeforeMatching(j);
-                            checkInThreeLines = true;
-                            checkInOneLine = false;
-                            if (i > 2 && i + 2 < listOneSize) i += 2;
-                            if (j > 2 && j + 2 < listOneSize) j += 2;
-                            temp = j;
-                        }
+//                    if (checkEmptyLines(i, j)) {
+                    if (checkCoincidenceLines(i, j)) {
+                        if (i + 1 < listOneSize) i++;
+                    } else {
+                        addLinesBeforeMatching(j);
+                        checkInThreeLines = true;
+                        checkInOneLine = false;
+                        if (i > 2 && i + 2 < listOneSize) i += 2;
+                        if (j > 2 && j + 2 < listOneSize) j += 2;
+                        temp = j;
                     }
+//                    }
                 }
                 if (checkInThreeLines) {
-                    if (checkEmptyLines(i, j)) {
-                        if (checkCoincidenceLines(i, j)) {
-                            addLinesAfterMismatch(j);
-                            checkInOneLine = true;
-                            checkInThreeLines = false;
-                            if (i + 1 < listOneSize) i++;
-                            temp = j;
-                        }
+//                    if (checkEmptyLines(i, j)) {
+                    if (checkCoincidenceLines(i, j)) {
+                        addLinesAfterMismatch(j);
+                        checkInOneLine = true;
+                        checkInThreeLines = false;
+                        if (i + 1 < listOneSize) i++;
+                        temp = j;
                     }
+//                    }
                 }
             }
         }
@@ -124,13 +124,32 @@ public class FileCompareFour {
 
     private boolean checkEmptyLines(int i, int j) {
         int count = 0;
+        int countEmpty = 0;
+//        while (countOne < 3) {
+//            if (i + countOne < listOneSize && listOne.get(i + countOne).isEmpty()) {
+//                countOne++;
+//                countEmptyOne++;
+//            } else
+//                countOne++;
+//        }
+//        while (countTwo < 3) {
+//            if (j + countTwo < listTwoSize && listTwo.get(j + countTwo).isEmpty()) {
+//                countTwo++;
+//                countEmptyTwo++;
+//            } else {
+//                countTwo++;
+//            }
+//        }
         while (count < 3) {
             if (i + count < listOneSize && j + count < listTwoSize
-                    && !listOne.get(i + count).isEmpty() && !listTwo.get(j + count).isEmpty()) {
+                    && (listOne.get(i + count).isEmpty() || listTwo.get(j + count).isEmpty())) {
                 count++;
+                countEmpty++;
             } else
-                return false;
+                count++;
         }
+        if (countEmpty > 1)
+            return false;
         return true;
     }
 
