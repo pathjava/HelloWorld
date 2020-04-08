@@ -60,11 +60,13 @@ public class FileCompareFive {
 
     private void searchAnchorLines() {
         int i = 0;
-        while (i < listOneSize) {
+        while (i < listOneSize - 3) {
             for (int j = 0; j < listTwoSize; j++) {
                 i = searchThreeNonEmptyLines(i);
-                if (checkCoincidenceLines(i, j))
-                    System.out.println("true");
+                if (checkCoincidenceLines(i, j)) {
+                    System.out.println("true " + j);
+                    if (i + 1 < listOneSize - 2) i++;
+                }
             }
         }
     }
@@ -78,7 +80,7 @@ public class FileCompareFive {
             } else {
                 count = 0;
             }
-            if (index + 1 < listOneSize) index++;
+            if (index + 1 <= listOneSize) index++;
         }
         return index - 3;
     }
@@ -118,10 +120,12 @@ public class FileCompareFive {
 //            countTwo++;
 //        }
 
-        System.out.println("------------ Patch -------------");
-        for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
-            System.out.format("%3d", entry.getKey());
-            System.out.println(": " + entry.getValue());
-        }
+        test.compareFiles();
+
+//        System.out.println("------------ Patch -------------");
+//        for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
+//            System.out.format("%3d", entry.getKey());
+//            System.out.println(": " + entry.getValue());
+//        }
     }
 }
