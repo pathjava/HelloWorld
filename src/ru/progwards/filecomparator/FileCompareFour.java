@@ -209,7 +209,7 @@ public class FileCompareFour {
 
 
     public static void main(String[] args) {
-        FileCompareFour test = new FileCompareFour();
+        FileCompareFive test = new FileCompareFive();
         test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
