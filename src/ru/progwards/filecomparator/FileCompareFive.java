@@ -62,7 +62,7 @@ public class FileCompareFive {
             if (listTwo.get(index).isEmpty())
                 index--;
             else
-                return index;
+                return index + 1;
         }
         return index + 1;
     }
@@ -73,26 +73,29 @@ public class FileCompareFive {
             if (listOne.get(index).isEmpty())
                 index--;
             else
-                return index;
+                return index + 1;
         }
         return index + 1;
     }
 
     private void searchAnchorLines() {
         int i = 0;
-        while (i < realSizeListOne() - 3) {
+        int temp1 = realSizeListOne();
+        int temp2 = realSizeListTwo();
+
+        while (i < realSizeListOne() - 2) {
             int j = 0;
-            while (j < realSizeListTwo() - 3) {
+            while (j < realSizeListTwo() - 2) {
                 i = searchThreeNonEmptyLinesListOne(i);
                 j = searchThreeNonEmptyLinesListTwo(j);
 
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
-                    if (i + 1 < realSizeListOne() - 2) i++;
+                    if (i < realSizeListOne() - 2) i++;
                 }
-                if (j + 1 < realSizeListTwo() - 2) j++;
+                if (j < realSizeListTwo() - 2) j++;
             }
-            if (i + 1 < realSizeListOne() - 2) i++;
+            if (i < realSizeListOne() - 2) i++;
         }
     }
 
@@ -142,32 +145,32 @@ public class FileCompareFive {
     private void checkAndAddAnchors(int i, int j) {
 
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
-            addAnchors(i, j);
+            addAnchors(j);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0)) {
             if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
-                addAnchors(i, j);
+                addAnchors(j);
             }
         }
         if ((i > 0 && j > 0) && (i < listOneSize - 3 && j < listTwoSize - 3)) {
             if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
-                addAnchors(i, j);
+                addAnchors(j);
             }
             if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
-                addAnchors(i, j);
+                addAnchors(j);
             }
         }
         if ((i == listOneSize - 3 && j == listTwoSize - 3) || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
             if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
-                addAnchors(i, j);
+                addAnchors(j);
             }
         }
         if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
-            addAnchors(i, j);
+            addAnchors(j);
         }
     }
 
-    private void addAnchors(int i, int j) {
+    private void addAnchors(int j) {
         int count = 0;
         while (count < 3) {
             fileFinalMap.put(j + count, listTwo.get(j + count));
