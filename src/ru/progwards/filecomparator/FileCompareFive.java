@@ -158,9 +158,11 @@ public class FileCompareFive {
 //            if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
 //                addAnchors(j);
 //            }
-            if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
+            if (checkNextLines(i, j))
                 addAnchors(j);
-            }
+//            if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
+//                addAnchors(j);
+//            }
         }
         if ((i == listOneSize - 3 && j == listTwoSize - 3) || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
             if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
@@ -185,6 +187,26 @@ public class FileCompareFive {
                 return false;
             else
                 index++;
+        }
+        return true;
+    }
+
+    private boolean checkNextLines(int i, int j) {
+        boolean found = false;
+        int indexOne = i + 3;
+        int indexTwo = j + 3;
+
+        while (!found) {
+            if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+                return false;
+            if (indexOne < listOneSize && indexTwo < listTwoSize && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                found = true;
+            else if (indexOne == listOneSize || indexTwo == listTwoSize)
+                return false;
+            else {
+                if (indexOne < listOneSize - 1) indexOne++;
+                if (indexTwo < listTwoSize - 1) indexTwo++;
+            }
         }
         return true;
     }
