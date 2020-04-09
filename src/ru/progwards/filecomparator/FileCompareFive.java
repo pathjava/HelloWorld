@@ -176,17 +176,20 @@ public class FileCompareFive {
 
     private boolean checkPrevLines(int i, int j) {
         boolean found = false;
-        int index = 1;
+        int indexOne = i - 1;
+        int indexTwo = j - 1;
 
         while (!found) {
-            if (!fileFinalMap.get(j - index).equals("#")) // TODO заменить отладочный # на isEmpty
+            if (!fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
                 return false;
-            if (i >= 0 && j >= 0 && !listOne.get(i - index).equals(listTwo.get(j - index)))
+            if (i >= 0 && j >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                 found = true;
-            else if (i == 1 || j == 1)
+            else if (indexOne == 0 || indexTwo == 0)
                 return false;
-            else
-                index++;
+            else {
+                if (indexOne > 0) indexOne--;
+                if (indexTwo > 0) indexTwo--;
+            }
         }
         return true;
     }
