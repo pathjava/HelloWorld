@@ -153,9 +153,11 @@ public class FileCompareFive {
             }
         }
         if ((i > 0 && j > 0) && (i < listOneSize - 3 && j < listTwoSize - 3)) {
-            if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
+            if (checkPrevLines(i, j))
                 addAnchors(j);
-            }
+//            if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
+//                addAnchors(j);
+//            }
             if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
                 addAnchors(j);
             }
@@ -168,6 +170,23 @@ public class FileCompareFive {
         if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
             addAnchors(j);
         }
+    }
+
+    private boolean checkPrevLines(int i, int j) {
+        boolean found = false;
+        int index = 1;
+
+        while (!found) {
+            if (!fileFinalMap.get(j - index).equals("#")) // TODO заменить отладочный # на isEmpty
+                return false;
+            if (i >= 0 && j >= 0 && !listOne.get(i - index).equals(listTwo.get(j - index)))
+                found = true;
+            else if (i == 1 || j == 1)
+                return false;
+            else
+                index++;
+        }
+        return true;
     }
 
     private void addAnchors(int j) {
