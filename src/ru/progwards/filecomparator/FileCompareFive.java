@@ -148,26 +148,18 @@ public class FileCompareFive {
             addAnchors(j);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0)) {
-            if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
+            if (checkNextLines(i, j))
                 addAnchors(j);
-            }
         }
         if ((i > 0 && j > 0) && (i < listOneSize - 3 && j < listTwoSize - 3)) {
             if (checkPrevLines(i, j))
                 addAnchors(j);
-//            if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
-//                addAnchors(j);
-//            }
             if (checkNextLines(i, j))
                 addAnchors(j);
-//            if (!listOne.get(i + 3).equals(listTwo.get(j + 3))) {
-//                addAnchors(j);
-//            }
         }
         if ((i == listOneSize - 3 && j == listTwoSize - 3) || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
-            if (!listOne.get(i - 1).equals(listTwo.get(j - 1))) {
+            if (checkPrevLines(i, j))
                 addAnchors(j);
-            }
         }
         if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
             addAnchors(j);
@@ -180,15 +172,17 @@ public class FileCompareFive {
         int indexTwo = j - 1;
 
         while (!found) {
-            if (!fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+            if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
                 return false;
-            if (i >= 0 && j >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+            if (indexOne >= 0 && indexTwo >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                 found = true;
             else if (indexOne == 0 || indexTwo == 0)
                 return false;
             else {
-                if (indexOne > 0) indexOne--;
-                if (indexTwo > 0) indexTwo--;
+                if (indexOne > 0 || indexTwo > 0) {
+                    indexOne--;
+                    indexTwo--;
+                }
             }
         }
         return true;
@@ -207,8 +201,10 @@ public class FileCompareFive {
             else if (indexOne == listOneSize || indexTwo == listTwoSize)
                 return false;
             else {
-                if (indexOne < listOneSize - 1) indexOne++;
-                if (indexTwo < listTwoSize - 1) indexTwo++;
+                if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
+                    indexOne++;
+                    indexTwo++;
+                }
             }
         }
         return true;
@@ -225,8 +221,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
