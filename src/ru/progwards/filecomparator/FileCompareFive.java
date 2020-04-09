@@ -80,8 +80,6 @@ public class FileCompareFive {
 
     private void searchAnchorLines() {
         int i = 0;
-        int temp1 = realSizeListOne();
-        int temp2 = realSizeListTwo();
 
         while (i < realSizeListOne() - 2) {
             int j = 0;
