@@ -56,20 +56,43 @@ public class FileCompareFive {
         return fileFinalMap;
     }
 
+    private int realSizeListTwo() {
+        int index = listTwoSize - 1;
+        while (index >= 0) {
+            if (listTwo.get(index).isEmpty())
+                index--;
+            else
+                return index;
+        }
+        return index + 1;
+    }
+
+    private int realSizeListOne() {
+        int index = listOneSize - 1;
+        while (index >= 0) {
+            if (listOne.get(index).isEmpty())
+                index--;
+            else
+                return index;
+        }
+        return index + 1;
+    }
+
     private void searchAnchorLines() {
         int i = 0;
-        while (i < listOneSize - 3) {
+        while (i < realSizeListOne() - 3) {
             int j = 0;
-            while (j < listTwoSize - 3) {
+            while (j < realSizeListTwo() - 3) {
                 i = searchThreeNonEmptyLinesListOne(i);
                 j = searchThreeNonEmptyLinesListTwo(j);
+
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
-                    if (i + 1 < listOneSize - 2) i++;
+                    if (i + 1 < realSizeListOne() - 2) i++;
                 }
-                if (j + 1 < listTwoSize - 2) j++;
+                if (j + 1 < realSizeListTwo() - 2) j++;
             }
-            if (i + 1 < listOneSize - 2) i++;
+            if (i + 1 < realSizeListOne() - 2) i++;
         }
     }
 
@@ -78,12 +101,12 @@ public class FileCompareFive {
         int count = 0;
 
         while (count != 3) {
-            if (index < listOneSize && !listOne.get(index).isEmpty()) {
+            if (index < realSizeListOne() && !listOne.get(index).isEmpty())
                 count++;
-            } else {
+            else
                 count = 0;
-            }
-            if (index + 1 <= listOneSize) index++;
+
+            if (index + 1 <= realSizeListOne()) index++;
         }
         return index - 3;
     }
@@ -93,12 +116,12 @@ public class FileCompareFive {
         int count = 0;
 
         while (count != 3) {
-            if (index < listTwoSize && !listTwo.get(index).isEmpty()) {
+            if (index < realSizeListTwo() && !listTwo.get(index).isEmpty())
                 count++;
-            } else {
+            else
                 count = 0;
-            }
-            if (index + 1 <= listTwoSize) index++;
+
+            if (index + 1 <= realSizeListTwo()) index++;
         }
         return index - 3;
     }
@@ -171,8 +194,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
