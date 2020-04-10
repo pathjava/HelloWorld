@@ -165,21 +165,29 @@ public class FileCompareFive {
     }
 
     private boolean checkPrevLines(int i, int j) {
-        boolean found = false;
         int indexOne = i - 1;
         int indexTwo = j - 1;
 
-        while (!found) {
-            if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-                return false;
-            if (indexOne >= 0 && indexTwo >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
-                found = true;
-            else if (indexOne == 0 || indexTwo == 0)
-                return false;
-            else {
-                if (indexOne > 0 || indexTwo > 0) {
-                    indexOne--;
-                    indexTwo--;
+        if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+            return false;
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+            return true;
+        if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
+            boolean found = false;
+            indexOne--;
+            indexTwo--;
+            while (!found) {
+                if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+                    return false;
+                if (indexOne >= 0 && indexTwo >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                    found = true;
+                else if (indexOne == 0 || indexTwo == 0)
+                    return false;
+                else {
+                    if (indexOne > 0 || indexTwo > 0) {
+                        indexOne--;
+                        indexTwo--;
+                    }
                 }
             }
         }
@@ -187,25 +195,33 @@ public class FileCompareFive {
     }
 
     private boolean checkNextLines(int i, int j) {
-        boolean found = false;
         int indexOne = i + 3;
         int indexTwo = j + 3;
 
-        while (!found) {
-            if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-                return false;
-            if (indexOne < listOneSize && indexTwo < listTwoSize && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
-                found = true;
-            else if (indexOne == listOneSize || indexTwo == listTwoSize)
-                return false;
-            else {
-                if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
-                    indexOne++;
-                    indexTwo++;
+        if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+            return false;
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+            return true;
+        if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
+            boolean found = false;
+            indexOne++;
+            indexTwo++;
+            while (!found) {
+                if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+                    return false;
+                if (indexOne < listOneSize && indexTwo < listTwoSize && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                    found = true;
+                else if (indexOne == listOneSize || indexTwo == listTwoSize)
+                    return false;
+                else {
+                    if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
+                        indexOne++;
+                        indexTwo++;
+                    }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private void addAnchors(int j) {
@@ -219,8 +235,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
