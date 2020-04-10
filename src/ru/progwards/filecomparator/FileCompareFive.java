@@ -178,13 +178,11 @@ public class FileCompareFive {
             return true;
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
-            if (indexOne > 0 || indexTwo > 0) {
-                indexOne--;
-                indexTwo--;
-            }
+            if (indexOne > 0) indexOne--;
+            if (indexTwo > 0) indexTwo--;
             while (count != 3) {
-                if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-                    return false;
+//                if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+//                    return false;
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
@@ -212,13 +210,13 @@ public class FileCompareFive {
             return true;
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
-            if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
-                indexOne++;
-                indexTwo++;
-            }
+            if (indexOne < listOneSize - 1) indexOne++;
+            if (indexTwo < listTwoSize - 1) indexTwo++;
             while (count != 3) {
-                if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-                    return false;
+                if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1 || indexOne < listOneSize - 1 && indexTwo == listTwoSize)
+                    return true;
+//                if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
+//                    return false;
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
@@ -247,8 +245,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
