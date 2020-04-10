@@ -58,24 +58,30 @@ public class FileCompareFive {
 
     private int realSizeListTwo() {
         int index = listTwoSize - 1;
-        while (index >= 0) {
-            if (listTwo.get(index).isEmpty())
-                index--;
+        int count = 0;
+        while (count != 3) {
+            if (index >= 0 && !listTwo.get(index).isEmpty())
+                count++;
             else
-                return index + 1;
+                count = 0;
+
+            if (index >= 0) index--;
         }
-        return index + 1;
+        return index + 3;
     }
 
     private int realSizeListOne() {
         int index = listOneSize - 1;
-        while (index >= 0) {
-            if (listOne.get(index).isEmpty())
-                index--;
+        int count = 0;
+        while (count != 3) {
+            if (index >= 0 && !listOne.get(index).isEmpty())
+                count++;
             else
-                return index + 1;
+                count = 0;
+
+            if (index >= 0) index--;
         }
-        return index + 1;
+        return index + 3;
     }
 
     private void searchAnchorLines() {
@@ -141,7 +147,6 @@ public class FileCompareFive {
     }
 
     private void checkAndAddAnchors(int i, int j) {
-
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
             addAnchors(j);
         }
@@ -221,7 +226,7 @@ public class FileCompareFive {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     private void addAnchors(int j) {
@@ -235,8 +240,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
 
 //        System.out.println("-----------One------------");
 //        int countOne = 1;
