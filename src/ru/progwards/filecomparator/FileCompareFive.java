@@ -67,7 +67,7 @@ public class FileCompareFive {
 
             if (index >= 0) index--;
         }
-        return index + 3;
+        return index + 4;
     }
 
     private int realSizeListOne() {
@@ -81,12 +81,11 @@ public class FileCompareFive {
 
             if (index >= 0) index--;
         }
-        return index + 3;
+        return index + 4;
     }
 
     private void searchAnchorLines() {
         int i = 0;
-
         while (i < realSizeListOne() - 2) {
             int j = 0;
             while (j < realSizeListTwo() - 2) {
@@ -178,25 +177,29 @@ public class FileCompareFive {
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
-            boolean found = false;
-            indexOne--;
-            indexTwo--;
-            while (!found) {
+            int count = 0;
+            if (indexOne > 0 || indexTwo > 0) {
+                indexOne--;
+                indexTwo--;
+            }
+            while (count != 3) {
                 if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
                     return false;
-                if (indexOne >= 0 && indexTwo >= 0 && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
-                    found = true;
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                    count++;
+                else
+                    count = 0;
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                    return true;
                 else if (indexOne == 0 || indexTwo == 0)
                     return false;
                 else {
-                    if (indexOne > 0 || indexTwo > 0) {
-                        indexOne--;
-                        indexTwo--;
-                    }
+                    indexOne--;
+                    indexTwo--;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private boolean checkNextLines(int i, int j) {
@@ -208,25 +211,29 @@ public class FileCompareFive {
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
-            boolean found = false;
-            indexOne++;
-            indexTwo++;
-            while (!found) {
+            int count = 0;
+            if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
+                indexOne++;
+                indexTwo++;
+            }
+            while (count != 3) {
                 if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
                     return false;
-                if (indexOne < listOneSize && indexTwo < listTwoSize && !listOne.get(indexOne).equals(listTwo.get(indexTwo)))
-                    found = true;
-                else if (indexOne == listOneSize || indexTwo == listTwoSize)
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                    count++;
+                else
+                    count = 0;
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                    return true;
+                else if (indexOne == listOneSize - 1 || indexTwo == listTwoSize - 1)
                     return false;
                 else {
-                    if (indexOne < listOneSize - 1 || indexTwo < listTwoSize - 1) {
-                        indexOne++;
-                        indexTwo++;
-                    }
+                    indexOne++;
+                    indexTwo++;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private void addAnchors(int j) {
