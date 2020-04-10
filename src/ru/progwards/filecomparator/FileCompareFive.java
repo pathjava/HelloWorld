@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class FileCompareFive {
-    private List<String> listOne = new ArrayList<>();
-    private List<String> listTwo = new ArrayList<>();
+    private final List<String> listOne = new ArrayList<>();
+    private final List<String> listTwo = new ArrayList<>();
 
     private int listOneSize;
     private int listTwoSize;
@@ -21,9 +21,6 @@ public class FileCompareFive {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
-//                if (lineOne.isEmpty())
-//                    listOne.add("isEmpty");
-//                else
                 listOne.add(lineOne);
             }
         } catch (IOException e) {
@@ -33,9 +30,6 @@ public class FileCompareFive {
         try (BufferedReader readerTwo = new BufferedReader(new FileReader(pathTwo))) {
             String lineTwo;
             while ((lineTwo = readerTwo.readLine()) != null) {
-//                if (lineTwo.isEmpty())
-//                    listTwo.add("isEmpty");
-//                else
                 listTwo.add(lineTwo);
             }
         } catch (IOException e) {
@@ -43,7 +37,7 @@ public class FileCompareFive {
         }
     }
 
-    private Map<Integer, String> fileFinalMap = new HashMap<>();
+    private final Map<Integer, String> fileFinalMap = new HashMap<>();
 
     public Map<Integer, String> compareFiles() {
         listOneSize = listOne.size();
