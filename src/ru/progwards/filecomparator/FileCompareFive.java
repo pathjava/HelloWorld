@@ -44,8 +44,8 @@ public class FileCompareFive {
     public Map<Integer, String> compareFiles() {
         listOneSize = listOne.size();
         listTwoSize = listTwo.size();
-        realSizeListOne = realSizeList(listOne, listOneSize);
-        realSizeListTwo = realSizeList(listTwo, listTwoSize);
+        realSizeListOne = listSizeForTheLastThreeNonEmptyLines(listOne);
+        realSizeListTwo = listSizeForTheLastThreeNonEmptyLines(listTwo);
 
         final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
@@ -101,8 +101,8 @@ public class FileCompareFive {
         }
     }
 
-    private int realSizeList(List<String> list, int listSize) {
-        int index = listSize - 1;
+    private int listSizeForTheLastThreeNonEmptyLines(List<String> list) {
+        int index = list.size() - 1;
         int count = 0;
         while (count != 3) {
             if (index >= 0 && !list.get(index).isEmpty())
