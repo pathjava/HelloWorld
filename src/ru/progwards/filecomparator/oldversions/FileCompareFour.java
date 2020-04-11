@@ -1,4 +1,6 @@
-package ru.progwards.filecomparator;
+package ru.progwards.filecomparator.oldversions;
+
+import ru.progwards.filecomparator.FileCompareFive;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

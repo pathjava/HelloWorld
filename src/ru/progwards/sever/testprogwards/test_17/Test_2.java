@@ -74,12 +74,12 @@ public class Test_2 {
             System.out.println(swapWordsThree(s));
         }
 
-//        String txt =
-//                "StringTokenizer - этот класс, " +
-//                        "нам строку разобьёт на раз.";
-//        StringTokenizer tokenizer = new StringTokenizer(txt, " .,");
-//        while (tokenizer.hasMoreTokens())
-//            System.out.print(tokenizer.nextToken());
+        String txt =
+                "StringTokenizer - этот класс, " +
+                        "нам строку разобьёт на раз.";
+        StringTokenizer tokenizer = new StringTokenizer(txt, " .,");
+        while (tokenizer.hasMoreTokens())
+            System.out.print(tokenizer.nextToken());
         /* StringTokenizer-этоткласснамстрокуразобьётнараз */
     }
 }

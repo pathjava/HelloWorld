@@ -1,4 +1,4 @@
-package ru.progwards.filecomparator;
+package ru.progwards.filecomparator.oldversions;
 
 public class FileCompareAnchors {
     public String lineFromFile;
