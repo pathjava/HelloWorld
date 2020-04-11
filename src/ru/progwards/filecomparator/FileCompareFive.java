@@ -1,6 +1,7 @@
 package ru.progwards.filecomparator;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -16,16 +17,13 @@ public class FileCompareFive {
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
-        if (pathOne == null || pathOne.equals("") || pathTwo == null || pathTwo.equals("")) {
-            System.out.println("Не выбран файл!");
-            return;
-        }
-
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
             String lineOne;
             while ((lineOne = readerOne.readLine()) != null) {
                 listOne.add(lineOne);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Не выбран файл 1!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,6 +33,8 @@ public class FileCompareFive {
             while ((lineTwo = readerTwo.readLine()) != null) {
                 listTwo.add(lineTwo);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Не выбран файл 2!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,6 +79,7 @@ public class FileCompareFive {
             if (i < realSizeListOne - 2) i++;
         }
     }
+
     // поиск последнего трехстрочия в каждом из листов
     private int listSizeForTheLastThreeNonEmptyLines(List<String> list) {
         int index = list.size() - 1;
@@ -93,6 +94,7 @@ public class FileCompareFive {
         }
         return index + 4;
     }
+
     // поиск первого трехстрочия в каждом из листов
     private int searchThreeNonEmptyLines(int i, List<String> list, int sizeList) {
         if (i > sizeList - 3)
@@ -110,6 +112,7 @@ public class FileCompareFive {
         }
         return index - 3;
     }
+
     // проверка на равенство трехстрочий
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
@@ -125,6 +128,7 @@ public class FileCompareFive {
             lastCoincidence = j;
         return true;
     }
+
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0))
@@ -145,6 +149,7 @@ public class FileCompareFive {
         if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3))
             addAnchors(j);
     }
+
     // проверка строк в листе перед трехстрочием
     private boolean checkPrevLines(int i, int j) {
         int indexOne = i - 1;
@@ -178,6 +183,7 @@ public class FileCompareFive {
         }
         return false;
     }
+
     // проверка строк в листе после трехстрочия
     private boolean checkNextLines(int i, int j) {
         int indexOne = i + 3;
@@ -215,6 +221,7 @@ public class FileCompareFive {
         }
         return false;
     }
+
     // добавление трехстрочия в HashMap
     private void addAnchors(int j) {
         int count = 0;
