@@ -83,15 +83,17 @@ public class FileCompareFive {
 //        return index + 4;
 //    }
 
+    private int lastCoincidence = 0;
+
     private void searchAnchorLines() {
         int i = 0;
         while (i < realSizeListOne - 2) {
             int j = 0;
             while (j < realSizeListTwo - 2) {
-//                i = searchThreeNonEmptyLinesListOne(i);
                 i = searchThreeNonEmptyLines(i, listOne, listOneSize);
-//                j = searchThreeNonEmptyLinesListTwo(j);
                 j = searchThreeNonEmptyLines(j, listTwo, listTwoSize);
+                if (j < lastCoincidence)
+                    j = lastCoincidence;
 
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
@@ -178,37 +180,37 @@ public class FileCompareFive {
             } else
                 return false;
         }
+        if (count == 3)
+            lastCoincidence = j;
         return true;
     }
 
     private void checkAndAddAnchors(int i, int j) {
-        if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
+        if ((i != 0 && j == 0) || (i == 0 && j != 0))
             addAnchors(j);
-        }
-        if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0)) {
+        if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
                 addAnchors(j);
-        }
         if ((i > 0 && j > 0) && (i < listOneSize - 3 && j < listTwoSize - 3)) {
             if (checkPrevLines(i, j))
                 addAnchors(j);
             if (checkNextLines(i, j))
                 addAnchors(j);
         }
-        if ((i == listOneSize - 3 && j == listTwoSize - 3) || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
+        if ((i == listOneSize - 3 && j == listTwoSize - 3)
+                || (i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3))
             if (checkPrevLines(i, j))
                 addAnchors(j);
-        }
-        if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3)) {
+        if ((i == listOneSize - 3 && j < listTwoSize - 3) || (i < listOneSize - 3 && j == listTwoSize - 3))
             addAnchors(j);
-        }
     }
 
     private boolean checkPrevLines(int i, int j) {
         int indexOne = i - 1;
         int indexTwo = j - 1;
 
-        if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
@@ -217,7 +219,8 @@ public class FileCompareFive {
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
             while (count != 3) {
-                if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
                     count = 0;
@@ -238,7 +241,8 @@ public class FileCompareFive {
         int indexOne = i + 3;
         int indexTwo = j + 3;
 
-        if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
@@ -247,9 +251,11 @@ public class FileCompareFive {
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
             while (count != 3) {
-                if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1 || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
+                if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1
+                        || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
-                if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
                     count = 0;
@@ -277,8 +283,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
