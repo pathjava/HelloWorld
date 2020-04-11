@@ -11,6 +11,8 @@ public class FileCompareFive {
 
     private int listOneSize;
     private int listTwoSize;
+    private int realSizeListOne;
+    private int realSizeListTwo;
 
     public void readFiles(String pathOne, String pathTwo) {
         if (pathOne == null || pathOne.equals("") || pathTwo == null || pathTwo.equals("")) {
@@ -42,6 +44,9 @@ public class FileCompareFive {
     public Map<Integer, String> compareFiles() {
         listOneSize = listOne.size();
         listTwoSize = listTwo.size();
+        realSizeListOne = realSizeList(listOne, listOneSize);
+        realSizeListTwo = realSizeList(listTwo, listTwoSize);
+
         final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "#");
@@ -50,82 +55,96 @@ public class FileCompareFive {
         return fileFinalMap;
     }
 
-    private int realSizeListTwo() {
-        int index = listTwoSize - 1;
-        int count = 0;
-        while (count != 3) {
-            if (index >= 0 && !listTwo.get(index).isEmpty())
-                count++;
-            else
-                count = 0;
-
-            if (index >= 0) index--;
-        }
-        return index + 4;
-    }
-
-    private int realSizeListOne() {
-        int index = listOneSize - 1;
-        int count = 0;
-        while (count != 3) {
-            if (index >= 0 && !listOne.get(index).isEmpty())
-                count++;
-            else
-                count = 0;
-
-            if (index >= 0) index--;
-        }
-        return index + 4;
-    }
+//    private int realSizeListTwo() {
+//        int index = listTwoSize - 1;
+//        int count = 0;
+//        while (count != 3) {
+//            if (index >= 0 && !listTwo.get(index).isEmpty())
+//                count++;
+//            else
+//                count = 0;
+//
+//            if (index >= 0) index--;
+//        }
+//        return index + 4;
+//    }
+//
+//    private int realSizeListOne() {
+//        int index = listOneSize - 1;
+//        int count = 0;
+//        while (count != 3) {
+//            if (index >= 0 && !listOne.get(index).isEmpty())
+//                count++;
+//            else
+//                count = 0;
+//
+//            if (index >= 0) index--;
+//        }
+//        return index + 4;
+//    }
 
     private void searchAnchorLines() {
         int i = 0;
-        while (i < realSizeListOne() - 2) {
+        while (i < realSizeListOne - 2) {
             int j = 0;
-            while (j < realSizeListTwo() - 2) {
+            while (j < realSizeListTwo - 2) {
                 i = searchThreeNonEmptyLinesListOne(i);
                 j = searchThreeNonEmptyLinesListTwo(j);
 
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
-                    if (i < realSizeListOne() - 2) i++;
+                    if (i < realSizeListOne - 2) i++;
                 }
-                if (j < realSizeListTwo() - 2) j++;
+                if (j < realSizeListTwo - 2) j++;
             }
-            if (i < realSizeListOne() - 2) i++;
+            if (i < realSizeListOne - 2) i++;
         }
     }
 
+    private int realSizeList(List<String> list, int listSize) {
+        int index = listSize - 1;
+        int count = 0;
+        while (count != 3) {
+            if (index >= 0 && !list.get(index).isEmpty())
+                count++;
+            else
+                count = 0;
+
+            if (index >= 0) index--;
+        }
+        return index + 4;
+    }
+
     private int searchThreeNonEmptyLinesListOne(int i) {
-        if (i > realSizeListOne() - 3)
+        if (i > realSizeListOne - 3)
             return i - 1;
         int index = i;
         int count = 0;
 
         while (count != 3) {
-            if (index < realSizeListOne() && !listOne.get(index).isEmpty())
+            if (index < realSizeListOne && !listOne.get(index).isEmpty())
                 count++;
             else
                 count = 0;
 
-            if (index + 1 <= realSizeListOne()) index++;
+            if (index + 1 <= realSizeListOne) index++;
         }
         return index - 3;
     }
 
     private int searchThreeNonEmptyLinesListTwo(int j) {
-        if (j > realSizeListTwo() - 3)
+        if (j > realSizeListTwo - 3)
             return j - 1;
         int index = j;
         int count = 0;
 
         while (count != 3) {
-            if (index < realSizeListTwo() && !listTwo.get(index).isEmpty())
+            if (index < realSizeListTwo && !listTwo.get(index).isEmpty())
                 count++;
             else
                 count = 0;
 
-            if (index + 1 <= realSizeListTwo()) index++;
+            if (index + 1 <= realSizeListTwo) index++;
         }
         return index - 3;
     }
@@ -179,8 +198,6 @@ public class FileCompareFive {
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
             while (count != 3) {
-//                if (indexOne >= 0 && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-//                    return false;
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
@@ -213,8 +230,6 @@ public class FileCompareFive {
             while (count != 3) {
                 if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1 || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
-//                if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
-//                    return false;
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo)) && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
                 else
@@ -243,8 +258,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
