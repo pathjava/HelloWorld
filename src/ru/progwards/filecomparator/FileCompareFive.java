@@ -88,8 +88,10 @@ public class FileCompareFive {
         while (i < realSizeListOne - 2) {
             int j = 0;
             while (j < realSizeListTwo - 2) {
-                i = searchThreeNonEmptyLinesListOne(i);
-                j = searchThreeNonEmptyLinesListTwo(j);
+//                i = searchThreeNonEmptyLinesListOne(i);
+                i = searchThreeNonEmptyLines(i, listOne, listOneSize);
+//                j = searchThreeNonEmptyLinesListTwo(j);
+                j = searchThreeNonEmptyLines(j, listTwo, listTwoSize);
 
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j);
@@ -115,39 +117,56 @@ public class FileCompareFive {
         return index + 4;
     }
 
-    private int searchThreeNonEmptyLinesListOne(int i) {
-        if (i > realSizeListOne - 3)
+    private int searchThreeNonEmptyLines(int i, List<String> list, int sizeList) {
+        if (i > sizeList - 3)
             return i - 1;
         int index = i;
         int count = 0;
 
         while (count != 3) {
-            if (index < realSizeListOne && !listOne.get(index).isEmpty())
+            if (index < sizeList && !list.get(index).isEmpty())
                 count++;
             else
                 count = 0;
 
-            if (index + 1 <= realSizeListOne) index++;
+            if (index + 1 <= sizeList) index++;
         }
         return index - 3;
     }
 
-    private int searchThreeNonEmptyLinesListTwo(int j) {
-        if (j > realSizeListTwo - 3)
-            return j - 1;
-        int index = j;
-        int count = 0;
-
-        while (count != 3) {
-            if (index < realSizeListTwo && !listTwo.get(index).isEmpty())
-                count++;
-            else
-                count = 0;
-
-            if (index + 1 <= realSizeListTwo) index++;
-        }
-        return index - 3;
-    }
+//    private int searchThreeNonEmptyLinesListOne(int i) {
+//        if (i > realSizeListOne - 3)
+//            return i - 1;
+//        int index = i;
+//        int count = 0;
+//
+//        while (count != 3) {
+//            if (index < realSizeListOne && !listOne.get(index).isEmpty())
+//                count++;
+//            else
+//                count = 0;
+//
+//            if (index + 1 <= realSizeListOne) index++;
+//        }
+//        return index - 3;
+//    }
+//
+//    private int searchThreeNonEmptyLinesListTwo(int j) {
+//        if (j > realSizeListTwo - 3)
+//            return j - 1;
+//        int index = j;
+//        int count = 0;
+//
+//        while (count != 3) {
+//            if (index < realSizeListTwo && !listTwo.get(index).isEmpty())
+//                count++;
+//            else
+//                count = 0;
+//
+//            if (index + 1 <= realSizeListTwo) index++;
+//        }
+//        return index - 3;
+//    }
 
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
@@ -258,8 +277,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
