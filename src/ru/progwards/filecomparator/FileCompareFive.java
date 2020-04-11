@@ -24,6 +24,7 @@ public class FileCompareFive {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Не выбран файл 1!");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,6 +36,7 @@ public class FileCompareFive {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Не выбран файл 2!");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
