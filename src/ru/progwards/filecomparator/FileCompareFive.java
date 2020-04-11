@@ -97,6 +97,8 @@ public class FileCompareFive {
     }
 
     private int searchThreeNonEmptyLinesListOne(int i) {
+        if (i > realSizeListOne() - 3)
+            return i - 1;
         int index = i;
         int count = 0;
 
@@ -112,6 +114,8 @@ public class FileCompareFive {
     }
 
     private int searchThreeNonEmptyLinesListTwo(int j) {
+        if (j > realSizeListTwo() - 3)
+            return j - 1;
         int index = j;
         int count = 0;
 
@@ -207,7 +211,7 @@ public class FileCompareFive {
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
             while (count != 3) {
-                if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1 || indexOne < listOneSize - 1 && indexTwo == listTwoSize)
+                if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1 || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
 //                if (indexTwo < fileFinalMap.size() && !fileFinalMap.get(indexTwo).equals("#")) // TODO заменить отладочный # на isEmpty
 //                    return false;
@@ -239,24 +243,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
-
-//        System.out.println("-----------One------------");
-//        int countOne = 1;
-//        for (String s : test.listOne) {
-//            System.out.format("%3d", countOne);
-//            System.out.println(": " + s);
-//            countOne++;
-//        }
-
-//        System.out.println("-----------Two------------");
-//        int countTwo = 1;
-//        for (String s : test.listTwo) {
-//            System.out.format("%3d", countTwo);
-//            System.out.println(": " + s);
-//            countTwo++;
-//        }
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
