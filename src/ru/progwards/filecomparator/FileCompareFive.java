@@ -98,19 +98,19 @@ public class FileCompareFive {
     }
 
     // поиск первого трехстрочия в каждом из листов
-    private int searchThreeNonEmptyLines(int i, List<String> list, int sizeList) {
-        if (i > sizeList - 3)
+    private int searchThreeNonEmptyLines(int i, List<String> list, int realSizeList) {
+        if (i > realSizeList - 3)
             return i - 1;
         int index = i;
         int count = 0;
 
         while (count != 3) {
-            if (index < sizeList && !list.get(index).isEmpty())
+            if (index < realSizeList && !list.get(index).isEmpty())
                 count++;
             else
                 count = 0;
 
-            if (index + 1 <= sizeList) index++;
+            if (index + 1 <= realSizeList) index++;
         }
         return index - 3;
     }
