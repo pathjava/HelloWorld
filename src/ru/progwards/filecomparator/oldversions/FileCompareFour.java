@@ -1,7 +1,5 @@
 package ru.progwards.filecomparator.oldversions;
 
-import ru.progwards.filecomparator.FileCompareFive;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -211,7 +209,7 @@ public class FileCompareFour {
 
 
     public static void main(String[] args) {
-        FileCompareFive test = new FileCompareFive();
+        FileCompareFour test = new FileCompareFour();
         test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
