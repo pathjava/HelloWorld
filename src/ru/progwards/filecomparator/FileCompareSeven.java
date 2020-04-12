@@ -246,6 +246,7 @@ public class FileCompareSeven {
     private void addAnchors(int j) {
         int count = 0;
         while (count < oneOrThree) {
+            fileAnchors = new FileAnchors();
             fileAnchors.anchorsLines = listTwo.get(j + count);
             fileFinalMap.put(j + count, fileAnchors);
             count++;
