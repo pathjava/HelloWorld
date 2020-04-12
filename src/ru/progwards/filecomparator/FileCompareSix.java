@@ -15,9 +15,9 @@ public class FileCompareSix {
     private int realSizeListOne;
     private int realSizeListTwo;
     // свойства класса, используемые при проверке больших и маленьких файлов
-    private int oneTwoThree = 3;
-    private int zeroOneTwo = 2;
-    private int twoThreeFour = 4;
+    private int oneOrThree = 3;
+    private int zeroOrTwo = 2;
+    private int twoOrFour = 4;
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
@@ -59,9 +59,9 @@ public class FileCompareSix {
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
         if (MAX_SIZE_ARRAY < 6) {
-            oneTwoThree = 1;
-            zeroOneTwo = 0;
-            twoThreeFour = 2;
+            oneOrThree = 1;
+            zeroOrTwo = 0;
+            twoOrFour = 2;
         }
         // присваиваем размеры листов по последним трем идущим подряд строкам
         realSizeListOne = listSizeForTheLastThreeNonEmptyLines(listOne);
@@ -75,9 +75,9 @@ public class FileCompareSix {
 
     private void searchAnchorLines() {
         int i = 0;
-        while (i < realSizeListOne - zeroOneTwo) {
+        while (i < realSizeListOne - zeroOrTwo) {
             int j = 0;
-            while (j < realSizeListTwo - zeroOneTwo) {
+            while (j < realSizeListTwo - zeroOrTwo) {
                 i = searchThreeNonEmptyLines(i, listOne, realSizeListOne); // определяем ближайшие три строки подряд
                 j = searchThreeNonEmptyLines(j, listTwo, realSizeListTwo);
                 if (j < lastCoincidence) // чтобы избежать повторного поиска с самого начала, присваиваем индекс последнего совпадения
@@ -85,11 +85,11 @@ public class FileCompareSix {
                 // проверяем трехстрочия на равенство
                 if (checkCoincidenceLines(i, j)) {
                     checkAndAddAnchors(i, j); // если совпали, проверяем строки выше/ниже на равенство и добавляем трехстрочие
-                    if (i < realSizeListOne - zeroOneTwo) i++;
+                    if (i < realSizeListOne - zeroOrTwo) i++;
                 }
-                if (j < realSizeListTwo - zeroOneTwo) j++;
+                if (j < realSizeListTwo - zeroOrTwo) j++;
             }
-            if (i < realSizeListOne - zeroOneTwo) i++;
+            if (i < realSizeListOne - zeroOrTwo) i++;
         }
     }
 
@@ -97,7 +97,7 @@ public class FileCompareSix {
     private int listSizeForTheLastThreeNonEmptyLines(List<String> list) {
         int index = list.size() - 1;
         int count = 0;
-        while (count != oneTwoThree) {
+        while (count != oneOrThree) {
             if (index >= 0 && !list.get(index).isEmpty())
                 count++;
             else
@@ -105,17 +105,17 @@ public class FileCompareSix {
 
             if (index >= 0) index--;
         }
-        return index + twoThreeFour;
+        return index + twoOrFour;
     }
 
     // поиск первого трехстрочия в каждом из листов
     private int searchThreeNonEmptyLines(int i, List<String> list, int realSizeList) {
-        if (i > realSizeList - oneTwoThree)
+        if (i > realSizeList - oneOrThree)
             return i - 1;
         int index = i;
         int count = 0;
 
-        while (count != oneTwoThree) {
+        while (count != oneOrThree) {
             if (index < realSizeList && !list.get(index).isEmpty())
                 count++;
             else
@@ -123,21 +123,21 @@ public class FileCompareSix {
 
             if (index + 1 <= realSizeList) index++;
         }
-        return index - oneTwoThree;
+        return index - oneOrThree;
     }
 
     // проверка на равенство трехстрочий
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
 
-        while (count < oneTwoThree) {
+        while (count < oneOrThree) {
             if (i + count < listOneSize && j + count < listTwoSize
                     && listOne.get(i + count).equals(listTwo.get(j + count))) {
                 count++;
             } else
                 return false;
         }
-        if (count == oneTwoThree)
+        if (count == oneOrThree)
             lastCoincidence = j;
         return true;
     }
@@ -149,19 +149,19 @@ public class FileCompareSix {
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
                 addAnchors(j);
-        if ((i > 0 && j > 0) && (i < listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)) {
+        if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
             if (checkPrevLines(i, j))
                 addAnchors(j);
             if (checkNextLines(i, j))
                 addAnchors(j);
         }
-        if ((i == listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)
-                || (i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
-                || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree))
+        if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
+                || (i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
+                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
             if (checkPrevLines(i, j))
                 addAnchors(j);
-        if ((i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
-                || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree))
+        if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
+                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
             addAnchors(j);
     }
 
@@ -179,7 +179,7 @@ public class FileCompareSix {
             int count = 0;
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
-            while (count != oneTwoThree) {
+            while (count != oneOrThree) {
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                         && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
                     count++;
@@ -201,8 +201,8 @@ public class FileCompareSix {
 
     // проверка строк в листе после трехстрочия
     private boolean checkNextLines(int i, int j) {
-        int indexOne = i + oneTwoThree;
-        int indexTwo = j + oneTwoThree;
+        int indexOne = i + oneOrThree;
+        int indexTwo = j + oneOrThree;
 
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
@@ -213,7 +213,7 @@ public class FileCompareSix {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
-            while (count != oneTwoThree) {
+            while (count != oneOrThree) {
                 if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1
                         || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
@@ -240,7 +240,7 @@ public class FileCompareSix {
     // добавление трехстрочия в HashMap
     private void addAnchors(int j) {
         int count = 0;
-        while (count < oneTwoThree) {
+        while (count < oneOrThree) {
             fileFinalMap.put(j + count, listTwo.get(j + count));
             count++;
         }
