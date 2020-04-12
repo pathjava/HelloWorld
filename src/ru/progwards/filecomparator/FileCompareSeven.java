@@ -150,7 +150,7 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0))
-            addAnchors(j, 2);
+            addAnchors(j, 0);
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
                 addAnchors(j, 1);
@@ -167,7 +167,7 @@ public class FileCompareSeven {
                 addAnchors(j, 0);
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
-            addAnchors(j, 2);
+            addAnchors(j, 1);
     }
 
     // проверка строк в листе перед трехстрочием
@@ -260,8 +260,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
