@@ -10,6 +10,8 @@ public class FileCompareSeven {
     private final List<String> listOne = new ArrayList<>();
     private final List<String> listTwo = new ArrayList<>();
 
+    private FileAnchors fileAnchors;
+
     private int listOneSize;
     private int listTwoSize;
     private int realSizeListOne;
@@ -46,16 +48,19 @@ public class FileCompareSeven {
         }
     }
 
-    private final Map<Integer, String> fileFinalMap = new HashMap<>();
+    private final Map<Integer, FileAnchors> fileFinalMap = new HashMap<>();
 
-    public Map<Integer, String> compareFiles() {
+    public Map<Integer, FileAnchors> compareFiles() {
         listOneSize = listOne.size(); // так как размеры листов часто используются, присваиваем их в переменные
         listTwoSize = listTwo.size();
 
         // создаем HashMap по размеру наибольшего из двух листов
         final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
+
+        fileAnchors = new FileAnchors();
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
-            fileFinalMap.put(i, "#");
+            fileAnchors.startFinish = "#";
+            fileFinalMap.put(i, fileAnchors);
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
         if (MAX_SIZE_ARRAY < 6) {
@@ -241,7 +246,8 @@ public class FileCompareSeven {
     private void addAnchors(int j) {
         int count = 0;
         while (count < oneOrThree) {
-            fileFinalMap.put(j + count, listTwo.get(j + count));
+            fileAnchors.anchorsLines = listTwo.get(j + count);
+            fileFinalMap.put(j + count, fileAnchors);
             count++;
         }
     }
@@ -253,7 +259,7 @@ public class FileCompareSeven {
                 "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt");
 
         System.out.println("------------ Patch -------------");
-        for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
+        for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
             System.out.format("%3d", entry.getKey());
             System.out.println(": " + entry.getValue());
         }
