@@ -150,24 +150,24 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0))
-            addAnchors(j);
+            addAnchors(j, 2);
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
-                addAnchors(j);
+                addAnchors(j, 1);
         if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
             if (checkPrevLines(i, j))
-                addAnchors(j);
+                addAnchors(j, 0);
             if (checkNextLines(i, j))
-                addAnchors(j);
+                addAnchors(j, 1);
         }
         if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
                 || (i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
             if (checkPrevLines(i, j))
-                addAnchors(j);
+                addAnchors(j, 0);
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
-            addAnchors(j);
+            addAnchors(j, 2);
     }
 
     // проверка строк в листе перед трехстрочием
@@ -243,10 +243,14 @@ public class FileCompareSeven {
     }
 
     // добавление трехстрочия в HashMap
-    private void addAnchors(int j) {
+    private void addAnchors(int j, int startFinish) {
         int count = 0;
         while (count < oneOrThree) {
             fileAnchors = new FileAnchors();
+            if (startFinish == 1 && count == 2)
+                fileAnchors.startFinish = "start";
+            if (startFinish == 0 && count == 0)
+                fileAnchors.startFinish = "finish";
             fileAnchors.anchorsLines = listTwo.get(j + count);
             fileFinalMap.put(j + count, fileAnchors);
             count++;
