@@ -67,8 +67,8 @@ public class FileCompareFive {
         while (i < realSizeListOne - 2) {
             int j = 0;
             while (j < realSizeListTwo - 2) {
-                i = searchThreeNonEmptyLines(i, listOne, listOneSize); // определяем ближайшие три строки подряд
-                j = searchThreeNonEmptyLines(j, listTwo, listTwoSize);
+                i = searchThreeNonEmptyLines(i, listOne, realSizeListOne); // определяем ближайшие три строки подряд
+                j = searchThreeNonEmptyLines(j, listTwo, realSizeListTwo);
                 if (j < lastCoincidence) // чтобы избежать повторного поиска с самого начала, присваиваем индекс последнего совпадения
                     j = lastCoincidence;
                 // проверяем трехстрочия на равенство
@@ -236,8 +236,8 @@ public class FileCompareFive {
 
     public static void main(String[] args) {
         FileCompareFive test = new FileCompareFive();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
