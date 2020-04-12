@@ -14,9 +14,10 @@ public class FileCompareSix {
     private int listTwoSize;
     private int realSizeListOne;
     private int realSizeListTwo;
-
+    // свойства класса, используемые при проверке больших и маленьких файлов
     private int oneTwoThree = 3;
     private int zeroOneTwo = 2;
+    private int twoThreeFour = 4;
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
@@ -50,19 +51,22 @@ public class FileCompareSix {
     public Map<Integer, String> compareFiles() {
         listOneSize = listOne.size(); // так как размеры листов часто используются, присваиваем их в переменные
         listTwoSize = listTwo.size();
-        // присваиваем размеры листов по последним трем идущим подряд строкам
-        realSizeListOne = listSizeForTheLastThreeNonEmptyLines(listOne);
-        realSizeListTwo = listSizeForTheLastThreeNonEmptyLines(listTwo);
 
         // создаем HashMap по размеру наибольшего из двух листов
         final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
         for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
             fileFinalMap.put(i, "#");
         }
+        // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
         if (MAX_SIZE_ARRAY < 6) {
             oneTwoThree = 1;
-            zeroOneTwo = 1;
+            zeroOneTwo = 0;
+            twoThreeFour = 2;
         }
+        // присваиваем размеры листов по последним трем идущим подряд строкам
+        realSizeListOne = listSizeForTheLastThreeNonEmptyLines(listOne);
+        realSizeListTwo = listSizeForTheLastThreeNonEmptyLines(listTwo);
+
         searchAnchorLines();
         return fileFinalMap;
     }
@@ -101,7 +105,7 @@ public class FileCompareSix {
 
             if (index >= 0) index--;
         }
-        return index + 4;
+        return index + twoThreeFour;
     }
 
     // поиск первого трехстрочия в каждом из листов
@@ -245,8 +249,8 @@ public class FileCompareSix {
 
     public static void main(String[] args) {
         FileCompareSix test = new FileCompareSix();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\06.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\05.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, String> entry : test.compareFiles().entrySet()) {
