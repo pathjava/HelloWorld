@@ -11,6 +11,7 @@ public class FileCompareSeven {
     private final List<String> listTwo = new ArrayList<>();
 
     private FileAnchors fileAnchors;
+    private int maxListsSize;
 
     private int listOneSize;
     private int listTwoSize;
@@ -55,15 +56,14 @@ public class FileCompareSeven {
         listTwoSize = listTwo.size();
 
         // создаем HashMap по размеру наибольшего из двух листов
-        final int MAX_SIZE_ARRAY = Math.max(listOneSize, listTwoSize);
+        maxListsSize = Math.max(listOneSize, listTwoSize);
 
         fileAnchors = new FileAnchors();
-        for (int i = 0; i < MAX_SIZE_ARRAY; i++) {
-            fileAnchors.startFinish = "#";
+        for (int i = 0; i < maxListsSize; i++) {
             fileFinalMap.put(i, fileAnchors);
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
-        if (MAX_SIZE_ARRAY < 6) {
+        if (maxListsSize < 6) {
             oneOrThree = 1;
             zeroOrTwo = 0;
             twoOrFour = 2;
@@ -150,24 +150,24 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0))
-            addAnchors(j, 0);
+            addAnchors(j, false, true);
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
-                addAnchors(j, 1);
+                addAnchors(j, true, false);
         if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
             if (checkPrevLines(i, j))
-                addAnchors(j, 0);
+                addAnchors(j, false, true);
             if (checkNextLines(i, j))
-                addAnchors(j, 1);
+                addAnchors(j, true, false);
         }
         if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
                 || (i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
             if (checkPrevLines(i, j))
-                addAnchors(j, 0);
+                addAnchors(j, false, true);
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
-            addAnchors(j, 1);
+            addAnchors(j, true, false);
     }
 
     // проверка строк в листе перед трехстрочием
@@ -243,18 +243,28 @@ public class FileCompareSeven {
     }
 
     // добавление трехстрочия в HashMap
-    private void addAnchors(int j, int startFinish) {
+    private void addAnchors(int j, boolean start, boolean finish) {
         int count = 0;
         while (count < oneOrThree) {
-            if (fileFinalMap.get(j + count).startFinish.contains("finish")
-                    || fileFinalMap.get(j + count).startFinish.contains("start"))
+            if (maxListsSize < 6) {
+                if ((fileFinalMap.get(j + count).finish.contains("finish") && start)
+                        || (fileFinalMap.get(j + count).start.contains("start") && finish)) {
+                    fileAnchors = new FileAnchors();
+                    fileAnchors.start = "start";
+                    fileAnchors.finish = "finish";
+                    fileAnchors.anchorsLines = listTwo.get(j + count);
+                    fileFinalMap.put(j + count, fileAnchors);
+                }
+            }
+            if (fileFinalMap.get(j + count).finish.contains("finish")
+                    || fileFinalMap.get(j + count).start.contains("start"))
                 count++;
             else {
                 fileAnchors = new FileAnchors();
-                if (startFinish == 1 && count == 2)
-                    fileAnchors.startFinish = "start";
-                if (startFinish == 0 && count == 0)
-                    fileAnchors.startFinish = "finish";
+                if (start && count == 2)
+                    fileAnchors.start = "start";
+                if (finish && count == 0)
+                    fileAnchors.finish = "finish";
                 fileAnchors.anchorsLines = listTwo.get(j + count);
                 fileFinalMap.put(j + count, fileAnchors);
                 count++;
