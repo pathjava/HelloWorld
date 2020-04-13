@@ -12,7 +12,7 @@ public class FileCompareSeven {
 
     private FileAnchors fileAnchors;
 
-    private int maxListsSize;
+    private int maxBothListsSize;
     private int listOneSize;
     private int listTwoSize;
     private int realSizeListOne;
@@ -56,14 +56,14 @@ public class FileCompareSeven {
         listTwoSize = listTwo.size();
 
         // создаем HashMap по размеру наибольшего из двух листов
-        maxListsSize = Math.max(listOneSize, listTwoSize);
+        maxBothListsSize = Math.max(listOneSize, listTwoSize);
 
         fileAnchors = new FileAnchors();
-        for (int i = 0; i < maxListsSize; i++) {
+        for (int i = 0; i < maxBothListsSize; i++) {
             fileFinalMap.put(i, fileAnchors);
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
-        if (maxListsSize < 6) {
+        if (maxBothListsSize < 6) {
             oneOrThree = 1;
             zeroOrTwo = 0;
             twoOrFour = 2;
@@ -246,7 +246,7 @@ public class FileCompareSeven {
     private void addAnchors(int j, boolean start, boolean finish) {
         int count = 0;
         while (count < oneOrThree) {
-            if (maxListsSize < 6) {
+            if (maxBothListsSize < 6) {
                 if ((fileFinalMap.get(j + count).finish.contains("finish") && start)
                         || (fileFinalMap.get(j + count).start.contains("start") && finish)) {
                     fileAnchors = new FileAnchors();
