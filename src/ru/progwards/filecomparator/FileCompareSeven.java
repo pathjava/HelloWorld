@@ -11,8 +11,8 @@ public class FileCompareSeven {
     private final List<String> listTwo = new ArrayList<>();
 
     private FileAnchors fileAnchors;
-    private int maxListsSize;
 
+    private int maxListsSize;
     private int listOneSize;
     private int listTwoSize;
     private int realSizeListOne;
