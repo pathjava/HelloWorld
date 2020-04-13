@@ -83,8 +83,8 @@ public class FileCompareSeven {
         while (i < realSizeListOne - zeroOrTwo) {
             int j = 0;
             while (j < realSizeListTwo - zeroOrTwo) {
-                i = searchThreeNonEmptyLines(i, listOne, realSizeListOne); // определяем ближайшие три строки подряд
-                j = searchThreeNonEmptyLines(j, listTwo, realSizeListTwo);
+                i = searchFirstThreeNonEmptyLines(i, listOne, realSizeListOne); // определяем ближайшие три строки подряд
+                j = searchFirstThreeNonEmptyLines(j, listTwo, realSizeListTwo);
                 if (j < lastCoincidence) // чтобы избежать повторного поиска с самого начала, присваиваем индекс последнего совпадения
                     j = lastCoincidence;
                 // проверяем трехстрочия на равенство
@@ -114,7 +114,7 @@ public class FileCompareSeven {
     }
 
     // поиск первого трехстрочия в каждом из листов
-    private int searchThreeNonEmptyLines(int i, List<String> list, int realSizeList) {
+    private int searchFirstThreeNonEmptyLines(int i, List<String> list, int realSizeList) {
         if (i > realSizeList - oneOrThree)
             return i - 1;
         int index = i;
@@ -274,8 +274,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
