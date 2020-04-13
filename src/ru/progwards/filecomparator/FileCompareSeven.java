@@ -246,10 +246,10 @@ public class FileCompareSeven {
     private void addAnchors(int j, boolean start, boolean finish) {
         int count = 0;
         while (count < oneOrThree) {
+            fileAnchors = new FileAnchors();
             if (maxBothListsSize < 6) {
                 if ((fileFinalMap.get(j + count).finish.contains("finish") && start)
                         || (fileFinalMap.get(j + count).start.contains("start") && finish)) {
-                    fileAnchors = new FileAnchors();
                     fileAnchors.start = "start";
                     fileAnchors.finish = "finish";
                     fileAnchors.anchorsLines = listTwo.get(j + count);
@@ -260,7 +260,6 @@ public class FileCompareSeven {
                     || fileFinalMap.get(j + count).start.contains("start"))
                 count++;
             else {
-                fileAnchors = new FileAnchors();
                 if (start && count == 2)
                     fileAnchors.start = "start";
                 if (finish && count == 0)
