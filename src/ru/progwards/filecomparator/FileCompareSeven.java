@@ -246,22 +246,27 @@ public class FileCompareSeven {
     private void addAnchors(int j, int startFinish) {
         int count = 0;
         while (count < oneOrThree) {
-            fileAnchors = new FileAnchors();
-            if (startFinish == 1 && count == 2)
-                fileAnchors.startFinish = "start";
-            if (startFinish == 0 && count == 0)
-                fileAnchors.startFinish = "finish";
-            fileAnchors.anchorsLines = listTwo.get(j + count);
-            fileFinalMap.put(j + count, fileAnchors);
-            count++;
+            if (fileFinalMap.get(j + count).startFinish.contains("finish")
+                    || fileFinalMap.get(j + count).startFinish.contains("start"))
+                count++;
+            else {
+                fileAnchors = new FileAnchors();
+                if (startFinish == 1 && count == 2)
+                    fileAnchors.startFinish = "start";
+                if (startFinish == 0 && count == 0)
+                    fileAnchors.startFinish = "finish";
+                fileAnchors.anchorsLines = listTwo.get(j + count);
+                fileFinalMap.put(j + count, fileAnchors);
+                count++;
+            }
         }
     }
 
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
