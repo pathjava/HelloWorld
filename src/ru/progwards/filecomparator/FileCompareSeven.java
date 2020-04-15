@@ -243,12 +243,12 @@ public class FileCompareSeven {
         return false;
     }
 
-    private boolean checkPrevNextFirstLine(int indexOne, int indexTwo){
+    private boolean checkPrevNextFirstLine(int indexOne, int indexTwo) {
         return listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
     }
 
-    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count){
+    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             count++;
@@ -279,15 +279,21 @@ public class FileCompareSeven {
         while (count < oneOrThree) {
             fileAnchors = new FileAnchors();
 
-            if (fileFinalMap.get(j + count).finish.contains("finish")
-                    || fileFinalMap.get(j + count).start.contains("start"))
-                count++;
+            if (fileFinalMap.get(j + count).finish.contains("finish")) {
+                fileAnchors.finish = "finish";
+                fileAnchors.finishOneIndex = fileFinalMap.get(j + count).finishOneIndex;
+                fileAnchors.finishTwoIndex = fileFinalMap.get(j + count).finishTwoIndex;
+            } else if (fileFinalMap.get(j + count).start.contains("start")) {
+                fileAnchors.start = "start";
+                fileAnchors.startOneIndex = fileFinalMap.get(j + count).startOneIndex;
+                fileAnchors.startTwoIndex = fileFinalMap.get(j + count).startTwoIndex;
+            }
 
             if (!oneIndex.isEmpty() && count == 0) {
                 fileAnchors.finishOneIndex = oneIndex.get(0);
                 fileAnchors.finishTwoIndex = oneIndex.get(1);
                 fileAnchors.finish = oneIndex.get(2);
-            } else if (!twoIndex.isEmpty() && count == 2) {
+            } else if (!twoIndex.isEmpty() && count == zeroOrTwo) {
                 fileAnchors.startOneIndex = twoIndex.get(0);
                 fileAnchors.startTwoIndex = twoIndex.get(1);
                 fileAnchors.start = twoIndex.get(2);
@@ -304,8 +310,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
