@@ -149,8 +149,10 @@ public class FileCompareSeven {
 
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
-        if ((i != 0 && j == 0) || (i == 0 && j != 0))
+        if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
+            setTemporaryIndex(i + 1, j + 1, "finish");
             addAnchors(j, false, true);
+        }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j))
                 addAnchors(j, true, false);
@@ -166,8 +168,10 @@ public class FileCompareSeven {
             if (checkPrevLines(i, j))
                 addAnchors(j, false, true);
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
-                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
+                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree)) {
+            setTemporaryIndex(i + 3, j + 3, "start");
             addAnchors(j, true, false);
+        }
     }
 
     // проверка строк в листе перед трехстрочием
@@ -178,8 +182,10 @@ public class FileCompareSeven {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+            setTemporaryIndex(indexOne + 2, indexTwo + 2, "finish");
             return true;
+        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne > 0) indexOne--;
@@ -191,9 +197,10 @@ public class FileCompareSeven {
                 else
                     count = 0;
 
-                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+                    setTemporaryIndex(indexOne, indexTwo, "finish");
                     return true;
-                else if (indexOne == 0 || indexTwo == 0)
+                } else if (indexOne == 0 || indexTwo == 0)
                     return false;
                 else {
                     indexOne--;
@@ -212,16 +219,20 @@ public class FileCompareSeven {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+            setTemporaryIndex(indexOne, indexTwo, "start");
             return true;
+        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
             while (count != oneOrThree) {
                 if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1
-                        || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
+                        || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1) {
+                    setTemporaryIndex(indexOne, indexTwo, "start");
                     return true;
+                }
 
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                         && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
@@ -229,9 +240,10 @@ public class FileCompareSeven {
                 else
                     count = 0;
 
-                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+                    setTemporaryIndex(indexOne - 2, indexTwo - 2, "start");
                     return true;
-                else if (indexOne == listOneSize - 1 || indexTwo == listTwoSize - 1)
+                } else if (indexOne == listOneSize - 1 || indexTwo == listTwoSize - 1)
                     return false;
                 else {
                     indexOne++;
@@ -242,33 +254,47 @@ public class FileCompareSeven {
         return false;
     }
 
+    private final List<String> oneIndex = new ArrayList<>();
+    private final List<String> twoIndex = new ArrayList<>();
+
+    private void setTemporaryIndex(int i, int j, String startFinish) {
+        if (startFinish.equals("finish")) {
+            oneIndex.add(String.valueOf(i));
+            oneIndex.add(String.valueOf(j));
+            oneIndex.add(startFinish);
+        } else if (startFinish.equals("start")) {
+            twoIndex.add(String.valueOf(i));
+            twoIndex.add(String.valueOf(j));
+            twoIndex.add(startFinish);
+        }
+    }
+
     // добавление трехстрочия в HashMap
     private void addAnchors(int j, boolean start, boolean finish) {
         int count = 0;
         while (count < oneOrThree) {
             fileAnchors = new FileAnchors();
-            if (maxBothListsSize < 6) {
-                if ((fileFinalMap.get(j + count).finish.contains("finish") && start)
-                        || (fileFinalMap.get(j + count).start.contains("start") && finish)) {
-                    fileAnchors.start = "start";
-                    fileAnchors.finish = "finish";
-                    fileAnchors.anchorsLines = listTwo.get(j + count);
-                    fileFinalMap.put(j + count, fileAnchors);
-                }
-            }
+
             if (fileFinalMap.get(j + count).finish.contains("finish")
                     || fileFinalMap.get(j + count).start.contains("start"))
                 count++;
-            else {
-                if (start && count == 2)
-                    fileAnchors.start = "start";
-                if (finish && count == 0)
-                    fileAnchors.finish = "finish";
-                fileAnchors.anchorsLines = listTwo.get(j + count);
-                fileFinalMap.put(j + count, fileAnchors);
-                count++;
+
+            if (!oneIndex.isEmpty() && count == 0) {
+                fileAnchors.finishOneIndex = oneIndex.get(0);
+                fileAnchors.finishTwoIndex = oneIndex.get(1);
+                fileAnchors.finish = oneIndex.get(2);
+            } else if (!twoIndex.isEmpty() && count == 2) {
+                fileAnchors.startOneIndex = twoIndex.get(0);
+                fileAnchors.startTwoIndex = twoIndex.get(1);
+                fileAnchors.start = twoIndex.get(2);
             }
+
+            fileAnchors.anchorsLines = listTwo.get(j + count);
+            fileFinalMap.put(j + count, fileAnchors);
+            count++;
         }
+        oneIndex.clear();
+        twoIndex.clear();
     }
 
 
