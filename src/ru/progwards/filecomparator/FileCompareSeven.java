@@ -150,21 +150,21 @@ public class FileCompareSeven {
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
             setTemporaryIndex(i + 1, j + 1, "finish");
-            addAnchors(j, false, true);
+            addAnchors(j);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j)) {
                 setTemporaryIndex(i + 3, j + 3, "start");
-                addAnchors(j, true, false);
+                addAnchors(j);
             }
         if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
             if (checkPrevLines(i, j)) {
                 setTemporaryIndex(i + 1, j + 1, "finish");
-                addAnchors(j, false, true);
+                addAnchors(j);
             }
             if (checkNextLines(i, j)) {
                 setTemporaryIndex(i + 3, j + 3, "start");
-                addAnchors(j, true, false);
+                addAnchors(j);
             }
         }
         if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
@@ -172,12 +172,12 @@ public class FileCompareSeven {
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
             if (checkPrevLines(i, j)) {
                 setTemporaryIndex(i + 1, j + 1, "finish");
-                addAnchors(j, false, true);
+                addAnchors(j);
             }
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree)) {
             setTemporaryIndex(i + 3, j + 3, "start");
-            addAnchors(j, true, false);
+            addAnchors(j);
         }
     }
 
@@ -269,7 +269,7 @@ public class FileCompareSeven {
     }
 
     // добавление трехстрочия в HashMap
-    private void addAnchors(int j, boolean start, boolean finish) {
+    private void addAnchors(int j) {
         int count = 0;
         while (count < oneOrThree) {
             fileAnchors = new FileAnchors();
