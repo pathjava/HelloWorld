@@ -186,8 +186,7 @@ public class FileCompareSeven {
         int indexOne = i - 1;
         int indexTwo = j - 1;
 
-        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+        if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
@@ -196,11 +195,7 @@ public class FileCompareSeven {
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
             while (count != oneOrThree) {
-                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
-                    count++;
-                else
-                    count = 0;
+                count = incrementCountWhenCheckingLines(indexOne, indexTwo, count);
 
                 if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
@@ -220,8 +215,7 @@ public class FileCompareSeven {
         int indexOne = i + oneOrThree;
         int indexTwo = j + oneOrThree;
 
-        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+        if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
         if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
@@ -234,11 +228,7 @@ public class FileCompareSeven {
                         || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
 
-                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
-                    count++;
-                else
-                    count = 0;
+                count = incrementCountWhenCheckingLines(indexOne, indexTwo, count);
 
                 if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
@@ -252,6 +242,21 @@ public class FileCompareSeven {
         }
         return false;
     }
+
+    private boolean checkPrevNextFirstLine(int indexOne, int indexTwo){
+        return listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
+    }
+
+    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count){
+        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+            count++;
+        else
+            count = 0;
+        return count;
+    }
+
     // листы и метод для временного хранения индексов троестрочий
     private final List<String> oneIndex = new ArrayList<>();
     private final List<String> twoIndex = new ArrayList<>();
@@ -299,8 +304,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
