@@ -1,4 +1,4 @@
-package ru.progwards.filecomparator;
+package ru.progwards.filecomparator.oldversions;
 
 public class FileAnchorIndex {
     public int oneListIndex;

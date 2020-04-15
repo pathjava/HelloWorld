@@ -154,19 +154,27 @@ public class FileCompareSeven {
             addAnchors(j, false, true);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
-            if (checkNextLines(i, j))
+            if (checkNextLines(i, j)) {
+                setTemporaryIndex(i + 3, j + 3, "start");
                 addAnchors(j, true, false);
+            }
         if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
-            if (checkPrevLines(i, j))
+            if (checkPrevLines(i, j)) {
+                setTemporaryIndex(i + 1, j + 1, "finish");
                 addAnchors(j, false, true);
-            if (checkNextLines(i, j))
+            }
+            if (checkNextLines(i, j)) {
+                setTemporaryIndex(i + 3, j + 3, "start");
                 addAnchors(j, true, false);
+            }
         }
         if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
                 || (i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
-            if (checkPrevLines(i, j))
+            if (checkPrevLines(i, j)) {
+                setTemporaryIndex(i + 1, j + 1, "finish");
                 addAnchors(j, false, true);
+            }
         if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
                 || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree)) {
             setTemporaryIndex(i + 3, j + 3, "start");
@@ -182,10 +190,8 @@ public class FileCompareSeven {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-            setTemporaryIndex(indexOne + 2, indexTwo + 2, "finish");
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
-        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne > 0) indexOne--;
@@ -197,10 +203,9 @@ public class FileCompareSeven {
                 else
                     count = 0;
 
-                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-                    setTemporaryIndex(indexOne, indexTwo, "finish");
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
-                } else if (indexOne == 0 || indexTwo == 0)
+                else if (indexOne == 0 || indexTwo == 0)
                     return false;
                 else {
                     indexOne--;
@@ -219,20 +224,16 @@ public class FileCompareSeven {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-            setTemporaryIndex(indexOne, indexTwo, "start");
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
-        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
             while (count != oneOrThree) {
                 if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1
-                        || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1) {
-                    setTemporaryIndex(indexOne, indexTwo, "start");
+                        || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
-                }
 
                 if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                         && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
@@ -240,10 +241,9 @@ public class FileCompareSeven {
                 else
                     count = 0;
 
-                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-                    setTemporaryIndex(indexOne - 2, indexTwo - 2, "start");
+                if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
-                } else if (indexOne == listOneSize - 1 || indexTwo == listTwoSize - 1)
+                else if (indexOne == listOneSize - 1 || indexTwo == listTwoSize - 1)
                     return false;
                 else {
                     indexOne++;
@@ -253,7 +253,7 @@ public class FileCompareSeven {
         }
         return false;
     }
-
+    // листы и метод для временного хранения индексов троестрочий
     private final List<String> oneIndex = new ArrayList<>();
     private final List<String> twoIndex = new ArrayList<>();
 
@@ -300,8 +300,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
