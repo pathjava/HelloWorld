@@ -292,9 +292,7 @@ public class FileCompareSeven {
     }
     // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
     private void setFirstLastAnchorNumberLine(String startFinish) {
-        int index = 0;
-        if (startFinish.equals(FINISH_LINE))
-            index = listTwoSize - 1;
+        int index = startFinish.equals(FINISH_LINE) ? listTwoSize - 1 : 0;
         fileAnchors = new FileAnchors();
         switch (startFinish) {
             case "finish":
