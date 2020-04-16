@@ -254,11 +254,13 @@ public class FileCompareSeven {
         }
         return false;
     }
+
     // проверка равенства предыдущей (не пустой) строки трехстрочий
     private boolean checkPrevNextFirstLine(int indexOne, int indexTwo) {
         return listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
     }
+
     // инкремент count при обнаружении совпадения строк идущих подряд
     private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
@@ -270,8 +272,8 @@ public class FileCompareSeven {
     }
 
     // листы и метод для временного хранения индексов троестрочий
-    private  List<String> oneListNumberLine;
-    private  List<String> twoListNumberLine;
+    private List<String> oneListNumberLine;
+    private List<String> twoListNumberLine;
 
     // добавление во временные листы номеров строк трохстрочий для добавления в объект fileAnchors
     private void setAnchorNumberLine(int i, int j, String startFinish) {
@@ -290,6 +292,7 @@ public class FileCompareSeven {
                 break;
         }
     }
+
     // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
     private void setFirstLastAnchorNumberLine(String startFinish) {
         int index = startFinish.equals(FINISH_LINE) ? listTwoSize - 1 : 0;
