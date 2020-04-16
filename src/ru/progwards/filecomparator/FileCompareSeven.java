@@ -200,8 +200,11 @@ public class FileCompareSeven {
 
         if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+            if (indexOne == 0 && indexTwo == 0)
+                setFirstLastAnchorNumberLine(START_LINE);
             return true;
+        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne > 0) indexOne--;
@@ -229,8 +232,11 @@ public class FileCompareSeven {
 
         if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+            if (indexOne == listOneSize - 1 && indexTwo == listTwoSize - 1)
+                setFirstLastAnchorNumberLine(FINISH_LINE);
             return true;
+        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
@@ -347,8 +353,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\09.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\10.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
