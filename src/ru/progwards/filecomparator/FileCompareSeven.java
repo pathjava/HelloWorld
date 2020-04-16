@@ -325,25 +325,29 @@ public class FileCompareSeven {
     }
 
     // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
-    private void setFirstLastAnchorNumberLine(){
+    private void setFirstLastAnchorNumberLine() {
+        fileAnchors = new FileAnchors();
         int count = 0;
         boolean found = false;
-        while (!found){
-            if (!fileFinalMap.get(count).start.isEmpty() && !fileFinalMap.get(count).finish.isEmpty()) {
-                found = true;
-            }else if (!fileFinalMap.get(count).start.isEmpty())
+        while (!found) {
+            if (!fileFinalMap.get(count).start.isEmpty() && fileFinalMap.get(count).finish.isEmpty())
                 break;
-            else if (!fileFinalMap.get(count).finish.isEmpty())
+            else if (!fileFinalMap.get(count).finish.isEmpty()) {
+                fileAnchors.startOneNumber = String.valueOf(1);
+                fileAnchors.startTwoNumber = String.valueOf(1);
+                fileAnchors.start = START_LINE;
                 found = true;
+            }
             count++;
         }
+        fileFinalMap.put(0, fileAnchors);
     }
 
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\05.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\06.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
