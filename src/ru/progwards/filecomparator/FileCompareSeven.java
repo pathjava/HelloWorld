@@ -22,6 +22,9 @@ public class FileCompareSeven {
     private int twoThreeFour = 4;
     private int zeroOneTwo = 2;
 
+    private final String START_LINE = "start";
+    private final String FINISH_LINE = "finish";
+
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
         try (BufferedReader readerOne = new BufferedReader(new FileReader(pathOne))) {
@@ -156,35 +159,37 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
-            setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "finish");
-            addAnchors(j);
+            setFirstLastAnchorNumberLine(START_LINE);
+            setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+            addAnchorsToHashMap(j);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j)) {
-                setTemporaryIndex(i + 1, j + 1, "start");
-                addAnchors(j);
+                setAnchorNumberLine(i + 1, j + 1, START_LINE);
+                addAnchorsToHashMap(j);
             }
         if ((i > 0 && j > 0) && (i < listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)) {
             if (checkPrevLines(i, j)) {
-                setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "finish");
-                addAnchors(j);
+                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+                addAnchorsToHashMap(j);
             }
             if (checkNextLines(i, j)) {
-                setTemporaryIndex(i + 1, j + 1, "start");
-                addAnchors(j);
+                setAnchorNumberLine(i + 1, j + 1, START_LINE);
+                addAnchorsToHashMap(j);
             }
         }
         if ((i == listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)
                 || (i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
                 || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree))
             if (checkPrevLines(i, j)) {
-                setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "finish");
-                addAnchors(j);
+                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+                addAnchorsToHashMap(j);
             }
         if ((i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
                 || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)) {
-            setTemporaryIndex(i + 1, j + 1, "start");
-            addAnchors(j);
+            setAnchorNumberLine(i + 1, j + 1, START_LINE);
+            setFirstLastAnchorNumberLine(FINISH_LINE);
+            addAnchorsToHashMap(j);
         }
     }
 
@@ -249,12 +254,12 @@ public class FileCompareSeven {
         }
         return false;
     }
-
+    // проверка равенства предыдущей (не пустой) строки трехстрочий
     private boolean checkPrevNextFirstLine(int indexOne, int indexTwo) {
         return listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
     }
-
+    // инкремент count при обнаружении совпадения строк идущих подряд
     private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
         if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
@@ -265,50 +270,71 @@ public class FileCompareSeven {
     }
 
     // листы и метод для временного хранения индексов троестрочий
-    private List<String> oneIndex;
-    private List<String> twoIndex;
+    private  List<String> oneListNumberLine;
+    private  List<String> twoListNumberLine;
 
-    private void setTemporaryIndex(int i, int j, String startFinish) {
-        oneIndex = new ArrayList<>();
-        twoIndex = new ArrayList<>();
+    // добавление во временные листы номеров строк трохстрочий для добавления в объект fileAnchors
+    private void setAnchorNumberLine(int i, int j, String startFinish) {
+        oneListNumberLine = new ArrayList<>();
+        twoListNumberLine = new ArrayList<>();
         switch (startFinish) {
             case "finish":
-                oneIndex.add(String.valueOf(i));
-                oneIndex.add(String.valueOf(j));
-                oneIndex.add(startFinish);
+                oneListNumberLine.add(String.valueOf(i));
+                oneListNumberLine.add(String.valueOf(j));
+                oneListNumberLine.add(startFinish);
                 break;
             case "start":
-                twoIndex.add(String.valueOf(i));
-                twoIndex.add(String.valueOf(j));
-                twoIndex.add(startFinish);
+                twoListNumberLine.add(String.valueOf(i));
+                twoListNumberLine.add(String.valueOf(j));
+                twoListNumberLine.add(startFinish);
                 break;
         }
     }
+    // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
+    private void setFirstLastAnchorNumberLine(String startFinish) {
+        int index = 0;
+        if (startFinish.equals(FINISH_LINE))
+            index = listTwoSize - 1;
+        fileAnchors = new FileAnchors();
+        switch (startFinish) {
+            case "finish":
+                fileAnchors.finishOneNumber = String.valueOf(listOneSize);
+                fileAnchors.finishTwoNumber = String.valueOf(listTwoSize);
+                fileAnchors.finish = startFinish;
+                break;
+            case "start":
+                fileAnchors.startOneNumber = String.valueOf(1);
+                fileAnchors.startTwoNumber = String.valueOf(1);
+                fileAnchors.start = startFinish;
+                break;
+        }
+        fileFinalMap.put(index, fileAnchors);
+    }
 
     // добавление объекта fileAnchors с трехстрочием и индексами в HashMap
-    private void addAnchors(int j) {
+    private void addAnchorsToHashMap(int j) {
         int count = 0;
         while (count < oneTwoThree) {
             fileAnchors = new FileAnchors();
 
-            if (fileFinalMap.get(j + count).finish.contains("finish")) {
-                fileAnchors.finish = "finish";
-                fileAnchors.finishOneIndex = fileFinalMap.get(j + count).finishOneIndex;
-                fileAnchors.finishTwoIndex = fileFinalMap.get(j + count).finishTwoIndex;
-            } else if (fileFinalMap.get(j + count).start.contains("start")) {
-                fileAnchors.start = "start";
-                fileAnchors.startOneIndex = fileFinalMap.get(j + count).startOneIndex;
-                fileAnchors.startTwoIndex = fileFinalMap.get(j + count).startTwoIndex;
+            if (fileFinalMap.get(j + count).finish.contains(FINISH_LINE)) {
+                fileAnchors.finish = FINISH_LINE;
+                fileAnchors.finishOneNumber = fileFinalMap.get(j + count).finishOneNumber;
+                fileAnchors.finishTwoNumber = fileFinalMap.get(j + count).finishTwoNumber;
+            } else if (fileFinalMap.get(j + count).start.contains(START_LINE)) {
+                fileAnchors.start = START_LINE;
+                fileAnchors.startOneNumber = fileFinalMap.get(j + count).startOneNumber;
+                fileAnchors.startTwoNumber = fileFinalMap.get(j + count).startTwoNumber;
             }
 
-            if (!oneIndex.isEmpty() && count == zeroOneTwo) {
-                fileAnchors.finishOneIndex = oneIndex.get(0);
-                fileAnchors.finishTwoIndex = oneIndex.get(1);
-                fileAnchors.finish = oneIndex.get(2);
-            } else if (!twoIndex.isEmpty() && count == 0) {
-                fileAnchors.startOneIndex = twoIndex.get(0);
-                fileAnchors.startTwoIndex = twoIndex.get(1);
-                fileAnchors.start = twoIndex.get(2);
+            if (!oneListNumberLine.isEmpty() && count == zeroOneTwo) {
+                fileAnchors.finishOneNumber = oneListNumberLine.get(0);
+                fileAnchors.finishTwoNumber = oneListNumberLine.get(1);
+                fileAnchors.finish = oneListNumberLine.get(2);
+            } else if (!twoListNumberLine.isEmpty() && count == 0) {
+                fileAnchors.startOneNumber = twoListNumberLine.get(0);
+                fileAnchors.startTwoNumber = twoListNumberLine.get(1);
+                fileAnchors.start = twoListNumberLine.get(2);
             }
 
             fileAnchors.anchorsLines = listTwo.get(j + count);
@@ -320,8 +346,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
