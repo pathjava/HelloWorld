@@ -17,9 +17,10 @@ public class FileCompareSeven {
     private int realSizeListOne;
     private int realSizeListTwo;
     // свойства класса, используемые при проверке больших и маленьких файлов
-    private int oneOrThree = 3;
+    private int oneTwoThree = 3;
     private int zeroOrTwo = 2;
-    private int twoOrFour = 4;
+    private int twoThreeFour = 4;
+    private int zeroOneTwo = 2;
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
@@ -63,9 +64,15 @@ public class FileCompareSeven {
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
         if (maxBothListsSize < 6) {
-            oneOrThree = 1;
+            oneTwoThree = 1;
             zeroOrTwo = 0;
-            twoOrFour = 2;
+            twoThreeFour = 2;
+            zeroOneTwo = 0;
+        } else if (maxBothListsSize < 11) {
+            oneTwoThree = 2;
+            zeroOrTwo = 1;
+            twoThreeFour = 3;
+            zeroOneTwo = 1;
         }
         // присваиваем размеры листов по последним трем идущим подряд строкам
         realSizeListOne = listSizeForTheLastThreeNonEmptyLines(listOne);
@@ -101,7 +108,7 @@ public class FileCompareSeven {
     private int listSizeForTheLastThreeNonEmptyLines(List<String> list) {
         int index = list.size() - 1;
         int count = 0;
-        while (count != oneOrThree) {
+        while (count != oneTwoThree) {
             if (index >= 0 && !list.get(index).isEmpty())
                 count++;
             else
@@ -109,17 +116,17 @@ public class FileCompareSeven {
 
             if (index >= 0) index--;
         }
-        return index + twoOrFour;
+        return index + twoThreeFour;
     }
 
     // поиск первого трехстрочия в каждом из листов
     private int searchFirstThreeNonEmptyLines(int i, List<String> list, int realSizeList) {
-        if (i > realSizeList - oneOrThree)
+        if (i > realSizeList - oneTwoThree)
             return i - 1;
         int index = i;
         int count = 0;
 
-        while (count != oneOrThree) {
+        while (count != oneTwoThree) {
             if (index < realSizeList && !list.get(index).isEmpty())
                 count++;
             else
@@ -127,21 +134,21 @@ public class FileCompareSeven {
 
             if (index + 1 <= realSizeList) index++;
         }
-        return index - oneOrThree;
+        return index - oneTwoThree;
     }
 
     // проверка на равенство трехстрочий
     private boolean checkCoincidenceLines(int i, int j) {
         int count = 0;
 
-        while (count < oneOrThree) {
+        while (count < oneTwoThree) {
             if (i + count < listOneSize && j + count < listTwoSize
                     && listOne.get(i + count).equals(listTwo.get(j + count))) {
                 count++;
             } else
                 return false;
         }
-        if (count == oneOrThree)
+        if (count == oneTwoThree)
             lastCoincidence = j;
         return true;
     }
@@ -154,29 +161,29 @@ public class FileCompareSeven {
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
             if (checkNextLines(i, j)) {
-                setTemporaryIndex(i + 3, j + 3, "start");
+                setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "start");
                 addAnchors(j);
             }
-        if ((i > 0 && j > 0) && (i < listOneSize - oneOrThree && j < listTwoSize - oneOrThree)) {
+        if ((i > 0 && j > 0) && (i < listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)) {
             if (checkPrevLines(i, j)) {
                 setTemporaryIndex(i + 1, j + 1, "finish");
                 addAnchors(j);
             }
             if (checkNextLines(i, j)) {
-                setTemporaryIndex(i + 3, j + 3, "start");
+                setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "start");
                 addAnchors(j);
             }
         }
-        if ((i == listOneSize - oneOrThree && j == listTwoSize - oneOrThree)
-                || (i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
-                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree))
+        if ((i == listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)
+                || (i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
+                || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree))
             if (checkPrevLines(i, j)) {
                 setTemporaryIndex(i + 1, j + 1, "finish");
                 addAnchors(j);
             }
-        if ((i == listOneSize - oneOrThree && j < listTwoSize - oneOrThree)
-                || (i < listOneSize - oneOrThree && j == listTwoSize - oneOrThree)) {
-            setTemporaryIndex(i + 3, j + 3, "start");
+        if ((i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
+                || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)) {
+            setTemporaryIndex(i + oneTwoThree, j + oneTwoThree, "start");
             addAnchors(j);
         }
     }
@@ -194,7 +201,7 @@ public class FileCompareSeven {
             int count = 0;
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
-            while (count != oneOrThree) {
+            while (count != oneTwoThree) {
                 count = incrementCountWhenCheckingLines(indexOne, indexTwo, count);
 
                 if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
@@ -212,8 +219,8 @@ public class FileCompareSeven {
 
     // проверка строк в листе после трехстрочия
     private boolean checkNextLines(int i, int j) {
-        int indexOne = i + oneOrThree;
-        int indexTwo = j + oneOrThree;
+        int indexOne = i + oneTwoThree;
+        int indexTwo = j + oneTwoThree;
 
         if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
@@ -223,7 +230,7 @@ public class FileCompareSeven {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
             if (indexTwo < listTwoSize - 1) indexTwo++;
-            while (count != oneOrThree) {
+            while (count != oneTwoThree) {
                 if (indexOne == listOneSize - 1 && indexTwo < listTwoSize - 1
                         || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
@@ -276,7 +283,7 @@ public class FileCompareSeven {
     // добавление объекта fileAnchors с трехстрочием и индексами в HashMap
     private void addAnchors(int j) {
         int count = 0;
-        while (count < oneOrThree) {
+        while (count < oneTwoThree) {
             fileAnchors = new FileAnchors();
 
             if (fileFinalMap.get(j + count).finish.contains("finish")) {
@@ -293,7 +300,7 @@ public class FileCompareSeven {
                 fileAnchors.finishOneIndex = oneIndex.get(0);
                 fileAnchors.finishTwoIndex = oneIndex.get(1);
                 fileAnchors.finish = oneIndex.get(2);
-            } else if (!twoIndex.isEmpty() && count == zeroOrTwo) {
+            } else if (!twoIndex.isEmpty() && count == zeroOneTwo) {
                 fileAnchors.startOneIndex = twoIndex.get(0);
                 fileAnchors.startTwoIndex = twoIndex.get(1);
                 fileAnchors.start = twoIndex.get(2);
@@ -310,8 +317,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
