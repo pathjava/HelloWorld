@@ -82,6 +82,7 @@ public class FileCompareSeven {
         realSizeListTwo = listSizeForTheLastThreeNonEmptyLines(listTwo);
 
         searchAnchorLines();
+        setFirstLastAnchorNumberLine();
         return fileFinalMap;
     }
 
@@ -159,7 +160,6 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
-            setFirstLastAnchorNumberLine(START_LINE);
             setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
             addAnchorsToHashMap(j);
         }
@@ -188,7 +188,6 @@ public class FileCompareSeven {
         if ((i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
                 || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree)) {
             setAnchorNumberLine(i + 1, j + 1, START_LINE);
-            setFirstLastAnchorNumberLine(FINISH_LINE);
             addAnchorsToHashMap(j);
         }
     }
@@ -200,11 +199,8 @@ public class FileCompareSeven {
 
         if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-            if (indexOne == 0 && indexTwo == 0)
-                setFirstLastAnchorNumberLine(START_LINE);
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
-        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne > 0) indexOne--;
@@ -232,11 +228,8 @@ public class FileCompareSeven {
 
         if (checkPrevNextFirstLine(indexOne, indexTwo))
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
-            if (indexOne == listOneSize - 1 && indexTwo == listTwoSize - 1)
-                setFirstLastAnchorNumberLine(FINISH_LINE);
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
             return true;
-        }
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne < listOneSize - 1) indexOne++;
@@ -299,25 +292,6 @@ public class FileCompareSeven {
         }
     }
 
-    // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
-    private void setFirstLastAnchorNumberLine(String startFinish) {
-        int index = startFinish.equals(FINISH_LINE) ? listTwoSize - 1 : 0;
-        fileAnchors = new FileAnchors();
-        switch (startFinish) {
-            case "finish":
-                fileAnchors.finishOneNumber = String.valueOf(listOneSize);
-                fileAnchors.finishTwoNumber = String.valueOf(listTwoSize);
-                fileAnchors.finish = startFinish;
-                break;
-            case "start":
-                fileAnchors.startOneNumber = String.valueOf(1);
-                fileAnchors.startTwoNumber = String.valueOf(1);
-                fileAnchors.start = startFinish;
-                break;
-        }
-        fileFinalMap.put(index, fileAnchors);
-    }
-
     // добавление объекта fileAnchors с трехстрочием и индексами в HashMap
     private void addAnchorsToHashMap(int j) {
         int count = 0;
@@ -350,11 +324,26 @@ public class FileCompareSeven {
         }
     }
 
+    // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
+    private void setFirstLastAnchorNumberLine(){
+        int count = 0;
+        boolean found = false;
+        while (!found){
+            if (!fileFinalMap.get(count).start.isEmpty() && !fileFinalMap.get(count).finish.isEmpty()) {
+                found = true;
+            }else if (!fileFinalMap.get(count).start.isEmpty())
+                break;
+            else if (!fileFinalMap.get(count).finish.isEmpty())
+                found = true;
+            count++;
+        }
+    }
+
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\06.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
