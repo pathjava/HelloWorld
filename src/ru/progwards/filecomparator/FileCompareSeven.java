@@ -366,8 +366,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\05.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\06.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
