@@ -82,7 +82,8 @@ public class FileCompareSeven {
         realSizeListTwo = listSizeForTheLastThreeNonEmptyLines(listTwo);
 
         searchAnchorLines();
-        setFirstLastAnchorNumberLine();
+        setFirstAnchorNumberLine();
+        setLastAnchorNumberLine();
         return fileFinalMap;
     }
 
@@ -325,7 +326,7 @@ public class FileCompareSeven {
     }
 
     // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
-    private void setFirstLastAnchorNumberLine() {
+    private void setFirstAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int count = 0;
         boolean found = false;
@@ -343,11 +344,29 @@ public class FileCompareSeven {
         fileFinalMap.put(0, fileAnchors);
     }
 
+    private void setLastAnchorNumberLine() {
+        fileAnchors = new FileAnchors();
+        int count = fileFinalMap.size() - 1;
+        boolean found = false;
+        while (!found) {
+            if (!fileFinalMap.get(count).finish.isEmpty() && fileFinalMap.get(count).start.isEmpty())
+                break;
+            else if (!fileFinalMap.get(count).start.isEmpty()) {
+                fileAnchors.finishOneNumber = String.valueOf(listOneSize);
+                fileAnchors.finishTwoNumber = String.valueOf(listTwoSize);
+                fileAnchors.finish = FINISH_LINE;
+                found = true;
+            }
+            count--;
+        }
+        fileFinalMap.put(fileFinalMap.size() - 1, fileAnchors);
+    }
+
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
