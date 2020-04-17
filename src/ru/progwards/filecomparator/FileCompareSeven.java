@@ -325,7 +325,7 @@ public class FileCompareSeven {
         }
     }
 
-    // добавление в объект fileAnchors номеров первых или последних строк, если в начале/конце текста есть изменения
+    // добавление в объект fileAnchors номеров первых строк, если в начале текста есть изменения
     private void setFirstAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int count = 0;
@@ -342,6 +342,7 @@ public class FileCompareSeven {
         fileFinalMap.put(0, fileAnchors);
     }
 
+    // добавление в объект fileAnchors номеров последних строк, если в конце текста есть изменения
     private void setLastAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int indexOne = listOneSize - 1;
@@ -365,8 +366,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\05.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\06.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
