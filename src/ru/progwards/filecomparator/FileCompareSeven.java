@@ -329,35 +329,35 @@ public class FileCompareSeven {
     private void setFirstAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int count = 0;
-        boolean found = false;
-        while (!found) {
-            if (!fileFinalMap.get(count).start.isEmpty() && fileFinalMap.get(count).finish.isEmpty())
-                break;
-            else if (!fileFinalMap.get(count).finish.isEmpty()) {
+        while (count < 3) {
+            if (listOne.get(count).equals(listTwo.get(count)))
+                count++;
+            else {
                 fileAnchors.startOneNumber = String.valueOf(1);
                 fileAnchors.startTwoNumber = String.valueOf(1);
                 fileAnchors.start = START_LINE;
-                found = true;
+                break;
             }
-            count++;
         }
         fileFinalMap.put(0, fileAnchors);
     }
 
     private void setLastAnchorNumberLine() {
         fileAnchors = new FileAnchors();
-        int count = fileFinalMap.size() - 1;
-        boolean found = false;
-        while (!found) {
-            if (!fileFinalMap.get(count).finish.isEmpty() && fileFinalMap.get(count).start.isEmpty())
-                break;
-            else if (!fileFinalMap.get(count).start.isEmpty()) {
+        int indexOne = listOneSize - 1;
+        int indexTwo = listTwoSize - 1;
+        int count = 0;
+        while (count < 3) {
+            if (listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+                indexOne--;
+                indexTwo--;
+                count++;
+            } else {
                 fileAnchors.finishOneNumber = String.valueOf(listOneSize);
                 fileAnchors.finishTwoNumber = String.valueOf(listTwoSize);
                 fileAnchors.finish = FINISH_LINE;
-                found = true;
+                break;
             }
-            count--;
         }
         fileFinalMap.put(fileFinalMap.size() - 1, fileAnchors);
     }
@@ -365,8 +365,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
