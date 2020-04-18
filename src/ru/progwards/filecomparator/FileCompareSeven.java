@@ -87,6 +87,7 @@ public class FileCompareSeven {
         searchAnchorLines();
         setFirstAnchorNumberLine();
         setLastAnchorNumberLine();
+        textBetweenAnchorInOneList();
         return fileFinalMap;
     }
 
@@ -366,6 +367,7 @@ public class FileCompareSeven {
         fileFinalMap.put(fileFinalMap.size() - 1, fileAnchors);
     }
 
+
     //====================== выборка текстов между трехстрочными анкорами ===========================
 
     private Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
@@ -383,11 +385,27 @@ public class FileCompareSeven {
         return textBetweenAnchorsMap;
     }
 
-    private void textBetweenAnchorInOneList(){
-        int count = 0;
-        int numberLine = 1;
-        while (count < fileFinalMap.size()) {
+    int startLine;
+    int finishLine;
 
+    private void textBetweenAnchorInOneList() {
+        int count = 0;
+
+        while (count < fileFinalMap.size()) {
+            if (fileFinalMap.get(count).start.contains("start")) {
+                startLine = count;
+                while (count < fileFinalMap.size()) {
+                    if (count < finishLine)
+                        count = finishLine+1;
+                    if (fileFinalMap.get(count).finish.contains("finish")) {
+                        finishLine = count;
+                        count -= 2;
+                        break;
+                    } else
+                        count++;
+                }
+            } else
+                count++;
         }
     }
 
@@ -404,5 +422,6 @@ public class FileCompareSeven {
             System.out.format("%3d", entry.getKey());
             System.out.println(": " + entry.getValue());
         }
+
     }
 }

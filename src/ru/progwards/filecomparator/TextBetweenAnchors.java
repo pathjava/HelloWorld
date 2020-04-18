@@ -1,7 +1,7 @@
 package ru.progwards.filecomparator;
 
 public class TextBetweenAnchors {
-    public String lineNumber;
+    public int lineNumber;
     public String anchorsLines = "";
     public String start = "";
     public String finish = "";
