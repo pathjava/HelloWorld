@@ -369,7 +369,7 @@ public class FileCompareSeven {
 
     //====================== выборка текстов между трехстрочными анкорами ===========================
 
-    private Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
+    private final Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
 
     public Map<Integer, List<TextBetweenAnchors>> searchTextBlock() {
         textBetweenAnchorInList();
@@ -416,9 +416,10 @@ public class FileCompareSeven {
     private void copyTextBetweenAnchors(int start, int stop, List<String> list) {
         int index = start;
         int count = 1;
-        textBetweenAnchors = new TextBetweenAnchors();
+
+        textAnchorsList = new ArrayList<>();
         while (index <= stop) {
-            textAnchorsList = new ArrayList<>();
+            textBetweenAnchors = new TextBetweenAnchors();
             textBetweenAnchors.lineNumber = count;
             textBetweenAnchors.anchorsLines = list.get(index);
             if (index == startLine) {
@@ -432,6 +433,7 @@ public class FileCompareSeven {
             }
             textAnchorsList.add(textBetweenAnchors);
             index++;
+            count++;
         }
         textBetweenAnchorsMap.put(countMap, textAnchorsList);
     }

@@ -8,7 +8,7 @@ public class TextBetweenAnchors {
     public String finishTwoNumber = "";
     public String startOneNumber = "";
     public String startTwoNumber = "";
-    public String anchorsLines = "";
+    public String anchorsLines;
 
     @Override
     public String toString() {
