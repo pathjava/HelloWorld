@@ -11,6 +11,7 @@ public class FileCompareSeven {
     private final List<String> listTwo = new ArrayList<>();
 
     private FileAnchors fileAnchors;
+    private TextBetweenAnchors textBetweenAnchors;
 
     private int listOneSize;
     private int listTwoSize;
@@ -51,6 +52,8 @@ public class FileCompareSeven {
             e.printStackTrace();
         }
     }
+
+    //========================= поиск трехстрочных анкоров =====================
 
     private final Map<Integer, FileAnchors> fileFinalMap = new HashMap<>();
 
@@ -363,11 +366,38 @@ public class FileCompareSeven {
         fileFinalMap.put(fileFinalMap.size() - 1, fileAnchors);
     }
 
+    //====================== выборка текстов между трехстрочными анкорами ===========================
+
+    private Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
+    private List<TextBetweenAnchors> listBetweenAnchors;
+
+    public Map<Integer, List<TextBetweenAnchors>> searchTextBlock() {
+
+//        listBetweenAnchors = new ArrayList<>();
+//        int i = 0;
+//        while (i < fileFinalMap.size()) {
+//            textBetweenAnchorsMap.put(i, listBetweenAnchors);
+//            i++;
+//        }
+
+        return textBetweenAnchorsMap;
+    }
+
+    private void textBetweenAnchorInOneList(){
+        int count = 0;
+        int numberLine = 1;
+        while (count < fileFinalMap.size()) {
+
+        }
+    }
+
+
+    //=============================== MAIN ============================================
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
