@@ -87,7 +87,6 @@ public class FileCompareSeven {
         searchAnchorLines();
         setFirstAnchorNumberLine();
         setLastAnchorNumberLine();
-        textBetweenAnchorInOneList();
         return fileFinalMap;
     }
 
@@ -371,34 +370,37 @@ public class FileCompareSeven {
     //====================== выборка текстов между трехстрочными анкорами ===========================
 
     private Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
-    private List<TextBetweenAnchors> listBetweenAnchors;
 
     public Map<Integer, List<TextBetweenAnchors>> searchTextBlock() {
-
-//        listBetweenAnchors = new ArrayList<>();
-//        int i = 0;
-//        while (i < fileFinalMap.size()) {
-//            textBetweenAnchorsMap.put(i, listBetweenAnchors);
-//            i++;
-//        }
-
+        textBetweenAnchorInList();
         return textBetweenAnchorsMap;
     }
 
     int startLine;
     int finishLine;
+    int countMap = 1;
 
-    private void textBetweenAnchorInOneList() {
+    private void textBetweenAnchorInList() {
         int count = 0;
-
         while (count < fileFinalMap.size()) {
             if (fileFinalMap.get(count).start.contains("start")) {
                 startLine = count;
                 while (count < fileFinalMap.size()) {
                     if (count < finishLine)
-                        count = finishLine+1;
+                        count = finishLine + 1;
                     if (fileFinalMap.get(count).finish.contains("finish")) {
                         finishLine = count;
+
+                        int startOne = Integer.parseInt(fileFinalMap.get(startLine).startOneNumber);
+                        int stopOne = Integer.parseInt(fileFinalMap.get(finishLine).finishOneNumber);
+                        copyTextBetweenAnchors(startOne - 1, stopOne - 1, listOne);
+                        countMap++;
+
+                        int startTwo = Integer.parseInt(fileFinalMap.get(startLine).startTwoNumber);
+                        int stopTwo = Integer.parseInt(fileFinalMap.get(finishLine).finishTwoNumber);
+                        copyTextBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
+                        countMap++;
+
                         count -= 2;
                         break;
                     } else
@@ -407,6 +409,31 @@ public class FileCompareSeven {
             } else
                 count++;
         }
+    }
+
+    List<TextBetweenAnchors> textAnchorsList;
+
+    private void copyTextBetweenAnchors(int start, int stop, List<String> list) {
+        int index = start;
+        int count = 1;
+        textBetweenAnchors = new TextBetweenAnchors();
+        while (index <= stop) {
+            textAnchorsList = new ArrayList<>();
+            textBetweenAnchors.lineNumber = count;
+            textBetweenAnchors.anchorsLines = list.get(index);
+            if (index == startLine) {
+                textBetweenAnchors.startOneNumber = fileFinalMap.get(index).startOneNumber;
+                textBetweenAnchors.startTwoNumber = fileFinalMap.get(index).startTwoNumber;
+                textBetweenAnchors.start = fileFinalMap.get(index).start;
+            } else if (index == finishLine) {
+                textBetweenAnchors.finishOneNumber = fileFinalMap.get(index).finishOneNumber;
+                textBetweenAnchors.finishTwoNumber = fileFinalMap.get(index).finishTwoNumber;
+                textBetweenAnchors.finish = fileFinalMap.get(index).finish;
+            }
+            textAnchorsList.add(textBetweenAnchors);
+            index++;
+        }
+        textBetweenAnchorsMap.put(countMap, textAnchorsList);
     }
 
 
@@ -419,6 +446,14 @@ public class FileCompareSeven {
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
+            System.out.format("%3d", entry.getKey());
+            System.out.println(": " + entry.getValue());
+        }
+
+        System.out.println("====================================");
+
+        System.out.println("------------ Patch -------------");
+        for (Map.Entry<Integer, List<TextBetweenAnchors>> entry : test.searchTextBlock().entrySet()) {
             System.out.format("%3d", entry.getKey());
             System.out.println(": " + entry.getValue());
         }
