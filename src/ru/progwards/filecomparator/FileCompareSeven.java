@@ -407,7 +407,7 @@ public class FileCompareSeven {
                         int stopTwo = Integer.parseInt(mapLinesAnchors.get(stopLine).stopTwoNumber);
                         textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
                         countMap++;
-                        // трехстрочие может быть и start и stop, поэтому делаем несколько шагов назад
+                        // строка якорь может быть и stop, и start, поэтому делаем несколько шагов назад
                         count -= count - zeroOneTwo == 0 ? +1 : zeroOneTwo;
                         break;
                     } else
