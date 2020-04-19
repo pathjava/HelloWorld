@@ -380,7 +380,7 @@ public class FileCompareSeven {
         return textBetweenAnchorsMap;
     }
 
-    private int startLine = -1;
+    private int startLine;
     private int stopLine;
     private int countMap = 1;
 
@@ -388,8 +388,6 @@ public class FileCompareSeven {
     private void textSearchBetweenAnchors() {
         int count = 0;
         while (count < mapLinesAnchors.size()) {
-            if (count == startLine) // чтобы не считывать start повторно, определяем count как +1 если count == start
-                count++;
             if (mapLinesAnchors.get(count).start.contains("start")) {
                 startLine = count;
                 while (count < mapLinesAnchors.size()) {
@@ -410,7 +408,7 @@ public class FileCompareSeven {
                         textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
                         countMap++;
                         // трехстрочие может быть и start и stop, поэтому делаем несколько шагов назад
-                        count -= count - zeroOneTwo >= 0 ? zeroOneTwo : zeroOneTwo + 1;
+                        count -= count - zeroOneTwo == 0 ? +1 : zeroOneTwo;
                         break;
                     } else
                         count++;
@@ -452,8 +450,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
@@ -472,6 +470,5 @@ public class FileCompareSeven {
             }
             count = 0;
         }
-
     }
 }
