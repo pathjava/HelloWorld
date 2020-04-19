@@ -54,7 +54,7 @@ public class FileCompareSeven {
 
     //========================= поиск трехстрочных анкоров =====================
 
-    private final Map<Integer, FileAnchors> mapThreeLinesAnchors = new HashMap<>();
+    private final Map<Integer, FileAnchors> mapLinesAnchors = new HashMap<>();
 
     public Map<Integer, FileAnchors> compareFiles() {
         listOneSize = listOne.size(); // так как размеры листов часто используются, присваиваем их в переменные
@@ -65,7 +65,7 @@ public class FileCompareSeven {
 
         fileAnchors = new FileAnchors();
         for (int i = 0; i < maxBothListsSize; i++) {
-            mapThreeLinesAnchors.put(i, fileAnchors);
+            mapLinesAnchors.put(i, fileAnchors);
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
         if (maxBothListsSize < 6) {
@@ -86,7 +86,7 @@ public class FileCompareSeven {
         searchAnchorLines();
         setFirstAnchorNumberLine();
         setLastAnchorNumberLine();
-        return mapThreeLinesAnchors;
+        return mapLinesAnchors;
     }
 
     private int lastCoincidence = 0; // переменная для хранения индукса последнего совпадения трех строк
@@ -301,14 +301,14 @@ public class FileCompareSeven {
         while (count < oneTwoThree) {
             fileAnchors = new FileAnchors();
 
-            if (mapThreeLinesAnchors.get(j + count).stop.contains(STOP_LINE)) {
+            if (mapLinesAnchors.get(j + count).stop.contains(STOP_LINE)) {
                 fileAnchors.stop = STOP_LINE;
-                fileAnchors.stopOneNumber = mapThreeLinesAnchors.get(j + count).stopOneNumber;
-                fileAnchors.stopTwoNumber = mapThreeLinesAnchors.get(j + count).stopTwoNumber;
-            } else if (mapThreeLinesAnchors.get(j + count).start.contains(START_LINE)) {
+                fileAnchors.stopOneNumber = mapLinesAnchors.get(j + count).stopOneNumber;
+                fileAnchors.stopTwoNumber = mapLinesAnchors.get(j + count).stopTwoNumber;
+            } else if (mapLinesAnchors.get(j + count).start.contains(START_LINE)) {
                 fileAnchors.start = START_LINE;
-                fileAnchors.startOneNumber = mapThreeLinesAnchors.get(j + count).startOneNumber;
-                fileAnchors.startTwoNumber = mapThreeLinesAnchors.get(j + count).startTwoNumber;
+                fileAnchors.startOneNumber = mapLinesAnchors.get(j + count).startOneNumber;
+                fileAnchors.startTwoNumber = mapLinesAnchors.get(j + count).startTwoNumber;
             }
 
             if (!oneListNumberLine.isEmpty() && count == zeroOneTwo) {
@@ -322,7 +322,7 @@ public class FileCompareSeven {
             }
 
             fileAnchors.anchorsLines = listTwo.get(j + count);
-            mapThreeLinesAnchors.put(j + count, fileAnchors);
+            mapLinesAnchors.put(j + count, fileAnchors);
             count++;
         }
     }
@@ -331,17 +331,19 @@ public class FileCompareSeven {
     private void setFirstAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int count = 0;
-        while (count < 3) {
+        while (count <= oneTwoThree) {
             if (listOne.get(count).equals(listTwo.get(count)))
                 count++;
-            else {
+            else if (mapLinesAnchors.get(0).start.isEmpty()) {
                 fileAnchors.startOneNumber = String.valueOf(1);
                 fileAnchors.startTwoNumber = String.valueOf(1);
                 fileAnchors.start = START_LINE;
+                mapLinesAnchors.put(0, fileAnchors);
+                break;
+            } else {
                 break;
             }
         }
-        mapThreeLinesAnchors.put(0, fileAnchors);
     }
 
     // добавление в объект fileAnchors номеров последних строк, если в крайних 3-х строках есть изменения
@@ -350,19 +352,21 @@ public class FileCompareSeven {
         int indexOne = listOneSize - 1;
         int indexTwo = listTwoSize - 1;
         int count = 0;
-        while (count < 3) {
+        while (count <= oneTwoThree) {
             if (listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
                 indexOne--;
                 indexTwo--;
                 count++;
-            } else {
+            } else if (mapLinesAnchors.get(mapLinesAnchors.size() - 1).stop.isEmpty()) {
                 fileAnchors.stopOneNumber = String.valueOf(listOneSize);
                 fileAnchors.stopTwoNumber = String.valueOf(listTwoSize);
                 fileAnchors.stop = STOP_LINE;
+                mapLinesAnchors.put(mapLinesAnchors.size() - 1, fileAnchors);
+                break;
+            } else {
                 break;
             }
         }
-        mapThreeLinesAnchors.put(mapThreeLinesAnchors.size() - 1, fileAnchors);
     }
 
 
@@ -376,35 +380,37 @@ public class FileCompareSeven {
         return textBetweenAnchorsMap;
     }
 
-    private int startLine;
+    private int startLine = -1;
     private int stopLine;
     private int countMap = 1;
 
     // поиск начального и конечного индексов в листах с текстами из сравниваемых файлов
     private void textSearchBetweenAnchors() {
         int count = 0;
-        while (count < mapThreeLinesAnchors.size()) {
-            if (mapThreeLinesAnchors.get(count).start.contains("start")) {
+        while (count < mapLinesAnchors.size()) {
+            if (count == startLine) // чтобы не считывать start повторно, определяем count как +1 если count == start
+                count++;
+            if (mapLinesAnchors.get(count).start.contains("start")) {
                 startLine = count;
-                while (count < mapThreeLinesAnchors.size()) {
-                    if (count < stopLine) // чтобы не считывать stop повторно, определяем count как +1 от прошлого stop
+                while (count < mapLinesAnchors.size()) {
+                    if (count <= stopLine && count != 0) // чтобы не считывать stop повторно, определяем count как +1 от прошлого stop
                         count = stopLine + 1;
-                    if (mapThreeLinesAnchors.get(count).stop.contains("stop")) {
+                    if (mapLinesAnchors.get(count).stop.contains("stop")) {
                         stopLine = count;
 
                         // сначала запускаем метод для поиска текста в listOne
-                        int startOne = Integer.parseInt(mapThreeLinesAnchors.get(startLine).startOneNumber);
-                        int stopOne = Integer.parseInt(mapThreeLinesAnchors.get(stopLine).stopOneNumber);
+                        int startOne = Integer.parseInt(mapLinesAnchors.get(startLine).startOneNumber);
+                        int stopOne = Integer.parseInt(mapLinesAnchors.get(stopLine).stopOneNumber);
                         textCopyBetweenAnchors(startOne - 1, stopOne - 1, listOne);
                         countMap++;
 
                         // потом запускаем метод поиска по listTwo
-                        int startTwo = Integer.parseInt(mapThreeLinesAnchors.get(startLine).startTwoNumber);
-                        int stopTwo = Integer.parseInt(mapThreeLinesAnchors.get(stopLine).stopTwoNumber);
+                        int startTwo = Integer.parseInt(mapLinesAnchors.get(startLine).startTwoNumber);
+                        int stopTwo = Integer.parseInt(mapLinesAnchors.get(stopLine).stopTwoNumber);
                         textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
                         countMap++;
                         // трехстрочие может быть и start и stop, поэтому делаем несколько шагов назад
-                        count -= zeroOneTwo;
+                        count -= count - zeroOneTwo >= 0 ? zeroOneTwo : zeroOneTwo + 1;
                         break;
                     } else
                         count++;
@@ -426,13 +432,13 @@ public class FileCompareSeven {
             textBetweenAnchors.anchorsLines = list.get(index);
             textBetweenAnchors.index = index;
             if (index == start) {
-                textBetweenAnchors.startOneNumber = mapThreeLinesAnchors.get(startLine).startOneNumber;
-                textBetweenAnchors.startTwoNumber = mapThreeLinesAnchors.get(startLine).startTwoNumber;
-                textBetweenAnchors.start = mapThreeLinesAnchors.get(startLine).start;
+                textBetweenAnchors.startOneNumber = mapLinesAnchors.get(startLine).startOneNumber;
+                textBetweenAnchors.startTwoNumber = mapLinesAnchors.get(startLine).startTwoNumber;
+                textBetweenAnchors.start = mapLinesAnchors.get(startLine).start;
             } else if (index == stop) {
-                textBetweenAnchors.stopOneNumber = mapThreeLinesAnchors.get(stopLine).stopOneNumber;
-                textBetweenAnchors.stopTwoNumber = mapThreeLinesAnchors.get(stopLine).stopTwoNumber;
-                textBetweenAnchors.stop = mapThreeLinesAnchors.get(stopLine).stop;
+                textBetweenAnchors.stopOneNumber = mapLinesAnchors.get(stopLine).stopOneNumber;
+                textBetweenAnchors.stopTwoNumber = mapLinesAnchors.get(stopLine).stopTwoNumber;
+                textBetweenAnchors.stop = mapLinesAnchors.get(stopLine).stop;
             }
             textAnchorsList.add(textBetweenAnchors);
             index++;
@@ -446,8 +452,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
