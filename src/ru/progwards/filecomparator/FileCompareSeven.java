@@ -422,11 +422,11 @@ public class FileCompareSeven {
             textBetweenAnchors = new TextBetweenAnchors();
             textBetweenAnchors.lineNumber = count;
             textBetweenAnchors.anchorsLines = list.get(index);
-            if (index == startLine) {
+            if (index == start) {
                 textBetweenAnchors.startOneNumber = fileFinalMap.get(index).startOneNumber;
                 textBetweenAnchors.startTwoNumber = fileFinalMap.get(index).startTwoNumber;
                 textBetweenAnchors.start = fileFinalMap.get(index).start;
-            } else if (index == finishLine) {
+            } else if (index == stop) {
                 textBetweenAnchors.finishOneNumber = fileFinalMap.get(index).finishOneNumber;
                 textBetweenAnchors.finishTwoNumber = fileFinalMap.get(index).finishTwoNumber;
                 textBetweenAnchors.finish = fileFinalMap.get(index).finish;
@@ -454,10 +454,14 @@ public class FileCompareSeven {
 
         System.out.println("====================================");
 
-        System.out.println("------------ Patch -------------");
+        int count = 0;
         for (Map.Entry<Integer, List<TextBetweenAnchors>> entry : test.searchTextBlock().entrySet()) {
-            System.out.format("%3d", entry.getKey());
-            System.out.println(": " + entry.getValue());
+            System.out.println("--- " + entry.getKey() + " ---");
+            while (count < entry.getValue().size()) {
+                System.out.println(entry.getValue().get(count));
+                count++;
+            }
+            count = 0;
         }
 
     }
