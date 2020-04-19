@@ -11,7 +11,6 @@ public class FileCompareSeven {
     private final List<String> listTwo = new ArrayList<>();
 
     private FileAnchors fileAnchors;
-    private TextBetweenAnchors textBetweenAnchors;
 
     private int listOneSize;
     private int listTwoSize;
@@ -24,7 +23,7 @@ public class FileCompareSeven {
     private int zeroOneTwo = 2;
 
     private final String START_LINE = "start";
-    private final String FINISH_LINE = "finish";
+    private final String STOP_LINE = "stop";
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
@@ -164,7 +163,7 @@ public class FileCompareSeven {
     // проверка трехстрочий на окружение - строки выше и ниже по листам
     private void checkAndAddAnchors(int i, int j) {
         if ((i != 0 && j == 0) || (i == 0 && j != 0)) {
-            setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+            setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, STOP_LINE);
             addAnchorsToHashMap(j);
         }
         if ((i == 0 && j == 0) || (i == 0 && j > 0) || (i > 0 && j == 0))
@@ -174,7 +173,7 @@ public class FileCompareSeven {
             }
         if ((i > 0 && j > 0) && (i < listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)) {
             if (checkPrevLines(i, j)) {
-                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, STOP_LINE);
                 addAnchorsToHashMap(j);
             }
             if (checkNextLines(i, j)) {
@@ -186,7 +185,7 @@ public class FileCompareSeven {
                 || (i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
                 || (i < listOneSize - oneTwoThree && j == listTwoSize - oneTwoThree))
             if (checkPrevLines(i, j)) {
-                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, FINISH_LINE);
+                setAnchorNumberLine(i + oneTwoThree, j + oneTwoThree, STOP_LINE);
                 addAnchorsToHashMap(j);
             }
         if ((i == listOneSize - oneTwoThree && j < listTwoSize - oneTwoThree)
@@ -283,7 +282,7 @@ public class FileCompareSeven {
         oneListNumberLine = new ArrayList<>();
         twoListNumberLine = new ArrayList<>();
         switch (startFinish) {
-            case "finish":
+            case "stop":
                 oneListNumberLine.add(String.valueOf(i));
                 oneListNumberLine.add(String.valueOf(j));
                 oneListNumberLine.add(startFinish);
@@ -302,8 +301,8 @@ public class FileCompareSeven {
         while (count < oneTwoThree) {
             fileAnchors = new FileAnchors();
 
-            if (fileFinalMap.get(j + count).finish.contains(FINISH_LINE)) {
-                fileAnchors.finish = FINISH_LINE;
+            if (fileFinalMap.get(j + count).finish.contains(STOP_LINE)) {
+                fileAnchors.finish = STOP_LINE;
                 fileAnchors.finishOneNumber = fileFinalMap.get(j + count).finishOneNumber;
                 fileAnchors.finishTwoNumber = fileFinalMap.get(j + count).finishTwoNumber;
             } else if (fileFinalMap.get(j + count).start.contains(START_LINE)) {
@@ -359,7 +358,7 @@ public class FileCompareSeven {
             } else {
                 fileAnchors.finishOneNumber = String.valueOf(listOneSize);
                 fileAnchors.finishTwoNumber = String.valueOf(listTwoSize);
-                fileAnchors.finish = FINISH_LINE;
+                fileAnchors.finish = STOP_LINE;
                 break;
             }
         }
@@ -371,16 +370,17 @@ public class FileCompareSeven {
 
     private final Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
 
-    public Map<Integer, List<TextBetweenAnchors>> searchTextBlock() {
-        textBetweenAnchorInList();
+    //
+    public Map<Integer, List<TextBetweenAnchors>> searchTextBlockForComparison() {
+        textSearchBetweenAnchors();
         return textBetweenAnchorsMap;
     }
 
-    int startLine;
-    int finishLine;
-    int countMap = 1;
+    private int startLine;
+    private int finishLine;
+    private int countMap = 1;
 
-    private void textBetweenAnchorInList() {
+    private void textSearchBetweenAnchors() {
         int count = 0;
         while (count < fileFinalMap.size()) {
             if (fileFinalMap.get(count).start.contains("start")) {
@@ -388,17 +388,17 @@ public class FileCompareSeven {
                 while (count < fileFinalMap.size()) {
                     if (count < finishLine)
                         count = finishLine + 1;
-                    if (fileFinalMap.get(count).finish.contains("finish")) {
+                    if (fileFinalMap.get(count).finish.contains("stop")) {
                         finishLine = count;
 
                         int startOne = Integer.parseInt(fileFinalMap.get(startLine).startOneNumber);
                         int stopOne = Integer.parseInt(fileFinalMap.get(finishLine).finishOneNumber);
-                        copyTextBetweenAnchors(startOne - 1, stopOne - 1, listOne);
+                        textCopyBetweenAnchors(startOne - 1, stopOne - 1, listOne);
                         countMap++;
 
                         int startTwo = Integer.parseInt(fileFinalMap.get(startLine).startTwoNumber);
                         int stopTwo = Integer.parseInt(fileFinalMap.get(finishLine).finishTwoNumber);
-                        copyTextBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
+                        textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
                         countMap++;
 
                         count -= 2;
@@ -411,17 +411,16 @@ public class FileCompareSeven {
         }
     }
 
-    List<TextBetweenAnchors> textAnchorsList;
-
-    private void copyTextBetweenAnchors(int start, int stop, List<String> list) {
+    private void textCopyBetweenAnchors(int start, int stop, List<String> list) {
         int index = start;
         int count = 1;
 
-        textAnchorsList = new ArrayList<>();
+        List<TextBetweenAnchors> textAnchorsList = new ArrayList<>();
         while (index <= stop) {
-            textBetweenAnchors = new TextBetweenAnchors();
+            TextBetweenAnchors textBetweenAnchors = new TextBetweenAnchors();
             textBetweenAnchors.lineNumber = count;
             textBetweenAnchors.anchorsLines = list.get(index);
+            textBetweenAnchors.index = index;
             if (index == start) {
                 textBetweenAnchors.startOneNumber = fileFinalMap.get(startLine).startOneNumber;
                 textBetweenAnchors.startTwoNumber = fileFinalMap.get(startLine).startTwoNumber;
@@ -429,7 +428,7 @@ public class FileCompareSeven {
             } else if (index == stop) {
                 textBetweenAnchors.finishOneNumber = fileFinalMap.get(finishLine).finishOneNumber;
                 textBetweenAnchors.finishTwoNumber = fileFinalMap.get(finishLine).finishTwoNumber;
-                textBetweenAnchors.finish = fileFinalMap.get(finishLine).finish;
+                textBetweenAnchors.stop = fileFinalMap.get(finishLine).finish;
             }
             textAnchorsList.add(textBetweenAnchors);
             index++;
@@ -455,7 +454,7 @@ public class FileCompareSeven {
         System.out.println("====================================");
 
         int count = 0;
-        for (Map.Entry<Integer, List<TextBetweenAnchors>> entry : test.searchTextBlock().entrySet()) {
+        for (Map.Entry<Integer, List<TextBetweenAnchors>> entry : test.searchTextBlockForComparison().entrySet()) {
             System.out.println("--- " + entry.getKey() + " ---");
             while (count < entry.getValue().size()) {
                 System.out.println(entry.getValue().get(count));
