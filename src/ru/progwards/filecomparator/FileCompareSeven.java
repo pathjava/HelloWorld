@@ -423,13 +423,13 @@ public class FileCompareSeven {
             textBetweenAnchors.lineNumber = count;
             textBetweenAnchors.anchorsLines = list.get(index);
             if (index == start) {
-                textBetweenAnchors.startOneNumber = fileFinalMap.get(index).startOneNumber;
-                textBetweenAnchors.startTwoNumber = fileFinalMap.get(index).startTwoNumber;
-                textBetweenAnchors.start = fileFinalMap.get(index).start;
+                textBetweenAnchors.startOneNumber = fileFinalMap.get(startLine).startOneNumber;
+                textBetweenAnchors.startTwoNumber = fileFinalMap.get(startLine).startTwoNumber;
+                textBetweenAnchors.start = fileFinalMap.get(startLine).start;
             } else if (index == stop) {
-                textBetweenAnchors.finishOneNumber = fileFinalMap.get(index).finishOneNumber;
-                textBetweenAnchors.finishTwoNumber = fileFinalMap.get(index).finishTwoNumber;
-                textBetweenAnchors.finish = fileFinalMap.get(index).finish;
+                textBetweenAnchors.finishOneNumber = fileFinalMap.get(finishLine).finishOneNumber;
+                textBetweenAnchors.finishTwoNumber = fileFinalMap.get(finishLine).finishTwoNumber;
+                textBetweenAnchors.finish = fileFinalMap.get(finishLine).finish;
             }
             textAnchorsList.add(textBetweenAnchors);
             index++;
