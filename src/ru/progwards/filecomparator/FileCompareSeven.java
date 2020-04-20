@@ -380,7 +380,7 @@ public class FileCompareSeven {
         return textBetweenAnchorsMap;
     }
 
-    private int startLine = -1;
+    private int startLine = -1; //инициализировано -1, чтобы не было count == startLine, если count = 0
     private int stopLine;
     private int countMap = 1;
 
@@ -390,12 +390,12 @@ public class FileCompareSeven {
         while (count < mapLinesAnchors.size()) {
             if (count == startLine) // чтобы не считывать start повторно, определяем count как +1 если count == start
                 count++;
-            if (mapLinesAnchors.get(count).start.contains("start")) {
+            if (mapLinesAnchors.get(count).start.contains(START_LINE)) {
                 startLine = count;
                 while (count < mapLinesAnchors.size()) {
                     if (count <= stopLine && count != 0) // чтобы не считывать stop повторно, определяем count как +1 от прошлого stop
                         count = stopLine + 1;
-                    if (mapLinesAnchors.get(count).stop.contains("stop")) {
+                    if (mapLinesAnchors.get(count).stop.contains(STOP_LINE)) {
                         stopLine = count;
 
                         // сначала запускаем метод для поиска текста в listOne
