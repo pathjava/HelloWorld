@@ -209,7 +209,11 @@ public class FileCompareSeven {
             if (indexOne > 0) indexOne--;
             if (indexTwo > 0) indexTwo--;
             while (count != oneTwoThree) {
-                count = incrementCountWhenCheckingLines(indexOne, indexTwo, count);
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                    count++;
+                else
+                    count = 0;
 
                 if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
@@ -242,7 +246,11 @@ public class FileCompareSeven {
                         || indexOne < listOneSize - 1 && indexTwo == listTwoSize - 1)
                     return true;
 
-                count = incrementCountWhenCheckingLines(indexOne, indexTwo, count);
+                if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                        && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+                    count++;
+                else
+                    count = 0;
 
                 if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
                     return true;
@@ -264,33 +272,33 @@ public class FileCompareSeven {
     }
 
     // инкремент count при обнаружении совпадения строк идущих подряд
-    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
-        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
-            count++;
-        else
-            count = 0;
-        return count;
-    }
+//    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
+//        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+//                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
+//            count++;
+//        else
+//            count = 0;
+//        return count;
+//    }
 
     // листы и метод для временного хранения индексов троестрочий
     private List<String> oneListNumberLine;
     private List<String> twoListNumberLine;
 
     // добавление во временные листы номеров строк трохстрочий для добавления в объект fileAnchors
-    private void setAnchorNumberLine(int i, int j, String startFinish) {
+    private void setAnchorNumberLine(int i, int j, String startStop) {
         oneListNumberLine = new ArrayList<>();
         twoListNumberLine = new ArrayList<>();
-        switch (startFinish) {
+        switch (startStop) {
             case "stop":
                 oneListNumberLine.add(String.valueOf(i));
                 oneListNumberLine.add(String.valueOf(j));
-                oneListNumberLine.add(startFinish);
+                oneListNumberLine.add(startStop);
                 break;
             case "start":
                 twoListNumberLine.add(String.valueOf(i));
                 twoListNumberLine.add(String.valueOf(j));
-                twoListNumberLine.add(startFinish);
+                twoListNumberLine.add(startStop);
                 break;
         }
     }
@@ -300,7 +308,8 @@ public class FileCompareSeven {
         int count = 0;
         while (count < oneTwoThree) {
             fileAnchors = new FileAnchors();
-
+            // защита от удаления данных при перезаписи строк анкоров в объект
+            // так как анкор записывается при нахождении изменений перед ним, а потом после него
             if (mapLinesAnchors.get(j + count).stop.contains(STOP_LINE)) {
                 fileAnchors.stop = STOP_LINE;
                 fileAnchors.stopOneNumber = mapLinesAnchors.get(j + count).stopOneNumber;
@@ -310,7 +319,7 @@ public class FileCompareSeven {
                 fileAnchors.startOneNumber = mapLinesAnchors.get(j + count).startOneNumber;
                 fileAnchors.startTwoNumber = mapLinesAnchors.get(j + count).startTwoNumber;
             }
-
+            // запись start и stop, а также номеров строк анкоров из двух листов
             if (!oneListNumberLine.isEmpty() && count == zeroOneTwo) {
                 fileAnchors.stopOneNumber = oneListNumberLine.get(0);
                 fileAnchors.stopTwoNumber = oneListNumberLine.get(1);
@@ -328,15 +337,16 @@ public class FileCompareSeven {
     }
 
     // добавление в объект fileAnchors номеров первых строк, если в первых 3-х строках есть изменения
+    // поиск изменений идет по первым четырем строкам (0,1,2,3), но если анкор записан ранее, он не перезаписывается
     private void setFirstAnchorNumberLine() {
         fileAnchors = new FileAnchors();
         int count = 0;
         while (count <= oneTwoThree) {
-            if (!mapLinesAnchors.get(0).start.isEmpty())
+            if (!mapLinesAnchors.get(0).start.isEmpty()) // если объект содержит start, то цикл прерываем
                 break;
-            else if (listOne.get(count).equals(listTwo.get(count)))
+            else if (listOne.get(count).equals(listTwo.get(count))) // если строки равные, проверяем следующие
                 count++;
-            else {
+            else { // иначе устанавливаем start и номера строк
                 fileAnchors.startOneNumber = String.valueOf(1);
                 fileAnchors.startTwoNumber = String.valueOf(1);
                 fileAnchors.start = START_LINE;
@@ -353,7 +363,7 @@ public class FileCompareSeven {
         int indexTwo = listTwoSize - 1;
         int count = 0;
         while (count <= oneTwoThree) {
-            if (!mapLinesAnchors.get(mapLinesAnchors.size() - 1).stop.isEmpty())
+            if (!mapLinesAnchors.get(mapLinesAnchors.size() - 1).stop.isEmpty()) // если объект содержит stop, то цикл прерываем
                 break;
             else if (listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
                 indexOne--;
@@ -452,8 +462,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
