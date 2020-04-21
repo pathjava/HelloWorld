@@ -200,10 +200,11 @@ public class FileCompareSeven {
         int indexOne = i - 1;
         int indexTwo = j - 1;
 
-        if (checkPrevNextFirstLine(indexOne, indexTwo))
+        if (checkPrevNextFirstLine(indexOne, indexTwo)) // если строки -1 равны, возвращаем false
             return false;
-        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo)))
+        if (!listOne.get(indexOne).equals(listTwo.get(indexTwo))) // если строки -1 равны, возвращаем true
             return true;
+        // если строки -1 пустые, ищем не пустые и сравниваем их
         if (listOne.get(indexOne).isEmpty() && listTwo.get(indexTwo).isEmpty()) {
             int count = 0;
             if (indexOne > 0) indexOne--;
@@ -330,6 +331,7 @@ public class FileCompareSeven {
                 fileAnchors.start = twoListNumberLine.get(2);
             }
 
+            fileAnchors.lineIsAnchor = "is";
             fileAnchors.anchorsLines = listTwo.get(j + count);
             mapLinesAnchors.put(j + count, fileAnchors);
             count++;
