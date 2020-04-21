@@ -381,6 +381,21 @@ public class FileCompareSeven {
         }
     }
 
+    private void addFirstAndLastAnchorLine(int count, int lineOne, int lineTwo, String startStop){
+        int loop = 0;
+        int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
+        while (loop <= count){
+            fileAnchors = new FileAnchors();
+            fileAnchors.startOneNumber = String.valueOf(lineOne);
+            fileAnchors.startTwoNumber = String.valueOf(lineTwo);
+            fileAnchors.start = startStop;
+            if (count > 0)
+                fileAnchors.anchorsLines = listOne.get(index);
+            mapLinesAnchors.put(index, fileAnchors);
+            loop++;
+        }
+    }
+
 
     //====================== выборка текстов между трехстрочными анкорами ===========================
 
@@ -392,12 +407,11 @@ public class FileCompareSeven {
         return textBetweenAnchorsMap;
     }
 
-    private int startLine = -1; //инициализировано -1, чтобы не было count == startLine, если count = 0
-    private int stopLine;
-    private int countMap = 1;
-
     // поиск начального и конечного индексов в листах с текстами из сравниваемых файлов
     private void textSearchBetweenAnchors() {
+        int startLine = -1; //инициализировано -1, чтобы не было count == startLine, если count = 0
+        int stopLine = 0;
+        int countMap = 1;
         int count = 0;
         while (count < mapLinesAnchors.size()) {
             if (count == startLine) // чтобы не считывать start повторно, определяем count как +1 если count == start
@@ -413,13 +427,13 @@ public class FileCompareSeven {
                         // сначала запускаем метод для поиска текста в listOne
                         int startOne = Integer.parseInt(mapLinesAnchors.get(startLine).startOneNumber);
                         int stopOne = Integer.parseInt(mapLinesAnchors.get(stopLine).stopOneNumber);
-                        textCopyBetweenAnchors(startOne - 1, stopOne - 1, listOne);
+                        textCopyBetweenAnchors(startOne - 1, stopOne - 1, listOne, startLine, stopLine, countMap);
                         countMap++;
 
                         // потом запускаем метод поиска по listTwo
                         int startTwo = Integer.parseInt(mapLinesAnchors.get(startLine).startTwoNumber);
                         int stopTwo = Integer.parseInt(mapLinesAnchors.get(stopLine).stopTwoNumber);
-                        textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo);
+                        textCopyBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo, startLine, stopLine, countMap);
                         countMap++;
                         // строка якорь может быть и stop, и start, поэтому делаем несколько шагов назад
                         count -= count - zeroOneTwo >= 0 ? zeroOneTwo : zeroOneTwo + 1;
@@ -433,7 +447,7 @@ public class FileCompareSeven {
     }
 
     // ищем текст между трехстрочиями и вместе с трехстрочиями добавляем поочередно в map
-    private void textCopyBetweenAnchors(int start, int stop, List<String> list) {
+    private void textCopyBetweenAnchors(int start, int stop, List<String> list, int startLine, int stopLine, int countMap) {
         int index = start;
         int count = 1;
 
@@ -464,8 +478,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
