@@ -10,10 +10,11 @@ public class TextBetweenAnchors {
     public String startOneNumber = "";
     public String startTwoNumber = "";
     public String anchorsLines;
+    public String lineIsAnchor = "";
 
     @Override
     public String toString() {
-        return String.format("%3d|%3s|%3s|%5s|%3s|%3s|%4s|%3d| %s", lineNumber, startOneNumber, startTwoNumber, start,
-                stopOneNumber, stopTwoNumber, stop, index, anchorsLines);
+        return String.format("%3d|%3s|%3s|%5s|%3s|%3s|%4s|%3d|%2s| %s", lineNumber, startOneNumber, startTwoNumber, start,
+                stopOneNumber, stopTwoNumber, stop, index, lineIsAnchor, anchorsLines);
     }
 }
