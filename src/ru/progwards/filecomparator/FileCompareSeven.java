@@ -24,6 +24,7 @@ public class FileCompareSeven {
 
     private final String START_LINE = "start";
     private final String STOP_LINE = "stop";
+    private final String IS_ANCHOR = "is";
 
     // считываем построчно два файла и перегоняем в два ArrayList
     public void readFiles(String pathOne, String pathTwo) {
@@ -281,12 +282,12 @@ public class FileCompareSeven {
         oneListNumberLine = new ArrayList<>();
         twoListNumberLine = new ArrayList<>();
         switch (startStop) {
-            case "stop":
+            case STOP_LINE:
                 oneListNumberLine.add(String.valueOf(i));
                 oneListNumberLine.add(String.valueOf(j));
                 oneListNumberLine.add(startStop);
                 break;
-            case "start":
+            case START_LINE:
                 twoListNumberLine.add(String.valueOf(i));
                 twoListNumberLine.add(String.valueOf(j));
                 twoListNumberLine.add(startStop);
@@ -321,7 +322,7 @@ public class FileCompareSeven {
                 fileAnchors.start = twoListNumberLine.get(2);
             }
 
-            fileAnchors.lineIsAnchor = "is";
+            fileAnchors.lineIsAnchor = IS_ANCHOR;
             fileAnchors.anchorsLines = listTwo.get(j + count);
             mapLinesAnchors.put(j + count, fileAnchors);
             count++;
@@ -365,6 +366,7 @@ public class FileCompareSeven {
         }
     }
 
+    // добавление одно-двух строчных анкоров в начале и конце текста
     private void addFirstOrLastAnchorLine(int count, String startStop) {
         int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
         fileAnchors = new FileAnchors();
@@ -373,26 +375,30 @@ public class FileCompareSeven {
                 fileAnchors.startOneNumber = String.valueOf(1);
                 fileAnchors.startTwoNumber = String.valueOf(1);
                 fileAnchors.start = startStop;
-                if (count == 1 && !listOne.get(index).isEmpty())
+                // проверяем строку только из одного листа на !isEmpty так как ранее строки прошли equals
+                // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
+                if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index + 1).isEmpty()) {
+                    fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorsLines = listOne.get(index);
-                else if (count == 2 && !listOne.get(index + 1).isEmpty())
-                    fileAnchors.anchorsLines = listOne.get(index);
+                }
                 break;
             case STOP_LINE:
                 fileAnchors.stopOneNumber = String.valueOf(listOneSize);
                 fileAnchors.stopTwoNumber = String.valueOf(listTwoSize);
                 fileAnchors.stop = STOP_LINE;
-                if (count == 1 && !listOne.get(index).isEmpty())
+                if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index - 1).isEmpty()) {
+                    fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorsLines = listOne.get(index);
-                else if (count == 2 && !listOne.get(index - 1).isEmpty())
-                    fileAnchors.anchorsLines = listOne.get(index);
+                }
                 break;
         }
         mapLinesAnchors.put(index, fileAnchors);
 
-        if (count == 2) {
-            index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
+        // если count пришел == 2, проверяем и добавляем вторую строку якорь
+        index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
+        if (count == 2 && mapLinesAnchors.get(index).anchorsLines.isEmpty()) {
             fileAnchors = new FileAnchors();
+            fileAnchors.lineIsAnchor = IS_ANCHOR;
             fileAnchors.anchorsLines = listOne.get(index);
             mapLinesAnchors.put(index, fileAnchors);
         }
