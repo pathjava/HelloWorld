@@ -272,16 +272,6 @@ public class FileCompareSeven {
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
     }
 
-    // инкремент count при обнаружении совпадения строк идущих подряд
-//    private int incrementCountWhenCheckingLines(int indexOne, int indexTwo, int count) {
-//        if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
-//                && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty())
-//            count++;
-//        else
-//            count = 0;
-//        return count;
-//    }
-
     // листы и метод для временного хранения индексов троестрочий
     private List<String> oneListNumberLine;
     private List<String> twoListNumberLine;
@@ -349,10 +339,7 @@ public class FileCompareSeven {
             else if (listOne.get(count).equals(listTwo.get(count))) // если строки равные, проверяем следующие
                 count++;
             else { // иначе устанавливаем start и номера строк
-                fileAnchors.startOneNumber = String.valueOf(1);
-                fileAnchors.startTwoNumber = String.valueOf(1);
-                fileAnchors.start = START_LINE;
-                mapLinesAnchors.put(0, fileAnchors);
+                addFirstOrLastAnchorLine(count, START_LINE);
                 break;
             }
         }
@@ -372,27 +359,42 @@ public class FileCompareSeven {
                 indexTwo--;
                 count++;
             } else {
-                fileAnchors.stopOneNumber = String.valueOf(listOneSize);
-                fileAnchors.stopTwoNumber = String.valueOf(listTwoSize);
-                fileAnchors.stop = STOP_LINE;
-                mapLinesAnchors.put(mapLinesAnchors.size() - 1, fileAnchors);
+                addFirstOrLastAnchorLine(count, STOP_LINE);
                 break;
             }
         }
     }
 
-    private void addFirstAndLastAnchorLine(int count, int lineOne, int lineTwo, String startStop){
-        int loop = 0;
+    private void addFirstOrLastAnchorLine(int count, String startStop) {
         int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
-        while (loop <= count){
+        fileAnchors = new FileAnchors();
+        switch (startStop) {
+            case START_LINE:
+                fileAnchors.startOneNumber = String.valueOf(1);
+                fileAnchors.startTwoNumber = String.valueOf(1);
+                fileAnchors.start = startStop;
+                if (count == 1 && !listOne.get(index).isEmpty())
+                    fileAnchors.anchorsLines = listOne.get(index);
+                else if (count == 2 && !listOne.get(index + 1).isEmpty())
+                    fileAnchors.anchorsLines = listOne.get(index);
+                break;
+            case STOP_LINE:
+                fileAnchors.stopOneNumber = String.valueOf(listOneSize);
+                fileAnchors.stopTwoNumber = String.valueOf(listTwoSize);
+                fileAnchors.stop = STOP_LINE;
+                if (count == 1 && !listOne.get(index).isEmpty())
+                    fileAnchors.anchorsLines = listOne.get(index);
+                else if (count == 2 && !listOne.get(index - 1).isEmpty())
+                    fileAnchors.anchorsLines = listOne.get(index);
+                break;
+        }
+        mapLinesAnchors.put(index, fileAnchors);
+
+        if (count == 2) {
+            index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
             fileAnchors = new FileAnchors();
-            fileAnchors.startOneNumber = String.valueOf(lineOne);
-            fileAnchors.startTwoNumber = String.valueOf(lineTwo);
-            fileAnchors.start = startStop;
-            if (count > 0)
-                fileAnchors.anchorsLines = listOne.get(index);
+            fileAnchors.anchorsLines = listOne.get(index);
             mapLinesAnchors.put(index, fileAnchors);
-            loop++;
         }
     }
 
