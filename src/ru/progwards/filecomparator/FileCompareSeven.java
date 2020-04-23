@@ -410,6 +410,7 @@ public class FileCompareSeven {
     // метод, запускающий поиск и сбор текста между трехстрочными анкорами
     public Map<Integer, List<TextBetweenAnchors>> searchTextBlockForComparison() {
         textSearchBetweenAnchors();
+        searchInnerAnchorsBetweenMainAnchors();
         return textBetweenAnchorsMap;
     }
 
@@ -529,6 +530,26 @@ public class FileCompareSeven {
                 count++;
         }
         return isAnchor;
+    }
+
+    private void searchInnerAnchorsBetweenMainAnchors() {
+        int countOne = 1;
+        int countTwo = 2;
+        int count = 0;
+        List<TextBetweenAnchors> tempListOne;
+        List<TextBetweenAnchors> tempListTwo;
+        while (count < textBetweenAnchorsMap.size()) {
+            tempListOne = new ArrayList<>(textBetweenAnchorsMap.get(countOne));
+            tempListTwo = new ArrayList<>(textBetweenAnchorsMap.get(countTwo));
+            comparisonInnerLinesBetweenMainAnchors(tempListOne, tempListTwo);
+            count += 2;
+            countOne += 2;
+            countTwo += 2;
+        }
+    }
+
+    private void comparisonInnerLinesBetweenMainAnchors(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+
     }
 
     //=============================== MAIN ============================================
