@@ -273,7 +273,7 @@ public class FileCompareSeven {
                 && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty();
     }
 
-    // листы и метод для временного хранения индексов троестрочий
+    // листы и метод для временного хранения номеров строк троестрочий
     private List<String> oneListNumberLine;
     private List<String> twoListNumberLine;
 
@@ -329,7 +329,7 @@ public class FileCompareSeven {
         }
     }
 
-    // добавление в объект fileAnchors номеров первых строк, если в первых 3-х строках есть изменения
+    // добавление в объект fileAnchors номеров первых строк, если в первых 3-х строках есть изменения в тексте
     // поиск изменений идет по первым четырем строкам (0,1,2,3), но если анкор записан ранее, он не перезаписывается
     private void setFirstAnchorNumberLine() {
         int count = 0;
@@ -364,7 +364,7 @@ public class FileCompareSeven {
         }
     }
 
-    // добавление одно-двух строчных анкоров в начале и конце текста
+    // добавление одно-двух строчных текстовых анкоров в начале и конце текста
     private void addFirstOrLastAnchorLine(int count, String startStop) {
         int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
         fileAnchors = new FileAnchors();
@@ -414,7 +414,7 @@ public class FileCompareSeven {
     }
 
     // поиск начального и конечного индексов в листах с текстами из сравниваемых файлов
-    public void textSearchBetweenAnchors() {
+    private void textSearchBetweenAnchors() {
         int startLine = -1; //инициализировано -1, чтобы не было count == startLine, если count = 0
         int stopLine = 0;
         int countMap = 1;
@@ -517,7 +517,7 @@ public class FileCompareSeven {
         }
     }
 
-    // проверяем наличие index в indexesOfAnchorLinesList
+    // проверяем наличие index в массиве indexesOfAnchorLinesList
     private boolean comparisonOfLineAndAnchorIndexes(int index, List<Integer> listIndexes) {
         int count = 0;
         boolean isAnchor = false;
@@ -546,7 +546,6 @@ public class FileCompareSeven {
 
         System.out.println("\n====================================");
 
-        test.textSearchBetweenAnchors();
         int count = 0;
         for (Map.Entry<Integer, List<TextBetweenAnchors>> entry : test.searchTextBlockForComparison().entrySet()) {
             System.out.println("--- " + entry.getKey() + " ---");
