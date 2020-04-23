@@ -458,7 +458,7 @@ public class FileCompareSeven {
     private void textCopyToBetweenAnchors(int start, int stop, List<String> list, int startLine, int stopLine, int countMap) {
         int index = start;
         int count = 1;
-        List<Integer> isAnchorIndexList = new ArrayList<>();
+        List<Integer> indexesOfAnchorLinesList = new ArrayList<>();
         List<TextBetweenAnchors> textAnchorsList = new ArrayList<>();
         while (index <= stop) {
             TextBetweenAnchors textBetweenAnchors = new TextBetweenAnchors();
@@ -466,9 +466,10 @@ public class FileCompareSeven {
             textBetweenAnchors.anchorsLines = list.get(index); // добавляем строку
             textBetweenAnchors.index = index; // добавляем индекс строки
 
-            checkIndexIsAnchor(start, stop, list, startLine, stopLine, isAnchorIndexList);
-            if (indexIsAnchor(index, isAnchorIndexList))
-                textBetweenAnchors.lineIsAnchor = IS_ANCHOR;
+            searchIndexesOfAnchorLines(start, stop, list, startLine, stopLine, indexesOfAnchorLinesList);
+            // полученные индексы в методе searchIndexesOfAnchorLines() сравниваем с текущим index
+            if (comparisonOfLineAndAnchorIndexes(index, indexesOfAnchorLinesList))
+                textBetweenAnchors.lineIsAnchor = IS_ANCHOR; // если index есть в листе, добавляем is в объект
 
             if (index == start) {
                 textBetweenAnchors.startOneNumber = mapLinesAnchors.get(startLine).startOneNumber;
@@ -486,23 +487,26 @@ public class FileCompareSeven {
         textBetweenAnchorsMap.put(countMap, textAnchorsList);
     }
 
-    private void checkIndexIsAnchor(int start, int stop, List<String> list, int startLine, int stopLine, List<Integer> isList) {
+    // поиск индексов строк-анкоров (is) и добавление индексов в ArrayList (indexesOfAnchorLinesList)
+    private void searchIndexesOfAnchorLines(int start, int stop, List<String> list, int startLine, int stopLine, List<Integer> listIndexes) {
         int count = 0;
-        while (count < 3) {
+        // ищем индексы (is) с начала блока от индекса start - количество циклов зависит от oneTwoThree (от 1 до 3)
+        while (count < oneTwoThree) {
             if (list.get(start).equals(mapLinesAnchors.get(startLine).anchorsLines)
                     && !mapLinesAnchors.get(startLine).lineIsAnchor.isEmpty())
-                isList.add(start);
+                listIndexes.add(start);
             else
                 break;
             count++;
             start++;
             startLine++;
         }
+        // ищем индексы с конца блока
         count = 0;
-        while (count < 3) {
+        while (count < oneTwoThree) {
             if (list.get(stop).equals(mapLinesAnchors.get(stopLine).anchorsLines)
                     && !mapLinesAnchors.get(stopLine).lineIsAnchor.isEmpty())
-                isList.add(stop);
+                listIndexes.add(stop);
             else
                 break;
             count++;
@@ -511,11 +515,12 @@ public class FileCompareSeven {
         }
     }
 
-    private boolean indexIsAnchor(int index, List<Integer> list) {
+    // проверяем наличие index в indexesOfAnchorLinesList
+    private boolean comparisonOfLineAndAnchorIndexes(int index, List<Integer> listIndexes) {
         int count = 0;
         boolean isAnchor = false;
-        while (count < list.size()) {
-            if (index == list.get(count)) {
+        while (count < listIndexes.size()) {
+            if (index == listIndexes.get(count)) {
                 isAnchor = true;
                 break;
             } else
