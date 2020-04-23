@@ -548,8 +548,25 @@ public class FileCompareSeven {
         }
     }
 
-    private void comparisonInnerLinesBetweenMainAnchors(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+    private void comparisonInnerLinesBetweenMainAnchors(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
+        int indexStartOne = searchStartIndex(listOne);
+        int indexStopOne;
+        int indexStartTwo;
+        int indexStopTwo;
 
+    }
+
+    private int searchStartIndex(List<TextBetweenAnchors> list) {
+        int index = 0;
+        int count = 0;
+        while (count < list.size()) {
+            if (list.get(count).lineIsAnchor.isEmpty()) {
+                index = count;
+                break;
+            } else
+                count++;
+        }
+        return index;
     }
 
     //=============================== MAIN ============================================
