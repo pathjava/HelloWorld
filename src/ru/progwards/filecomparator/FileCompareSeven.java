@@ -435,13 +435,15 @@ public class FileCompareSeven {
                         // сначала запускаем метод для поиска текста в listOne
                         int startOne = Integer.parseInt(mapLinesAnchors.get(startLine).startOneNumber);
                         int stopOne = Integer.parseInt(mapLinesAnchors.get(stopLine).stopOneNumber);
-                        textCopyToBetweenAnchors(startOne - 1, stopOne - 1, listOne, startLine, stopLine, countMap);
+                        textCopyToBetweenAnchors(startOne - 1, stopOne - 1,
+                                listOne, startLine, stopLine, countMap);
                         countMap++;
 
                         // потом запускаем метод поиска по listTwo
                         int startTwo = Integer.parseInt(mapLinesAnchors.get(startLine).startTwoNumber);
                         int stopTwo = Integer.parseInt(mapLinesAnchors.get(stopLine).stopTwoNumber);
-                        textCopyToBetweenAnchors(startTwo - 1, stopTwo - 1, listTwo, startLine, stopLine, countMap);
+                        textCopyToBetweenAnchors(startTwo - 1, stopTwo - 1,
+                                listTwo, startLine, stopLine, countMap);
                         countMap++;
                         // строка якорь может быть и stop, и start, поэтому делаем несколько шагов назад
                         count -= count - zeroOneTwo >= 0 ? zeroOneTwo : zeroOneTwo + 1;
@@ -455,7 +457,8 @@ public class FileCompareSeven {
     }
 
     // ищем текст между трехстрочиями и вместе с трехстрочиями добавляем поочередно в map
-    private void textCopyToBetweenAnchors(int start, int stop, List<String> list, int startLine, int stopLine, int countMap) {
+    private void textCopyToBetweenAnchors(int start, int stop, List<String> list,
+                                          int startLine, int stopLine, int countMap) {
         int index = start;
         int count = 1;
         List<Integer> indexesOfAnchorLinesList = new ArrayList<>();
@@ -488,7 +491,8 @@ public class FileCompareSeven {
     }
 
     // поиск индексов строк-анкоров (is) и добавление индексов в ArrayList (indexesOfAnchorLinesList)
-    private void searchIndexesOfAnchorLines(int start, int stop, List<String> list, int startLine, int stopLine, List<Integer> listIndexes) {
+    private void searchIndexesOfAnchorLines(int start, int stop, List<String> list,
+                                            int startLine, int stopLine, List<Integer> listIndexes) {
         int count = 0;
         // ищем индексы (is) с начала блока от индекса start - количество циклов зависит от oneTwoThree (от 1 до 3)
         while (count < oneTwoThree) {
