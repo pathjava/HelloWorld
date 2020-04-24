@@ -600,6 +600,14 @@ public class FileCompareSeven {
 
         int firstPairOne = searchFirstPairInnerTextLine(iStartOne, lastPairOne, listOne);
         int firstPairTwo = searchFirstPairInnerTextLine(iStartTwo, lastPairTwo, listTwo);
+
+        while (firstPairOne <= lastPairOne){
+            while (firstPairTwo <= lastPairTwo){
+
+                firstPairTwo++;
+            }
+            firstPairOne++;
+        }
     }
 
     private int searchLastPairInnerTextLine(int iStart, int iStop, List<TextBetweenAnchors> list) {
