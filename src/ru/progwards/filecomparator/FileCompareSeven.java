@@ -323,7 +323,7 @@ public class FileCompareSeven {
             }
 
             fileAnchors.lineIsAnchor = IS_ANCHOR;
-            fileAnchors.anchorsLines = listTwo.get(j + count);
+            fileAnchors.anchorLine = listTwo.get(j + count);
             mapLinesAnchors.put(j + count, fileAnchors);
             count++;
         }
@@ -377,7 +377,7 @@ public class FileCompareSeven {
                 // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
                 if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index + 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorsLines = listOne.get(index);
+                    fileAnchors.anchorLine = listOne.get(index);
                 }
                 break;
             case STOP_LINE:
@@ -386,7 +386,7 @@ public class FileCompareSeven {
                 fileAnchors.stop = STOP_LINE;
                 if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index - 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorsLines = listOne.get(index);
+                    fileAnchors.anchorLine = listOne.get(index);
                 }
                 break;
         }
@@ -394,10 +394,10 @@ public class FileCompareSeven {
 
         // если count пришел == 2, проверяем и добавляем вторую строку якорь
         index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
-        if (count == 2 && mapLinesAnchors.get(index).anchorsLines.isEmpty()) {
+        if (count == 2 && mapLinesAnchors.get(index).anchorLine.isEmpty()) {
             fileAnchors = new FileAnchors();
             fileAnchors.lineIsAnchor = IS_ANCHOR;
-            fileAnchors.anchorsLines = listOne.get(index);
+            fileAnchors.anchorLine = listOne.get(index);
             mapLinesAnchors.put(index, fileAnchors);
         }
     }
@@ -465,7 +465,7 @@ public class FileCompareSeven {
         while (index <= stop) {
             TextBetweenAnchors textBetweenAnchors = new TextBetweenAnchors();
             textBetweenAnchors.lineNumber = count; // номер количества строк в блоке
-            textBetweenAnchors.anchorsLines = list.get(index); // добавляем строку
+            textBetweenAnchors.anchorLine = list.get(index); // добавляем строку
             textBetweenAnchors.index = index; // добавляем индекс строки
 
             searchIndexesOfAnchorLines(start, stop, list, startLine, stopLine, indexesOfAnchorLinesList);
@@ -495,7 +495,7 @@ public class FileCompareSeven {
         int count = 0;
         // ищем индексы (is) с начала блока от индекса start - количество циклов зависит от oneTwoThree (от 1 до 3)
         while (count < oneTwoThree) {
-            if (list.get(start).equals(mapLinesAnchors.get(startLine).anchorsLines)
+            if (list.get(start).equals(mapLinesAnchors.get(startLine).anchorLine)
                     && !mapLinesAnchors.get(startLine).lineIsAnchor.isEmpty())
                 listIndexes.add(start);
             else
@@ -507,7 +507,7 @@ public class FileCompareSeven {
         // ищем индексы с конца блока
         count = 0;
         while (count < oneTwoThree) {
-            if (list.get(stop).equals(mapLinesAnchors.get(stopLine).anchorsLines)
+            if (list.get(stop).equals(mapLinesAnchors.get(stopLine).anchorLine)
                     && !mapLinesAnchors.get(stopLine).lineIsAnchor.isEmpty())
                 listIndexes.add(stop);
             else
@@ -532,6 +532,7 @@ public class FileCompareSeven {
         return isAnchor;
     }
 
+    //=====================//
     private void searchInnerAnchorsBetweenMainAnchors() {
         int countOne = 1;
         int countTwo = 2;
@@ -549,15 +550,25 @@ public class FileCompareSeven {
     }
 
     private void comparisonInnerLinesBetweenMainAnchors(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
-        int indexStartOne = searchStartIndex(listOne);
-        int indexStopOne;
-        int indexStartTwo;
-        int indexStopTwo;
+        int iStartOne = searchStartIndex(listOne);
+        int iStopOne = searchStopIndex(listOne);
+        int iStartTwo = searchStartIndex(listTwo);
+        int iStopTwo = searchStopIndex(listTwo);
+        int minValueInnerText = Math.min(iStopOne - iStartOne, iStopTwo - iStartTwo);
 
+        if (iStartOne >= 0 && iStopOne >= 0 && iStartTwo >= 0 && iStopTwo >= 0)
+            while (iStartOne <= iStopOne) {
+                while (iStartTwo <= iStopTwo) {
+                    if (minValueInnerText > 8)
+                        comparisonPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
+                    iStartTwo++;
+                }
+                iStartOne++;
+            }
     }
 
     private int searchStartIndex(List<TextBetweenAnchors> list) {
-        int index = 0;
+        int index = -1;
         int count = 0;
         while (count < list.size()) {
             if (list.get(count).lineIsAnchor.isEmpty()) {
@@ -568,6 +579,57 @@ public class FileCompareSeven {
         }
         return index;
     }
+
+    private int searchStopIndex(List<TextBetweenAnchors> list) {
+        int index = -1;
+        int count = list.size() - 1;
+        while (count >= 0) {
+            if (list.get(count).lineIsAnchor.isEmpty()) {
+                index = count;
+                break;
+            } else
+                count--;
+        }
+        return index;
+    }
+
+    private void comparisonPairInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
+                                         int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
+        int lastPairOne = searchLastPairInnerTextLine(iStartOne, iStopOne, listOne);
+        int lastPairTwo = searchLastPairInnerTextLine(iStartTwo, iStopTwo, listTwo);
+
+        int firstPairOne = searchFirstPairInnerTextLine(iStartOne, lastPairOne, listOne);
+        int firstPairTwo = searchFirstPairInnerTextLine(iStartTwo, lastPairTwo, listTwo);
+    }
+
+    private int searchLastPairInnerTextLine(int iStart, int iStop, List<TextBetweenAnchors> list) {
+        int index = iStop;
+        int count = 0;
+        while (count != 2) {
+            if (index >= iStart && !list.get(index).anchorLine.isEmpty())
+                count++;
+            else
+                count = 0;
+
+            if (index > iStart) index--;
+        }
+        return index + 2;
+    }
+
+    private int searchFirstPairInnerTextLine(int iStart, int lastPair, List<TextBetweenAnchors> list) {
+        int index = iStart;
+        int count = 0;
+        while (count != 2) {
+            if (index < lastPair && !list.get(index).anchorLine.isEmpty())
+                count++;
+            else
+                count = 0;
+
+            if (index + 1 <= lastPair) index++;
+        }
+        return index - 2;
+    }
+
 
     //=============================== MAIN ============================================
 
