@@ -561,43 +561,15 @@ public class FileCompareSeven {
         int minValueInnerText = Math.min(iStopOne - iStartOne, iStopTwo - iStartTwo);
 
         if (iStartOne >= 0 && iStopOne >= 0 && iStartTwo >= 0 && iStopTwo >= 0) {
-            int lastComparison = 0;
             if (minValueInnerText > 8)
                 searchPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
-//                while (iStartOne <= iStopOne) {
-//                    while (iStartTwo <= iStopTwo) {
-//                        if (comparisonPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo)) {
-//                            changeValuesInnerLine(iStartOne, listOne, iStartTwo + 1, listTwo, 2);
-//                            iStartOne++;
-//                            lastComparison = iStartTwo;
-//                        }
-//                        iStartTwo++;
-//                    }
-//                    iStartTwo = lastComparison;
-//                    iStartOne++;
-//                }
+
             searchSingleInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
-//            iStartOne = searchStartIndex(listOne);
-//            iStopOne = searchStopIndex(listOne);
-//            iStartTwo = searchStartIndex(listTwo);
-//            iStopTwo = searchStopIndex(listTwo);
-//            while (iStartOne <= iStopOne) {
-//                while (iStartTwo <= iStopTwo) {
-//                    if (comparisonSingleInnerLine(iStartOne, listOne, iStartTwo, listTwo)) {
-//                        changeValuesInnerLine(iStartOne, listOne, iStartTwo, listTwo, 1);
-//                        iStartOne++;
-//                        lastComparison = iStartTwo;
-//                    }
-//                    iStartTwo++;
-//                }
-//                iStartTwo = lastComparison;
-//                iStartOne++;
-//            }
         }
     }
 
     private void searchPairInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
-                                     int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo){
+                                     int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
         while (iStartOne <= iStopOne) {
             while (iStartTwo <= iStopTwo) {
@@ -614,7 +586,7 @@ public class FileCompareSeven {
     }
 
     private void searchSingleInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
-                                       int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo){
+                                       int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
         while (iStartOne <= iStopOne) {
             while (iStartTwo <= iStopTwo) {
