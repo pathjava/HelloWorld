@@ -537,46 +537,55 @@ public class FileCompareSeven {
     private List<TextBetweenAnchors> tempListOne;
     private List<TextBetweenAnchors> tempListTwo;
 
+    // поиск анкоров - одинаковых строк в текстах между основными анкорами
     private void searchInnerAnchorsBetweenMainAnchors() {
         int countOne = 1;
         int countTwo = 2;
         int count = 0;
         while (count < textBetweenAnchorsMap.size()) {
+            // получаем из Map объекты с данными и помещаем во временные листы
             tempListOne = new ArrayList<>(textBetweenAnchorsMap.get(countOne));
             tempListTwo = new ArrayList<>(textBetweenAnchorsMap.get(countTwo));
+            // вызываем основной метод поиска, сравнения и добавления маркеров анкеров
             comparisonInnerLinesBetweenMainAnchors(tempListOne, tempListTwo);
             count += 2;
             countOne += 2;
             countTwo += 2;
         }
+        // добавляем измененные объекты в листах обратно в Map
         textBetweenAnchorsMap.put(countOne, tempListOne);
         textBetweenAnchorsMap.put(countTwo, tempListTwo);
     }
 
+    // поиск начальных и конечных индексов и вызов методов сравнения
     private void comparisonInnerLinesBetweenMainAnchors(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
         int iStartOne = searchStartIndex(listOne);
         int iStopOne = searchStopIndex(listOne);
         int iStartTwo = searchStartIndex(listTwo);
         int iStopTwo = searchStopIndex(listTwo);
+        // определяем минимальное количество строк между основными анкорами
         int minValueInnerText = Math.min(iStopOne - iStartOne, iStopTwo - iStartTwo);
 
         if (iStartOne >= 0 && iStopOne >= 0 && iStartTwo >= 0 && iStopTwo >= 0) {
-            if (minValueInnerText > 8)
+            if (minValueInnerText > 8) // если между основными анкорами более 8 строк, сначала ищем парные анкоры
                 searchPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
 
             searchSingleInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
         }
     }
 
+    // поиск и сравнение парных анкоров
     private void searchPairInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                      int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
         while (iStartOne <= iStopOne) {
             while (iStartTwo <= iStopTwo) {
+                // сравниваем парные анкоры
                 if (comparisonPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo)) {
+                    // и если true, вносим изменения в лист с объектом
                     changeValuesInnerLine(iStartOne, listOne, iStartTwo + 1, listTwo, 2);
                     iStartOne++;
-                    lastComparison = iStartTwo;
+                    lastComparison = iStartTwo; // запоминаем индекс последнего совпадения
                 }
                 iStartTwo++;
             }
@@ -585,6 +594,7 @@ public class FileCompareSeven {
         }
     }
 
+    // поиск и сравнение одиночных анкоров
     private void searchSingleInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                        int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
@@ -602,8 +612,9 @@ public class FileCompareSeven {
         }
     }
 
+    // ищем стартовый индекс - пустая ячейка lineIsAnchor
     private int searchStartIndex(List<TextBetweenAnchors> list) {
-        int index = -1;
+        int index = -1; // если пустых ячеек не найдено, возвращаем -1
         int count = 0;
         while (count < list.size()) {
             if (list.get(count).lineIsAnchor.isEmpty()) {
@@ -615,6 +626,7 @@ public class FileCompareSeven {
         return index;
     }
 
+    // ищем конечный индекс
     private int searchStopIndex(List<TextBetweenAnchors> list) {
         int index = -1;
         int count = list.size() - 1;
@@ -628,8 +640,10 @@ public class FileCompareSeven {
         return index;
     }
 
+    // сравнение парных строк
     private boolean comparisonPairInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                             int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
+        // определяем первые и последние пары, содержащие символы (не пустые)
         int lastPairOne = searchLastPairInnerLine(iStartOne, iStopOne, listOne);
         int lastPairTwo = searchLastPairInnerLine(iStartTwo, iStopTwo, listTwo);
 
@@ -647,12 +661,14 @@ public class FileCompareSeven {
         return true;
     }
 
+    // сравнение одиночных строк
     private boolean comparisonSingleInnerLine(int iStartOne, List<TextBetweenAnchors> listOne,
                                               int iStartTwo, List<TextBetweenAnchors> listTwo) {
         return !listOne.get(iStartOne).anchorLine.isEmpty() && !listTwo.get(iStartTwo).anchorLine.isEmpty()
                 && listOne.get(iStartOne).anchorLine.equals(listTwo.get(iStartTwo).anchorLine);
     }
 
+    // поиск последней пары строк в блоке текста между основными анкорами
     private int searchLastPairInnerLine(int iStart, int iStop, List<TextBetweenAnchors> list) {
         int index = iStop;
         int count = 0;
@@ -667,6 +683,7 @@ public class FileCompareSeven {
         return index + 2;
     }
 
+    // поиск первой пары строк в блоке текста между основными анкорами
     private int searchFirstPairInnerLine(int iStart, int lastPair, List<TextBetweenAnchors> list) {
         int index = iStart;
         int count = 0;
@@ -681,6 +698,7 @@ public class FileCompareSeven {
         return index - 2;
     }
 
+    // внесение изменений в строки объекта временнных листов
     private void changeValuesInnerLine(int indexOne, List<TextBetweenAnchors> listOne,
                                        int indexTwo, List<TextBetweenAnchors> listTwo, int loop) {
         int count = 0;
