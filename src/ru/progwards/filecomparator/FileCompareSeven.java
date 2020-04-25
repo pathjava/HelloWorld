@@ -532,13 +532,12 @@ public class FileCompareSeven {
         return isAnchor;
     }
 
-    //=====================//
+    //========== поиск анкеров в тексте между основными анкерами ===========//
 
     private List<TextBetweenAnchors> tempListOne;
     private List<TextBetweenAnchors> tempListTwo;
 
     private void searchInnerAnchorsBetweenMainAnchors() {
-
         int countOne = 1;
         int countTwo = 2;
         int count = 0;
@@ -566,9 +565,11 @@ public class FileCompareSeven {
                 while (iStartTwo <= iStopTwo) {
                     if (minValueInnerText > 8)
                         if (comparisonPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo))
-                            changeValuesInnerTextLine(iStartTwo+1, listTwo);
+                            changeValuesInnerTextLine(iStartTwo + 1, listTwo);
+                        else
+                            iStartTwo++;
                     else
-                        iStartTwo++;
+                        if (comparisonInnerLine(iStartOne, listOne, iStartTwo, listTwo))
                 }
                 iStartOne++;
             }
@@ -619,6 +620,11 @@ public class FileCompareSeven {
         return true;
     }
 
+    private boolean comparisonInnerLine(int iStartOne, List<TextBetweenAnchors> listOne,
+                                        int iStartTwo, List<TextBetweenAnchors> listTwo){
+        return listOne.get(iStartOne).anchorLine.equals(listTwo.get(iStartTwo).anchorLine);
+    }
+
     private int searchLastPairInnerTextLine(int iStart, int iStop, List<TextBetweenAnchors> list) {
         int index = iStop;
         int count = 0;
@@ -647,9 +653,9 @@ public class FileCompareSeven {
         return index - 2;
     }
 
-    private void changeValuesInnerTextLine(int indexTwo, List<TextBetweenAnchors> listTwo){
+    private void changeValuesInnerTextLine(int indexTwo, List<TextBetweenAnchors> listTwo) {
         int count = 0;
-        while (count <2){
+        while (count < 2) {
             listTwo.get(indexTwo).lineIsAnchor = IS_ANCHOR;
             indexTwo++;
             count++;
