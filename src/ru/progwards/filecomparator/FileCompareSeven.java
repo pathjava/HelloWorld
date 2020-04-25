@@ -703,8 +703,10 @@ public class FileCompareSeven {
                                        int indexTwo, List<TextBetweenAnchors> listTwo, int loop) {
         int count = 0;
         while (count < loop) {
-            listOne.get(indexOne).lineIsAnchor = IS_ANCHOR;
-            listTwo.get(indexTwo).lineIsAnchor = IS_ANCHOR;
+            if (listOne.get(indexOne).lineIsAnchor.isEmpty())
+                listOne.get(indexOne).lineIsAnchor = "in";
+            if (listTwo.get(indexTwo).lineIsAnchor.isEmpty())
+                listTwo.get(indexTwo).lineIsAnchor = "in";
             indexOne++;
             indexTwo++;
             count++;
