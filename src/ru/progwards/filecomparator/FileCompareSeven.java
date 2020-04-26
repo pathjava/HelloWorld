@@ -551,7 +551,6 @@ public class FileCompareSeven {
 
     private List<TextBetweenAnchors> tempListOne;
     private List<TextBetweenAnchors> tempListTwo;
-    private boolean anchorsWereFound = false;
 
     // поиск анкоров - одинаковых строк в текстах между основными анкорами
     private void searchInnerAnchorsBetweenMainAnchors() {
@@ -565,15 +564,15 @@ public class FileCompareSeven {
             // вызываем основной метод поиска, сравнения и добавления маркеров анкеров
             comparisonInnerLinesBetweenMainAnchors(tempListOne, tempListTwo);
             count += 2;
-            countOne += 2;
-            countTwo += 2;
+            if (countOne + 2 < textBetweenAnchorsMap.size())
+                countOne += 2;
+            if (countTwo + 2 < textBetweenAnchorsMap.size())
+                countTwo += 2;
         }
         // добавляем измененные объекты в листах обратно в Map
         // если в методе changeValuesInnerLine() были изменения и флаг true, тогда перезаписываем объект в Map
-        if (anchorsWereFound) {
-            textBetweenAnchorsMap.put(countOne, tempListOne);
-            textBetweenAnchorsMap.put(countTwo, tempListTwo);
-        }
+        textBetweenAnchorsMap.put(countOne, tempListOne);
+        textBetweenAnchorsMap.put(countTwo, tempListTwo);
     }
 
     // поиск начальных и конечных индексов и вызов методов сравнения
@@ -732,7 +731,6 @@ public class FileCompareSeven {
             indexTwo++;
             count++;
         }
-        anchorsWereFound = true;
     }
 
 
@@ -740,8 +738,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\09.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\10.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
