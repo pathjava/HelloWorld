@@ -367,15 +367,23 @@ public class FileCompareSeven {
     // добавление одно-двух строчных текстовых анкоров в начале и конце текста
     private void addFirstOrLastAnchorLine(int count, String startStop) {
         int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
+
         fileAnchors = new FileAnchors();
         switch (startStop) {
             case START_LINE:
                 fileAnchors.startOneNumber = String.valueOf(1);
                 fileAnchors.startTwoNumber = String.valueOf(1);
                 fileAnchors.start = startStop;
+
+                if (!mapLinesAnchors.get(index).anchorLine.isEmpty())
+                    fileAnchors.anchorLine = mapLinesAnchors.get(index).anchorLine;
+                if (!mapLinesAnchors.get(index).lineIsAnchor.isEmpty())
+                    fileAnchors.lineIsAnchor = IS_ANCHOR;
+
                 // проверяем строку только из одного листа на !isEmpty так как ранее строки прошли equals
                 // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
-                if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index + 1).isEmpty()) {
+                if (index < listOneSize && count == 1 && !listOne.get(index).isEmpty()
+                        || index < listOneSize && count == 2 && !listOne.get(index + 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorLine = listOne.get(index);
                 }
@@ -384,7 +392,14 @@ public class FileCompareSeven {
                 fileAnchors.stopOneNumber = String.valueOf(listOneSize);
                 fileAnchors.stopTwoNumber = String.valueOf(listTwoSize);
                 fileAnchors.stop = STOP_LINE;
-                if (count == 1 && !listOne.get(index).isEmpty() || count == 2 && !listOne.get(index - 1).isEmpty()) {
+
+                if (!mapLinesAnchors.get(index).anchorLine.isEmpty())
+                    fileAnchors.anchorLine = mapLinesAnchors.get(index).anchorLine;
+                if (!mapLinesAnchors.get(index).lineIsAnchor.isEmpty())
+                    fileAnchors.lineIsAnchor = IS_ANCHOR;
+
+                if (index < listOneSize && count == 1 && !listOne.get(index).isEmpty()
+                        || index < listOneSize && count == 2 && !listOne.get(index - 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorLine = listOne.get(index);
                 }
@@ -602,17 +617,19 @@ public class FileCompareSeven {
     private void searchSingleInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                        int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
-        while (iStartOne <= iStopOne) {
-            while (iStartTwo <= iStopTwo) {
+        while (iStartOne < iStopOne) {
+            while (iStartTwo < iStopTwo) {
                 if (comparisonSingleInnerLine(iStartOne, listOne, iStartTwo, listTwo)) {
                     changeValuesInnerLine(iStartOne, listOne, iStartTwo, listTwo, 1);
                     iStartOne++;
                     lastComparison = iStartTwo;
                 }
-                iStartTwo++;
+                if (iStartTwo + 1 < listTwo.size())
+                    iStartTwo++;
             }
             iStartTwo = lastComparison;
-            iStartOne++;
+            if (iStartOne + 1 < listOne.size())
+                iStartOne++;
         }
     }
 
@@ -723,8 +740,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
