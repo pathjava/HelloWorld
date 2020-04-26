@@ -532,7 +532,7 @@ public class FileCompareSeven {
         return isAnchor;
     }
 
-    //========== поиск анкеров в тексте между основными анкерами ===========//
+    //========== поиск анкоров в тексте между основными анкорами ===========//
 
     private List<TextBetweenAnchors> tempListOne;
     private List<TextBetweenAnchors> tempListTwo;
@@ -718,8 +718,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\09.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\10.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
