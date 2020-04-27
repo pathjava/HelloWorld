@@ -571,7 +571,6 @@ public class FileCompareSeven {
                 countTwo += 2;
         }
         // добавляем измененные объекты в листах обратно в Map
-        // если в методе changeValuesInnerLine() были изменения и флаг true, тогда перезаписываем объект в Map
         textBetweenAnchorsMap.put(countOne, tempListOne);
         textBetweenAnchorsMap.put(countTwo, tempListTwo);
     }
