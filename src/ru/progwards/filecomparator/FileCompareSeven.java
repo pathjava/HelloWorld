@@ -383,10 +383,10 @@ public class FileCompareSeven {
 
                 // проверяем строку только из одного листа на !isEmpty так как ранее строки прошли equals
                 // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
-                if (index < listOneSize && count == 1 && !listOne.get(index).isEmpty()
-                        || index < listOneSize && count == 2 && !listOne.get(index + 1).isEmpty()) {
+                if (index < listTwoSize && count == 1 && !listTwo.get(index).isEmpty()
+                        || index < listTwoSize && count == 2 && !listTwo.get(index + 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorLine = listOne.get(index);
+                    fileAnchors.anchorLine = listTwo.get(index);
                 }
                 break;
             case STOP_LINE:
@@ -399,10 +399,10 @@ public class FileCompareSeven {
                 if (!mapLinesAnchors.get(index).lineIsAnchor.isEmpty())
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
 
-                if (index < listOneSize && count == 1 && !listOne.get(index).isEmpty()
-                        || index < listOneSize && count == 2 && !listOne.get(index - 1).isEmpty()) {
+                if (index < listTwoSize && count == 1 && !listTwo.get(index).isEmpty()
+                        || index < listTwoSize && count == 2 && !listTwo.get(index - 1).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorLine = listOne.get(index);
+                    fileAnchors.anchorLine = listTwo.get(index);
                 }
                 break;
         }
@@ -410,10 +410,10 @@ public class FileCompareSeven {
 
         // если count пришел == 2, проверяем и добавляем вторую строку якорь
         index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
-        if (count == 2 && mapLinesAnchors.get(index).anchorLine.isEmpty()) {
+        if (count == 2 && mapLinesAnchors.get(index).anchorLine.isEmpty() && !listTwo.get(index).isEmpty()) {
             fileAnchors = new FileAnchors();
             fileAnchors.lineIsAnchor = IS_ANCHOR;
-            fileAnchors.anchorLine = listOne.get(index);
+            fileAnchors.anchorLine = listTwo.get(index);
             mapLinesAnchors.put(index, fileAnchors);
         }
     }
@@ -744,8 +744,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\12.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\11.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
