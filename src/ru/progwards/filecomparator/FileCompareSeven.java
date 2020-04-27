@@ -567,7 +567,7 @@ public class FileCompareSeven {
             count += 2;
             if (countOne + 2 < textBetweenAnchorsMap.size())
                 countOne += 2;
-            if (countTwo + 2 < textBetweenAnchorsMap.size())
+            if (countTwo + 1 < textBetweenAnchorsMap.size())
                 countTwo += 2;
         }
         // добавляем измененные объекты в листах обратно в Map
@@ -589,7 +589,7 @@ public class FileCompareSeven {
             if (minValueInnerText > 8) // если между основными анкорами более 8 строк, сначала ищем парные анкоры
                 searchPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
 
-            searchSingleInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo);
+            searchSingleInnerLine(iStartOne, iStopOne + 1, listOne, iStartTwo, iStopTwo + 1, listTwo);
         }
     }
 
@@ -604,19 +604,20 @@ public class FileCompareSeven {
         int firstPairTwo = searchFirstPairInnerLine(iStartTwo, lastPairTwo, listTwo);
 
         int lastComparison = 0;
+        int indexTwo = firstPairTwo;
         while (firstPairOne < iStopOne) {
-            while (firstPairTwo < iStopTwo) {
+            while (indexTwo < iStopTwo) {
                 // сравниваем парные анкоры
-                if (comparisonPairInnerLine(firstPairOne, lastPairOne, listOne, firstPairTwo, lastPairTwo, listTwo)) {
+                if (comparisonPairInnerLines(firstPairOne, lastPairOne, listOne, indexTwo, lastPairTwo, listTwo)) {
                     // и если true, вносим изменения в лист с объектом
-                    changeValuesInnerLine(firstPairOne, listOne, firstPairTwo, listTwo, 2);
+                    changeValuesInnerLine(firstPairOne, listOne, indexTwo, listTwo, 2);
                     firstPairOne++;
-                    lastComparison = firstPairTwo; // запоминаем индекс последнего совпадения
+                    lastComparison = indexTwo; // запоминаем индекс последнего совпадения
                 }
-                if (firstPairTwo + 1 < listTwo.size())
-                    firstPairTwo++;
+                if (indexTwo + 1 < listTwo.size())
+                    indexTwo++;
             }
-            firstPairTwo = lastComparison;
+            indexTwo = lastComparison > indexTwo ? lastComparison : firstPairTwo;
             if (firstPairOne + 1 < listOne.size())
                 firstPairOne++;
         }
@@ -626,18 +627,20 @@ public class FileCompareSeven {
     private void searchSingleInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                        int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
+        int indexTwo = iStartTwo;
         while (iStartOne < iStopOne) {
-            while (iStartTwo < iStopTwo) {
-                if (comparisonSingleInnerLine(iStartOne, listOne, iStartTwo, listTwo)) {
-                    changeValuesInnerLine(iStartOne, listOne, iStartTwo, listTwo, 1);
-                    iStartOne++;
-                    lastComparison = iStartTwo;
+            while (indexTwo < iStopTwo) {
+                if (comparisonSingleInnerLine(iStartOne, listOne, indexTwo, listTwo)) {
+                    changeValuesInnerLine(iStartOne, listOne, indexTwo, listTwo, 1);
+                    if (iStartOne + 1 < iStopOne)
+                        iStartOne++;
+                    lastComparison = indexTwo;
                 }
-                if (iStartTwo + 1 < listTwo.size())
-                    iStartTwo++;
+                if (indexTwo + 1 <= iStopTwo)
+                    indexTwo++;
             }
-            iStartTwo = lastComparison;
-            if (iStartOne + 1 < listOne.size())
+            indexTwo = lastComparison > indexTwo ? lastComparison : iStartTwo;
+            if (iStartOne + 1 <= iStopOne)
                 iStartOne++;
         }
     }
@@ -671,8 +674,8 @@ public class FileCompareSeven {
     }
 
     // сравнение парных строк
-    private boolean comparisonPairInnerLine(int firstPairOne, int lastPairOne, List<TextBetweenAnchors> listOne,
-                                            int firstPairTwo, int lastPairTwo, List<TextBetweenAnchors> listTwo) {
+    private boolean comparisonPairInnerLines(int firstPairOne, int lastPairOne, List<TextBetweenAnchors> listOne,
+                                             int firstPairTwo, int lastPairTwo, List<TextBetweenAnchors> listTwo) {
         int count = 0;
         while (count < 2) {
             if (firstPairOne + count <= lastPairOne && firstPairTwo + count <= lastPairTwo
@@ -718,7 +721,7 @@ public class FileCompareSeven {
 
             if (index + 1 <= lastPair) index++;
         }
-        return index - 2;
+        return index - 1;
     }
 
     // внесение изменений в строки объекта временнных листов
@@ -741,8 +744,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\12.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\11.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
