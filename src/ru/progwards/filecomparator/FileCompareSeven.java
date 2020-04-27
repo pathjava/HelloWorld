@@ -596,8 +596,8 @@ public class FileCompareSeven {
     private void searchPairInnerLine(int iStartOne, int iStopOne, List<TextBetweenAnchors> listOne,
                                      int iStartTwo, int iStopTwo, List<TextBetweenAnchors> listTwo) {
         int lastComparison = 0;
-        while (iStartOne <= iStopOne) {
-            while (iStartTwo <= iStopTwo) {
+        while (iStartOne < iStopOne) {
+            while (iStartTwo < iStopTwo) {
                 // сравниваем парные анкоры
                 if (comparisonPairInnerLine(iStartOne, iStopOne, listOne, iStartTwo, iStopTwo, listTwo)) {
                     // и если true, вносим изменения в лист с объектом
@@ -605,10 +605,12 @@ public class FileCompareSeven {
                     iStartOne++;
                     lastComparison = iStartTwo; // запоминаем индекс последнего совпадения
                 }
-                iStartTwo++;
+                if (iStartTwo + 1 < listTwo.size())
+                    iStartTwo++;
             }
             iStartTwo = lastComparison;
-            iStartOne++;
+            if (iStartOne + 1 < listOne.size())
+                iStartOne++;
         }
     }
 
@@ -738,8 +740,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\09.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\10.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
