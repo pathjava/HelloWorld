@@ -62,19 +62,19 @@ public class FileCompareSeven {
         listTwoSize = listTwo.size();
 
         // создаем HashMap по размеру наибольшего из двух листов
-        int maxBothListsSize = Math.max(listOneSize, listTwoSize);
+        int largestOfTwoList = Math.max(listOneSize, listTwoSize);
 
         fileAnchors = new FileAnchors();
-        for (int i = 0; i < maxBothListsSize; i++) {
+        for (int i = 0; i < largestOfTwoList; i++) {
             mapLinesAnchors.put(i, fileAnchors);
         }
         // если самый большой из листов меньше 6, используем меньшие значения (вместо 3, 2, 4)
-        if (maxBothListsSize < 6) {
+        if (largestOfTwoList < 6) {
             oneTwoThree = 1;
             zeroOrTwo = 0;
             twoThreeFour = 2;
             zeroOneTwo = 0;
-        } else if (maxBothListsSize < 11) {
+        } else if (largestOfTwoList < 11) {
             oneTwoThree = 2;
             zeroOrTwo = 1;
             twoThreeFour = 3;
@@ -367,6 +367,7 @@ public class FileCompareSeven {
     // добавление одно-двух строчных текстовых анкоров в начале и конце текста
     private void addFirstOrLastAnchorLine(int count, String startStop) {
         int index = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
+        List<String> maxSizeList = listOneSize > listTwoSize ? listOne : listTwo;
 
         fileAnchors = new FileAnchors();
         switch (startStop) {
@@ -383,9 +384,9 @@ public class FileCompareSeven {
 
                 // проверяем строку только из одного листа на !isEmpty так как ранее строки прошли equals
                 // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
-                if (index < listTwoSize && count == 1 && !listTwo.get(index).isEmpty()) {
+                if (index < maxSizeList.size() && count == 1 && !maxSizeList.get(index).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorLine = listTwo.get(index);
+                    fileAnchors.anchorLine = maxSizeList.get(index);
                 }
                 break;
             case STOP_LINE:
@@ -398,9 +399,9 @@ public class FileCompareSeven {
                 if (!mapLinesAnchors.get(index).lineIsAnchor.isEmpty())
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
 
-                if (index < listTwoSize && count == 1 && !listTwo.get(index).isEmpty()) {
+                if (index < maxSizeList.size() && count == 1 && !maxSizeList.get(index).isEmpty()) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
-                    fileAnchors.anchorLine = listTwo.get(index);
+                    fileAnchors.anchorLine = maxSizeList.get(index);
                 }
                 break;
         }
@@ -409,11 +410,11 @@ public class FileCompareSeven {
         // если count пришел == 2, проверяем, добавлена ли ранее первая и добавляем вторую строку якорь
         index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
         int indexOne = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
-        if (count == 2 && !listTwo.get(indexOne).isEmpty()
-                && mapLinesAnchors.get(index).anchorLine.isEmpty() && !listTwo.get(index).isEmpty()) {
+        if (count == 2 && !maxSizeList.get(indexOne).isEmpty()
+                && mapLinesAnchors.get(index).anchorLine.isEmpty() && !maxSizeList.get(index).isEmpty()) {
             fileAnchors = new FileAnchors();
             fileAnchors.lineIsAnchor = IS_ANCHOR;
-            fileAnchors.anchorLine = listTwo.get(index);
+            fileAnchors.anchorLine = maxSizeList.get(index);
             mapLinesAnchors.put(index, fileAnchors);
         }
     }
@@ -743,8 +744,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\12.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\11.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
