@@ -407,7 +407,7 @@ public class FileCompareSeven {
         }
         mapLinesAnchors.put(index, fileAnchors);
 
-        // если count пришел == 2, проверяем, добавлена ли ранее первая и добавляем вторую строку якорь
+        // если count пришел == 2, проверяем, добавлена ли ранее первая и добавляем вторую строку
         index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
         int indexOne = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
         if (count == 2 && !maxSizeList.get(indexOne).isEmpty()
