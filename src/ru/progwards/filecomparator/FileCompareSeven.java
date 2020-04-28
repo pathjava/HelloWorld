@@ -53,7 +53,7 @@ public class FileCompareSeven {
         }
     }
 
-    //========================= поиск трехстрочных анкоров =====================
+    //========================= поиск трехстрочных анкоров =====================//
 
     private final Map<Integer, FileAnchors> mapLinesAnchors = new HashMap<>();
 
@@ -420,7 +420,7 @@ public class FileCompareSeven {
     }
 
 
-    //====================== выборка текстов между трехстрочными анкорами ===========================
+    //====================== выборка текстов между трехстрочными анкорами ==================//
 
     private final Map<Integer, List<TextBetweenAnchors>> textBetweenAnchorsMap = new HashMap<>();
 
@@ -739,13 +739,16 @@ public class FileCompareSeven {
         }
     }
 
+    //====================== создание патча ==================================//
+
+
 
     //=============================== MAIN ============================================
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\12.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\11.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
