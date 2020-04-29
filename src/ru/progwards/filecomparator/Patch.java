@@ -30,7 +30,7 @@ public class Patch {
 
     static class PatchLine {
         public String noNewLine = "";
-        public String plusMinusEmpty = "";
+        public String plusMinusEmpty = " ";
         public String fileLines = "";
 
         @Override
