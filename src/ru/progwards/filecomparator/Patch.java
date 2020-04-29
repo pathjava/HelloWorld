@@ -8,8 +8,12 @@ public class Patch {
     PatchIdentifier identifier = new PatchIdentifier();
     PatchLine line = new PatchLine();
 
+    @Override
+    public String toString() {
+        return "" + identifier + line;
+    }
+
     static class PatchIdentifier {
-        public String dogs = "@@";
         public int oneStart;
         public int oneCount;
         public int twoStart;
@@ -17,7 +21,7 @@ public class Patch {
 
         @Override
         public String toString() {
-            return dogs + " " + oneStart + "," + oneCount + " " + twoStart + "," + twoCount + " " + dogs;
+            return "@@ " + "-" + oneStart + "," + oneCount + " " + "+" + twoStart + "," + twoCount + " @@";
         }
     }
 
