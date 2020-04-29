@@ -748,7 +748,7 @@ public class FileCompareSeven {
         int countTwo = 2;
         int count = 0;
         int index = 1;
-        List<Patch> patchList = null;
+        List<Patch> patchList;
         while (count < textBetweenAnchorsMap.size()) {
 
             tempListOne = new ArrayList<>(textBetweenAnchorsMap.get(countOne));
@@ -756,16 +756,15 @@ public class FileCompareSeven {
 
             patchList = new ArrayList<>();
             patchList.add(identifierCreator(tempListOne, tempListTwo));
+            patchFile.put(index, patchList);
 
             count += 2;
             if (countOne + 2 < textBetweenAnchorsMap.size())
                 countOne += 2;
             if (countTwo + 1 < textBetweenAnchorsMap.size())
                 countTwo += 2;
-            patchFile.put(index, patchList);
             index++;
         }
-
         return patchFile;
     }
 
