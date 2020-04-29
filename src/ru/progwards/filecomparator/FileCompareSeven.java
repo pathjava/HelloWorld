@@ -741,9 +741,9 @@ public class FileCompareSeven {
 
     //====================== создание патча ==================================//
 
-    private final Map<Integer, PatchLines> patchFile = new HashMap<>();
+    private final Map<Integer, Patch> patchFile = new HashMap<>();
 
-    public Map<Integer, PatchLines> patchCreator(){
+    public Map<Integer, Patch> patchCreator(){
 
         return patchFile;
     }
