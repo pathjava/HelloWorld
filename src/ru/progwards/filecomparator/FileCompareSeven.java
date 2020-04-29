@@ -336,7 +336,8 @@ public class FileCompareSeven {
         while (count <= oneTwoThree) {
             if (!mapLinesAnchors.get(0).start.isEmpty()) // если объект содержит start, то цикл прерываем
                 break;
-            else if (listOne.get(count).equals(listTwo.get(count))) // если строки равные, проверяем следующие
+            else if (listOne.get(count).equals(listTwo.get(count))
+                    && !listOne.get(count).isEmpty() && !listTwo.get(count).isEmpty()) // если строки равные, проверяем следующие
                 count++;
             else { // иначе устанавливаем start и номера строк
                 addFirstOrLastAnchorLine(count, START_LINE);
@@ -353,7 +354,8 @@ public class FileCompareSeven {
         while (count <= oneTwoThree) {
             if (!mapLinesAnchors.get(mapLinesAnchors.size() - 1).stop.isEmpty()) // если объект содержит stop, то цикл прерываем
                 break;
-            else if (listOne.get(indexOne).equals(listTwo.get(indexTwo))) {
+            else if (listOne.get(indexOne).equals(listTwo.get(indexTwo))
+                    && !listOne.get(indexOne).isEmpty() && !listTwo.get(indexTwo).isEmpty()) {
                 indexOne--;
                 indexTwo--;
                 count++;
@@ -384,7 +386,7 @@ public class FileCompareSeven {
 
                 // проверяем строку только из одного листа на !isEmpty так как ранее строки прошли equals
                 // пустая строка может быть анкором, только если за ней не пустая строка-анкор, иначе нет
-                if (index < maxSizeList.size() && count == 1 && !maxSizeList.get(index).isEmpty()) {
+                if (index < maxSizeList.size() && count == 1) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorLine = maxSizeList.get(index);
                 }
@@ -399,7 +401,7 @@ public class FileCompareSeven {
                 if (!mapLinesAnchors.get(index).lineIsAnchor.isEmpty())
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
 
-                if (index < maxSizeList.size() && count == 1 && !maxSizeList.get(index).isEmpty()) {
+                if (index < maxSizeList.size() && count == 1) {
                     fileAnchors.lineIsAnchor = IS_ANCHOR;
                     fileAnchors.anchorLine = maxSizeList.get(index);
                 }
@@ -409,9 +411,7 @@ public class FileCompareSeven {
 
         // если count пришел == 2, проверяем, добавлена ли ранее первая и добавляем вторую строку
         index = startStop.equals(START_LINE) ? 1 : mapLinesAnchors.size() - 2;
-        int indexOne = startStop.equals(START_LINE) ? 0 : mapLinesAnchors.size() - 1;
-        if (count == 2 && !maxSizeList.get(indexOne).isEmpty()
-                && mapLinesAnchors.get(index).anchorLine.isEmpty() && !maxSizeList.get(index).isEmpty()) {
+        if (count == 2 && mapLinesAnchors.get(index).anchorLine.isEmpty()) {
             fileAnchors = new FileAnchors();
             fileAnchors.lineIsAnchor = IS_ANCHOR;
             fileAnchors.anchorLine = maxSizeList.get(index);
@@ -741,14 +741,20 @@ public class FileCompareSeven {
 
     //====================== создание патча ==================================//
 
+    private final Map<Integer, PatchLines> patchFile = new HashMap<>();
+
+    public Map<Integer, PatchLines> patchCreator(){
+
+        return patchFile;
+    }
 
 
     //=============================== MAIN ============================================
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt");
 
         System.out.println("------------ Patch -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
