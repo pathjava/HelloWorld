@@ -744,7 +744,7 @@ public class FileCompareSeven {
     private final Map<Integer, List<Patch>> patchFile = new HashMap<>();
     private List<Patch> patchList;
 
-    public Map<Integer, List<Patch>> patchCreator(){
+    public Map<Integer, List<Patch>> patchCreator() {
         int countOne = 1;
         int countTwo = 2;
         int count = 0;
@@ -769,23 +769,23 @@ public class FileCompareSeven {
         return patchFile;
     }
 
-    private void identifierCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+    private void identifierCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
         Patch patch = new Patch();
 
-        patch.identifier.oneStart = Integer.parseInt(listOne.listIterator().next().startOneNumber);
-        patch.identifier.oneCount = listOne.size();
-        patch.identifier.twoStart = Integer.parseInt(listTwo.listIterator().next().startTwoNumber);
-        patch.identifier.twoCount = listTwo.size();
+        patch.oneStart = Integer.parseInt(listOne.listIterator().next().startOneNumber);
+        patch.oneCount = listOne.size();
+        patch.twoStart = Integer.parseInt(listTwo.listIterator().next().startTwoNumber);
+        patch.twoCount = listTwo.size();
 
         patchList.add(patch);
     }
 
-    private void linesCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+    private void linesCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
         Patch patch;
         int count = 0;
-        while (count < listTwo.size()){
+        while (count < listTwo.size()) {
             patch = new Patch();
-            patch.line.fileLines = listTwo.get(count).anchorLine;
+            patch.fileLines = listTwo.get(count).anchorLine;
             patchList.add(patch);
             count++;
         }
@@ -797,8 +797,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\06.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\05.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
 
         System.out.println("------------ Anchors List -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
