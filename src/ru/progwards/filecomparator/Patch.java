@@ -21,7 +21,10 @@ public class Patch {
 
         @Override
         public String toString() {
-            return "@@ " + "-" + oneStart + "," + oneCount + " " + "+" + twoStart + "," + twoCount + " @@";
+            if (oneStart != 0)
+                return "@@ " + "-" + oneStart + "," + oneCount + " " + "+" + twoStart + "," + twoCount + " @@";
+            else
+                return "";
         }
     }
 

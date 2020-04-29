@@ -742,33 +742,34 @@ public class FileCompareSeven {
     //====================== создание патча ==================================//
 
     private final Map<Integer, List<Patch>> patchFile = new HashMap<>();
+    private List<Patch> patchList;
 
     public Map<Integer, List<Patch>> patchCreator(){
         int countOne = 1;
         int countTwo = 2;
         int count = 0;
         int index = 1;
-        List<Patch> patchList;
-        while (count < textBetweenAnchorsMap.size()) {
 
+        while (count < textBetweenAnchorsMap.size()) {
             tempListOne = new ArrayList<>(textBetweenAnchorsMap.get(countOne));
             tempListTwo = new ArrayList<>(textBetweenAnchorsMap.get(countTwo));
 
             patchList = new ArrayList<>();
-            patchList.add(identifierCreator(tempListOne, tempListTwo));
+            identifierCreator(tempListOne, tempListTwo);
+            linesCreator(tempListOne, tempListTwo);
             patchFile.put(index, patchList);
+            index++;
 
             count += 2;
             if (countOne + 2 < textBetweenAnchorsMap.size())
                 countOne += 2;
             if (countTwo + 1 < textBetweenAnchorsMap.size())
                 countTwo += 2;
-            index++;
         }
         return patchFile;
     }
 
-    private Patch identifierCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+    private void identifierCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
         Patch patch = new Patch();
 
         patch.identifier.oneStart = Integer.parseInt(listOne.listIterator().next().startOneNumber);
@@ -776,7 +777,19 @@ public class FileCompareSeven {
         patch.identifier.twoStart = Integer.parseInt(listTwo.listIterator().next().startTwoNumber);
         patch.identifier.twoCount = listTwo.size();
 
-        return patch;
+        patchList.add(patch);
+    }
+
+    private void linesCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo){
+        Patch patch;
+        int count = 0;
+        while (count < listTwo.size()){
+            patch = new Patch();
+            patch.line.fileLines = listTwo.get(count).anchorLine;
+            patchList.add(patch);
+            count++;
+        }
+
     }
 
 
