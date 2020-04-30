@@ -739,7 +739,7 @@ public class FileCompareSeven {
         }
     }
 
-    //====================== создание патча ==================================//
+    //====================== создание патча ==============================//
 
     private final Map<Integer, List<Patch>> patchFile = new HashMap<>();
     private List<Patch> patchList;
