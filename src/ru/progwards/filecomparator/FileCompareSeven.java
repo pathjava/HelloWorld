@@ -789,7 +789,6 @@ public class FileCompareSeven {
             patchList.add(patch);
             count++;
         }
-
     }
 
 
