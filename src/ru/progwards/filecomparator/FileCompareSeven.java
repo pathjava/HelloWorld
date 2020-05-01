@@ -725,17 +725,24 @@ public class FileCompareSeven {
     }
 
     // внесение изменений в строки объекта временнных листов
+    int markerNumber = 1;
+
     private void changeValuesInnerLine(int indexOne, List<TextBetweenAnchors> listOne,
                                        int indexTwo, List<TextBetweenAnchors> listTwo, int loop) {
         int count = 0;
         while (count < loop) {
-            if (listOne.get(indexOne).lineIsAnchor.isEmpty())
+            if (listOne.get(indexOne).lineIsAnchor.isEmpty()) {
                 listOne.get(indexOne).lineIsAnchor = "in";
-            if (listTwo.get(indexTwo).lineIsAnchor.isEmpty())
+                listOne.get(indexOne).numberMarker = String.valueOf(markerNumber);
+            }
+            if (listTwo.get(indexTwo).lineIsAnchor.isEmpty()) {
                 listTwo.get(indexTwo).lineIsAnchor = "in";
+                listTwo.get(indexTwo).numberMarker = String.valueOf(markerNumber);
+            }
             indexOne++;
             indexTwo++;
             count++;
+            markerNumber++;
         }
     }
 
@@ -786,6 +793,8 @@ public class FileCompareSeven {
         while (count < listTwo.size()) {
             patch = new Patch();
             patch.fileLines = listTwo.get(count).anchorLine;
+            if (listTwo.get(count).lineIsAnchor.isEmpty())
+                patch.plusMinusEmpty = "+";
             patchList.add(patch);
             count++;
         }
@@ -796,8 +805,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\01.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\02.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt");
 
         System.out.println("------------ Anchors List -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
