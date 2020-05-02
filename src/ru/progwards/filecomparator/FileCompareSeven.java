@@ -763,7 +763,7 @@ public class FileCompareSeven {
 
             patchList = new ArrayList<>();
             identifierCreator(tempListOne, tempListTwo);
-            linesCreator(tempListOne, tempListTwo);
+            originalAndAddedLinesCreator(tempListOne, tempListTwo);
             patchFile.put(index, patchList);
             index++;
 
@@ -787,7 +787,7 @@ public class FileCompareSeven {
         patchList.add(patch);
     }
 
-    private void linesCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
+    private void originalAndAddedLinesCreator(List<TextBetweenAnchors> listOne, List<TextBetweenAnchors> listTwo) {
         Patch patch;
         int count = 0;
         while (count < listTwo.size()) {
@@ -805,8 +805,8 @@ public class FileCompareSeven {
 
     public static void main(String[] args) {
         FileCompareSeven test = new FileCompareSeven();
-        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\04.txt",
-                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\03.txt");
+        test.readFiles("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\08.txt",
+                "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\filecomparator\\testfile\\07.txt");
 
         System.out.println("------------ Anchors List -------------");
         for (Map.Entry<Integer, FileAnchors> entry : test.compareFiles().entrySet()) {
