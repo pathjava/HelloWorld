@@ -4,14 +4,22 @@
 package ru.progwards.sever.testprogwards2.test_01;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class SortLambda{
 
+    // решение, предложенное IDE на основе моего - ниже вариант
     void sortAndPrint(List<Person> list){
-        list.sort((i1, i2) -> Integer.compare(i1.age, i2.age));
+        list.sort(Comparator.comparingInt(i -> i.age));
         list.forEach(System.out::println);
     }
+
+    // решение, написанное мной
+//    void sortAndPrint(List<Person> list){
+//        list.sort((i1, i2) -> Integer.compare(i1.age, i2.age));
+//        list.forEach(System.out::println);
+//    }
 
     public static void main(String[] args) {
         List<Person> list = new ArrayList<>(List.of(
