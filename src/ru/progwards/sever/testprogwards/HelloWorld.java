@@ -1,4 +1,7 @@
-package ru.progwards.sever;
+// Oleg Kiselev
+// 06.05.2020, 14:50
+
+package ru.progwards.sever.testprogwards;
 
 public class HelloWorld {
     static void println(String str){

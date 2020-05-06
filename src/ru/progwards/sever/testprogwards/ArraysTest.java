@@ -1,6 +1,7 @@
-package ru.progwards.sever;
+// Oleg Kiselev
+// 06.05.2020, 14:50
 
-import ru.progwards.java1.lessons.bigints.ArrayInteger;
+package ru.progwards.sever.testprogwards;
 
 import java.util.Arrays;
 
