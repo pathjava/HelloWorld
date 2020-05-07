@@ -1,16 +1,13 @@
 // Oleg Kiselev
 // 06.05.2020, 20:45
 
-package ru.progwards.sever.testprogwards2.test_01;
+package ru.progwards.sever.testprogwards2.test_02;
 
 public class RecursionTest {
     public static int sumSequence(int n) {
-        int result;
         if (n == 1)
             return n;
-        result = sumSequence(n - 2) + n;
-
-        return result;
+        return sumSequence(n - 2) + n;
     }
 
 

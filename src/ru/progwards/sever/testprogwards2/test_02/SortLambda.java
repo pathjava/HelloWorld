@@ -1,7 +1,7 @@
 // Oleg Kiselev
 // 06.05.2020, 14:59
 
-package ru.progwards.sever.testprogwards2.test_01;
+package ru.progwards.sever.testprogwards2.test_02;
 
 import java.util.ArrayList;
 import java.util.Comparator;

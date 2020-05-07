@@ -1,7 +1,7 @@
 // Oleg Kiselev
 // 06.05.2020, 20:23
 
-package ru.progwards.sever.testprogwards2.test_01;
+package ru.progwards.sever.testprogwards2.test_02;
 
 public class FactorialStepInfo {
     public static int factorial(int val) {
