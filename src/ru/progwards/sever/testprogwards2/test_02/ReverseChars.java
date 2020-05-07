@@ -5,8 +5,8 @@ package ru.progwards.sever.testprogwards2.test_02;
 
 public class ReverseChars {
 
-    public static String reverseChars(String str){
-        return str.isEmpty() ? "" : reverseChars(str.substring(1))+str.charAt(0);
+    public static String reverseChars(String str) {
+        return str.isEmpty() ? "" : reverseChars(str.substring(1)) + str.charAt(0);
     }
 
     public static void main(String[] args) {
