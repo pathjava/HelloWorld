@@ -41,6 +41,8 @@ public class GoodsWithLambda {
     private List<Goods> sortByAvailabilityAndNumber() {
         List<Goods> newList = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
                 .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
+        /* при такой реализации изменяется содержимое listGoods (без final) и последующие методы работают с
+         * измененными данными, а не полным списком */
 //        listGoods = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
 //                .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
         newList.forEach(System.out::println);
