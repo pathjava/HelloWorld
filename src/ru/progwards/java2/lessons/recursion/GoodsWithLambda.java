@@ -14,6 +14,7 @@ public class GoodsWithLambda {
 
     private void setGoods(List<Goods> list){
         listGoods.addAll(list);
+        listGoods.forEach(System.out::println);
     }
 
 //    private List<Goods> sortByName(){
@@ -51,7 +52,7 @@ public class GoodsWithLambda {
                 new Goods("Песнь льда и пламени", "15а10", 5, 225.10, Instant.now()),
                 new Goods("Записки о Гальской войне", "12р15", 3, 125.0, Instant.now().minus(1, ChronoUnit.DAYS)),
                 new Goods("Шантарам", "20К18", 1, 301.25, Instant.now().plus(2, ChronoUnit.DAYS)),
-                new Goods("Дни в Бирме", "32б57", 7, 225.10, Instant.now().plus(15, ChronoUnit.HOURS)),
+                new Goods("Дни в Бирме", "32057", 7, 225.10, Instant.now().plus(15, ChronoUnit.HOURS)),
                 new Goods("Проклятые короли", "15Ю61", 7, 145.10, Instant.now().plus(10, ChronoUnit.HOURS)),
                 new Goods("Цыплёнок ястреб", "10ю11", 0, 85.10, Instant.now().plus(300, ChronoUnit.MINUTES)),
                 new Goods("Великие Моголы", "15Ю01", 0, 205.10, Instant.now().minus(2, ChronoUnit.DAYS)),
@@ -60,9 +61,6 @@ public class GoodsWithLambda {
 
         goodsWithLambda.setGoods(list);
 
-        for (Goods listGood : goodsWithLambda.listGoods) {
-            System.out.println(listGood);
-        }
     }
 
 }

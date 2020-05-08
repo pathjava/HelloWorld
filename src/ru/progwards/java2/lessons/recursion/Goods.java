@@ -22,12 +22,6 @@ public class Goods {
 
     @Override
     public String toString() {
-        return "Goods{" +
-                "name='" + name + '\'' +
-                ", number='" + number + '\'' +
-                ", available=" + available +
-                ", price=" + price +
-                ", expired=" + expired +
-                '}';
+        return "name= " + name + ", number= " + number + ", available= " + available + ", price= " + price + ", expired=" + expired;
     }
 }
