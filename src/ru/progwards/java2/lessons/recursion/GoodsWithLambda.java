@@ -8,10 +8,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GoodsWithLambda {
 
-    private final List<Goods> listGoods = new ArrayList<>();
+    private List<Goods> listGoods = new ArrayList<>();
 
     private void setGoods(List<Goods> list) {
         listGoods.addAll(list);
@@ -31,18 +32,25 @@ public class GoodsWithLambda {
         return listGoods;
     }
 
-//    private List<Goods> sortByPartNumber(){
-//
-//    }
-//
-//    private List<Goods> sortByAvailabilityAndNumber(){
-//
-//    }
-//
+    private List<Goods> sortByPartNumber() {
+        listGoods.sort(Comparator.comparing(s -> s.number.substring(0, 2).toLowerCase()));
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
+
+    private List<Goods> sortByAvailabilityAndNumber(){
+//        List<Goods> newList = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
+//                .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
+        listGoods = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
+                .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
+
 //    private List<Goods> expiredAfter(Instant date){
 //
 //    }
-//
+
 //    private List<Goods> сountLess(int count){
 //
 //    }
@@ -61,7 +69,7 @@ public class GoodsWithLambda {
                 new Goods("Дни в Бирме", "32057", 7, 225.10, Instant.now().plus(15, ChronoUnit.HOURS)),
                 new Goods("Проклятые короли", "15Ю61", 7, 145.10, Instant.now().plus(10, ChronoUnit.HOURS)),
                 new Goods("Цыплёнок ястреб", "10ю11", 0, 85.10, Instant.now().plus(300, ChronoUnit.MINUTES)),
-                new Goods("Великие Моголы", "15Ю01", 0, 205.10, Instant.now().minus(2, ChronoUnit.DAYS)),
+                new Goods("Великие Моголы", "15А01", 0, 205.10, Instant.now().minus(2, ChronoUnit.DAYS)),
                 new Goods("Туарег", "05ф01", 5, 145.10, Instant.now())
         );
 
@@ -71,6 +79,10 @@ public class GoodsWithLambda {
         goodsWithLambda.sortByName();
         System.out.println("------------ sorted by vendor code -----------");
         goodsWithLambda.sortByNumber();
+        System.out.println("------------ sorted by part vendor code -----------");
+        goodsWithLambda.sortByPartNumber();
+        System.out.println("------------ sorted by availability and vendor code -----------");
+        goodsWithLambda.sortByAvailabilityAndNumber();
     }
 
 }
