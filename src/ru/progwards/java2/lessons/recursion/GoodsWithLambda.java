@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class GoodsWithLambda {
 
-    private List<Goods> listGoods = new ArrayList<>();
+    private final List<Goods> listGoods = new ArrayList<>();
 
     private void setGoods(List<Goods> list) {
         listGoods.addAll(list);
@@ -38,31 +38,33 @@ public class GoodsWithLambda {
         return listGoods;
     }
 
-    private List<Goods> sortByAvailabilityAndNumber(){
-//        List<Goods> newList = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
-//                .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
-        listGoods = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
+    private List<Goods> sortByAvailabilityAndNumber() {
+        List<Goods> newList = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
                 .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
-        listGoods.forEach(System.out::println);
-        return listGoods;
+//        listGoods = listGoods.stream().sorted(Comparator.comparing(s -> s.number.toLowerCase()))
+//                .sorted(Comparator.comparing(s -> s.available)).collect(Collectors.toList());
+        newList.forEach(System.out::println);
+        return newList;
     }
 
-    private List<Goods> expiredAfter(Instant date){
-        listGoods = listGoods.stream().filter(s -> s.expired.compareTo(date) > 0)
+    private List<Goods> expiredAfter(Instant date) {
+        List<Goods> newList = listGoods.stream().filter(s -> s.expired.compareTo(date) > 0)
                 .sorted(Comparator.comparing(d -> d.expired)).collect(Collectors.toList());
-        listGoods.forEach(System.out::println);
-        return listGoods;
+        newList.forEach(System.out::println);
+        return newList;
     }
 
-    private List<Goods> сountLess(int count){
-        listGoods = listGoods.stream().filter(s -> s.available < count).collect(Collectors.toList());
-        listGoods.forEach(System.out::println);
-        return listGoods;
+    private List<Goods> сountLess(int count) {
+        List<Goods> newList = listGoods.stream().filter(s -> s.available < count).collect(Collectors.toList());
+        newList.forEach(System.out::println);
+        return newList;
     }
 
-//    private List<Goods> сountBetween(int count1, int count2){
-//
-//    }
+    private List<Goods> сountBetween(int count1, int count2) {
+        List<Goods> newList = listGoods.stream().filter(s -> s.available > count1 && s.available < count2).collect(Collectors.toList());
+        newList.forEach(System.out::println);
+        return newList;
+    }
 
     public static void main(String[] args) {
         GoodsWithLambda goodsWithLambda = new GoodsWithLambda();
@@ -80,18 +82,20 @@ public class GoodsWithLambda {
 
         System.out.println("------------ unsorted -----------");
         goodsWithLambda.setGoods(list);
-        System.out.println("------------ sorted by name -----------");
+        System.out.println("\n------------ sorted by name -----------");
         goodsWithLambda.sortByName();
-        System.out.println("------------ sorted by vendor code -----------");
+        System.out.println("\n------------ sorted by vendor code -----------");
         goodsWithLambda.sortByNumber();
-        System.out.println("------------ sorted by part vendor code -----------");
+        System.out.println("\n------------ sorted by part vendor code -----------");
         goodsWithLambda.sortByPartNumber();
-        System.out.println("------------ sorted by availability and vendor code -----------");
+        System.out.println("\n------------ sorted by availability and vendor code -----------");
         goodsWithLambda.sortByAvailabilityAndNumber();
-        System.out.println("------------ sorted by expired date -----------");
+        System.out.println("\n------------ sorted by expired date -----------");
         goodsWithLambda.expiredAfter(Instant.now());
-        System.out.println("------------ sorted by less count -----------");
+        System.out.println("\n------------ sorted by less count -----------");
         goodsWithLambda.сountLess(5);
+        System.out.println("\n------------ sorted by less && more -----------");
+        goodsWithLambda.сountBetween(1, 7);
     }
 
 }
