@@ -47,9 +47,12 @@ public class GoodsWithLambda {
         return listGoods;
     }
 
-//    private List<Goods> expiredAfter(Instant date){
-//
-//    }
+    private List<Goods> expiredAfter(Instant date){
+        listGoods = listGoods.stream().filter(s -> s.expired.compareTo(date) > 0)
+                .sorted(Comparator.comparing(d -> d.expired)).collect(Collectors.toList());
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
 
 //    private List<Goods> сountLess(int count){
 //
@@ -83,6 +86,8 @@ public class GoodsWithLambda {
         goodsWithLambda.sortByPartNumber();
         System.out.println("------------ sorted by availability and vendor code -----------");
         goodsWithLambda.sortByAvailabilityAndNumber();
+        System.out.println("------------ sorted by expired date -----------");
+        goodsWithLambda.expiredAfter(Instant.now());
     }
 
 }
