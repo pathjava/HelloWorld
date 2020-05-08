@@ -54,10 +54,12 @@ public class GoodsWithLambda {
         return listGoods;
     }
 
-//    private List<Goods> сountLess(int count){
-//
-//    }
-//
+    private List<Goods> сountLess(int count){
+        listGoods = listGoods.stream().filter(s -> s.available < count).collect(Collectors.toList());
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
+
 //    private List<Goods> сountBetween(int count1, int count2){
 //
 //    }
@@ -88,6 +90,8 @@ public class GoodsWithLambda {
         goodsWithLambda.sortByAvailabilityAndNumber();
         System.out.println("------------ sorted by expired date -----------");
         goodsWithLambda.expiredAfter(Instant.now());
+        System.out.println("------------ sorted by less count -----------");
+        goodsWithLambda.сountLess(5);
     }
 
 }
