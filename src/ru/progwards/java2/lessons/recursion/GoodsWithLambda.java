@@ -6,25 +6,31 @@ package ru.progwards.java2.lessons.recursion;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GoodsWithLambda {
 
-    private final List<Goods> listGoods = new ArrayList<>();;
+    private final List<Goods> listGoods = new ArrayList<>();
 
-    private void setGoods(List<Goods> list){
+    private void setGoods(List<Goods> list) {
         listGoods.addAll(list);
         listGoods.forEach(System.out::println);
     }
 
-//    private List<Goods> sortByName(){
-//
-//    }
-//
-//    private List<Goods> sortByNumber(){
-//
-//    }
-//
+    private List<Goods> sortByName() {
+        listGoods.sort(Comparator.comparing(n -> n.name));
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
+
+    private List<Goods> sortByNumber() {
+//        listGoods.sort((a,b) -> a.number.toLowerCase().compareTo(b.number.toLowerCase()));
+        listGoods.sort(Comparator.comparing(s -> s.number.toLowerCase()));
+        listGoods.forEach(System.out::println);
+        return listGoods;
+    }
+
 //    private List<Goods> sortByPartNumber(){
 //
 //    }
@@ -48,7 +54,7 @@ public class GoodsWithLambda {
     public static void main(String[] args) {
         GoodsWithLambda goodsWithLambda = new GoodsWithLambda();
 
-        List<Goods> list = new ArrayList<>(List.of(
+        List<Goods> list = List.of(
                 new Goods("Песнь льда и пламени", "15а10", 5, 225.10, Instant.now()),
                 new Goods("Записки о Гальской войне", "12р15", 3, 125.0, Instant.now().minus(1, ChronoUnit.DAYS)),
                 new Goods("Шантарам", "20К18", 1, 301.25, Instant.now().plus(2, ChronoUnit.DAYS)),
@@ -57,10 +63,14 @@ public class GoodsWithLambda {
                 new Goods("Цыплёнок ястреб", "10ю11", 0, 85.10, Instant.now().plus(300, ChronoUnit.MINUTES)),
                 new Goods("Великие Моголы", "15Ю01", 0, 205.10, Instant.now().minus(2, ChronoUnit.DAYS)),
                 new Goods("Туарег", "05ф01", 5, 145.10, Instant.now())
-        ));
+        );
 
+        System.out.println("------------ unsorted -----------");
         goodsWithLambda.setGoods(list);
-
+        System.out.println("------------ sorted by name -----------");
+        goodsWithLambda.sortByName();
+        System.out.println("------------ sorted by vendor code -----------");
+        goodsWithLambda.sortByNumber();
     }
 
 }
