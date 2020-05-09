@@ -5,8 +5,6 @@ package ru.progwards.java2.lessons.recursion;
 
 public class AsNumbersSum {
 
-    StringBuilder stringBuilder = new StringBuilder();
-
     private static int count;
     private static int trueNumber;
 
@@ -14,11 +12,14 @@ public class AsNumbersSum {
         if (count == 0) {
             trueNumber = n;
             count++;
-            return " =";
+            return n + " =";
         } else if (trueNumber - n > 0) {
-            if ((trueNumber - n) == 1) {
+            if ((trueNumber - n) < n && (trueNumber - n) % 2 != 0) {
                 count++;
-                return "+" + 1;
+                return n + "+" + (trueNumber - n);
+            } else if ((trueNumber - n) < n) {
+                count++;
+                return n + "+" + (trueNumber - n);
             }
         }
         count++;
@@ -30,10 +31,17 @@ public class AsNumbersSum {
         if (number <= 0)
             return String.valueOf(1);
 
-        System.out.print(number + "" + someMethod(number) + " ");
+        System.out.print(someMethod(number) + " ");
 
         return asNumbersSum(number - 1);
     }
+
+//    public static String asNumbersSum2(int number) {
+//        if (number <= 0)
+//            return String.valueOf(1);
+//
+//        return number + asNumbersSum2(number - 1);
+//    }
 
 //        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
 
@@ -50,5 +58,7 @@ public class AsNumbersSum {
     public static void main(String[] args) {
 //        System.out.println(asNumbersSum(5));
         asNumbersSum(5);
+
+//        System.out.println(asNumbersSum2(5));
     }
 }
