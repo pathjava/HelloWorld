@@ -14,12 +14,16 @@ public class AsNumbersSum {
         if (count == 0) {
             trueNumber = n;
             count++;
-            System.out.println(trueNumber);
             return " =";
-        } else {
-            count++;
-            return ":" + (n - 1);
+        } else if (trueNumber - n > 0) {
+            if ((trueNumber - n) == 1) {
+                count++;
+                return "+" + 1;
+            }
+
         }
+        count++;
+        return ":" + (n - 1);
     }
 
 
@@ -32,6 +36,8 @@ public class AsNumbersSum {
         System.out.print(number + "" + someMethod(number) + " ");
 
         return asNumbersSum(number - 1);
+
+//        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
     }
 
 
