@@ -3,6 +3,8 @@
 
 package ru.progwards.java2.lessons.recursion;
 
+import com.google.inject.internal.asm.$Label;
+
 public class AsNumbersSum {
 
     private static int count;
@@ -18,11 +20,16 @@ public class AsNumbersSum {
             if ((trueNumber - n) == 1) {
                 count++;
                 return n + "+" + 1;
-            } else if ((trueNumber - n) < n && (trueNumber - n) % 2 == 0) {
+            } else {
                 count++;
                 str.append(n).append("+").append(trueNumber - n).append(" ");
                 int temp = (trueNumber - n) / 2;
-                int cycle = (trueNumber - n);
+                int rem = (trueNumber - n) % 2;
+                int cycle;
+                if (temp % 2 != 0)
+                    cycle = (trueNumber - n) - rem;
+                else
+                    cycle = (trueNumber - n);
                 while (temp != 0) {
                     StringBuilder str2 = new StringBuilder();
                     while (cycle > 0) {
@@ -34,9 +41,10 @@ public class AsNumbersSum {
                     cycle = (trueNumber - n);
                 }
                 return str.toString();
-            } else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
-
             }
+//            else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
+//
+//            }
         }
         count++;
         return ":" + (n - 1);
