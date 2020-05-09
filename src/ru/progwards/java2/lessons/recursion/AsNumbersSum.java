@@ -22,10 +22,15 @@ public class AsNumbersSum {
                 count++;
                 str.append(n).append("+").append(trueNumber - n).append(" ");
                 int temp = (trueNumber - n) / 2;
-                str.append(n).append("+").append(temp).append("+").append(temp);
+                int cycle = (trueNumber - n);
+                StringBuilder str2 = new StringBuilder();
+                while (cycle > 0) {
+                    str2.append("+").append(temp);
+                    cycle -= temp;
+                }
+                str.append(n).append(str2);
                 return str.toString();
-            }
-            else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
+            } else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
 
             }
         }
