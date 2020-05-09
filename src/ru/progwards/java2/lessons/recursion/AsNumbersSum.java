@@ -3,8 +3,6 @@
 
 package ru.progwards.java2.lessons.recursion;
 
-import com.google.inject.internal.asm.$Label;
-
 public class AsNumbersSum {
 
     private static int count;
@@ -61,20 +59,7 @@ public class AsNumbersSum {
         return asNumbersSum(number - 1);
     }
 
-//    public static String asNumbersSum2(int number) {
-//        int count = 0;
-//        if (number <= 0)
-//            return String.valueOf(1);
-//
-//        int result=0;
-//        while(number >= count){
-//            count++;
-//            result = Integer.parseInt(number + asNumbersSum2(number - 1));
-//        }
-//
-//        return String.valueOf(result);
-//    }
-
+    /* что с ним делать??? */
 //        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
 
     /* Реализовать класс, AsNumbersSum, содержащий метод
@@ -88,9 +73,6 @@ public class AsNumbersSum {
      */
 
     public static void main(String[] args) {
-//        System.out.println(asNumbersSum(5));
         asNumbersSum(5);
-
-//        System.out.println(asNumbersSum2(5));
     }
 }
