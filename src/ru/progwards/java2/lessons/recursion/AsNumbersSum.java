@@ -20,7 +20,6 @@ public class AsNumbersSum {
                 count++;
                 return "+" + 1;
             }
-
         }
         count++;
         return ":" + (n - 1);
@@ -31,15 +30,12 @@ public class AsNumbersSum {
         if (number <= 0)
             return String.valueOf(1);
 
-//        System.out.print(someMethod(number) + " " + number);
-//        System.out.print(number + "=" + someMethod(number) + " ");
         System.out.print(number + "" + someMethod(number) + " ");
 
         return asNumbersSum(number - 1);
-
-//        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
     }
 
+//        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
 
     /* Реализовать класс, AsNumbersSum, содержащий метод
      * public static String asNumbersSum(int number), который раскладывает параметр number,
