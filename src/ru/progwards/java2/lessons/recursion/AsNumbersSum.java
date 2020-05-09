@@ -15,14 +15,14 @@ public class AsNumbersSum {
         if (count == 0) {
             trueNumber = n;
             count++;
-            return n + " =";
+            return "" + n;
         } else if (trueNumber - n > 0) {
             if ((trueNumber - n) == 1) {
                 count++;
-                return n + "+" + 1;
+                return " = " + n + "+" + 1;
             } else {
                 count++;
-                str.append(n).append("+").append(trueNumber - n).append(" ");
+                str.append(" = ").append(n).append("+").append(trueNumber - n);
                 int temp = (trueNumber - n) / 2;
                 int rem = (trueNumber - n) % 2;
                 int temp2 = 0;
@@ -35,9 +35,9 @@ public class AsNumbersSum {
                         cycle -= temp;
                     }
                     if (trueNumber - (n + temp2) == 0)
-                        str.append(n).append(str2).append(" ");
+                        str.append(" = ").append(n).append(str2);
                     else
-                        str.append(n).append(str2).append("+").append(rem).append(" ");
+                        str.append(" = ").append(n).append(str2).append("+").append(rem);
                     temp--;
                     if (temp % 2 != 0)
                         rem = temp % 2;
@@ -59,7 +59,7 @@ public class AsNumbersSum {
         if (number <= 0)
             return String.valueOf(1);
 
-        System.out.print(someMethod(number) + " ");
+        System.out.print(someMethod(number) + "");
 
         return asNumbersSum(number - 1);
     }
@@ -92,7 +92,7 @@ public class AsNumbersSum {
 
     public static void main(String[] args) {
 //        System.out.println(asNumbersSum(5));
-        asNumbersSum(15);
+        asNumbersSum(5);
 
 //        System.out.println(asNumbersSum2(5));
     }
