@@ -9,17 +9,21 @@ public class AsNumbersSum {
     private static int trueNumber;
 
     private static String someMethod(int n) {
+        StringBuilder str = new StringBuilder();
         if (count == 0) {
             trueNumber = n;
             count++;
             return n + " =";
         } else if (trueNumber - n > 0) {
-            if ((trueNumber - n) < n && (trueNumber - n) % 2 != 0) {
+            if ((trueNumber - n) == 1) {
                 count++;
-                return n + "+" + (trueNumber - n);
-            } else if ((trueNumber - n) < n) {
+                return n + "+" + 1;
+            } else if ((trueNumber - n) < n && (trueNumber - n) % 2 == 0) {
                 count++;
-                return n + "+" + (trueNumber - n);
+                str.append(n).append("+").append(trueNumber - n).append(" ");
+                int temp = (trueNumber - n) / 2;
+                str.append(n).append("+").append(temp).append("+").append(temp);
+                return str.toString();
             }
         }
         count++;
@@ -37,10 +41,17 @@ public class AsNumbersSum {
     }
 
 //    public static String asNumbersSum2(int number) {
+//        int count = 0;
 //        if (number <= 0)
 //            return String.valueOf(1);
 //
-//        return number + asNumbersSum2(number - 1);
+//        int result=0;
+//        while(number >= count){
+//            count++;
+//            result = Integer.parseInt(number + asNumbersSum2(number - 1));
+//        }
+//
+//        return String.valueOf(result);
 //    }
 
 //        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
