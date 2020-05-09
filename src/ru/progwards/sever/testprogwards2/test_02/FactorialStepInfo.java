@@ -7,7 +7,13 @@ public class FactorialStepInfo {
     public static int factorial(int val) {
         System.out.println("Прямой ход, val = " + val);
 
-        int result = val <= 1 ? 1 : factorial(val - 1) * val;
+        int result;
+        if (val <= 1)
+            result = 1;
+        else
+            result = factorial(val - 1) * val;
+
+//        int result = val <= 1 ? 1 : factorial(val - 1) * val;
 
         System.out.println("Обратный ход, val = " + val + ", result = " + result);
 

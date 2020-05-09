@@ -7,6 +7,8 @@ import org.apache.logging.log4j.core.util.JsonUtils;
 
 public class AsNumbersSum {
 
+    // все, что написано ниже, это хождение слепого в полной тьме
+    // то есть, полное отсутствие понимания, что есть рекурсия и с чем её едят
     public static String asNumbersSum(int number) {
         if (number <= 0)
             return 0 + " ";

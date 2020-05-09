@@ -13,6 +13,8 @@ public class HanoiTower {
         this.pos = pos;
     }
 
+    // везде данную задачу решают через void move(int n, int a, int b, int c) и это логично, три столба и количество дисков
+    // но в данном случае void move(int from, int to) - ничего не понимаю...
     public void move(int from, int to){
 
     }
