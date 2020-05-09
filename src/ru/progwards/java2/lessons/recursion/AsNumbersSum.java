@@ -46,9 +46,6 @@ public class AsNumbersSum {
                 }
                 return str.toString();
             }
-//            else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
-//
-//            }
         }
         count++;
         return ":" + (n - 1);
