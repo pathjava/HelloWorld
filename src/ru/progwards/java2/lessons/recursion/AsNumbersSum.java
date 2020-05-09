@@ -7,30 +7,30 @@ import org.apache.logging.log4j.core.util.JsonUtils;
 
 public class AsNumbersSum {
 
-    // все, что написано ниже, это хождение слепого в полной тьме
-    // то есть, полное отсутствие понимания, что есть рекурсия и с чем её едят
+    StringBuilder stringBuilder = new StringBuilder();
+
+    private static int count = 0;
+
+    private static String someMethod(int n) {
+        if (count == 0) {
+            count++;
+            return "=";
+        } else {
+            count++;
+            return String.valueOf(n - 1);
+        }
+    }
+
+
     public static String asNumbersSum(int number) {
         if (number <= 0)
-            return 0 + " ";
-        if (number == 1) {
-            System.out.println(number);
-            return asNumbersSum(number - 1) + 1 + " ";
-        }
-        if (number == 2) {
-            System.out.println(number);
-            return asNumbersSum(number - 1) + 2 + " ";
-        }
-        if (number == 3) {
-            System.out.println(number);
-            return asNumbersSum(number - 1) + 3 + " ";
-        }
-        if (number == 4) {
-            System.out.println(number);
-            return asNumbersSum(number - 1) + 4 + " ";
-        }
+            return String.valueOf(1);
 
-//        System.out.println(number);
-        return asNumbersSum(number - 1) + " ";
+//        System.out.print(someMethod(number) + " " + number);
+//        System.out.print(number + "=" + someMethod(number) + " ");
+        System.out.print(number + " " + someMethod(number) + " ");
+
+        return asNumbersSum(number - 1);
     }
 
 
@@ -45,6 +45,7 @@ public class AsNumbersSum {
      */
 
     public static void main(String[] args) {
-        System.out.println("5 = " + asNumbersSum(5));
+//        System.out.println(asNumbersSum(5));
+        asNumbersSum(5);
     }
 }
