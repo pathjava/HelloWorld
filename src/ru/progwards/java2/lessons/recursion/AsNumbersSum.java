@@ -9,15 +9,18 @@ public class AsNumbersSum {
 
     StringBuilder stringBuilder = new StringBuilder();
 
-    private static int count = 0;
+    private static int count;
+    private static int trueNumber;
 
     private static String someMethod(int n) {
         if (count == 0) {
+            trueNumber = n;
             count++;
-            return "=";
+            System.out.println(trueNumber);
+            return " =";
         } else {
             count++;
-            return String.valueOf(n - 1);
+            return ":" + (n - 1);
         }
     }
 
@@ -28,7 +31,7 @@ public class AsNumbersSum {
 
 //        System.out.print(someMethod(number) + " " + number);
 //        System.out.print(number + "=" + someMethod(number) + " ");
-        System.out.print(number + " " + someMethod(number) + " ");
+        System.out.print(number + "" + someMethod(number) + " ");
 
         return asNumbersSum(number - 1);
     }
