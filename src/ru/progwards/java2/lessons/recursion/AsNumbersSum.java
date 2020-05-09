@@ -39,6 +39,8 @@ public class AsNumbersSum {
                     else
                         str.append(n).append(str2).append("+").append(rem).append(" ");
                     temp--;
+                    if (temp % 2 != 0)
+                        rem = temp % 2;
                     temp2 = 0;
                     cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
                 }
