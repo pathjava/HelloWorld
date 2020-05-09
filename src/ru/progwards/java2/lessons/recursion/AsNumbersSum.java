@@ -23,12 +23,16 @@ public class AsNumbersSum {
                 str.append(n).append("+").append(trueNumber - n).append(" ");
                 int temp = (trueNumber - n) / 2;
                 int cycle = (trueNumber - n);
-                StringBuilder str2 = new StringBuilder();
-                while (cycle > 0) {
-                    str2.append("+").append(temp);
-                    cycle -= temp;
+                while (temp != 0) {
+                    StringBuilder str2 = new StringBuilder();
+                    while (cycle > 0) {
+                        str2.append("+").append(temp);
+                        cycle -= temp;
+                    }
+                    str.append(n).append(str2).append(" ");
+                    temp--;
+                    cycle = (trueNumber - n);
                 }
-                str.append(n).append(str2);
                 return str.toString();
             } else if ((trueNumber - n) > n && (trueNumber - n) % 2 == 0) {
 
@@ -76,7 +80,7 @@ public class AsNumbersSum {
 
     public static void main(String[] args) {
 //        System.out.println(asNumbersSum(5));
-        asNumbersSum(5);
+        asNumbersSum(15);
 
 //        System.out.println(asNumbersSum2(5));
     }
