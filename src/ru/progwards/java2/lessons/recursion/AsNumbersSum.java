@@ -25,20 +25,22 @@ public class AsNumbersSum {
                 str.append(n).append("+").append(trueNumber - n).append(" ");
                 int temp = (trueNumber - n) / 2;
                 int rem = (trueNumber - n) % 2;
-                int cycle;
-                if (temp % 2 != 0)
-                    cycle = (trueNumber - n) - rem;
-                else
-                    cycle = (trueNumber - n);
+                int temp2 = 0;
+                int cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
                 while (temp != 0) {
                     StringBuilder str2 = new StringBuilder();
-                    while (cycle > 0) {
+                    while (cycle >= temp && cycle > 0) {
                         str2.append("+").append(temp);
+                        temp2 += temp;
                         cycle -= temp;
                     }
-                    str.append(n).append(str2).append(" ");
+                    if (trueNumber - (n + temp2) == 0)
+                        str.append(n).append(str2).append(" ");
+                    else
+                        str.append(n).append(str2).append("+").append(rem).append(" ");
                     temp--;
-                    cycle = (trueNumber - n);
+                    temp2 = 0;
+                    cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
                 }
                 return str.toString();
             }
