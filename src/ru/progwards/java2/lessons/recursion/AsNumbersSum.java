@@ -20,8 +20,11 @@ public class AsNumbersSum {
                 return " = " + n + "+" + 1;
             } else {
                 count++;
+//                if (trueNumber / 2 + 1 <= n)
                 str.append(" = ").append(n).append("+").append(trueNumber - n);
                 int temp = (trueNumber - n) / 2;
+//                if (trueNumber - n > n)
+//                    str.append(" = ").append((trueNumber - n) - temp).append("+").append((trueNumber - n) - temp).append("+").append(temp);
                 int rem = (trueNumber - n) % 2;
                 int temp2 = 0;
                 int cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
