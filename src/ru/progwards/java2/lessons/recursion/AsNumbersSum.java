@@ -63,13 +63,29 @@ public class AsNumbersSum {
     }
 
 
-    public static String asNumbersSumTwo(int number){
-        if (number <= 0)
-            return String.valueOf(1);
-
+    public static String asNumbersSumTwo(int number) {
         System.out.println(number + "");
+        int result;
+        if (number <= 1)
+            result = 1;
+        else
+            result = Integer.parseInt(asNumbersSumTwo(number - 1)) * number;
 
-        return asNumbersSumTwo(number - 1);
+        System.out.printf("%2d : %d%n", number, result);
+
+        return String.valueOf(result);
+
+//        System.out.println("Прямой ход, val = " + number);
+//
+//        int result;
+//        if (number <= 1)
+//            result = 1;
+//        else
+//            result = Integer.parseInt(asNumbersSumTwo(number - 1)) * number;
+//
+//        System.out.println("Обратный ход, val = " + number + ", result = " + result);
+//
+//        return String.valueOf(result);
     }
 
 
