@@ -8,99 +8,102 @@ import java.util.List;
 
 public class AsNumbersSum {
 
-    private static int count;
-    private static int trueNumber;
-
-    private static String someMethod(int n) {
-        StringBuilder str = new StringBuilder();
-        if (count == 0) {
-            trueNumber = n;
-            count++;
-            return "" + n;
-        } else if (trueNumber - n > 0) {
-            if ((trueNumber - n) == 1) {
-                count++;
-                return " = " + n + "+" + 1;
-            } else {
-                count++;
-//                if (trueNumber / 2 + 1 <= n)
-                str.append(" = ").append(n).append("+").append(trueNumber - n);
-                int temp = (trueNumber - n) / 2;
-//                if (trueNumber - n > n)
-//                    str.append(" = ").append((trueNumber - n) - temp).append("+").append((trueNumber - n) - temp).append("+").append(temp);
-                int rem = (trueNumber - n) % 2;
-                int temp2 = 0;
-                int cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
-                while (temp != 0) {
-                    StringBuilder str2 = new StringBuilder();
-                    while (cycle >= temp && cycle > 0) {
-                        str2.append("+").append(temp);
-                        temp2 += temp;
-                        cycle -= temp;
-                    }
-                    if (trueNumber - (n + temp2) == 0)
-                        str.append(" = ").append(n).append(str2);
-                    else
-                        str.append(" = ").append(n).append(str2).append("+").append(rem);
-                    temp--;
-                    if (temp % 2 != 0)
-                        rem = temp % 2;
-                    temp2 = 0;
-                    cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
-                }
-                return str.toString();
-            }
-        }
-        count++;
-        return ":" + (n - 1);
-    }
-
-
-    public static String asNumbersSum(int number) {
-        if (number <= 0)
-            return String.valueOf(1);
-
-        System.out.print(someMethod(number) + "");
-
-        return asNumbersSum(number - 1);
-    }
-
+//    private static int count;
+//    private static int trueNumber;
+//
+//    private static String someMethod(int n) {
+//        StringBuilder str = new StringBuilder();
+//        if (count == 0) {
+//            trueNumber = n;
+//            count++;
+//            return "" + n;
+//        } else if (trueNumber - n > 0) {
+//            if ((trueNumber - n) == 1) {
+//                count++;
+//                return " = " + n + "+" + 1;
+//            } else {
+//                count++;
+////                if (trueNumber / 2 + 1 <= n)
+//                str.append(" = ").append(n).append("+").append(trueNumber - n);
+//                int temp = (trueNumber - n) / 2;
+////                if (trueNumber - n > n)
+////                    str.append(" = ").append((trueNumber - n) - temp).append("+").append((trueNumber - n) - temp).append("+").append(temp);
+//                int rem = (trueNumber - n) % 2;
+//                int temp2 = 0;
+//                int cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
+//                while (temp != 0) {
+//                    StringBuilder str2 = new StringBuilder();
+//                    while (cycle >= temp && cycle > 0) {
+//                        str2.append("+").append(temp);
+//                        temp2 += temp;
+//                        cycle -= temp;
+//                    }
+//                    if (trueNumber - (n + temp2) == 0)
+//                        str.append(" = ").append(n).append(str2);
+//                    else
+//                        str.append(" = ").append(n).append(str2).append("+").append(rem);
+//                    temp--;
+//                    if (temp % 2 != 0)
+//                        rem = temp % 2;
+//                    temp2 = 0;
+//                    cycle = temp % 2 != 0 ? trueNumber - n : (trueNumber - n) - rem;
+//                }
+//                return str.toString();
+//            }
+//        }
+//        count++;
+//        return ":" + (n - 1);
+//    }
+//
+//
+//    public static String asNumbersSum(int number) {
+//        if (number <= 0)
+//            return String.valueOf(1);
+//
+//        System.out.print(someMethod(number) + "");
+//
+//        return asNumbersSum(number - 1);
+//    }
 
     /*
      * 5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
      *
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
-    private static final List<Integer> list = new ArrayList<>();
+    private static final List<String> list = new ArrayList<>();
+
     public static String asNumbersSumTwo(int number) {
+        int result = 0;
+        int count = number;
+        System.out.println(number + " ");
 
-        list.add(number);
-        int result;
-        System.out.println(number + " " + list);
-        if (number <= 1)
-            result = 1;
-        else {
+        if (number <= 1) {
+            list.add(String.valueOf(number));
+            result = Integer.parseInt(String.valueOf(1));
+        } else {
 
-            result = Integer.parseInt(asNumbersSumTwo(number - 1)) + number;
+            while (count > 0) {
+                list.add(String.valueOf(number));
+                if (result != 0)
+                    list.add(String.valueOf(result));
+                result = Integer.parseInt(asNumbersSumTwo(number - 1));
+                count--;
+            }
         }
 
-        System.out.println(number + " " + result);
+        System.out.print(number + " " + result + list);
 
         return String.valueOf(result);
-
-//        System.out.println("Прямой ход, val = " + number);
-//
-//        int result;
-//        if (number <= 1)
-//            result = 1;
-//        else
-//            result = Integer.parseInt(asNumbersSumTwo(number - 1)) * number;
-//
-//        System.out.println("Обратный ход, val = " + number + ", result = " + result);
-//
-//        return String.valueOf(result);
     }
 
+    /*
+     * Если не запрещать повторы, то можно так представить
+     * asNumbersSum(1) = 1 - Выход из рекурсии.
+     * asNumbersSum(2) = 1+asNumbersSum(1)
+     * asNumbersSum(3) = 1+asNumbersSum(2) = 2+asNumbersSum(1)
+     * asNumbersSum(4) = 1+asNumbersSum(3) = 2+asNumbersSum(2) = 3+asNumbersSum(1)
+     * и так далее.
+     * */
 
 
     /* что с ним делать??? */

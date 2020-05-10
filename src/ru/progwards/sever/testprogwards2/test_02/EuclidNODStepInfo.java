@@ -16,6 +16,6 @@ public class EuclidNODStepInfo {
     }
 
     public static void main(String[] args) {
-        System.out.println(nod(15, 25));
+        System.out.println(nod(12, 53));
     }
 }
