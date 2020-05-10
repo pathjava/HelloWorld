@@ -63,13 +63,20 @@ public class AsNumbersSum {
     }
 
 
+    /*
+     * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
+     * */
     public static String asNumbersSumTwo(int number) {
+        int count = 0;
         System.out.println(number + "");
-        int result;
+        int result = 0;
         if (number <= 1)
             result = 1;
         else
-            result = Integer.parseInt(asNumbersSumTwo(number - 1)) * number;
+            while (count < number) {
+                result = Integer.parseInt(Integer.parseInt(asNumbersSumTwo(number - 1)) + "" + number);
+                count++;
+            }
 
         System.out.printf("%2d : %d%n", number, result);
 
@@ -106,6 +113,6 @@ public class AsNumbersSum {
     public static void main(String[] args) {
 //        asNumbersSum(5);
 
-        asNumbersSumTwo(10);
+        asNumbersSumTwo(5);
     }
 }
