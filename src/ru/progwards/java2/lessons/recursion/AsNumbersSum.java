@@ -3,6 +3,9 @@
 
 package ru.progwards.java2.lessons.recursion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AsNumbersSum {
 
     private static int count;
@@ -68,13 +71,18 @@ public class AsNumbersSum {
      *
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
+    private static final List<Integer> list = new ArrayList<>();
     public static String asNumbersSumTwo(int number) {
-        System.out.println(number + "");
-        int result = 0;
+
+        list.add(number);
+        int result;
+        System.out.println(number + " " + list);
         if (number <= 1)
             result = 1;
-        else
-            result = Integer.parseInt(asNumbersSumTwo(number - 1) + number);
+        else {
+
+            result = Integer.parseInt(asNumbersSumTwo(number - 1)) + number;
+        }
 
         System.out.println(number + " " + result);
 
