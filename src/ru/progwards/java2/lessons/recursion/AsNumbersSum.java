@@ -62,6 +62,18 @@ public class AsNumbersSum {
         return asNumbersSum(number - 1);
     }
 
+
+    public static String asNumbersSumTwo(int number){
+        if (number <= 0)
+            return String.valueOf(1);
+
+        System.out.println(number + "");
+
+        return asNumbersSumTwo(number - 1);
+    }
+
+
+
     /* что с ним делать??? */
 //        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
 
@@ -76,6 +88,8 @@ public class AsNumbersSum {
      */
 
     public static void main(String[] args) {
-        asNumbersSum(5);
+//        asNumbersSum(5);
+
+        asNumbersSumTwo(10);
     }
 }

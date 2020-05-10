@@ -21,6 +21,6 @@ public class FactorialStepInfo {
     }
 
     public static void main(String[] args) {
-        factorial(5);
+        factorial(15);
     }
 }
