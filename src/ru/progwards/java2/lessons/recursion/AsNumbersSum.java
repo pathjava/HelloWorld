@@ -64,21 +64,19 @@ public class AsNumbersSum {
 
 
     /*
+     * 5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
+     *
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
     public static String asNumbersSumTwo(int number) {
-        int count = 0;
         System.out.println(number + "");
         int result = 0;
         if (number <= 1)
             result = 1;
         else
-            while (count < number) {
-                result = Integer.parseInt(Integer.parseInt(asNumbersSumTwo(number - 1)) + "" + number);
-                count++;
-            }
+            result = Integer.parseInt(asNumbersSumTwo(number - 1) + number);
 
-        System.out.printf("%2d : %d%n", number, result);
+        System.out.println(number + " " + result);
 
         return String.valueOf(result);
 
