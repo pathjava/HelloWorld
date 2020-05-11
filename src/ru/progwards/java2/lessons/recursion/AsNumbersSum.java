@@ -3,9 +3,6 @@
 
 package ru.progwards.java2.lessons.recursion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AsNumbersSum {
 
 //    private static int count;
@@ -70,31 +67,28 @@ public class AsNumbersSum {
      *
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
-    private static final List<String> list = new ArrayList<>();
 
     public static String asNumbersSumTwo(int number) {
         int result = 0;
-        int count = number;
-        System.out.println(number + " ");
+        System.out.println(number);
 
         if (number <= 1) {
-            list.add(String.valueOf(number));
-            result = Integer.parseInt(String.valueOf(1));
+            result = 1;
         } else {
-
-            while (count > 0) {
-                list.add(String.valueOf(number));
-                if (result != 0)
-                    list.add(String.valueOf(result));
-                result = Integer.parseInt(asNumbersSumTwo(number - 1));
-                count--;
-            }
+            asNumbersSumTwo(number - 1);
         }
 
-        System.out.print(number + " " + result + list);
+        System.out.println(number);
 
         return String.valueOf(result);
     }
+
+    /*
+     * 4 + asNumbersSum(1)
+     * 3 + asNumbersSum(2)
+     * 2 + asNumbersSum(3)
+     * 1 + asNumbersSum(4)
+     * */
 
     /*
      * Если не запрещать повторы, то можно так представить
@@ -123,5 +117,6 @@ public class AsNumbersSum {
 //        asNumbersSum(5);
 
         asNumbersSumTwo(5);
+//        System.out.println(asNumbersSumTwo(5));
     }
 }
