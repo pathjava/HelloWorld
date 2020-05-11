@@ -68,17 +68,19 @@ public class AsNumbersSum {
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
 
-    public static String asNumbersSumTwo(int number) {
+    public static String asNumbersSumTwo(int number, String str) {
         int result = 0;
-        System.out.println(number);
+        System.out.println(number + str);
 
         if (number <= 1) {
             result = 1;
         } else {
-            asNumbersSumTwo(number - 1);
+//            for (int i = 1; i < number / 2; i++) {
+                asNumbersSumTwo(number - 1, str + "+" + 1);
+//            }
         }
 
-        System.out.println(number);
+//        System.out.println(number + str);
 
         return String.valueOf(result);
     }
@@ -116,7 +118,7 @@ public class AsNumbersSum {
     public static void main(String[] args) {
 //        asNumbersSum(5);
 
-        asNumbersSumTwo(5);
+        asNumbersSumTwo(5, "");
 //        System.out.println(asNumbersSumTwo(5));
     }
 }
