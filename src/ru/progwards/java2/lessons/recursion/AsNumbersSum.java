@@ -75,15 +75,23 @@ public class AsNumbersSum {
         if (number <= 1) {
             result = 1;
         } else {
-//            for (int i = 1; i < number / 2; i++) {
-                asNumbersSumTwo(number - 1, str + "+" + 1);
-//            }
+            for (int i = 1; i < number / 2 + 1; i++) {
+                asNumbersSumTwo(number - i, str + "+" + i);
+            }
         }
 
 //        System.out.println(number + str);
 
         return String.valueOf(result);
     }
+
+
+    public static void main(String[] args) {
+//        asNumbersSum(5);
+
+        asNumbersSumTwo(5, "");
+    }
+
 
     /*
      * 4 + asNumbersSum(1)
@@ -114,11 +122,4 @@ public class AsNumbersSum {
      * Повторные комбинации не допускаются, например, если а строке уже есть 3+2, то 2+3 там быть не должно.
      * Задача должна быть решена методом рекурсии, циклы использовать запрещено.
      */
-
-    public static void main(String[] args) {
-//        asNumbersSum(5);
-
-        asNumbersSumTwo(5, "");
-//        System.out.println(asNumbersSumTwo(5));
-    }
 }
