@@ -3,8 +3,7 @@
 
 package ru.progwards.java2.lessons.recursion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AsNumbersSum {
 
@@ -79,14 +78,22 @@ public class AsNumbersSum {
             result = 1;
         } else {
             for (int i = 1; i < number / 2 + 1; i++) {
-                asNumbersSumTwo(number - i, "+" + i + str);
+                asNumbersSumTwo(number - i, "-" + i + str);
             }
         }
 
         return String.valueOf(result);
     }
 
+    private static final Map<String, String> sortedMap = new TreeMap<>();
 
+    public static void sortNumber(){
+        for (String s : list) {
+            int[] numArr = Arrays.stream(s.split("-")).sorted(Comparator.reverseOrder()).mapToInt(Integer::parseInt).toArray();
+            System.out.println(Arrays.toString(numArr));
+        }
+
+    }
 
 
     public static void main(String[] args) {
@@ -95,6 +102,10 @@ public class AsNumbersSum {
         asNumbersSumTwo(5, "");
 
         list.forEach(System.out::println);
+
+        System.out.println("---------------------");
+
+        sortNumber();
     }
 
 
