@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.recursion;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class AsNumbersSum {
 
@@ -64,9 +65,6 @@ public class AsNumbersSum {
 //        return asNumbersSum(number - 1);
 //    }
 
-    /*
-     * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
-     * */
     private static final List<String> list = new ArrayList<>();
 
     public static String asNumbersSumTwo(int number, String str) {
@@ -81,18 +79,27 @@ public class AsNumbersSum {
                 asNumbersSumTwo(number - i, "-" + i + str);
             }
         }
-
         return String.valueOf(result);
     }
 
-    private static final Map<String, String> sortedMap = new TreeMap<>();
+    private static final Map<String, String> sortedMap = new TreeMap<>(Collections.reverseOrder());
 
-    public static void sortNumber(){
+    public static void sortNumber() {
         for (String s : list) {
             int[] numArr = Arrays.stream(s.split("-")).sorted(Comparator.reverseOrder()).mapToInt(Integer::parseInt).toArray();
-            System.out.println(Arrays.toString(numArr));
+
+            StringBuilder str = new StringBuilder();
+            IntStream.range(0, numArr.length).forEachOrdered(i -> {
+                str.append(numArr[i]).append(i == numArr.length - 1 ? "" : "+");
+            });
+            sortedMap.put(str.toString(), str.toString());
         }
 
+        int count = 0;
+        for (String value : sortedMap.values()) {
+            System.out.print(count != sortedMap.size() - 1 ? value + " = " : value);
+            count++;
+        }
     }
 
 
@@ -101,11 +108,13 @@ public class AsNumbersSum {
 
         asNumbersSumTwo(5, "");
 
-        list.forEach(System.out::println);
+//        list.forEach(System.out::println);
 
-        System.out.println("---------------------");
+//        System.out.println("---------------------");
 
         sortNumber();
+
+//        sortedMap.forEach((k,v) -> System.out.println(v));
     }
 
 
