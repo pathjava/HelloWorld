@@ -34,6 +34,18 @@ public class HanoiTower {
         hanoi(size, from, to, middle);
     }
 
+    /*
+    * написал выше комментарий, снова прогнал по дебагу и стал немного понимать.
+    * основная суть в смене позиций параметров в возвращаемых методах,
+    * именно так происходит перестановка.
+    * параметр из сигнатуры метода:
+    * hanoi(int n, int from, int to, int middle)
+    * и из рекурсивных вызовов:
+    * hanoi(n - 1, from, middle, to);
+    * и
+    * hanoi(n - 1, middle, to, from);
+    * */
+
     public void hanoi(int n, int from, int to, int middle) {
         if (n == 0)
             return;
