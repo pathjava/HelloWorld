@@ -3,6 +3,9 @@
 
 package ru.progwards.java2.lessons.recursion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AsNumbersSum {
 
 //    private static int count;
@@ -63,55 +66,37 @@ public class AsNumbersSum {
 //    }
 
     /*
-     * 5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
-     *
      * 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
      * */
+    private static final List<String> list = new ArrayList<>();
 
     public static String asNumbersSumTwo(int number, String str) {
         int result = 0;
-        System.out.println(number + str);
+//        System.out.println(number + str);
+        list.add(number + str);
 
         if (number <= 1) {
             result = 1;
         } else {
             for (int i = 1; i < number / 2 + 1; i++) {
-                asNumbersSumTwo(number - i, str + "+" + i);
+                asNumbersSumTwo(number - i, "+" + i + str);
             }
         }
 
-//        System.out.println(number + str);
-
         return String.valueOf(result);
     }
+
+
 
 
     public static void main(String[] args) {
 //        asNumbersSum(5);
 
         asNumbersSumTwo(5, "");
+
+        list.forEach(System.out::println);
     }
 
-
-    /*
-     * 4 + asNumbersSum(1)
-     * 3 + asNumbersSum(2)
-     * 2 + asNumbersSum(3)
-     * 1 + asNumbersSum(4)
-     * */
-
-    /*
-     * Если не запрещать повторы, то можно так представить
-     * asNumbersSum(1) = 1 - Выход из рекурсии.
-     * asNumbersSum(2) = 1+asNumbersSum(1)
-     * asNumbersSum(3) = 1+asNumbersSum(2) = 2+asNumbersSum(1)
-     * asNumbersSum(4) = 1+asNumbersSum(3) = 2+asNumbersSum(2) = 3+asNumbersSum(1)
-     * и так далее.
-     * */
-
-
-    /* что с ним делать??? */
-//        5 = 4 + asNumbersSum(1) = 3 + asNumbersSum(2) = 2 + asNumbersSum(3) = 1 + asNumbersSum(4);
 
     /* Реализовать класс, AsNumbersSum, содержащий метод
      * public static String asNumbersSum(int number), который раскладывает параметр number,
