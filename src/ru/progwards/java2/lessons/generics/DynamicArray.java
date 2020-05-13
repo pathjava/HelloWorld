@@ -58,6 +58,9 @@ public class DynamicArray<T> {
     }
 
     private void get(int pos) {
+        if (pos < 0 || pos > arr.length - 1)
+            return;
+
         System.out.println(arr[pos]);
     }
 
