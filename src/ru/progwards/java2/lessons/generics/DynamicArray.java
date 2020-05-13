@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.generics;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class DynamicArray<T extends Comparable<? super T>> {
 
@@ -15,13 +14,34 @@ public class DynamicArray<T extends Comparable<? super T>> {
     public DynamicArray() {
     }
 
-    private void add(T element){
-        size = (int) Arrays.stream(arr).filter(Objects::nonNull).count();
+    private int realSize() {
+        return size = (int) Arrays.stream(arr).filter(Objects::nonNull).count();
+    }
 
-        if (arr.length == size) {
+    private void add(T element) {
+        if (arr.length == realSize()) {
             arr = Arrays.copyOf(arr, arr.length * 2);
         }
         arr[size] = element;
+    }
+
+    private void insert(int pos, T element) {
+        if (pos < 0)
+            return;
+
+        if (arr.length == realSize()) {
+            arr = Arrays.copyOf(arr, arr.length * 2);
+        }
+
+        T[] tempArr = Arrays.copyOfRange(arr, pos, arr.length);
+
+        arr[pos] = element;
+
+        int index = 0;
+        for (int i = pos + 1; i < arr.length; i++) {
+            arr[i] = tempArr[index];
+            index++;
+        }
     }
 
 
@@ -31,6 +51,10 @@ public class DynamicArray<T extends Comparable<? super T>> {
 
         for (int i = 1; i <= 10; i++) {
             dynamicArray.add(i);
+        }
+
+        for (int i = 1; i < 10; i += 2) {
+            dynamicArray.insert(i + 3, i + 50);
         }
 
         System.out.println(Arrays.toString(dynamicArray.arr));
