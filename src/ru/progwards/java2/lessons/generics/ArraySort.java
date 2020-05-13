@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 public class ArraySort {
 
-    private static void sort(int[] arr) {
+    private static <T extends Comparable<? super T>> void sort(T[] arr) {
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
-                int temp;
-                if (arr[i] > arr[j]) {
+                T temp;
+                if (arr[i].compareTo(arr[j]) > 0) {
                     temp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = temp;
@@ -24,7 +24,13 @@ public class ArraySort {
 
 
     public static void main(String[] args) {
-        sort(new int[]{5, 1, 14, 34, -4, 22, 3, 1, 3, 100, 17});
+
+        Integer[] intArr = {5, 1, 14, 34, -4, 22, 3, 1, 3, 100, 17};
+        Double[] doubleArr = {5.91, 1.8, 14.90, 34.7, -4.2, 22.25, 3.3, 1.8, 3.3, 100.10, 17.120};
+        String[] strArr = {"Михаил", "Алексей", "Сергей", "Игорь", "Даша", "Лена", "Bill", "Mike", "Alex"};
+        sort(intArr);
+        sort(strArr);
+        sort(doubleArr);
     }
 
 }
