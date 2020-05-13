@@ -6,7 +6,7 @@ package ru.progwards.java2.lessons.generics;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class DynamicArray<T extends Comparable<? super T>> {
+public class DynamicArray<T extends Number> {
 
     private T[] arr;
     private int size;
@@ -26,7 +26,7 @@ public class DynamicArray<T extends Comparable<? super T>> {
     }
 
     private void insert(int pos, T element) {
-        if (pos < 0)
+        if (pos < 0 || pos > arr.length - 1)
             return;
 
         if (arr.length == realSize()) {
@@ -44,6 +44,28 @@ public class DynamicArray<T extends Comparable<? super T>> {
         }
     }
 
+    private void remove(int pos) {
+        if (pos < 0 || pos > arr.length - 1)
+            return;
+
+        T[] tempArr = Arrays.copyOfRange(arr, pos + 1, arr.length);
+        arr = Arrays.copyOf(arr, arr.length - 1);
+
+        int index = 0;
+        for (int i = pos; i < arr.length; i++) {
+            arr[i] = tempArr[index];
+            index++;
+        }
+    }
+
+    private void get(int pos){
+        System.out.println(arr[pos]);
+    }
+
+    private void size(){
+        System.out.println(realSize());
+    }
+
 
     public static void main(String[] args) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
@@ -56,6 +78,14 @@ public class DynamicArray<T extends Comparable<? super T>> {
         for (int i = 1; i < 10; i += 2) {
             dynamicArray.insert(i + 3, i + 50);
         }
+
+        for (int i = 0; i < 10; i += 3) {
+            dynamicArray.remove(4 + i);
+        }
+
+        dynamicArray.get(5);
+
+        dynamicArray.size();
 
         System.out.println(Arrays.toString(dynamicArray.arr));
 
