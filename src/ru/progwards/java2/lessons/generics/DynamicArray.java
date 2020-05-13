@@ -9,20 +9,19 @@ import java.util.Objects;
 public class DynamicArray<T> {
 
     private T[] arr;
-    private int size;
 
     public DynamicArray() {
     }
 
     private int realSize() {
-        return size = (int) Arrays.stream(arr).filter(Objects::nonNull).count();
+        return (int) Arrays.stream(arr).filter(Objects::nonNull).count();
     }
 
     private void add(T element) {
         if (arr.length == realSize()) {
             arr = Arrays.copyOf(arr, arr.length * 2);
         }
-        arr[size] = element;
+        arr[realSize()] = element;
     }
 
     private void insert(int pos, T element) {
@@ -72,13 +71,13 @@ public class DynamicArray<T> {
         dynamicArray.arr = new Integer[]{5, 1, 14, 34, 22, 3, 1, 3, 100, 17};
 
         /*
-        * со строками работает, только в тестовых методах надо к i + "строка"
-        * */
+         * со строками работает, только в тестовых методах надо к i + "строка"
+         * */
 //        DynamicArray<String> dynamicArray = new DynamicArray<>();
 //        dynamicArray.arr = new String[]{"Михаил", "Алексей", "Сергей", "Игорь", "Даша", "Лена", "Bill", "Mike", "Alex"};
 
-        for (int i = 1; i <= 10; i++) {
-            dynamicArray.add(i);
+        for (int i = 1; i <= 15; i++) {
+            dynamicArray.add(i * 2);
         }
 
         for (int i = 1; i < 10; i += 2) {
