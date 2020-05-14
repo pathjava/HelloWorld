@@ -3,19 +3,20 @@
 
 package ru.progwards.java2.lessons.generics;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FruitBox<T extends Fruit> {
+public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
     private List<T> fruitList;
 
     private void addFruit(List<? extends Fruit> list){
-//        fruitList.addAll(list);
+        fruitList.addAll(list);
     }
 
 
     public static void main(String[] args) {
-        FruitBox<Apple> fruitBox = new FruitBox<>();
+        FruitBox<Fruit> fruitBox = new FruitBox<>();
 
         List<Fruit> list = List.of(
                 new Apple(1.0),
