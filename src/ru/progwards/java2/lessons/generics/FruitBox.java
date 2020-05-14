@@ -8,26 +8,21 @@ import java.util.List;
 
 public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
-    private final List<T> fruitList = new ArrayList<>();
-
     private void addFruit(List<T> list) {
-        fruitList.addAll(list);
+        addAll(list);
     }
 
     private double getWeight() {
-        return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
+        return stream().mapToDouble(Fruit::getWeight).sum();
     }
 
     private void moveTo(FruitBox<T> box) {
-        if (box.isEmpty() || fruitList.isEmpty())
+        if (box.isEmpty())
             return;
 
-        try {
-            box.fruitList.addAll(fruitList);
-        } catch (Exception e) {
-            throw new UnsupportedOperationException();
-        }
-        fruitList.clear();
+        box.addAll(this);
+
+        clear();
     }
 
 
@@ -55,19 +50,20 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
             fruitBoxFour.addFruit(List.of(orangesOne, orangesTwo));
 
         fruitBoxOne.moveTo(fruitBoxThree);
-        fruitBoxOne.fruitList.forEach(System.out::println);
+
+        fruitBoxThree.forEach(System.out::println);
         System.out.println("-----------------");
 
-        fruitBoxOne.fruitList.forEach(System.out::println);
+        fruitBoxOne.forEach(System.out::println);
         System.out.println(fruitBoxOne.getWeight());
         System.out.println("-----------------");
-        fruitBoxThree.fruitList.forEach(System.out::println);
+        fruitBoxThree.forEach(System.out::println);
         System.out.println(fruitBoxThree.getWeight());
         System.out.println("-----------------");
-        fruitBoxTwo.fruitList.forEach(System.out::println);
+        fruitBoxTwo.forEach(System.out::println);
         System.out.println(fruitBoxTwo.getWeight());
         System.out.println("-----------------");
-        fruitBoxFour.fruitList.forEach(System.out::println);
+        fruitBoxFour.forEach(System.out::println);
         System.out.println(fruitBoxFour.getWeight());
         System.out.println("-----------------");
 
