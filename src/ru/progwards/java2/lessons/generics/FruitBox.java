@@ -26,21 +26,33 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         Orange orangesTwo = new Orange(1.5);
 
         FruitBox<Apple> fruitBoxOne = new FruitBox<>();
+        FruitBox<Apple> fruitBoxThree = new FruitBox<>();
         FruitBox<Orange> fruitBoxTwo = new FruitBox<>();
+        FruitBox<Orange> fruitBoxFour = new FruitBox<>();
 
 //        fruitBoxOne.addFruit(List.of(applesOne, applesTwo, orangesOne, orangesTwo));
 //        fruitBoxOne.fruitList.forEach(System.out::println);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             fruitBoxOne.addFruit(List.of(applesOne, applesTwo));
+        }
+        for (int i = 0; i < 2; i++) {
+            fruitBoxThree.addFruit(List.of(applesOne, applesTwo));
         }
         for (int i = 0; i < 3; i++) {
             fruitBoxTwo.addFruit(List.of(orangesOne, orangesTwo));
         }
+        for (int i = 0; i < 2; i++) {
+            fruitBoxFour.addFruit(List.of(orangesOne, orangesTwo));
+        }
 
         fruitBoxOne.fruitList.forEach(System.out::println);
         System.out.println("-----------------");
+        fruitBoxThree.fruitList.forEach(System.out::println);
+        System.out.println("-----------------");
         fruitBoxTwo.fruitList.forEach(System.out::println);
+        System.out.println("-----------------");
+        fruitBoxFour.fruitList.forEach(System.out::println);
     }
 
 }
