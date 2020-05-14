@@ -4,4 +4,9 @@
 package ru.progwards.java2.lessons.generics;
 
 public class Apple extends Fruit {
+    public double weight;
+
+    public Apple(double weight) {
+        this.weight = weight;
+    }
 }
