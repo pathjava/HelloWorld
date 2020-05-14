@@ -18,12 +18,12 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
     }
 
-    private void moveTo(List<T> box) {
-        if (box.isEmpty())
+    private void moveTo(FruitBox<T> box) {
+        if (box.isEmpty() || fruitList.isEmpty())
             return;
 
         try {
-            box.addAll(fruitList);
+            box.fruitList.addAll(fruitList);
         } catch (Exception e) {
             throw new UnsupportedOperationException();
         }
@@ -37,26 +37,26 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         Orange orangesOne = new Orange(1.5);
         Orange orangesTwo = new Orange(1.5);
 
+
         FruitBox<Apple> fruitBoxOne = new FruitBox<>();
-        FruitBox<Apple> fruitBoxThree = new FruitBox<>();
-        FruitBox<Orange> fruitBoxTwo = new FruitBox<>();
-        FruitBox<Orange> fruitBoxFour = new FruitBox<>();
-
-//        fruitBoxOne.addFruit(List.of(applesOne, applesTwo, orangesOne, orangesTwo));
-//        fruitBoxOne.fruitList.forEach(System.out::println);
-
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
             fruitBoxOne.addFruit(List.of(applesOne, applesTwo));
-        }
-        for (int i = 0; i < 2; i++) {
+
+        FruitBox<Apple> fruitBoxThree = new FruitBox<>();
+        for (int i = 0; i < 2; i++)
             fruitBoxThree.addFruit(List.of(applesOne, applesTwo));
-        }
-        for (int i = 0; i < 3; i++) {
+
+        FruitBox<Orange> fruitBoxTwo = new FruitBox<>();
+        for (int i = 0; i < 3; i++)
             fruitBoxTwo.addFruit(List.of(orangesOne, orangesTwo));
-        }
-        for (int i = 0; i < 2; i++) {
+
+        FruitBox<Orange> fruitBoxFour = new FruitBox<>();
+        for (int i = 0; i < 2; i++)
             fruitBoxFour.addFruit(List.of(orangesOne, orangesTwo));
-        }
+
+        fruitBoxOne.moveTo(fruitBoxThree);
+        fruitBoxOne.fruitList.forEach(System.out::println);
+        System.out.println("-----------------");
 
         fruitBoxOne.fruitList.forEach(System.out::println);
         System.out.println(fruitBoxOne.getWeight());
@@ -71,8 +71,7 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         System.out.println(fruitBoxFour.getWeight());
         System.out.println("-----------------");
 
-        fruitBoxOne.moveTo(fruitBoxThree);
-        fruitBoxOne.fruitList.forEach(System.out::println);
+
     }
 
 }
