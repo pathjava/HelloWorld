@@ -22,10 +22,21 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         Orange orangesTwo = new Orange(1.5);
 
         FruitBox<Fruit> fruitBoxOne = new FruitBox<>();
+        FruitBox<Fruit> fruitBoxTwo = new FruitBox<>();
 
-        fruitBoxOne.addFruit(List.of(applesOne, applesTwo, orangesOne, orangesTwo));
+//        fruitBoxOne.addFruit(List.of(applesOne, applesTwo, orangesOne, orangesTwo));
+//        fruitBoxOne.fruitList.forEach(System.out::println);
+
+        for (int i = 0; i < 4; i++) {
+            fruitBoxOne.addFruit(List.of(applesOne, applesTwo));
+        }
+        for (int i = 0; i < 3; i++) {
+            fruitBoxTwo.addFruit(List.of(orangesOne, orangesTwo));
+        }
 
         fruitBoxOne.fruitList.forEach(System.out::println);
+        System.out.println("-----------------");
+        fruitBoxTwo.fruitList.forEach(System.out::println);
     }
 
 }
