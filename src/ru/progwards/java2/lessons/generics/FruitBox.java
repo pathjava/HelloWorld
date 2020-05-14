@@ -10,15 +10,15 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
     private final List<T> fruitList = new ArrayList<>();
 
-    private void addFruit(List<T> list){
+    private void addFruit(List<T> list) {
         fruitList.addAll(list);
     }
 
-    private double getWeight(){
+    private double getWeight() {
         return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
     }
 
-    private void moveTo(List<T> list){
+    private void moveTo(List<T> list) {
 
     }
 
@@ -51,17 +51,15 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         }
 
         fruitBoxOne.fruitList.forEach(System.out::println);
+        System.out.println(fruitBoxOne.getWeight());
         System.out.println("-----------------");
         fruitBoxThree.fruitList.forEach(System.out::println);
+        System.out.println(fruitBoxThree.getWeight());
         System.out.println("-----------------");
         fruitBoxTwo.fruitList.forEach(System.out::println);
+        System.out.println(fruitBoxTwo.getWeight());
         System.out.println("-----------------");
         fruitBoxFour.fruitList.forEach(System.out::println);
-
-        System.out.println("-----------------");
-        System.out.println(fruitBoxOne.getWeight());
-        System.out.println(fruitBoxThree.getWeight());
-        System.out.println(fruitBoxTwo.getWeight());
         System.out.println(fruitBoxFour.getWeight());
     }
 
