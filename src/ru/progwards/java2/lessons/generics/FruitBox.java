@@ -6,7 +6,7 @@ package ru.progwards.java2.lessons.generics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FruitBox<T extends Fruit> extends ArrayList<T> {
+public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox> {
 
     private void addFruit(List<T> list) {
         addAll(list);
@@ -17,7 +17,7 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
     }
 
     private void moveTo(FruitBox<T> box) {
-        if (box.isEmpty())
+        if (box.isEmpty() || this.isEmpty())
             return;
 
         box.addAll(this);
@@ -25,6 +25,15 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         clear();
     }
 
+    private int comparisonFruitBoxes(FruitBox<?> box) {
+        int result = this.compareTo(box);
+        return Integer.compare(result, 0);
+    }
+
+    @Override
+    public int compareTo(FruitBox fruit) {
+        return (int) (this.getWeight() - fruit.getWeight());
+    }
 
     public static void main(String[] args) {
         Apple applesOne = new Apple(1.0);
@@ -49,8 +58,10 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         for (int i = 0; i < 2; i++)
             fruitBoxFour.addFruit(List.of(orangesOne, orangesTwo));
 
-        fruitBoxOne.moveTo(fruitBoxThree);
+        System.out.println(fruitBoxOne.comparisonFruitBoxes(fruitBoxTwo));
+        System.out.println("-----------------");
 
+        fruitBoxOne.moveTo(fruitBoxThree);
         fruitBoxThree.forEach(System.out::println);
         System.out.println("-----------------");
 
@@ -69,5 +80,4 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
 
     }
-
 }
