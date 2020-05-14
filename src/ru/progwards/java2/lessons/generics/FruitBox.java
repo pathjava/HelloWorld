@@ -16,12 +16,10 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
     private double getWeight(){
         return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
+    }
 
-//        double weight = 0;
-//        for (T t : fruitList) {
-//            weight += t.getWeight();
-//        }
-//        return weight;
+    private void moveTo(List<T> list){
+
     }
 
 
