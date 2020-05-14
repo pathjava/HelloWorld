@@ -14,6 +14,10 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         fruitList.addAll(list);
     }
 
+    private void getWeight(){
+
+    }
+
 
     public static void main(String[] args) {
         Apple applesOne = new Apple(1.0);
@@ -21,8 +25,8 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         Orange orangesOne = new Orange(1.5);
         Orange orangesTwo = new Orange(1.5);
 
-        FruitBox<Fruit> fruitBoxOne = new FruitBox<>();
-        FruitBox<Fruit> fruitBoxTwo = new FruitBox<>();
+        FruitBox<Apple> fruitBoxOne = new FruitBox<>();
+        FruitBox<Orange> fruitBoxTwo = new FruitBox<>();
 
 //        fruitBoxOne.addFruit(List.of(applesOne, applesTwo, orangesOne, orangesTwo));
 //        fruitBoxOne.fruitList.forEach(System.out::println);
