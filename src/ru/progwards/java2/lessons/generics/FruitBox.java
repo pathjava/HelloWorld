@@ -8,18 +8,20 @@ import java.util.List;
 
 public class FruitBox<T extends Fruit> extends ArrayList<T> {
 
-    private List<T> fruitList = new ArrayList<>();
+    private final List<T> fruitList = new ArrayList<>();
 
     private void addFruit(List<T> list){
         fruitList.addAll(list);
     }
 
     private double getWeight(){
-        double weight = 0;
-        for (T t : fruitList) {
-            weight += t.getWeight();
-        }
-        return weight;
+        return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
+
+//        double weight = 0;
+//        for (T t : fruitList) {
+//            weight += t.getWeight();
+//        }
+//        return weight;
     }
 
 
