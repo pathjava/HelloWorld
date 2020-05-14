@@ -18,8 +18,16 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         return fruitList.stream().mapToDouble(Fruit::getWeight).sum();
     }
 
-    private void moveTo(List<T> list) {
+    private void moveTo(List<T> box) {
+        if (box.isEmpty())
+            return;
 
+        try {
+            box.addAll(fruitList);
+        } catch (Exception e) {
+            throw new UnsupportedOperationException();
+        }
+        fruitList.clear();
     }
 
 
@@ -61,6 +69,10 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> {
         System.out.println("-----------------");
         fruitBoxFour.fruitList.forEach(System.out::println);
         System.out.println(fruitBoxFour.getWeight());
+        System.out.println("-----------------");
+
+        fruitBoxOne.moveTo(fruitBoxThree);
+        fruitBoxOne.fruitList.forEach(System.out::println);
     }
 
 }
