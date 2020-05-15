@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.generics;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox<? super T>> {
 
@@ -50,8 +51,7 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparabl
 
 
         FruitBox<Apple> fruitBoxOne = new FruitBox<>();
-        for (int i = 0; i < 3; i++)
-            fruitBoxOne.addFruit(List.of(applesOne, applesTwo));
+        IntStream.range(0, 3).mapToObj(i -> List.of(applesOne, applesTwo)).forEach(fruitBoxOne::addFruit);
 
         FruitBox<Apple> fruitBoxThree = new FruitBox<>();
         for (int i = 0; i < 2; i++)
