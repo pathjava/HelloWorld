@@ -6,7 +6,7 @@ package ru.progwards.java2.lessons.generics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox> {
+public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox<? super T>> {
 
     private void addFruit(List<T> list) {
         addAll(list);
