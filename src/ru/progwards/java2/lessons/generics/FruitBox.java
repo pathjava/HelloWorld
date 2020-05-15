@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox<? super T>> {
+public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparable<FruitBox<T>> {
 
     private void addFruit(List<T> list) {
         addAll(list);
