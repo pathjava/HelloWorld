@@ -32,7 +32,14 @@ public class FruitBox<T extends Fruit> extends ArrayList<T> implements Comparabl
 
     @Override
     public int compareTo(FruitBox fruit) {
-        return (int) (this.getWeight() - fruit.getWeight());
+        /* данный способ кастит до int, поэтому возможны неточности сравнения */
+//        return (int) (this.getWeight() - fruit.getWeight());
+
+        if (this.getWeight() < fruit.getWeight())
+            return -1;
+        else if (fruit.getWeight() < this.getWeight())
+            return 1;
+        return 0;
     }
 
     public static void main(String[] args) {
