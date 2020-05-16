@@ -81,18 +81,25 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<Integer> list = new BiDirList<>();
-        list.addLast(1);
-        list.addLast(2);
-        list.addLast(3);
+//        list.addLast(1);
+//        list.addLast(2);
+//        list.addLast(3);
+//
+//        BiDirList<Integer>.ListItem<Integer> currentHead = list.getHead();
+//        while (currentHead != null) {
+//            System.out.println(currentHead.getItem());
+//            currentHead = currentHead.getNext();
+//        }
+        System.out.println("--------------------");
 
-//        list.addFirst(4);
-//        list.addFirst(5);
-//        list.addFirst(6);
+        list.addFirst(4);
+        list.addFirst(5);
+        list.addFirst(6);
 
-        BiDirList<Integer>.ListItem<Integer> current = list.getHead();
-        while (current != null) {
-            System.out.println(current.getItem());
-            current = current.getNext();
+        BiDirList<Integer>.ListItem<Integer> currentTail = list.getTail();
+        while (currentTail != null) {
+            System.out.println(currentTail.getItem());
+            currentTail = currentTail.getPrev();
         }
 
 
