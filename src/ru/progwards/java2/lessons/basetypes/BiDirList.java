@@ -19,7 +19,7 @@ public class BiDirList<T> {
 
     class ListItem<T> {
 
-        private T item;
+        private final T item;
         private ListItem<T> next;
         private ListItem<T> prev;
 
@@ -31,16 +31,8 @@ public class BiDirList<T> {
             return item;
         }
 
-        public void setNext(ListItem<T> item) {
-            next = item;
-        }
-
         public ListItem<T> getNext() {
             return next;
-        }
-
-        public void setPrev(ListItem<T> prev) {
-            this.prev = prev;
         }
 
         public ListItem<T> getPrev() {
@@ -52,9 +44,9 @@ public class BiDirList<T> {
         final ListItem<T> last = tail;
         final ListItem<T> newItem = new ListItem<>(item);
         tail = newItem;
-        if (last == null) {
+        if (last == null)
             head = newItem;
-        } else {
+        else {
             last.next = newItem;
             last.prev = last;
         }
@@ -65,9 +57,9 @@ public class BiDirList<T> {
         final ListItem<T> first = head;
         final ListItem<T> newItem = new ListItem<>(item);
         head = newItem;
-        if (first == null) {
+        if (first == null)
             tail = newItem;
-        } else {
+        else {
             first.prev = newItem;
             first.next = first;
         }
@@ -81,26 +73,26 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<Integer> list = new BiDirList<>();
-//        list.addLast(1);
-//        list.addLast(2);
-//        list.addLast(3);
-//
-//        BiDirList<Integer>.ListItem<Integer> currentHead = list.getHead();
-//        while (currentHead != null) {
-//            System.out.println(currentHead.getItem());
-//            currentHead = currentHead.getNext();
-//        }
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+
+        BiDirList<Integer>.ListItem<Integer> currentHead = list.getHead();
+        while (currentHead != null) {
+            System.out.println(currentHead.getItem());
+            currentHead = currentHead.getNext();
+        }
         System.out.println("--------------------");
 
-        list.addFirst(4);
-        list.addFirst(5);
-        list.addFirst(6);
-
-        BiDirList<Integer>.ListItem<Integer> currentTail = list.getTail();
-        while (currentTail != null) {
-            System.out.println(currentTail.getItem());
-            currentTail = currentTail.getPrev();
-        }
+//        list.addFirst(4);
+//        list.addFirst(5);
+//        list.addFirst(6);
+//
+//        BiDirList<Integer>.ListItem<Integer> currentTail = list.getTail();
+//        while (currentTail != null) {
+//            System.out.println(currentTail.getItem());
+//            currentTail = currentTail.getPrev();
+//        }
 
 
         System.out.println("Size = " + list.size());
