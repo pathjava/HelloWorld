@@ -13,13 +13,14 @@ public class BiDirList<T> {
     public ListItem<T> getHead() {
         return head;
     }
+
     public ListItem<T> getTail() {
         return tail;
     }
 
     class ListItem<T> {
 
-        private final T item;
+        private T item;
         private ListItem<T> next;
         private ListItem<T> prev;
 
@@ -66,6 +67,29 @@ public class BiDirList<T> {
         size++;
     }
 
+    public void remove(T item) {
+        final ListItem<T> removeItem = new ListItem<>(item);
+        final ListItem<T> next = removeItem.next;
+        final ListItem<T> prev = removeItem.prev;
+
+        if (prev == null)
+            head = next;
+        else {
+            prev.next = next;
+            removeItem.prev = null;
+        }
+
+        if (next == null)
+            tail = prev;
+        else {
+            next.prev = prev;
+            removeItem.next = null;
+        }
+        removeItem.item = null;
+
+        size--;
+    }
+
     public int size() {
         return size;
     }
@@ -76,6 +100,9 @@ public class BiDirList<T> {
         list.addLast(1);
         list.addLast(2);
         list.addLast(3);
+
+        list.remove(2);
+
 
         BiDirList<Integer>.ListItem<Integer> currentHead = list.getHead();
         while (currentHead != null) {
