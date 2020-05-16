@@ -13,6 +13,9 @@ public class BiDirList<T> {
     public ListItem<T> getHead() {
         return head;
     }
+    public ListItem<T> getTail() {
+        return tail;
+    }
 
     class ListItem<T> {
 
@@ -46,29 +49,30 @@ public class BiDirList<T> {
     }
 
     public void addLast(T item) {
-        final ListItem<T> li = new ListItem<>(item);
-        if (head == null) {
-            head = li;
+        final ListItem<T> last = tail;
+        final ListItem<T> newItem = new ListItem<>(item);
+        tail = newItem;
+        if (last == null) {
+            head = newItem;
         } else {
-            tail.setNext(li);
-            head.setPrev(li);
+            last.next = newItem;
         }
-        tail = li;
         size++;
     }
 
     public void addFirst(T item) {
-        final ListItem<T> li = new ListItem<>(item);
-        if (tail == null) {
-            tail = li;
+        final ListItem<T> first = head;
+        final ListItem<T> newItem = new ListItem<>(item);
+        head = newItem;
+        if (first == null) {
+            tail = newItem;
         } else {
-            head.setPrev(li);
+            first.prev = newItem;
         }
-        head = li;
         size++;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
@@ -83,11 +87,11 @@ public class BiDirList<T> {
         list.addFirst(5);
         list.addFirst(6);
 
-//        BiDirList<Integer>.ListItem<Integer> current = list.getHead();
-//        while (current != null) {
-//            System.out.println(current.getItem());
-//            current = current.getNext();
-//        }
+        BiDirList<Integer>.ListItem<Integer> current = list.getHead();
+        while (current != null) {
+            System.out.println(current.getItem());
+            current = current.getNext();
+        }
 
 
         System.out.println("Size = " + list.size());
