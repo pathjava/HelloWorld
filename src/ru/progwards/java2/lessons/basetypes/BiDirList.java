@@ -56,6 +56,7 @@ public class BiDirList<T> {
             head = newItem;
         } else {
             last.next = newItem;
+            last.prev = last;
         }
         size++;
     }
@@ -68,6 +69,7 @@ public class BiDirList<T> {
             tail = newItem;
         } else {
             first.prev = newItem;
+            first.next = first;
         }
         size++;
     }
@@ -83,9 +85,9 @@ public class BiDirList<T> {
         list.addLast(2);
         list.addLast(3);
 
-        list.addFirst(4);
-        list.addFirst(5);
-        list.addFirst(6);
+//        list.addFirst(4);
+//        list.addFirst(5);
+//        list.addFirst(6);
 
         BiDirList<Integer>.ListItem<Integer> current = list.getHead();
         while (current != null) {
