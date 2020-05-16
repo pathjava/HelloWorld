@@ -7,6 +7,12 @@ package ru.progwards.java2.lessons.basetypes;
 public class BiDirList<T> {
 
     private int size = 0;
+    private ListItem<T> head;
+    private ListItem<T> tail;
+
+    public ListItem<T> getHead() {
+        return head;
+    }
 
     class ListItem<T> {
 
@@ -37,13 +43,6 @@ public class BiDirList<T> {
         public ListItem<T> getPrev() {
             return prev;
         }
-    }
-
-    private ListItem<T> head;
-    private ListItem<T> tail;
-
-    ListItem<T> getHead() {
-        return head;
     }
 
     public void addLast(T item) {
