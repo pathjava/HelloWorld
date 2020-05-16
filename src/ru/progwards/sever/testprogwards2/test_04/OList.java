@@ -57,26 +57,29 @@ public class OList<T> {
         list.add(7);
         list.add(10);
 
-//        LinkedList<String> list = new LinkedList<String>();
-//
-//        // use add() method to add elements in the list
-//        list.add("Geeks");
-//        list.add("for");
-//        list.add("Geeks");
-//        list.add("10");
-//        list.add("20");
-//
-//        // Output the present list
-//        System.out.println("The list is:" + list);
-//
-//        // Adding new elements at the beginning
-//        list.addFirst("First");
-//        list.addFirst("At");
-
 //        OList<Integer>.ListItem<Integer> current = list.getHead();
 //        while (current != null) {
 //            System.out.println(current.getItem());
 //            current = current.getNext();
 //        }
+
+        //--------------------
+
+        LinkedList<String> listTwo = new LinkedList<>();
+
+        // use add() method to add elements in the list
+        listTwo.add("Geeks");
+        listTwo.add("for");
+        listTwo.add("Geeks");
+        listTwo.add("10");
+        listTwo.add("20");
+
+        // Output the present list
+        System.out.println("The list is:" + listTwo);
+
+        // Adding new elements at the beginning
+        listTwo.addFirst("First");
+        listTwo.addFirst("At");
+
     }
 }
