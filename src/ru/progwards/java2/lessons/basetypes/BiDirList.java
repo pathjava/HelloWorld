@@ -68,6 +68,10 @@ public class BiDirList<T> {
         size++;
     }
 
+    public int size(){
+        return size;
+    }
+
 
     public static void main(String[] args) {
         BiDirList<Integer> list = new BiDirList<>();
@@ -86,7 +90,7 @@ public class BiDirList<T> {
 //        }
 
 
-        System.out.println("Size = " + list.size);
+        System.out.println("Size = " + list.size());
     }
 
 }
