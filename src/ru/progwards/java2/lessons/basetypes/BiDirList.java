@@ -135,7 +135,8 @@ public class BiDirList<T> {
             @Override
             public T next() throws IndexOutOfBoundsException {
                 T result = current.currentItem;
-                if (!hasNext()) throw new IndexOutOfBoundsException("End of list.");
+                if (!hasNext())
+                    throw new IndexOutOfBoundsException();
                 current = current.nextItem;
                 return result;
             }
