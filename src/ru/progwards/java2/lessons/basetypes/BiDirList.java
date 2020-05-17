@@ -13,7 +13,6 @@ public class BiDirList<T> {
     public BiDirList() {
         tail = new ItemContainer<>(null, null, head);
         head = new ItemContainer<>(null, tail, null);
-//        tail = new ItemContainer<>(head, null, null);
     }
 
     class ItemContainer<T> {
@@ -105,5 +104,4 @@ public class BiDirList<T> {
         System.out.println(list.at(3));
         System.out.println(list.size());
     }
-
 }
