@@ -4,8 +4,6 @@
 package ru.progwards.java2.lessons.basetypes;
 
 
-import com.google.inject.internal.asm.$Label;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
