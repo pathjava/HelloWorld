@@ -57,7 +57,6 @@ public class BiDirList<T> {
         public String toString() {
             return "item by index = " + currentItem;
         }
-
     }
 
     public void addLast(T item) {
@@ -115,6 +114,8 @@ public class BiDirList<T> {
         if (i < 0 || i > size - 1)
             throw new NullPointerException();
 
+        /* для оптимизации поиска элемента по индексу, сравниваю искомый индекс с размером листа,
+        * если индекс в первой половине листа, ищем элемент с начала списка, если нет, то с конца */
         ItemContainer<T> tempItem;
         if (i < (size / 2 + 1)) {
             tempItem = head.getNextItem();
@@ -146,7 +147,7 @@ public class BiDirList<T> {
         return newList;
     }
 
-    public static<T> BiDirList<T> of(T...array){
+    public static <T> BiDirList<T> of(T... array) {
         BiDirList<T> newList = new BiDirList<>();
         for (T t : array) {
             newList.addLast(t);
@@ -158,8 +159,14 @@ public class BiDirList<T> {
         return newList;
     }
 
-    public static<T> void toArray(T[] array){
-
+    public void toArray(T[] array) {
+        for (T t : array) {
+            ItemContainer<T> prev = tail;
+            prev.setCurrentItem(t);
+            tail = new ItemContainer<>(null, null, prev);
+            prev.setNextItem(tail);
+            size++;
+        }
     }
 
     public Iterator<T> getIterator() {
@@ -185,14 +192,14 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<String> list = new BiDirList<>();
-        list.addLast("1");
-        list.addLast("3");
-        list.addLast("5");
-        list.addLast("7");
-        list.addLast("9");
-        list.addLast("11");
-        list.addLast("13");
-        list.addLast("15");
+//        list.addLast("1");
+//        list.addLast("3");
+//        list.addLast("5");
+//        list.addLast("7");
+//        list.addLast("9");
+//        list.addLast("11");
+//        list.addLast("13");
+//        list.addLast("15");
 
 //        list.addFirst("6");
 //        list.addFirst("5");
@@ -201,7 +208,7 @@ public class BiDirList<T> {
 //        list.addFirst("2");
 //        list.addFirst("1");
 
-        System.out.println(list.at(3));
+//        System.out.println(list.at(3));
 
 //        System.out.println("List size = " + list.size());
 //
@@ -212,6 +219,8 @@ public class BiDirList<T> {
 //        from(new Integer[]{5, 1, 14, 34, 22, 3, 1, 3, 100, 17});
 
 //        of(5, 1, 14, 34, 22, 3, 1, 3, 100, 17);
+
+        list.toArray(new String[]{"5", "1", "14", "34", "22", "3", "1", "3", "100", "17"});
 
         for (Iterator<String> it = list.getIterator(); it.hasNext(); ) {
             String s = it.next();
