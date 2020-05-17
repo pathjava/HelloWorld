@@ -87,10 +87,10 @@ public class BiDirList<T> {
         ItemContainer<T> prev = removeItem.prevItem;
         ItemContainer<T> next = removeItem.nextItem;
 
-        if (prev.getPrevItem() == null) {
+        if (prev == null) {
             next.setPrevItem(null);
             head.setNextItem(next);
-        } else if (next.getNextItem() == null) {
+        } else if (next == null) {
             prev.setNextItem(null);
             tail.setPrevItem(prev);
         } else {
@@ -169,7 +169,7 @@ public class BiDirList<T> {
 
         System.out.println("List size = " + list.size());
 
-        list.remove("3");
+        list.remove("7");
 
         System.out.println("List size = " + list.size());
 
