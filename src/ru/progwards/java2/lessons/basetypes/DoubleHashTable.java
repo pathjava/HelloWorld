@@ -9,10 +9,12 @@ public class DoubleHashTable<T> {
 
     private int size = 101;
 
-
     class HashTableContainer<T> {
         private T key;
         private T value;
+        private HashTableContainer<T> nextKey;
+
+
     }
 
     public int sizeTable(int currentSize) {
