@@ -52,10 +52,10 @@ public class BiDirList<T> {
             this.nextItem = nextItem;
         }
 
-//        @Override
-//        public String toString() {
-//            return "item by index = " + currentItem;
-//        }
+        @Override
+        public String toString() {
+            return "item by index = " + currentItem;
+        }
 
     }
 
@@ -96,6 +96,7 @@ public class BiDirList<T> {
             prev.setNextItem(next);
             next.setPrevItem(prev);
         }
+        size--;
     }
 
     private ItemContainer<T> findItem(T item) {
@@ -136,10 +137,14 @@ public class BiDirList<T> {
         list.addFirst("2");
         list.addFirst("1");
 
-        System.out.println(list.at(0));
+        System.out.println(list.at(2));
 
         System.out.println("List size = " + list.size());
 
         list.remove("3");
+
+        System.out.println(list.at(2));
+
+        System.out.println("List size = " + list.size());
     }
 }
