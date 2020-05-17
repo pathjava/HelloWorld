@@ -52,9 +52,7 @@ public class BiDirList<T> {
 
         @Override
         public String toString() {
-            return "ItemContainer{" +
-                    "currentItem=" + currentItem +
-                    '}';
+            return "item by index = " + currentItem;
         }
     }
 
@@ -95,13 +93,13 @@ public class BiDirList<T> {
 //        list.addLast("4");
 //        list.addLast("5");
 
-        list.addFirst("1");
-        list.addFirst("2");
-        list.addFirst("3");
-        list.addFirst("4");
         list.addFirst("5");
+        list.addFirst("4");
+        list.addFirst("3");
+        list.addFirst("2");
+        list.addFirst("1");
 
-        System.out.println(list.at(3));
-        System.out.println(list.size());
+        System.out.println(list.at(2));
+        System.out.println("List size = " + list.size());
     }
 }
