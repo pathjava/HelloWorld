@@ -72,6 +72,24 @@ public class BiDirList<T> {
         size++;
     }
 
+    public void remove(T item) {
+        if (item == null)
+            throw new NullPointerException();
+
+
+    }
+
+    private ItemContainer<T> findItem(T item) {
+        ItemContainer<T> tempItem = head.getNextItem();
+        for (int j = 0; j < size; j++) {
+            if (tempItem.equals(item))
+                return tempItem;
+            else
+                tempItem = tempItem.getNextItem();
+        }
+        return null;
+    }
+
     public ItemContainer<T> at(int i) {
         ItemContainer<T> tempItem = head.getNextItem();
         for (int j = 0; j < i; j++) {
