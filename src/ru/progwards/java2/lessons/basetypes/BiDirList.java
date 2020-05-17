@@ -92,6 +92,9 @@ public class BiDirList<T> {
         } else if (next.getNextItem() == null) {
             prev.setNextItem(null);
             tail.setPrevItem(prev);
+        } else {
+            prev.setNextItem(next);
+            next.setPrevItem(prev);
         }
     }
 
@@ -137,6 +140,6 @@ public class BiDirList<T> {
 
         System.out.println("List size = " + list.size());
 
-        list.remove("5");
+        list.remove("3");
     }
 }
