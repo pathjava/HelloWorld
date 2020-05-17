@@ -112,6 +112,9 @@ public class BiDirList<T> {
     }
 
     public ItemContainer<T> at(int i) {
+        if (i < 0 || i > size - 1)
+            throw new NullPointerException();
+
         ItemContainer<T> tempItem = head.getNextItem();
         for (int j = 0; j < i; j++) {
             tempItem = tempItem.getNextItem();
@@ -123,9 +126,17 @@ public class BiDirList<T> {
         return size;
     }
 
-//    public static <T> BiDirList<T> from(T[] array) {
-//
-//    }
+    public static <T> BiDirList<T> from(T[] array) {
+        BiDirList<T> newList = new BiDirList<>();
+        for (T t : array) {
+            newList.addLast(t);
+        }
+        for (Iterator<T> it = newList.getIterator(); it.hasNext(); ) {
+            T s = it.next();
+            System.out.println(s);
+        }
+        return newList;
+    }
 
     public Iterator<T> getIterator() {
         return new Iterator<T>() {
@@ -150,13 +161,13 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<String> list = new BiDirList<>();
-        list.addLast("1");
-        list.addLast("2");
-        list.addLast("3");
-        list.addLast("4");
-        list.addLast("5");
-        list.addLast("6");
-        list.addLast("7");
+//        list.addLast("1");
+//        list.addLast("2");
+//        list.addLast("3");
+//        list.addLast("4");
+//        list.addLast("5");
+//        list.addLast("6");
+//        list.addLast("7");
 
 //        list.addFirst("6");
 //        list.addFirst("5");
@@ -167,11 +178,13 @@ public class BiDirList<T> {
 
         System.out.println(list.at(2));
 
-        System.out.println("List size = " + list.size());
+//        System.out.println("List size = " + list.size());
+//
+//        list.remove("5");
+//
+//        System.out.println("List size = " + list.size());
 
-        list.remove("7");
-
-        System.out.println("List size = " + list.size());
+//        from(new Integer[]{5, 1, 14, 34, 22, 3, 1, 3, 100, 17});
 
         for (Iterator<String> it = list.getIterator(); it.hasNext(); ) {
             String s = it.next();
