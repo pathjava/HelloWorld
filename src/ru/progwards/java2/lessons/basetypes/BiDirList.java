@@ -118,7 +118,6 @@ public class BiDirList<T> {
             throw new NullPointerException();
 
         ItemContainer<T> tempItem;
-
         if (i < (size / 2 + 1)) {
             tempItem = head.getNextItem();
             for (int j = 0; j < i; j++) {
