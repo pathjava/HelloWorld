@@ -4,6 +4,8 @@
 package ru.progwards.java2.lessons.basetypes;
 
 
+import java.util.NoSuchElementException;
+
 public class BiDirList<T> {
 
     private int size = 0;
@@ -50,10 +52,11 @@ public class BiDirList<T> {
             this.nextItem = nextItem;
         }
 
-        @Override
-        public String toString() {
-            return "item by index = " + currentItem;
-        }
+//        @Override
+//        public String toString() {
+//            return "item by index = " + currentItem;
+//        }
+
     }
 
     public void addLast(T item) {
@@ -76,13 +79,18 @@ public class BiDirList<T> {
         if (item == null)
             throw new NullPointerException();
 
+        ItemContainer<T> removeItem = findItem(item);
+        if (removeItem == null)
+            throw new NoSuchElementException();
 
+        ItemContainer<T> prev = removeItem.prevItem;
+        ItemContainer<T> next = removeItem.nextItem;
     }
 
     private ItemContainer<T> findItem(T item) {
         ItemContainer<T> tempItem = head.getNextItem();
         for (int j = 0; j < size; j++) {
-            if (tempItem.equals(item))
+            if (tempItem.getCurrentItem().equals(item))
                 return tempItem;
             else
                 tempItem = tempItem.getNextItem();
@@ -118,6 +126,9 @@ public class BiDirList<T> {
         list.addFirst("1");
 
         System.out.println(list.at(2));
+
         System.out.println("List size = " + list.size());
+
+        list.remove("3");
     }
 }
