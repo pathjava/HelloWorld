@@ -115,7 +115,7 @@ public class BiDirList<T> {
             throw new NullPointerException();
 
         /* для оптимизации поиска элемента по индексу, сравниваю искомый индекс с размером листа,
-        * если индекс в первой половине листа, ищем элемент с начала списка, если нет, то с конца */
+         * если индекс в первой половине листа, ищем элемент с начала списка, если нет, то с конца */
         ItemContainer<T> tempItem;
         if (i < (size / 2 + 1)) {
             tempItem = head.getNextItem();
@@ -228,6 +228,5 @@ public class BiDirList<T> {
             String s = it.next();
             System.out.println(s);
         }
-
     }
 }
