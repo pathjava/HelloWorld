@@ -4,6 +4,8 @@
 package ru.progwards.java2.lessons.basetypes;
 
 
+import com.google.inject.internal.asm.$Label;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -115,9 +117,18 @@ public class BiDirList<T> {
         if (i < 0 || i > size - 1)
             throw new NullPointerException();
 
-        ItemContainer<T> tempItem = head.getNextItem();
-        for (int j = 0; j < i; j++) {
-            tempItem = tempItem.getNextItem();
+        ItemContainer<T> tempItem;
+
+        if (i < (size / 2 + 1)) {
+            tempItem = head.getNextItem();
+            for (int j = 0; j < i; j++) {
+                tempItem = tempItem.getNextItem();
+            }
+        } else {
+            tempItem = tail.getPrevItem();
+            for (int j = size - 1; j > i; j--) {
+                tempItem = tempItem.getPrevItem();
+            }
         }
         return tempItem;
     }
@@ -161,13 +172,14 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<String> list = new BiDirList<>();
-//        list.addLast("1");
-//        list.addLast("2");
-//        list.addLast("3");
-//        list.addLast("4");
-//        list.addLast("5");
-//        list.addLast("6");
-//        list.addLast("7");
+        list.addLast("1");
+        list.addLast("3");
+        list.addLast("5");
+        list.addLast("7");
+        list.addLast("9");
+        list.addLast("11");
+        list.addLast("13");
+        list.addLast("15");
 
 //        list.addFirst("6");
 //        list.addFirst("5");
@@ -176,7 +188,7 @@ public class BiDirList<T> {
 //        list.addFirst("2");
 //        list.addFirst("1");
 
-        System.out.println(list.at(2));
+        System.out.println(list.at(3));
 
 //        System.out.println("List size = " + list.size());
 //
