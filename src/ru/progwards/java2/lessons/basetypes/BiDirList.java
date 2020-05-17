@@ -79,7 +79,7 @@ public class BiDirList<T> {
         if (item == null)
             throw new NullPointerException();
 
-        ItemContainer<T> removeItem = findItem(item);
+        ItemContainer<T> removeItem = findRemoveItem(item);
         if (removeItem == null)
             throw new NoSuchElementException();
 
@@ -99,7 +99,7 @@ public class BiDirList<T> {
         size--;
     }
 
-    private ItemContainer<T> findItem(T item) {
+    private ItemContainer<T> findRemoveItem(T item) {
         ItemContainer<T> tempItem = head.getNextItem();
         for (int j = 0; j < size; j++) {
             if (tempItem.getCurrentItem().equals(item))
@@ -146,5 +146,6 @@ public class BiDirList<T> {
         System.out.println(list.at(2));
 
         System.out.println("List size = " + list.size());
+
     }
 }
