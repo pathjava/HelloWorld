@@ -5,16 +5,15 @@ package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
 
-public class DoubleHashTable<T> {
+public class DoubleHashTable<K, V> {
 
     private int size = 101;
 
-    class HashTableContainer<T> {
-        private T key;
-        private T value;
-        private HashTableContainer<T> nextKey;
-
-
+    class HashTableContainer<K, V> {
+        private int hash;
+        private K key;
+        private V value;
+        private HashTableContainer<K, V> nextKey;
     }
 
     public int sizeTable(int currentSize) {
@@ -33,7 +32,7 @@ public class DoubleHashTable<T> {
 
 
     public static void main(String[] args) {
-        DoubleHashTable<Integer> hashTable = new DoubleHashTable<>();
+        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
 
         System.out.println(hashTable.sizeTable(101));
     }
