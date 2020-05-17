@@ -211,9 +211,9 @@ public class BiDirList<T> {
 //        System.out.println(list.at(3));
 
 //        System.out.println("List size = " + list.size());
-//
+
 //        list.remove("5");
-//
+
 //        System.out.println("List size = " + list.size());
 
 //        from(new Integer[]{5, 1, 14, 34, 22, 3, 1, 3, 100, 17});
@@ -221,6 +221,8 @@ public class BiDirList<T> {
 //        of(5, 1, 14, 34, 22, 3, 1, 3, 100, 17);
 
         list.toArray(new String[]{"5", "1", "14", "34", "22", "3", "1", "3", "100", "17"});
+
+        list.remove("14");
 
         for (Iterator<String> it = list.getIterator(); it.hasNext(); ) {
             String s = it.next();
