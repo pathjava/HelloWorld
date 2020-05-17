@@ -85,6 +85,14 @@ public class BiDirList<T> {
 
         ItemContainer<T> prev = removeItem.prevItem;
         ItemContainer<T> next = removeItem.nextItem;
+
+        if (prev.getPrevItem() == null) {
+            next.setPrevItem(null);
+            head.setNextItem(next);
+        } else if (next.getNextItem() == null) {
+            prev.setNextItem(null);
+            tail.setPrevItem(prev);
+        }
     }
 
     private ItemContainer<T> findItem(T item) {
@@ -125,10 +133,10 @@ public class BiDirList<T> {
         list.addFirst("2");
         list.addFirst("1");
 
-        System.out.println(list.at(2));
+        System.out.println(list.at(0));
 
         System.out.println("List size = " + list.size());
 
-        list.remove("3");
+        list.remove("5");
     }
 }
