@@ -123,6 +123,10 @@ public class BiDirList<T> {
         return size;
     }
 
+//    public static <T> BiDirList<T> from(T[] array) {
+//
+//    }
+
     public Iterator<T> getIterator() {
         return new Iterator<T>() {
             private ItemContainer<T> current = head.getNextItem();
@@ -146,18 +150,20 @@ public class BiDirList<T> {
 
     public static void main(String[] args) {
         BiDirList<String> list = new BiDirList<>();
-//        list.addLast("1");
-//        list.addLast("2");
-//        list.addLast("3");
-//        list.addLast("4");
-//        list.addLast("5");
+        list.addLast("1");
+        list.addLast("2");
+        list.addLast("3");
+        list.addLast("4");
+        list.addLast("5");
+        list.addLast("6");
+        list.addLast("7");
 
-        list.addFirst("6");
-        list.addFirst("5");
-        list.addFirst("4");
-        list.addFirst("3");
-        list.addFirst("2");
-        list.addFirst("1");
+//        list.addFirst("6");
+//        list.addFirst("5");
+//        list.addFirst("4");
+//        list.addFirst("3");
+//        list.addFirst("2");
+//        list.addFirst("1");
 
         System.out.println(list.at(2));
 
