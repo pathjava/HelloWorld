@@ -148,6 +148,22 @@ public class BiDirList<T> {
         return newList;
     }
 
+    public static<T> BiDirList<T> of(T...array){
+        BiDirList<T> newList = new BiDirList<>();
+        for (T t : array) {
+            newList.addLast(t);
+        }
+        for (Iterator<T> it = newList.getIterator(); it.hasNext(); ) {
+            T s = it.next();
+            System.out.println(s);
+        }
+        return newList;
+    }
+
+    public static<T> void toArray(T[] array){
+
+    }
+
     public Iterator<T> getIterator() {
         return new Iterator<T>() {
             private ItemContainer<T> current = head.getNextItem();
@@ -196,6 +212,8 @@ public class BiDirList<T> {
 //        System.out.println("List size = " + list.size());
 
 //        from(new Integer[]{5, 1, 14, 34, 22, 3, 1, 3, 100, 17});
+
+//        of(5, 1, 14, 34, 22, 3, 1, 3, 100, 17);
 
         for (Iterator<String> it = list.getIterator(); it.hasNext(); ) {
             String s = it.next();
