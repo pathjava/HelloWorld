@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.basetypes;
 
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class BiDirList<T> {
@@ -122,6 +123,25 @@ public class BiDirList<T> {
         return size;
     }
 
+    public Iterator<T> getIterator() {
+        return new Iterator<T>() {
+            private ItemContainer<T> current = head.getNextItem();
+
+            @Override
+            public boolean hasNext() {
+                return current.getNextItem() != null;
+            }
+
+            @Override
+            public T next() throws IndexOutOfBoundsException {
+                T result = current.currentItem;
+                if (!hasNext()) throw new IndexOutOfBoundsException("End of list.");
+                current = current.nextItem;
+                return result;
+            }
+        };
+    }
+
 
     public static void main(String[] args) {
         BiDirList<String> list = new BiDirList<>();
@@ -131,6 +151,7 @@ public class BiDirList<T> {
 //        list.addLast("4");
 //        list.addLast("5");
 
+        list.addFirst("6");
         list.addFirst("5");
         list.addFirst("4");
         list.addFirst("3");
@@ -143,9 +164,12 @@ public class BiDirList<T> {
 
         list.remove("3");
 
-        System.out.println(list.at(2));
-
         System.out.println("List size = " + list.size());
+
+        for (Iterator<String> it = list.getIterator(); it.hasNext(); ) {
+            String s = it.next();
+            System.out.println(s);
+        }
 
     }
 }
