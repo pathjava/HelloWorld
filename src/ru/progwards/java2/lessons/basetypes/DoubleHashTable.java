@@ -11,21 +11,20 @@ public class DoubleHashTable<K, V> {
     private int size = 0;
     private int sizeTable = 101;
     private ItemHashTable<K, V>[] table;
-    private float loadFactor;
+    private int loadFactor = 75;
 
     public DoubleHashTable() {
         table = new ItemHashTable[sizeTable];
-        loadFactor = table.length * 0.75f;
     }
 
     public void add(K key, V value) {
         if (size + 1 >= loadFactor) {
-            loadFactor *= 2;
             copyTable();
+            loadFactor = (int) (table.length * (75.0f / 100.0f));
         }
-
         if (table[getIndex(key)] == null)
             addSingle(key, value);
+
     }
 
     private void addSingle(K key, V value) {
