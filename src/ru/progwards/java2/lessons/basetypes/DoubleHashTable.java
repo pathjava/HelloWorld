@@ -20,8 +20,16 @@ public class DoubleHashTable<K, V> {
 
     public void add(K key, V value) {
         if (size + 1 >= loadFactor) {
+            loadFactor *= 2;
             copyTable();
         }
+
+        if (table[getIndex(key)] == null)
+            addSingle(key, value);
+    }
+
+    private void addSingle(K key, V value){
+
     }
 
     private void copyTable() {
@@ -33,9 +41,8 @@ public class DoubleHashTable<K, V> {
                 add(hashTable.key, hashTable.value);
     }
 
-    private int getHash(K key) {
-        int hash = 31;
-        hash = hash * 17 + key.hashCode();
+    private int getIndex(K key) {
+        int hash = 31 * 17 + key.hashCode();
         return hash % table.length;
     }
 
@@ -80,10 +87,7 @@ public class DoubleHashTable<K, V> {
 
         @Override
         public int hashCode() {
-            hash = 31;
-            hash = hash * 17 + key.hashCode();
-            hash = hash * 17 + value.hashCode();
-            return hash;
+            return hash = 31 * 17 + key.hashCode();
         }
 
         @Override
@@ -94,8 +98,7 @@ public class DoubleHashTable<K, V> {
             if (obj instanceof DoubleHashTable.ItemHashTable) {
                 ItemHashTable<K, V> temp = (ItemHashTable) obj;
                 return (Objects.equals(key, temp.getKey())
-                        && Objects.equals(value, temp.getValue())
-                        || Objects.equals(hash, temp.hashCode()));
+                        && Objects.equals(value, temp.getValue()));
             }
             return false;
         }
