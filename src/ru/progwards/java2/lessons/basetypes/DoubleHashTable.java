@@ -4,27 +4,33 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
+import java.util.Hashtable;
+import java.util.Objects;
 
 public class DoubleHashTable<K, V> {
 
-    private int size = 101;
-    private HashTable<K, V>[] table;
+    private int size = 0;
+    private final MyHashTable<K, V>[] table;
+    private float loadFactor;
 
     public DoubleHashTable() {
-        table = new HashTable[size];
+        table = new MyHashTable[101];
+        loadFactor = table.length * 0.75f;
     }
 
     private int getHash(int key){
+        int hash = 31;
+        hash = hash * 17 + key
         return key % table.length;
     }
 
-    class HashTable<K, V> {
+    public class MyHashTable<K, V> {
         private int hash;
         private K key;
         private V value;
-        private HashTable<K, V> nextKeyValue;
+        private MyHashTable<K, V> nextKeyValue;
 
-        public HashTable(K key, V value) {
+        public MyHashTable(K key, V value) {
             this.key = key;
             this.value = value;
         }
@@ -45,12 +51,34 @@ public class DoubleHashTable<K, V> {
             this.value = value;
         }
 
-        public HashTable<K, V> getNextKeyValue() {
+        public MyHashTable<K, V> getNextKeyValue() {
             return nextKeyValue;
         }
 
-        public void setNextKeyValue(HashTable<K, V> nextKeyValue) {
+        public void setNextKeyValue(MyHashTable<K, V> nextKeyValue) {
             this.nextKeyValue = nextKeyValue;
+        }
+
+        @Override
+        public int hashCode() {
+            hash = 31;
+            hash = hash * 17 + key.hashCode();
+            hash = hash * 17 + value.hashCode();
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+
+            if (obj instanceof Hashtable){
+                MyHashTable<K, V> temp = (MyHashTable) obj;
+                return (Objects.equals(key, temp.getKey())
+                        && Objects.equals(value, temp.getValue())
+                        || Objects.equals(hash, temp.hashCode()));
+            }
+            return false;
         }
     }
 
