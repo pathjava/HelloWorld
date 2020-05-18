@@ -8,12 +8,50 @@ import java.math.BigInteger;
 public class DoubleHashTable<K, V> {
 
     private int size = 101;
+    private HashTable<K, V>[] table;
 
-    class HashTableContainer<K, V> {
+    public DoubleHashTable() {
+        table = new HashTable[size];
+    }
+
+    private int getHash(int key){
+        return key % table.length;
+    }
+
+    class HashTable<K, V> {
         private int hash;
         private K key;
         private V value;
-        private HashTableContainer<K, V> nextKey;
+        private HashTable<K, V> nextKeyValue;
+
+        public HashTable(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public void setKey(K key) {
+            this.key = key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
+
+        public HashTable<K, V> getNextKeyValue() {
+            return nextKeyValue;
+        }
+
+        public void setNextKeyValue(HashTable<K, V> nextKeyValue) {
+            this.nextKeyValue = nextKeyValue;
+        }
     }
 
     public int sizeTable(int currentSize) {
