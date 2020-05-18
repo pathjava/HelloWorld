@@ -28,8 +28,11 @@ public class DoubleHashTable<K, V> {
             addSingle(key, value);
     }
 
-    private void addSingle(K key, V value){
-
+    private void addSingle(K key, V value) {
+        int index = getIndex(key);
+        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
+        table[index] = newItem;
+        size++;
     }
 
     private void copyTable() {
