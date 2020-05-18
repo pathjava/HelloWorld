@@ -6,7 +6,7 @@ package ru.progwards.java2.lessons.basetypes;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class DoubleHashTable<K, V> {
+public class DoubleHashTable<K, V> implements HashValue {
 
     private int size = 0;
     private int sizeTable = 101;
@@ -35,7 +35,7 @@ public class DoubleHashTable<K, V> {
         size++;
     }
 
-    private void addCollision(K key, V value){
+    private void addCollision(K key, V value) {
 
     }
 
@@ -51,6 +51,11 @@ public class DoubleHashTable<K, V> {
     private int getIndex(K key) {
         int hash = 31 * 17 + key.hashCode();
         return hash % table.length;
+    }
+
+    @Override
+    public int getHash() {
+        return 0;
     }
 
     public class ItemHashTable<K, V> {
@@ -94,10 +99,6 @@ public class DoubleHashTable<K, V> {
 
         @Override
         public int hashCode() {
-//            hash = 31;
-//            hash = hash * 17 + key.hashCode();
-//            hash = hash * 17 + value.hashCode();
-//            return hash;
             return hash = 31 * 17 + key.hashCode();
         }
 
@@ -113,6 +114,16 @@ public class DoubleHashTable<K, V> {
             }
             return false;
         }
+    }
+
+    private int hashDivInt(K key) {
+        return (int) key % table.length;
+    }
+
+    private int hashMulInt(K key) {
+        double A = 1.61803398875;
+        double d = A * (int) key;
+        return (int) (table.length * (d - Math.floor(d)));
     }
 
     public int sizeTable(int currentSize) {
