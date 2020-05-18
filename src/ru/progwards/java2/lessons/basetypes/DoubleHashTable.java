@@ -94,6 +94,10 @@ public class DoubleHashTable<K, V> {
 
         @Override
         public int hashCode() {
+//            hash = 31;
+//            hash = hash * 17 + key.hashCode();
+//            hash = hash * 17 + value.hashCode();
+//            return hash;
             return hash = 31 * 17 + key.hashCode();
         }
 
@@ -130,7 +134,9 @@ public class DoubleHashTable<K, V> {
     public static void main(String[] args) {
         DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
 
-        System.out.println(hashTable.sizeTable(101));
+        hashTable.add(1, "value1");
+        hashTable.add(2, "value2");
+        hashTable.add(3, "value3");
     }
 
 }
