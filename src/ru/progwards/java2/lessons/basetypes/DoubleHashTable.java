@@ -9,27 +9,43 @@ import java.util.Objects;
 public class DoubleHashTable<K, V> {
 
     private int size = 0;
-    private final MyHashTable<K, V>[] table;
+    private int sizeTable = 101;
+    private ItemHashTable<K, V>[] table;
     private float loadFactor;
 
     public DoubleHashTable() {
-        table = new MyHashTable[101];
+        table = new ItemHashTable[sizeTable];
         loadFactor = table.length * 0.75f;
     }
 
-    private int getHash(K key){
+    public void add(K key, V value) {
+        if (size + 1 >= loadFactor) {
+            copyTable();
+        }
+    }
+
+    private void copyTable() {
+        ItemHashTable<K, V>[] tempTable = table;
+        table = new ItemHashTable[sizeTable(sizeTable)];
+
+        for (ItemHashTable<K, V> hashTable : tempTable)
+            if (hashTable != null)
+                add(hashTable.key, hashTable.value);
+    }
+
+    private int getHash(K key) {
         int hash = 31;
         hash = hash * 17 + key.hashCode();
         return hash % table.length;
     }
 
-    public class MyHashTable<K, V> {
+    public class ItemHashTable<K, V> {
         private int hash;
         private K key;
         private V value;
-        private MyHashTable<K, V> nextKeyValue;
+        private ItemHashTable<K, V> nextKeyValue;
 
-        public MyHashTable(K key, V value) {
+        public ItemHashTable(K key, V value) {
             this.key = key;
             this.value = value;
         }
@@ -54,11 +70,11 @@ public class DoubleHashTable<K, V> {
             this.value = value;
         }
 
-        public MyHashTable<K, V> getNextKeyValue() {
+        public ItemHashTable<K, V> getNextKeyValue() {
             return nextKeyValue;
         }
 
-        public void setNextKeyValue(MyHashTable<K, V> nextKeyValue) {
+        public void setNextKeyValue(ItemHashTable<K, V> nextKeyValue) {
             this.nextKeyValue = nextKeyValue;
         }
 
@@ -75,8 +91,8 @@ public class DoubleHashTable<K, V> {
             if (this == obj)
                 return true;
 
-            if (obj instanceof MyHashTable){
-                MyHashTable<K, V> temp = (MyHashTable) obj;
+            if (obj instanceof DoubleHashTable.ItemHashTable) {
+                ItemHashTable<K, V> temp = (ItemHashTable) obj;
                 return (Objects.equals(key, temp.getKey())
                         && Objects.equals(value, temp.getValue())
                         || Objects.equals(hash, temp.hashCode()));
@@ -96,6 +112,7 @@ public class DoubleHashTable<K, V> {
             else
                 tempSize++;
         }
+        sizeTable = newSize;
         return newSize;
     }
 
