@@ -24,7 +24,8 @@ public class DoubleHashTable<K, V> {
         }
         if (table[getIndex(key)] == null)
             addSingle(key, value);
-
+        else
+            addCollision(key, value);
     }
 
     private void addSingle(K key, V value) {
@@ -32,6 +33,10 @@ public class DoubleHashTable<K, V> {
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         table[index] = newItem;
         size++;
+    }
+
+    private void addCollision(K key, V value){
+
     }
 
     private void copyTable() {
