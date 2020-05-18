@@ -4,7 +4,6 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
-import java.util.Hashtable;
 import java.util.Objects;
 
 public class DoubleHashTable<K, V> {
@@ -18,10 +17,10 @@ public class DoubleHashTable<K, V> {
         loadFactor = table.length * 0.75f;
     }
 
-    private int getHash(int key){
+    private int getHash(K key){
         int hash = 31;
-        hash = hash * 17 + key
-        return key % table.length;
+        hash = hash * 17 + key.hashCode();
+        return hash % table.length;
     }
 
     public class MyHashTable<K, V> {
@@ -41,6 +40,10 @@ public class DoubleHashTable<K, V> {
 
         public void setKey(K key) {
             this.key = key;
+        }
+
+        public int getHash() {
+            return hashCode() % table.length;
         }
 
         public V getValue() {
@@ -72,7 +75,7 @@ public class DoubleHashTable<K, V> {
             if (this == obj)
                 return true;
 
-            if (obj instanceof Hashtable){
+            if (obj instanceof MyHashTable){
                 MyHashTable<K, V> temp = (MyHashTable) obj;
                 return (Objects.equals(key, temp.getKey())
                         && Objects.equals(value, temp.getValue())
