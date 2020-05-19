@@ -41,11 +41,13 @@ public class DoubleHashTable<K, V> implements HashValue {
                 table[index].setValue(newItem.value);
             else if (!newItem.key.equals(table[index].key))
                 table[index].setNextKeyValue(newItem);
+        } else if (!(newItem.hash == table[index].hash) && table[index].nextKeyValue == null) {
+            table[index].setNextKeyValue(newItem);
         } else if (!(newItem.hash == table[index].hash)) {
             ItemHashTable<K, V> currentItem = table[index];
-            while (!next){
-                nextItem(currentItem);
-
+            while (!next) {
+                currentItem = nextItem(currentItem);
+                if (newItem.hash == currentItem.hash)
                 next = true;
             }
         }
