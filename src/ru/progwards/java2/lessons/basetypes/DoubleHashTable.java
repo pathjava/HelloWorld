@@ -4,7 +4,6 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
-import java.util.Objects;
 
 public class DoubleHashTable<K, V> implements HashValue {
 
@@ -22,15 +21,15 @@ public class DoubleHashTable<K, V> implements HashValue {
             copyTable();
             loadFactor = (int) (table.length * (75.0f / 100.0f));
         }
-        if (table[getIndex(key)] == null)
-            addSingle(key, value);
+        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
+        if (table[getIndex(newItem)] == null)
+            addSingle(newItem);
         else
             addCollision(key, value);
     }
 
-    private void addSingle(K key, V value) {
-        int index = getIndex(key);
-        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
+    private void addSingle(ItemHashTable<K, V> newItem) {
+        int index = getIndex(newItem);
         table[index] = newItem;
         size++;
     }
@@ -48,9 +47,8 @@ public class DoubleHashTable<K, V> implements HashValue {
                 add(hashTable.key, hashTable.value);
     }
 
-    private int getIndex(K key) {
-        int hash = 31 * 17 + key.hashCode();
-        return hash % table.length;
+    private int getIndex(ItemHashTable<K, V> newItem) {
+        return newItem.hashCode() % table.length;
     }
 
     @Override
@@ -98,21 +96,24 @@ public class DoubleHashTable<K, V> implements HashValue {
         }
 
         @Override
-        public int hashCode() {
-            return hash = 31 * 17 + key.hashCode();
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ItemHashTable<?, ?> that = (ItemHashTable<?, ?>) o;
+
+            if (hash != that.hash) return false;
+            if (key != null ? !key.equals(that.key) : that.key != null) return false;
+            return value != null ? value.equals(that.value) : that.value == null;
         }
 
         @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-
-            if (obj instanceof DoubleHashTable.ItemHashTable) {
-                ItemHashTable<K, V> temp = (ItemHashTable) obj;
-                return (Objects.equals(key, temp.getKey())
-                        && Objects.equals(value, temp.getValue()));
-            }
-            return false;
+        public int hashCode() {
+            int hashCode = (int) key;
+            hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+            hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+            hash = hashCode;
+            return hashCode;
         }
     }
 
@@ -145,9 +146,9 @@ public class DoubleHashTable<K, V> implements HashValue {
     public static void main(String[] args) {
         DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
 
-        hashTable.add(1, "value1");
-        hashTable.add(2, "value2");
-        hashTable.add(3, "value3");
+        hashTable.add(321, "value1");
+        hashTable.add(20, "value2");
+        hashTable.add(553, "value3");
     }
 
 }
