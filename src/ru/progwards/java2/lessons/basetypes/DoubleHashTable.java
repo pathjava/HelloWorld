@@ -36,24 +36,45 @@ public class DoubleHashTable<K, V> implements HashValue {
 
     private void addChains(ItemHashTable<K, V> newItem, int index) {
         boolean next = false;
-        if (newItem.hash == table[index].hash && table[index].nextKeyValue == null) {
-            if (newItem.key.equals(table[index].key))
-                table[index].setValue(newItem.value);
-            else if (!newItem.key.equals(table[index].key))
-                table[index].setNextKeyValue(newItem);
-        } else if (!(newItem.hash == table[index].hash) && table[index].nextKeyValue == null) {
-            table[index].setNextKeyValue(newItem);
-        } else if (!(newItem.hash == table[index].hash)) {
-            ItemHashTable<K, V> currentItem = table[index];
-            while (!next) {
-                currentItem = nextItem(currentItem);
-                if (newItem.hash == currentItem.hash)
-                next = true;
+        ItemHashTable<K, V> currentItem = table[index];
+
+        while (!next) {
+            if (newItem.hash == currentItem.hash) {
+                if (newItem.key.equals(currentItem.key)) {
+                    currentItem.setValue(newItem.value);
+                    next = true;
+                } else if (!newItem.key.equals(currentItem.key))
+                    if (currentItem.nextKeyValue == null) {
+                        currentItem.setNextKeyValue(newItem);
+                        next = true;
+                    } else
+                        currentItem = nextChainsItem(currentItem);
+            } else {
+                if (currentItem.nextKeyValue == null) {
+                    currentItem.setNextKeyValue(newItem);
+                    next = true;
+                } else
+                    currentItem = nextChainsItem(currentItem);
             }
         }
+//        if (newItem.hash == table[index].hash && table[index].nextKeyValue == null) {
+//            if (newItem.key.equals(table[index].key))
+//                table[index].setValue(newItem.value);
+//            else if (!newItem.key.equals(table[index].key))
+//                table[index].setNextKeyValue(newItem);
+//        } else if (!(newItem.hash == table[index].hash) && table[index].nextKeyValue == null) {
+//            table[index].setNextKeyValue(newItem);
+//        } else if (!(newItem.hash == table[index].hash)) {
+//            ItemHashTable<K, V> currentItem = table[index];
+//            while (!next) {
+//                currentItem = nextChainsItem(currentItem);
+//                if (newItem.hash == currentItem.hash)
+//                    next = true;
+//            }
+//        }
     }
 
-    private ItemHashTable<K, V> nextItem(ItemHashTable<K, V> currentItem) {
+    private ItemHashTable<K, V> nextChainsItem(ItemHashTable<K, V> currentItem) {
         ItemHashTable<K, V> nextItem = null;
         if (currentItem.getNextKeyValue() != null) {
             nextItem = new ItemHashTable<>(currentItem.getNextKeyValue().key, currentItem.getNextKeyValue().value);
