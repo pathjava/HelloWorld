@@ -4,7 +4,6 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 
 public class DoubleHashTable<K, V> implements HashValue {
 
@@ -25,13 +24,12 @@ public class DoubleHashTable<K, V> implements HashValue {
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         int index = getIndex(newItem);
         if (table[index] == null)
-            addSingle(newItem);
+            addSingle(newItem, index);
         else
             addChains(newItem, index);
     }
 
-    private void addSingle(ItemHashTable<K, V> newItem) {
-        int index = getIndex(newItem);
+    private void addSingle(ItemHashTable<K, V> newItem, int index) {
         table[index] = newItem;
         size++;
     }
@@ -53,7 +51,7 @@ public class DoubleHashTable<K, V> implements HashValue {
     }
 
     private int getIndex(ItemHashTable<K, V> newItem) {
-        return newItem.hashCode() % table.length;
+        return newItem.hash % table.length;
     }
 
     @Override
@@ -70,6 +68,7 @@ public class DoubleHashTable<K, V> implements HashValue {
         public ItemHashTable(K key, V value) {
             this.key = key;
             this.value = value;
+            this.hash = hashCode();
         }
 
         public K getKey() {
