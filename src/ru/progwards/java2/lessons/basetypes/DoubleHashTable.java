@@ -35,10 +35,28 @@ public class DoubleHashTable<K, V> implements HashValue {
     }
 
     private void addChains(ItemHashTable<K, V> newItem, int index) {
-        if (newItem.hash == table[index].hash && newItem.key.equals(table[index].key) && table[index].nextKeyValue == null)
-            table[index].setValue(newItem.value);
-        else if (newItem.hash != table[index].hash && table[index].nextKeyValue == null)
-            table[index].setNextKeyValue(newItem);
+        boolean next = false;
+        if (newItem.hash == table[index].hash && table[index].nextKeyValue == null) {
+            if (newItem.key.equals(table[index].key))
+                table[index].setValue(newItem.value);
+            else if (!newItem.key.equals(table[index].key))
+                table[index].setNextKeyValue(newItem);
+        } else if (!(newItem.hash == table[index].hash)) {
+            ItemHashTable<K, V> currentItem = table[index];
+            while (!next){
+                nextItem(currentItem);
+
+                next = true;
+            }
+        }
+    }
+
+    private ItemHashTable<K, V> nextItem(ItemHashTable<K, V> currentItem) {
+        ItemHashTable<K, V> nextItem = null;
+        if (currentItem.getNextKeyValue() != null) {
+            nextItem = new ItemHashTable<>(currentItem.getNextKeyValue().key, currentItem.getNextKeyValue().value);
+        }
+        return nextItem;
     }
 
     private void copyTable() {
@@ -57,6 +75,10 @@ public class DoubleHashTable<K, V> implements HashValue {
     @Override
     public int getHash() {
         return 0;
+    }
+
+    public int size() {
+        return size;
     }
 
     public class ItemHashTable<K, V> {
