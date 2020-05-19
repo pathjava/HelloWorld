@@ -4,11 +4,12 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 
 public class DoubleHashTable<K, V> implements HashValue {
 
     private int size = 0;
-    private int sizeTable = 101;
+    private int sizeTable = 5;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
 
@@ -17,15 +18,16 @@ public class DoubleHashTable<K, V> implements HashValue {
     }
 
     public void add(K key, V value) {
-        if (size + 1 >= loadFactor) {
-            copyTable();
-            loadFactor = (int) (table.length * (75.0f / 100.0f));
-        }
+//        if (size + 1 >= loadFactor) {
+//            copyTable();
+//            loadFactor = (int) (table.length * (75.0f / 100.0f));
+//        }
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
-        if (table[getIndex(newItem)] == null)
+        int index = getIndex(newItem);
+        if (table[index] == null)
             addSingle(newItem);
         else
-            addCollision(key, value);
+            addChains(newItem, index);
     }
 
     private void addSingle(ItemHashTable<K, V> newItem) {
@@ -34,8 +36,11 @@ public class DoubleHashTable<K, V> implements HashValue {
         size++;
     }
 
-    private void addCollision(K key, V value) {
-
+    private void addChains(ItemHashTable<K, V> newItem, int index) {
+        if (newItem.hash == table[index].hash && newItem.key.equals(table[index].key) && table[index].nextKeyValue == null)
+            table[index].setValue(newItem.value);
+        else if (newItem.hash != table[index].hash && table[index].nextKeyValue == null)
+            table[index].setNextKeyValue(newItem);
     }
 
     private void copyTable() {
@@ -102,7 +107,6 @@ public class DoubleHashTable<K, V> implements HashValue {
 
             ItemHashTable<?, ?> that = (ItemHashTable<?, ?>) o;
 
-            if (hash != that.hash) return false;
             if (key != null ? !key.equals(that.key) : that.key != null) return false;
             return value != null ? value.equals(that.value) : that.value == null;
         }
@@ -147,8 +151,13 @@ public class DoubleHashTable<K, V> implements HashValue {
         DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
 
         hashTable.add(321, "value1");
-        hashTable.add(20, "value2");
-        hashTable.add(553, "value3");
+        hashTable.add(321, "valueNew1");
+        hashTable.add(120, "value2");
+        hashTable.add(225, "value3");
+        hashTable.add(722, "value4");
+        hashTable.add(327, "value5");
+        hashTable.add(286, "value6");
+        hashTable.add(553, "value7");
     }
 
 }
