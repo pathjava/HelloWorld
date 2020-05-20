@@ -17,6 +17,8 @@ public class DoubleHashTable<K, V> {
     }
 
     public void add(K key, V value) {
+        if (key == null)
+            throw new IllegalArgumentException("Key is null!");
 //        if (size + 1 >= loadFactor) {
 //            copyTable();
 //            loadFactor = (int) (table.length * (75.0f / 100.0f));
@@ -56,6 +58,8 @@ public class DoubleHashTable<K, V> {
     }
 
     public V get(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("Key is null!");
         int hash = hash(key);
         int index = hash % table.length;
         ItemHashTable<K, V> currentItem = table[index];
@@ -65,25 +69,33 @@ public class DoubleHashTable<K, V> {
                 if (currentItem.key.equals(key)) {
                     return currentItem.value;
                 }
-            if (currentItem.next != null)
-                currentItem = currentItem.next;
+            currentItem = currentItem.next;
         }
         return null;
     }
 
     public void remove(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("Key is null!");
         int hash = hash(key);
         int index = hash % table.length;
+        ItemHashTable<K, V> prev = null;
         ItemHashTable<K, V> currentItem = table[index];
 
-        while (currentItem.next != null) {
+        while (currentItem != null) {
             if (currentItem.hash == hash)
                 if (currentItem.key.equals(key)) {
-                    currentItem = null;
+                    if (prev == null) {
+                        currentItem = currentItem.getNext();
+                        table[index] = currentItem;
+                    } else {
+                        prev.setNext(currentItem.getNext());
+                    }
                     size--;
                     return;
                 }
-            currentItem = currentItem.next;
+            prev = currentItem;
+            currentItem = currentItem.getNext();
         }
     }
 
@@ -217,6 +229,8 @@ public class DoubleHashTable<K, V> {
         hashTable.add(225, "valueNew3");
 
         System.out.println(hashTable.get(553));
+
+        hashTable.remove(553);
 
         System.out.println(hashTable.size());
     }
