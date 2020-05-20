@@ -56,8 +56,8 @@ public class DoubleHashTable<K, V> {
     }
 
     public V get(K key) {
-        int index = hash(key) % table.length;
         int hash = hash(key);
+        int index = hash % table.length;
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem != null) {
@@ -72,8 +72,8 @@ public class DoubleHashTable<K, V> {
     }
 
     public void remove(K key) {
-        int index = hash(key) % table.length;
         int hash = hash(key);
+        int index = hash % table.length;
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem.next != null) {
