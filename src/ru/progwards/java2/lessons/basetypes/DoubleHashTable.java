@@ -55,6 +55,12 @@ public class DoubleHashTable<K, V> {
         }
     }
 
+    public V get(K key){
+
+
+        return value;
+    }
+
     private void copyTable() {
         ItemHashTable<K, V>[] tempTable = table;
         table = new ItemHashTable[sizeTable(sizeTable)];
