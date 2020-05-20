@@ -38,15 +38,17 @@ public class DoubleHashTable<K, V> {
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem.next != null) {
-            if (currentItem.key.equals(newItem.key)) {
-                currentItem.value = newItem.value;
-                return;
-            }
+            if (currentItem.hash == newItem.hash)
+                if (currentItem.key.equals(newItem.key)) {
+                    currentItem.value = newItem.value;
+                    return;
+                }
             currentItem = currentItem.next;
         }
 
-        if (currentItem.key.equals(newItem.key)) {
-            currentItem.value = newItem.value;
+        if (currentItem.hash == newItem.hash) {
+            if (currentItem.key.equals(newItem.key))
+                currentItem.value = newItem.value;
         } else {
             currentItem.next = newItem;
             size++;
