@@ -58,20 +58,33 @@ public class DoubleHashTable<K, V> {
     public V get(K key) {
         int index = hash(key) % table.length;
         int hash = hash(key);
-        boolean found = false;
-        V value = null;
         ItemHashTable<K, V> currentItem = table[index];
 
-        while (!found) {
+        while (currentItem != null) {
             if (currentItem.hash == hash)
                 if (currentItem.key.equals(key)) {
-                    value = currentItem.value;
-                    found = true;
+                    return currentItem.value;
                 }
             if (currentItem.next != null)
                 currentItem = currentItem.next;
         }
-        return value;
+        return null;
+    }
+
+    public void remove(K key) {
+        int index = hash(key) % table.length;
+        int hash = hash(key);
+        ItemHashTable<K, V> currentItem = table[index];
+
+        while (currentItem.next != null) {
+            if (currentItem.hash == hash)
+                if (currentItem.key.equals(key)) {
+                    currentItem = null;
+                    size--;
+                    return;
+                }
+            currentItem = currentItem.next;
+        }
     }
 
     private void copyTable() {
@@ -203,7 +216,7 @@ public class DoubleHashTable<K, V> {
         hashTable.add(553, "value7");
         hashTable.add(225, "valueNew3");
 
-        System.out.println(hashTable.get(225));
+        System.out.println(hashTable.get(553));
 
         System.out.println(hashTable.size());
     }
