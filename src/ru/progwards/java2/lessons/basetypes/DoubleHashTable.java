@@ -55,18 +55,21 @@ public class DoubleHashTable<K, V> {
         }
     }
 
-    public V get(K key){
+    public V get(K key) {
         int index = hash(key) % table.length;
         int hash = hash(key);
+        boolean found = false;
         V value = null;
         ItemHashTable<K, V> currentItem = table[index];
 
-        while (currentItem.next != null) {
+        while (!found) {
             if (currentItem.hash == hash)
                 if (currentItem.key.equals(key)) {
                     value = currentItem.value;
+                    found = true;
                 }
-            currentItem = currentItem.next;
+            if (currentItem.next != null)
+                currentItem = currentItem.next;
         }
         return value;
     }
@@ -198,6 +201,9 @@ public class DoubleHashTable<K, V> {
         hashTable.add(327, "value5");
         hashTable.add(286, "value6");
         hashTable.add(553, "value7");
+        hashTable.add(225, "valueNew3");
+
+        System.out.println(hashTable.get(225));
 
         System.out.println(hashTable.size());
     }
