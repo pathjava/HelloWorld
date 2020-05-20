@@ -79,24 +79,33 @@ public class DoubleHashTable<K, V> {
             throw new IllegalArgumentException("Key is null!");
         int hash = hash(key);
         int index = hash % table.length;
-        ItemHashTable<K, V> prev = null;
+        ItemHashTable<K, V> tempItem = null;
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem != null) {
             if (currentItem.hash == hash)
                 if (currentItem.key.equals(key)) {
-                    if (prev == null) {
+                    if (tempItem == null) {
                         currentItem = currentItem.getNext();
                         table[index] = currentItem;
                     } else {
-                        prev.setNext(currentItem.getNext());
+                        tempItem.setNext(currentItem.getNext());
                     }
                     size--;
                     return;
                 }
-            prev = currentItem;
+            tempItem = currentItem;
             currentItem = currentItem.getNext();
         }
+    }
+
+    public void change(K keyOne, K keyTwo) {
+        if (keyOne == null || keyTwo == null)
+            throw new IllegalArgumentException("Key is null!");
+        V tempValue = get(keyTwo);
+        remove(keyTwo);
+
+        add(keyOne, tempValue);
     }
 
     private void copyTable() {
@@ -231,6 +240,8 @@ public class DoubleHashTable<K, V> {
         System.out.println(hashTable.get(553));
 
         hashTable.remove(553);
+
+        hashTable.change(120, 286);
 
         System.out.println(hashTable.size());
     }
