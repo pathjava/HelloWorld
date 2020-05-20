@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
+import java.util.Iterator;
 
 public class DoubleHashTable<K, V> {
 
@@ -106,6 +107,20 @@ public class DoubleHashTable<K, V> {
         remove(keyTwo);
 
         add(keyOne, tempValue);
+    }
+
+    public Iterator<DoubleHashTable<K,V>> getIterator(){
+        return new Iterator<DoubleHashTable<K, V>>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public DoubleHashTable<K, V> next() {
+                return null;
+            }
+        };
     }
 
     private void copyTable() {
