@@ -35,7 +35,6 @@ public class DoubleHashTable<K, V> {
     }
 
     private void addChains(ItemHashTable<K, V> newItem, int index) {
-        boolean next = false;
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem.next != null) {
@@ -52,15 +51,6 @@ public class DoubleHashTable<K, V> {
             currentItem.next = newItem;
             size++;
         }
-    }
-
-    private ItemHashTable<K, V> nextChainsItem(ItemHashTable<K, V> currentItem) {
-        ItemHashTable<K, V> nextItem = null;
-        if (currentItem.getNext() != null) {
-            nextItem = new ItemHashTable<>(currentItem.getNext().key, currentItem.getNext().value,
-                    currentItem.getNext().next);
-        }
-        return nextItem;
     }
 
     private void copyTable() {
@@ -183,6 +173,8 @@ public class DoubleHashTable<K, V> {
         hashTable.add(327, "value5");
         hashTable.add(286, "value6");
         hashTable.add(553, "value7");
+
+        System.out.println(hashTable.size());
     }
 
 }
