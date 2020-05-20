@@ -5,7 +5,7 @@ package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
 
-public class DoubleHashTable<K, V> implements HashValue {
+public class DoubleHashTable<K, V> {
 
     private int size = 0;
     private int sizeTable = 5;
@@ -21,7 +21,7 @@ public class DoubleHashTable<K, V> implements HashValue {
 //            copyTable();
 //            loadFactor = (int) (table.length * (75.0f / 100.0f));
 //        }
-        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
+        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value, null);
         int index = getIndex(newItem);
         if (table[index] == null)
             addSingle(newItem, index);
@@ -38,46 +38,27 @@ public class DoubleHashTable<K, V> implements HashValue {
         boolean next = false;
         ItemHashTable<K, V> currentItem = table[index];
 
-        while (!next) {
-            if (newItem.hash == currentItem.hash) {
-                if (newItem.key.equals(currentItem.key)) {
-                    currentItem.setValue(newItem.value);
-                    next = true;
-                } else if (!newItem.key.equals(currentItem.key))
-                    if (currentItem.nextKeyValue == null) {
-                        currentItem.setNextKeyValue(newItem);
-                        next = true;
-                    } else
-                        currentItem = nextChainsItem(currentItem);
-            } else {
-                if (currentItem.nextKeyValue == null) {
-                    currentItem.setNextKeyValue(newItem);
-                    next = true;
-                } else
-                    currentItem = nextChainsItem(currentItem);
+        while (currentItem.next != null) {
+            if (currentItem.key.equals(newItem.key)) {
+                currentItem.value = newItem.value;
+                return;
             }
+            currentItem = currentItem.next;
         }
-//        if (newItem.hash == table[index].hash && table[index].nextKeyValue == null) {
-//            if (newItem.key.equals(table[index].key))
-//                table[index].setValue(newItem.value);
-//            else if (!newItem.key.equals(table[index].key))
-//                table[index].setNextKeyValue(newItem);
-//        } else if (!(newItem.hash == table[index].hash) && table[index].nextKeyValue == null) {
-//            table[index].setNextKeyValue(newItem);
-//        } else if (!(newItem.hash == table[index].hash)) {
-//            ItemHashTable<K, V> currentItem = table[index];
-//            while (!next) {
-//                currentItem = nextChainsItem(currentItem);
-//                if (newItem.hash == currentItem.hash)
-//                    next = true;
-//            }
-//        }
+
+        if (currentItem.key.equals(newItem.key)) {
+            currentItem.value = newItem.value;
+        } else {
+            currentItem.next = newItem;
+            size++;
+        }
     }
 
     private ItemHashTable<K, V> nextChainsItem(ItemHashTable<K, V> currentItem) {
         ItemHashTable<K, V> nextItem = null;
-        if (currentItem.getNextKeyValue() != null) {
-            nextItem = new ItemHashTable<>(currentItem.getNextKeyValue().key, currentItem.getNextKeyValue().value);
+        if (currentItem.getNext() != null) {
+            nextItem = new ItemHashTable<>(currentItem.getNext().key, currentItem.getNext().value,
+                    currentItem.getNext().next);
         }
         return nextItem;
     }
@@ -95,25 +76,25 @@ public class DoubleHashTable<K, V> implements HashValue {
         return newItem.hash % table.length;
     }
 
-    @Override
-    public int getHash() {
-        return 0;
-    }
-
     public int size() {
         return size;
     }
 
     public class ItemHashTable<K, V> {
-        private int hash;
         private K key;
         private V value;
-        private ItemHashTable<K, V> nextKeyValue;
+        private int hash;
+        private ItemHashTable<K, V> next;
 
-        public ItemHashTable(K key, V value) {
+        public ItemHashTable(K key, V value, ItemHashTable<K, V> next) {
             this.key = key;
             this.value = value;
             this.hash = hashCode();
+            this.next = next;
+        }
+
+        public void setHash(int hash) {
+            this.hash = hash;
         }
 
         public K getKey() {
@@ -125,7 +106,7 @@ public class DoubleHashTable<K, V> implements HashValue {
         }
 
         public int getHash() {
-            return hashCode() % table.length;
+            return hashCode();
         }
 
         public V getValue() {
@@ -136,12 +117,12 @@ public class DoubleHashTable<K, V> implements HashValue {
             this.value = value;
         }
 
-        public ItemHashTable<K, V> getNextKeyValue() {
-            return nextKeyValue;
+        public ItemHashTable<K, V> getNext() {
+            return next;
         }
 
-        public void setNextKeyValue(ItemHashTable<K, V> nextKeyValue) {
-            this.nextKeyValue = nextKeyValue;
+        public void setNext(ItemHashTable<K, V> next) {
+            this.next = next;
         }
 
         @Override
