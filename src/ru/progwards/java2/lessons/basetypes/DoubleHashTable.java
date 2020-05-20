@@ -56,8 +56,18 @@ public class DoubleHashTable<K, V> {
     }
 
     public V get(K key){
+        int index = hash(key) % table.length;
+        int hash = hash(key);
+        V value = null;
+        ItemHashTable<K, V> currentItem = table[index];
 
-
+        while (currentItem.next != null) {
+            if (currentItem.hash == hash)
+                if (currentItem.key.equals(key)) {
+                    value = currentItem.value;
+                }
+            currentItem = currentItem.next;
+        }
         return value;
     }
 
@@ -144,15 +154,22 @@ public class DoubleHashTable<K, V> {
         }
     }
 
-    private int hashDivInt(K key) {
-        return (int) key % table.length;
+    public int hash(K key) {
+        int hashCode = (int) key;
+        hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+        hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+        return hashCode;
     }
 
-    private int hashMulInt(K key) {
-        double A = 1.61803398875;
-        double d = A * (int) key;
-        return (int) (table.length * (d - Math.floor(d)));
-    }
+//    private int hashDivInt(K key) {
+//        return (int) key % table.length;
+//    }
+//
+//    private int hashMulInt(K key) {
+//        double A = 1.61803398875;
+//        double d = A * (int) key;
+//        return (int) (table.length * (d - Math.floor(d)));
+//    }
 
     public int sizeTable(int currentSize) {
         int newSize = 0;
