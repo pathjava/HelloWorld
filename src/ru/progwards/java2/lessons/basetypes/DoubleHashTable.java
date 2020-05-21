@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
 import java.util.Iterator;
+import java.util.Random;
 
 public class DoubleHashTable<K, V> {
 
@@ -133,15 +134,12 @@ public class DoubleHashTable<K, V> {
 
             @Override
             public ItemHashTable<K, V> next() {
-                if (current == null)
-                    current = table[i++];
-
                 ItemHashTable<K, V> result = current;
-
+                K keys = current.key;
+                V values = current.value;
                 current = current.next;
                 if (current == null)
                     i++;
-
                 return result;
             }
         };
@@ -281,18 +279,25 @@ public class DoubleHashTable<K, V> {
         hashTable.add(553, "value7");
         hashTable.add(225, "valueNew3");
 
-        System.out.println(hashTable.get(553));
+//        int min = 100;
+//        int max = 1000;
+//        for (int i = 0; i < 1000; i++) {
+//            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+//            hashTable.add(randomNum, "value" + randomNum);
+//        }
 
-        hashTable.remove(553);
-
-        hashTable.change(120, 286);
+//        System.out.println(hashTable.get(553));
+//
+//        hashTable.remove(553);
+//
+//        hashTable.change(120, 286);
 
         for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            Object o = it.next().value;
-            System.out.println(o);
+            Object v = it.next();
+            System.out.println(v);
         }
 
-        System.out.println(hashTable.size());
+//        System.out.println(hashTable.size());
     }
 
 }
