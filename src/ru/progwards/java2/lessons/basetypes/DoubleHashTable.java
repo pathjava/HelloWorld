@@ -109,25 +109,36 @@ public class DoubleHashTable<K, V> {
         add(keyOne, tempValue);
     }
 
-    public Iterator<DoubleHashTable<K, V>> getIterator() {
-        return new Iterator<DoubleHashTable<K, V>>() {
-            private int index() {
-                int i = 0;
-                while (table[i] != null)
-                    i++;
-                return i;
-            }
+    public Iterator<ItemHashTable<K, V>> getIterator() {
+        return new Iterator<>() {
+            private ItemHashTable<K, V> current;
+            private int i = 0;
 
-            final ItemHashTable<K, V> current = table[index()];
+            private void getCurrent() {
+                while (i < table.length) {
+                    if (table[i] != null) {
+                        current = table[i];
+                        i++;
+                        break;
+                    }
+                    i++;
+                }
+            }
 
             @Override
             public boolean hasNext() {
-                return current.getNext() != null;
+                if (current == null)
+                    getCurrent();
+                return i < table.length && table[i] != null;
             }
 
             @Override
-            public DoubleHashTable<K, V> next() {
-                return null;
+            public ItemHashTable<K, V> next() {
+                ItemHashTable<K, V> result = current;
+
+                current = current.next;
+
+                return result;
             }
         };
     }
@@ -149,7 +160,7 @@ public class DoubleHashTable<K, V> {
         return size;
     }
 
-    public class ItemHashTable<K, V> {
+    public static class ItemHashTable<K, V> {
         private K key;
         private V value;
         private int hash;
@@ -213,6 +224,11 @@ public class DoubleHashTable<K, V> {
             hash = hashCode;
             return hashCode;
         }
+
+        @Override
+        public String toString() {
+            return "key=" + key + ", value=" + value;
+        }
     }
 
     public int hash(K key) {
@@ -266,6 +282,11 @@ public class DoubleHashTable<K, V> {
         hashTable.remove(553);
 
         hashTable.change(120, 286);
+
+        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            Object o = it.next();
+            System.out.println(o);
+        }
 
         System.out.println(hashTable.size());
     }
