@@ -109,13 +109,20 @@ public class DoubleHashTable<K, V> {
         add(keyOne, tempValue);
     }
 
-    public Iterator<DoubleHashTable<K,V>> getIterator(){
+    public Iterator<DoubleHashTable<K, V>> getIterator() {
         return new Iterator<DoubleHashTable<K, V>>() {
+            private int index() {
+                int i = 0;
+                while (table[i] != null)
+                    i++;
+                return i;
+            }
 
+            final ItemHashTable<K, V> current = table[index()];
 
             @Override
             public boolean hasNext() {
-                return false;
+                return current.getNext() != null;
             }
 
             @Override
