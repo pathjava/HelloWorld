@@ -111,14 +111,13 @@ public class DoubleHashTable<K, V> {
 
     public Iterator<ItemHashTable<K, V>> getIterator() {
         return new Iterator<>() {
-            private ItemHashTable<K, V> current;
             private int i = 0;
+            private ItemHashTable<K, V> current = table[i];
 
             private void getCurrent() {
                 while (i < table.length) {
                     if (table[i] != null) {
                         current = table[i];
-                        i++;
                         break;
                     }
                     i++;
@@ -129,14 +128,19 @@ public class DoubleHashTable<K, V> {
             public boolean hasNext() {
                 if (current == null)
                     getCurrent();
-                return i < table.length && table[i] != null;
+                return current != null;
             }
 
             @Override
             public ItemHashTable<K, V> next() {
+                if (current == null)
+                    current = table[i++];
+
                 ItemHashTable<K, V> result = current;
 
                 current = current.next;
+                if (current == null)
+                    i++;
 
                 return result;
             }
@@ -284,7 +288,7 @@ public class DoubleHashTable<K, V> {
         hashTable.change(120, 286);
 
         for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            Object o = it.next();
+            Object o = it.next().value;
             System.out.println(o);
         }
 
