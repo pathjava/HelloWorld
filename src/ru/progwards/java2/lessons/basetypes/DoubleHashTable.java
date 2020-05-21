@@ -295,7 +295,7 @@ public class DoubleHashTable<K, V> {
             System.out.println(temp.key + " : " + temp.value);
         }
 
-//        System.out.println(hashTable.size());
+        System.out.println(hashTable.size());
     }
 
 }
