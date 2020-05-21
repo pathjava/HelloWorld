@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.basetypes;
 
 import java.math.BigInteger;
 import java.util.Iterator;
-import java.util.Random;
 
 public class DoubleHashTable<K, V> {
 
@@ -138,6 +137,7 @@ public class DoubleHashTable<K, V> {
                 current = current.next;
                 if (current == null)
                     i++;
+                result.next = null; // null присваиваю, чтобы в итератор уходил только данный узел, а не цепочка
                 return result;
             }
         };
