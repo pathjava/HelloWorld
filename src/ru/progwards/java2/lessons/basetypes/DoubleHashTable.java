@@ -135,8 +135,6 @@ public class DoubleHashTable<K, V> {
             @Override
             public ItemHashTable<K, V> next() {
                 ItemHashTable<K, V> result = current;
-                K keys = current.key;
-                V values = current.value;
                 current = current.next;
                 if (current == null)
                     i++;
@@ -293,8 +291,8 @@ public class DoubleHashTable<K, V> {
 //        hashTable.change(120, 286);
 
         for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            Object v = it.next();
-            System.out.println(v);
+            ItemHashTable<Integer, String> temp = it.next();
+            System.out.println(temp.key + " : " + temp.value);
         }
 
 //        System.out.println(hashTable.size());
