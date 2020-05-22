@@ -6,7 +6,7 @@ package ru.progwards.java2.lessons.basetypes;
 import java.math.BigInteger;
 import java.util.Iterator;
 
-public class DoubleHashTable<K, V> {
+public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
     private int countCollision = 0;
@@ -155,10 +155,6 @@ public class DoubleHashTable<K, V> {
                 add(hashTable.key, hashTable.value);
     }
 
-//    private int getIndex(ItemHashTable<K, V> newItem) {
-//        return newItem.hash % table.length;
-//    }
-
     public int size() {
         return size;
     }
@@ -172,7 +168,6 @@ public class DoubleHashTable<K, V> {
         public ItemHashTable(K key, V value, ItemHashTable<K, V> next) {
             this.key = key;
             this.value = value;
-//            this.hash = hashCode();
             this.next = next;
         }
 
@@ -255,33 +250,6 @@ public class DoubleHashTable<K, V> {
         }
     }
 
-    public int hash(K key) {
-        int hashCode;
-        if (key instanceof String) {
-            /* PJW - алгоритм, основанный на работе Peter J. Weinberger */
-            String str = (String) key;
-            long BitsInUnsignedInt = 4 * 8;
-            long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
-            long OneEighth = BitsInUnsignedInt / 8;
-            long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-            long hash = 0;
-            long test;
-
-            for (int i = 0; i < str.length(); i++) {
-                hash = (hash << OneEighth) + str.charAt(i);
-
-                if ((test = hash & HighBits) != 0) {
-                    hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
-                }
-            }
-            hashCode = (int) hash;
-        } else {
-            hashCode = (int) key;
-            hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-            hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
-        }
-        return hashCode;
-    }
 
 //    private int hashDivInt(K key) {
 //        return (int) key % table.length;
@@ -320,33 +288,33 @@ public class DoubleHashTable<K, V> {
 
     public static void main(String[] args) {
         /* Integer, String */
-        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
-//
-//        hashTable.add(321, "value1");
-//        hashTable.add(321, "valueNew1");
-//        hashTable.add(120, "value2");
-//        hashTable.add(225, "value3");
-//        hashTable.add(722, "value4");
-//        hashTable.add(327, "value5");
-//        hashTable.add(286, "value6");
-//        hashTable.add(553, "value7");
-//        hashTable.add(225, "valueNew3");
-//
-        int min = 100;
-        int max = 1000;
-        for (int i = 0; i < 1000; i++) {
-            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
-            hashTable.add(randomNum, "value" + randomNum);
-        }
+        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
+
+        hashTable.add(321, "value1");
+        hashTable.add(321, "valueNew1");
+        hashTable.add(120, "value2");
+        hashTable.add(225, "value3");
+        hashTable.add(722, "value4");
+        hashTable.add(327, "value5");
+        hashTable.add(286, "value6");
+        hashTable.add(553, "value7");
+        hashTable.add(225, "valueNew3");
+
+//        int min = 100;
+//        int max = 1000;
+//        for (int i = 0; i < 1000; i++) {
+//            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+//            hashTable.add(randomNum, "value" + randomNum);
+//        }
 //
 //        System.out.println(hashTable.get(722));
 //
 //        hashTable.remove(553);
 //
 //        hashTable.change(120, 286);
-//
-        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<Integer, String> temp = it.next();
+
+        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<IntegerHashValue, String> temp = it.next();
             System.out.println(temp.key + " : " + temp.value);
         }
 
