@@ -10,7 +10,7 @@ public class DoubleHashTable<K, V> {
 
     private int size = 0;
     private int countCollision = 0;
-    private int sizeTable = 5;
+    private int sizeTable = 1000;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
 
@@ -220,9 +220,31 @@ public class DoubleHashTable<K, V> {
 
         @Override
         public int hashCode() {
-            int hashCode = (int) key;
-            hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-            hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+            int hashCode;
+            if (key instanceof String){
+                String str = (String) key;
+                long BitsInUnsignedInt = 4 * 8;
+                long ThreeQuarters     = (BitsInUnsignedInt  * 3) / 4;
+                long OneEighth         = BitsInUnsignedInt / 8;
+                long HighBits          = (long)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+                long hash              = 0;
+                long test              = 0;
+
+                for(int i = 0; i < str.length(); i++)
+                {
+                    hash = (hash << OneEighth) + str.charAt(i);
+
+                    if((test = hash & HighBits)  != 0)
+                    {
+                        hash = (( hash ^ (test >> ThreeQuarters)) & (~HighBits));
+                    }
+                }
+                hashCode = (int) hash;
+            } else {
+                hashCode = (int) key;
+                hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+                hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+            }
             hash = hashCode;
             return hashCode;
         }
@@ -234,9 +256,31 @@ public class DoubleHashTable<K, V> {
     }
 
     public int hash(K key) {
-        int hashCode = (int) key;
-        hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-        hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+        int hashCode;
+        if (key instanceof String){
+            String str = (String) key;
+            long BitsInUnsignedInt = 4 * 8;
+            long ThreeQuarters     = (BitsInUnsignedInt  * 3) / 4;
+            long OneEighth         = BitsInUnsignedInt / 8;
+            long HighBits          = (long)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+            long hash              = 0;
+            long test              = 0;
+
+            for(int i = 0; i < str.length(); i++)
+            {
+                hash = (hash << OneEighth) + str.charAt(i);
+
+                if((test = hash & HighBits)  != 0)
+                {
+                    hash = (( hash ^ (test >> ThreeQuarters)) & (~HighBits));
+                }
+            }
+            hashCode = (int) hash;
+        } else {
+            hashCode = (int) key;
+            hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+            hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+        }
         return hashCode;
     }
 
@@ -267,33 +311,65 @@ public class DoubleHashTable<K, V> {
 
 
     public static void main(String[] args) {
-        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
-
-        hashTable.add(321, "value1");
-        hashTable.add(321, "valueNew1");
-        hashTable.add(120, "value2");
-        hashTable.add(225, "value3");
-        hashTable.add(722, "value4");
-        hashTable.add(327, "value5");
-        hashTable.add(286, "value6");
-        hashTable.add(553, "value7");
-        hashTable.add(225, "valueNew3");
-
+        /* Integer, String */
+//        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
+//
+//        hashTable.add(321, "value1");
+//        hashTable.add(321, "valueNew1");
+//        hashTable.add(120, "value2");
+//        hashTable.add(225, "value3");
+//        hashTable.add(722, "value4");
+//        hashTable.add(327, "value5");
+//        hashTable.add(286, "value6");
+//        hashTable.add(553, "value7");
+//        hashTable.add(225, "valueNew3");
+//
 //        int min = 100;
 //        int max = 1000;
 //        for (int i = 0; i < 1000; i++) {
 //            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
 //            hashTable.add(randomNum, "value" + randomNum);
 //        }
-
-        System.out.println(hashTable.get(722));
-
+//
+//        System.out.println(hashTable.get(722));
+//
 //        hashTable.remove(553);
-
+//
 //        hashTable.change(120, 286);
+//
+//        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+//            ItemHashTable<Integer, String> temp = it.next();
+//            System.out.println(temp.key + " : " + temp.value);
+//        }
 
-        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<Integer, String> temp = it.next();
+        /* String, String */
+        DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
+
+//        hashTable.add("value1", "Vvalue1");
+//        hashTable.add("value1", "VvalueNew1");
+//        hashTable.add("value2", "Vvalue2");
+//        hashTable.add("value3", "Vvalue3");
+//        hashTable.add("value4", "Vvalue4");
+//        hashTable.add("value5", "Vvalue5");
+//        hashTable.add("value6", "Vvalue6");
+//        hashTable.add("value7", "Vvalue7");
+//        hashTable.add("value3", "VvalueNew3");
+
+        int min = 100;
+        int max = 1000;
+        for (int i = 0; i < 1000; i++) {
+            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+            hashTable.add("key" + randomNum, "value" + randomNum);
+        }
+
+        System.out.println(hashTable.get("value1"));
+
+//        hashTable.remove("value7");
+//
+//        hashTable.change("value2", "value6");
+
+        for (Iterator<ItemHashTable<String, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<String, String> temp = it.next();
             System.out.println(temp.key + " : " + temp.value);
         }
 
