@@ -26,7 +26,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 //            loadFactor = (int) (table.length * (75.0f / 100.0f));
 //        }
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value, null);
-        newItem.hash = hash(key);
+        newItem.hash = key.getHash();
         int index = newItem.hash % table.length;
         if (table[index] == null)
             addSingle(newItem, index);
@@ -64,7 +64,7 @@ public class DoubleHashTable<K extends HashValue, V> {
     public V get(K key) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-        int hash = hash(key);
+        int hash = key.getHash();
         int index = hash % table.length;
         ItemHashTable<K, V> currentItem = table[index];
 
@@ -81,7 +81,7 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void remove(K key) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-        int hash = hash(key);
+        int hash = key.getHash();
         int index = hash % table.length;
         ItemHashTable<K, V> tempItem = null;
         ItemHashTable<K, V> currentItem = table[index];
@@ -183,9 +183,9 @@ public class DoubleHashTable<K extends HashValue, V> {
             this.key = key;
         }
 
-        public int getHash() {
-            return hashCode();
-        }
+//        public int getHash() {
+//            return hashCode();
+//        }
 
         public V getValue() {
             return value;
@@ -214,7 +214,7 @@ public class DoubleHashTable<K extends HashValue, V> {
             return value != null ? value.equals(that.value) : that.value == null;
         }
 
-//        @Override
+        //        @Override
 //        public int hashCode() {
 //            int hashCode;
 //            if (key instanceof String) {
@@ -287,18 +287,18 @@ public class DoubleHashTable<K extends HashValue, V> {
 
 
     public static void main(String[] args) {
-        /* Integer, String */
+        /* IntegerHashValue, String */
         DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
 
-        hashTable.add(321, "value1");
-        hashTable.add(321, "valueNew1");
-        hashTable.add(120, "value2");
-        hashTable.add(225, "value3");
-        hashTable.add(722, "value4");
-        hashTable.add(327, "value5");
-        hashTable.add(286, "value6");
-        hashTable.add(553, "value7");
-        hashTable.add(225, "valueNew3");
+        hashTable.add(new IntegerHashValue(321), "value1");
+        hashTable.add(new IntegerHashValue(321), "valueNew1");
+        hashTable.add(new IntegerHashValue(120), "value2");
+        hashTable.add(new IntegerHashValue(225), "value3");
+        hashTable.add(new IntegerHashValue(722), "value4");
+        hashTable.add(new IntegerHashValue(327), "value5");
+        hashTable.add(new IntegerHashValue(286), "value6");
+        hashTable.add(new IntegerHashValue(553), "value7");
+        hashTable.add(new IntegerHashValue(225), "valueNew3");
 
 //        int min = 100;
 //        int max = 1000;
@@ -318,7 +318,7 @@ public class DoubleHashTable<K extends HashValue, V> {
             System.out.println(temp.key + " : " + temp.value);
         }
 
-        /* String, String */
+        /* StringHashValue, String */
 //        DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add("value1", "Vvalue1");
