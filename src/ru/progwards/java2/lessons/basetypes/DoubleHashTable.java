@@ -306,6 +306,15 @@ public class DoubleHashTable<K, V> {
         return newSize;
     }
 
+    public int realSizeTable(){
+        int count = 0;
+        for (ItemHashTable<K, V> kvItemHashTable : table) {
+            if (kvItemHashTable != null)
+                count++;
+        }
+        return count;
+    }
+
 
     public static void main(String[] args) {
         /* Integer, String */
@@ -342,22 +351,22 @@ public class DoubleHashTable<K, V> {
         /* String, String */
         DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
 
-        hashTable.add("value1", "Vvalue1");
-        hashTable.add("value1", "VvalueNew1");
-        hashTable.add("ключ2", "Vvalue2");
-        hashTable.add("value3", "Vvalue3");
-        hashTable.add("value4", "Vvalue4");
-        hashTable.add("ключ тестовый 5", "Vvalue5");
-        hashTable.add("value6", "Vvalue6");
-        hashTable.add("value проверка длины ключа 7", "Vvalue7");
-        hashTable.add("value3", "VvalueNew3");
+//        hashTable.add("value1", "Vvalue1");
+//        hashTable.add("value1", "VvalueNew1");
+//        hashTable.add("ключ2", "Vvalue2");
+//        hashTable.add("value3", "Vvalue3");
+//        hashTable.add("value4", "Vvalue4");
+//        hashTable.add("ключ тестовый 5", "Vvalue5");
+//        hashTable.add("value6", "Vvalue6");
+//        hashTable.add("value проверка длины ключа 7", "Vvalue7");
+//        hashTable.add("value3", "VvalueNew3");
 
-//        int min = 100;
-//        int max = 1000;
-//        for (int i = 0; i < 1000; i++) {
-//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-//            hashTable.add("key" + randomNum, "value" + randomNum);
-//        }
+        int min = 100;
+        int max = 1000;
+        for (int i = 0; i < 1000; i++) {
+            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
+            hashTable.add("key" + randomNum, "value" + randomNum);
+        }
 
 //        System.out.println(hashTable.get("value1"));
 
@@ -372,6 +381,7 @@ public class DoubleHashTable<K, V> {
 
         System.out.println("Размер таблицы: " + hashTable.size());
         System.out.println("Количество коллизий: " + hashTable.countCollision);
+        System.out.println("Реальное количество занятых ячеек в массиве table: " + hashTable.realSizeTable());
     }
 
 }
