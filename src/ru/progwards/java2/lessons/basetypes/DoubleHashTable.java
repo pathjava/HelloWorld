@@ -262,7 +262,7 @@ public class DoubleHashTable<K, V> {
             long OneEighth = BitsInUnsignedInt / 8;
             long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
             long hash = 0;
-            long test = 0;
+            long test;
 
             for (int i = 0; i < str.length(); i++) {
                 hash = (hash << OneEighth) + str.charAt(i);
@@ -341,22 +341,22 @@ public class DoubleHashTable<K, V> {
         /* String, String */
         DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
 
-//        hashTable.add("value1", "Vvalue1");
-//        hashTable.add("value1", "VvalueNew1");
-//        hashTable.add("value2", "Vvalue2");
-//        hashTable.add("value3", "Vvalue3");
-//        hashTable.add("value4", "Vvalue4");
-//        hashTable.add("value5", "Vvalue5");
-//        hashTable.add("value6", "Vvalue6");
-//        hashTable.add("value7", "Vvalue7");
-//        hashTable.add("value3", "VvalueNew3");
+        hashTable.add("value1", "Vvalue1");
+        hashTable.add("value1", "VvalueNew1");
+        hashTable.add("ключ2", "Vvalue2");
+        hashTable.add("value3", "Vvalue3");
+        hashTable.add("value4", "Vvalue4");
+        hashTable.add("ключ тестовый 5", "Vvalue5");
+        hashTable.add("value6", "Vvalue6");
+        hashTable.add("value проверка длины ключа 7", "Vvalue7");
+        hashTable.add("value3", "VvalueNew3");
 
-        int min = 100;
-        int max = 1000;
-        for (int i = 0; i < 1000; i++) {
-            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add("key" + randomNum, "value" + randomNum);
-        }
+//        int min = 100;
+//        int max = 1000;
+//        for (int i = 0; i < 1000; i++) {
+//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
+//            hashTable.add("key" + randomNum, "value" + randomNum);
+//        }
 
 //        System.out.println(hashTable.get("value1"));
 
