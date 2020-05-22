@@ -221,22 +221,20 @@ public class DoubleHashTable<K, V> {
         @Override
         public int hashCode() {
             int hashCode;
-            if (key instanceof String){
+            if (key instanceof String) {
                 String str = (String) key;
                 long BitsInUnsignedInt = 4 * 8;
-                long ThreeQuarters     = (BitsInUnsignedInt  * 3) / 4;
-                long OneEighth         = BitsInUnsignedInt / 8;
-                long HighBits          = (long)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-                long hash              = 0;
-                long test              = 0;
+                long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
+                long OneEighth = BitsInUnsignedInt / 8;
+                long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+                long hash = 0;
+                long test;
 
-                for(int i = 0; i < str.length(); i++)
-                {
+                for (int i = 0; i < str.length(); i++) {
                     hash = (hash << OneEighth) + str.charAt(i);
 
-                    if((test = hash & HighBits)  != 0)
-                    {
-                        hash = (( hash ^ (test >> ThreeQuarters)) & (~HighBits));
+                    if ((test = hash & HighBits) != 0) {
+                        hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
                     }
                 }
                 hashCode = (int) hash;
@@ -257,22 +255,20 @@ public class DoubleHashTable<K, V> {
 
     public int hash(K key) {
         int hashCode;
-        if (key instanceof String){
+        if (key instanceof String) {
             String str = (String) key;
             long BitsInUnsignedInt = 4 * 8;
-            long ThreeQuarters     = (BitsInUnsignedInt  * 3) / 4;
-            long OneEighth         = BitsInUnsignedInt / 8;
-            long HighBits          = (long)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-            long hash              = 0;
-            long test              = 0;
+            long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
+            long OneEighth = BitsInUnsignedInt / 8;
+            long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+            long hash = 0;
+            long test = 0;
 
-            for(int i = 0; i < str.length(); i++)
-            {
+            for (int i = 0; i < str.length(); i++) {
                 hash = (hash << OneEighth) + str.charAt(i);
 
-                if((test = hash & HighBits)  != 0)
-                {
-                    hash = (( hash ^ (test >> ThreeQuarters)) & (~HighBits));
+                if ((test = hash & HighBits) != 0) {
+                    hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
                 }
             }
             hashCode = (int) hash;
@@ -358,11 +354,11 @@ public class DoubleHashTable<K, V> {
         int min = 100;
         int max = 1000;
         for (int i = 0; i < 1000; i++) {
-            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
             hashTable.add("key" + randomNum, "value" + randomNum);
         }
 
-        System.out.println(hashTable.get("value1"));
+//        System.out.println(hashTable.get("value1"));
 
 //        hashTable.remove("value7");
 //
