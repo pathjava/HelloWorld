@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class DoubleHashTable<K, V> {
 
     private int size = 0;
+    private int countCollision = 0;
     private int sizeTable = 5;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
@@ -55,6 +56,7 @@ public class DoubleHashTable<K, V> {
         } else {
             currentItem.next = newItem;
             size++;
+            countCollision++;
         }
     }
 
@@ -137,7 +139,7 @@ public class DoubleHashTable<K, V> {
                 current = current.next;
                 if (current == null)
                     i++;
-                result.next = null; // null присваиваю, чтобы в итератор уходил только данный узел, а не цепочка
+                result.next = null; // null присваиваю, чтобы из итератора уходил только данный узел, а не цепочка
                 return result;
             }
         };
@@ -241,7 +243,7 @@ public class DoubleHashTable<K, V> {
 //    private int hashDivInt(K key) {
 //        return (int) key % table.length;
 //    }
-//
+
 //    private int hashMulInt(K key) {
 //        double A = 1.61803398875;
 //        double d = A * (int) key;
@@ -295,7 +297,8 @@ public class DoubleHashTable<K, V> {
             System.out.println(temp.key + " : " + temp.value);
         }
 
-        System.out.println(hashTable.size());
+        System.out.println("Размер таблицы: " + hashTable.size());
+        System.out.println("Количество коллизий: " + hashTable.countCollision);
     }
 
 }
