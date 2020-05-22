@@ -26,7 +26,8 @@ public class DoubleHashTable<K, V> {
 //            loadFactor = (int) (table.length * (75.0f / 100.0f));
 //        }
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value, null);
-        int index = getIndex(newItem);
+        newItem.hash = hash(key);
+        int index = newItem.hash % table.length;
         if (table[index] == null)
             addSingle(newItem, index);
         else
@@ -154,9 +155,9 @@ public class DoubleHashTable<K, V> {
                 add(hashTable.key, hashTable.value);
     }
 
-    private int getIndex(ItemHashTable<K, V> newItem) {
-        return newItem.hash % table.length;
-    }
+//    private int getIndex(ItemHashTable<K, V> newItem) {
+//        return newItem.hash % table.length;
+//    }
 
     public int size() {
         return size;
@@ -171,7 +172,7 @@ public class DoubleHashTable<K, V> {
         public ItemHashTable(K key, V value, ItemHashTable<K, V> next) {
             this.key = key;
             this.value = value;
-            this.hash = hashCode();
+//            this.hash = hashCode();
             this.next = next;
         }
 
@@ -218,35 +219,35 @@ public class DoubleHashTable<K, V> {
             return value != null ? value.equals(that.value) : that.value == null;
         }
 
-        @Override
-        public int hashCode() {
-            int hashCode;
-            if (key instanceof String) {
-                /* PJW - алгоритм, основанный на работе Peter J. Weinberger */
-                String str = (String) key;
-                long BitsInUnsignedInt = 4 * 8;
-                long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
-                long OneEighth = BitsInUnsignedInt / 8;
-                long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-                long hash = 0;
-                long test;
-
-                for (int i = 0; i < str.length(); i++) {
-                    hash = (hash << OneEighth) + str.charAt(i);
-
-                    if ((test = hash & HighBits) != 0) {
-                        hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
-                    }
-                }
-                hashCode = (int) hash;
-            } else {
-                hashCode = (int) key;
-                hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-                hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
-            }
-            hash = hashCode;
-            return hashCode;
-        }
+//        @Override
+//        public int hashCode() {
+//            int hashCode;
+//            if (key instanceof String) {
+//                /* PJW - алгоритм, основанный на работе Peter J. Weinberger */
+//                String str = (String) key;
+//                long BitsInUnsignedInt = 4 * 8;
+//                long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
+//                long OneEighth = BitsInUnsignedInt / 8;
+//                long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
+//                long hash = 0;
+//                long test;
+//
+//                for (int i = 0; i < str.length(); i++) {
+//                    hash = (hash << OneEighth) + str.charAt(i);
+//
+//                    if ((test = hash & HighBits) != 0) {
+//                        hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
+//                    }
+//                }
+//                hashCode = (int) hash;
+//            } else {
+//                hashCode = (int) key;
+//                hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+//                hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+//            }
+//            hash = hashCode;
+//            return hashCode;
+//        }
 
         @Override
         public String toString() {
@@ -306,7 +307,7 @@ public class DoubleHashTable<K, V> {
         return newSize;
     }
 
-    public int realSizeTable(){
+    public int realSizeTable() {
         int count = 0;
         for (ItemHashTable<K, V> kvItemHashTable : table) {
             if (kvItemHashTable != null)
