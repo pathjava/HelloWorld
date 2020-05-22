@@ -320,7 +320,7 @@ public class DoubleHashTable<K, V> {
 
     public static void main(String[] args) {
         /* Integer, String */
-//        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
+        DoubleHashTable<Integer, String> hashTable = new DoubleHashTable<>();
 //
 //        hashTable.add(321, "value1");
 //        hashTable.add(321, "valueNew1");
@@ -332,12 +332,12 @@ public class DoubleHashTable<K, V> {
 //        hashTable.add(553, "value7");
 //        hashTable.add(225, "valueNew3");
 //
-//        int min = 100;
-//        int max = 1000;
-//        for (int i = 0; i < 1000; i++) {
-//            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
-//            hashTable.add(randomNum, "value" + randomNum);
-//        }
+        int min = 100;
+        int max = 1000;
+        for (int i = 0; i < 1000; i++) {
+            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+            hashTable.add(randomNum, "value" + randomNum);
+        }
 //
 //        System.out.println(hashTable.get(722));
 //
@@ -345,13 +345,13 @@ public class DoubleHashTable<K, V> {
 //
 //        hashTable.change(120, 286);
 //
-//        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-//            ItemHashTable<Integer, String> temp = it.next();
-//            System.out.println(temp.key + " : " + temp.value);
-//        }
+        for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<Integer, String> temp = it.next();
+            System.out.println(temp.key + " : " + temp.value);
+        }
 
         /* String, String */
-        DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
+//        DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add("value1", "Vvalue1");
 //        hashTable.add("value1", "VvalueNew1");
@@ -363,12 +363,12 @@ public class DoubleHashTable<K, V> {
 //        hashTable.add("value проверка длины ключа 7", "Vvalue7");
 //        hashTable.add("value3", "VvalueNew3");
 
-        int min = 100;
-        int max = 1000;
-        for (int i = 0; i < 1000; i++) {
-            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add("key" + randomNum, "value" + randomNum);
-        }
+//        int min = 100;
+//        int max = 1000;
+//        for (int i = 0; i < 1000; i++) {
+//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
+//            hashTable.add("key" + randomNum, "value" + randomNum);
+//        }
 
 //        System.out.println(hashTable.get("value1"));
 
@@ -376,10 +376,10 @@ public class DoubleHashTable<K, V> {
 //
 //        hashTable.change("value2", "value6");
 
-        for (Iterator<ItemHashTable<String, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<String, String> temp = it.next();
-            System.out.println(temp.key + " : " + temp.value);
-        }
+//        for (Iterator<ItemHashTable<String, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+//            ItemHashTable<String, String> temp = it.next();
+//            System.out.println(temp.key + " : " + temp.value);
+//        }
 
         System.out.println("Размер таблицы: " + hashTable.size());
         System.out.println("Количество коллизий: " + hashTable.countCollision);
