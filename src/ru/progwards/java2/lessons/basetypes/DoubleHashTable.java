@@ -258,6 +258,7 @@ public class DoubleHashTable<K, V> {
     public int hash(K key) {
         int hashCode;
         if (key instanceof String) {
+            /* PJW - алгоритм, основанный на работе Peter J. Weinberger */
             String str = (String) key;
             long BitsInUnsignedInt = 4 * 8;
             long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
