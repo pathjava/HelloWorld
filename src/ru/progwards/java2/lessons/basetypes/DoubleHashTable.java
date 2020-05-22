@@ -286,10 +286,10 @@ public class DoubleHashTable<K, V> {
 //            hashTable.add(randomNum, "value" + randomNum);
 //        }
 
-//        System.out.println(hashTable.get(553));
-//
+        System.out.println(hashTable.get(722));
+
 //        hashTable.remove(553);
-//
+
 //        hashTable.change(120, 286);
 
         for (Iterator<ItemHashTable<Integer, String>> it = hashTable.getIterator(); it.hasNext(); ) {
