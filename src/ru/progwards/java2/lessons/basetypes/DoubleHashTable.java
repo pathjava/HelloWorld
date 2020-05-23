@@ -10,7 +10,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
     private int countCollision = 0;
-    private int sizeTable = 1000;
+    private int sizeTable = 101;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
 
@@ -250,17 +250,6 @@ public class DoubleHashTable<K extends HashValue, V> {
         }
     }
 
-
-//    private int hashDivInt(K key) {
-//        return (int) key % table.length;
-//    }
-
-//    private int hashMulInt(K key) {
-//        double A = 1.61803398875;
-//        double d = A * (int) key;
-//        return (int) (table.length * (d - Math.floor(d)));
-//    }
-
     public int sizeTable(int currentSize) {
         int newSize = 0;
         int tempSize = currentSize * 2;
@@ -288,38 +277,38 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     public static void main(String[] args) {
         /* IntegerHashValue, String */
-        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
+//        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
 
-        hashTable.add(new IntegerHashValue(321), "value1");
-        hashTable.add(new IntegerHashValue(321), "valueNew1");
-        hashTable.add(new IntegerHashValue(120), "value2");
-        hashTable.add(new IntegerHashValue(225), "value3");
-        hashTable.add(new IntegerHashValue(722), "value4");
-        hashTable.add(new IntegerHashValue(327), "value5");
-        hashTable.add(new IntegerHashValue(286), "value6");
-        hashTable.add(new IntegerHashValue(553), "value7");
-        hashTable.add(new IntegerHashValue(225), "valueNew3");
+//        hashTable.add(new IntegerHashValue(321), "value1");
+//        hashTable.add(new IntegerHashValue(321), "valueNew1");
+//        hashTable.add(new IntegerHashValue(120), "value2");
+//        hashTable.add(new IntegerHashValue(225), "value3");
+//        hashTable.add(new IntegerHashValue(722), "value4");
+//        hashTable.add(new IntegerHashValue(327), "value5");
+//        hashTable.add(new IntegerHashValue(286), "value6");
+//        hashTable.add(new IntegerHashValue(553), "value7");
+//        hashTable.add(new IntegerHashValue(225), "valueNew3");
 
 //        int min = 100;
-//        int max = 1000;
+//        int max = 10000;
 //        for (int i = 0; i < 1000; i++) {
 //            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
-//            hashTable.add(randomNum, "value" + randomNum);
+//            hashTable.add(new IntegerHashValue(randomNum), "value" + randomNum);
 //        }
-//
+
 //        System.out.println(hashTable.get(722));
 //
 //        hashTable.remove(553);
 //
 //        hashTable.change(120, 286);
 
-        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<IntegerHashValue, String> temp = it.next();
-            System.out.println(temp.key + " : " + temp.value);
-        }
+//        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+//            ItemHashTable<IntegerHashValue, String> temp = it.next();
+//            System.out.println(temp.key + " : " + temp.value);
+//        }
 
         /* StringHashValue, String */
-//        DoubleHashTable<String, String> hashTable = new DoubleHashTable<>();
+        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add("value1", "Vvalue1");
 //        hashTable.add("value1", "VvalueNew1");
@@ -331,12 +320,12 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        hashTable.add("value проверка длины ключа 7", "Vvalue7");
 //        hashTable.add("value3", "VvalueNew3");
 
-//        int min = 100;
-//        int max = 1000;
-//        for (int i = 0; i < 1000; i++) {
-//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-//            hashTable.add("key" + randomNum, "value" + randomNum);
-//        }
+        int min = 100;
+        int max = 1000;
+        for (int i = 0; i < 500; i++) {
+            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
+            hashTable.add(new StringHashValue("key" + randomNum), "value" + randomNum);
+        }
 
 //        System.out.println(hashTable.get("value1"));
 
@@ -344,10 +333,10 @@ public class DoubleHashTable<K extends HashValue, V> {
 //
 //        hashTable.change("value2", "value6");
 
-//        for (Iterator<ItemHashTable<String, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-//            ItemHashTable<String, String> temp = it.next();
-//            System.out.println(temp.key + " : " + temp.value);
-//        }
+        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<StringHashValue, String> temp = it.next();
+            System.out.println(temp.key + " : " + temp.value);
+        }
 
         System.out.println("Размер таблицы: " + hashTable.size());
         System.out.println("Количество коллизий: " + hashTable.countCollision);
