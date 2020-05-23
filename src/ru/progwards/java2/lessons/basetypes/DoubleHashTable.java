@@ -9,10 +9,12 @@ import java.util.Iterator;
 public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
+    private int newSize = 0;
     private int countCollision = 0;
-    private int sizeTable = 503;
+    private int sizeTable = 5;
     private ItemHashTable<K, V>[] table;
-    private int loadFactor = 75;
+    private int loadFactor = 4;
+    private boolean rebuildComplete = true;
 
     public DoubleHashTable() {
         table = new ItemHashTable[sizeTable];
@@ -21,10 +23,12 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void add(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-//        if (size + 1 >= loadFactor) {
-//            copyTable();
-//            loadFactor = (int) (table.length * (75.0f / 100.0f));
-//        }
+        if (rebuildComplete) {
+            if (size + 1 >= loadFactor) {
+                rebuildTable();
+                loadFactor = (int) (table.length * (75.0f / 100.0f));
+            }
+        }
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         newItem.hash = key.getHash();
         int index = getIndex(newItem.hash);
@@ -146,13 +150,42 @@ public class DoubleHashTable<K extends HashValue, V> {
         };
     }
 
-    private void copyTable() {
+//    private void copyTable() {
+//        ItemHashTable<K, V>[] tempTable = table;
+//        table = new ItemHashTable[sizeTable(sizeTable)];
+//
+//        for (ItemHashTable<K, V> hashTable : tempTable)
+//            if (hashTable != null)
+//                add(hashTable.key, hashTable.value);
+//    }
+
+    private void rebuildTable() {
+        rebuildComplete = false;
         ItemHashTable<K, V>[] tempTable = table;
         table = new ItemHashTable[sizeTable(sizeTable)];
+        int i = 0;
+        ItemHashTable<K, V> current = tempTable[i];
 
-        for (ItemHashTable<K, V> hashTable : tempTable)
-            if (hashTable != null)
-                add(hashTable.key, hashTable.value);
+        while (i < tempTable.length) {
+            if (tempTable[i] == null){
+                while (i < tempTable.length) {
+                    if (tempTable[i] != null) {
+                        current = tempTable[i];
+                        break;
+                    } else
+                        i++;
+                }
+            } else {
+                while (current != null) {
+                    add(current.key, current.value);
+                    newSize++;
+                    current = current.next;
+                }
+            }
+            i++;
+        }
+        rebuildComplete = true;
+        size = newSize;
     }
 
     public int size() {
