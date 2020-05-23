@@ -10,7 +10,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
     private int countCollision = 0;
-    private int sizeTable = 101;
+    private int sizeTable = 503;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
 
@@ -25,9 +25,9 @@ public class DoubleHashTable<K extends HashValue, V> {
 //            copyTable();
 //            loadFactor = (int) (table.length * (75.0f / 100.0f));
 //        }
-        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value, null);
+        ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         newItem.hash = key.getHash();
-        int index = newItem.hash % table.length;
+        int index = getIndex(newItem.hash);
         if (table[index] == null)
             addSingle(newItem, index);
         else
@@ -65,7 +65,7 @@ public class DoubleHashTable<K extends HashValue, V> {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
         int hash = key.getHash();
-        int index = hash % table.length;
+        int index = getIndex(hash);
         ItemHashTable<K, V> currentItem = table[index];
 
         while (currentItem != null) {
@@ -82,7 +82,7 @@ public class DoubleHashTable<K extends HashValue, V> {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
         int hash = key.getHash();
-        int index = hash % table.length;
+        int index = getIndex(hash);
         ItemHashTable<K, V> tempItem = null;
         ItemHashTable<K, V> currentItem = table[index];
 
@@ -159,16 +159,21 @@ public class DoubleHashTable<K extends HashValue, V> {
         return size;
     }
 
+    public int getIndex(int hash) {
+        final double A = 0.61803398875;
+        double d = A * hash;
+        return (int) (table.length * (d - Math.floor(d)));
+    }
+
     public static class ItemHashTable<K, V> {
         private K key;
         private V value;
         private int hash;
         private ItemHashTable<K, V> next;
 
-        public ItemHashTable(K key, V value, ItemHashTable<K, V> next) {
+        public ItemHashTable(K key, V value) {
             this.key = key;
             this.value = value;
-            this.next = next;
         }
 
         public void setHash(int hash) {
@@ -292,7 +297,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        int min = 100;
 //        int max = 10000;
 //        for (int i = 0; i < 1000; i++) {
-//            int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
 //            hashTable.add(new IntegerHashValue(randomNum), "value" + randomNum);
 //        }
 

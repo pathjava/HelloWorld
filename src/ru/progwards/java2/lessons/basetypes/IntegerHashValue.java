@@ -19,13 +19,6 @@ public class IntegerHashValue implements HashValue {
         return hashCode;
     }
 
-//    @Override
-//    public int getHash() {
-//        final double A = 0.61803398875;
-//        double d = A * key;
-//        return (int) (table.length * (d - Math.floor(d)));
-//    }
-
 //    private int hashDivInt(K key) {
 //        return (int) key % table.length;
 //    }
