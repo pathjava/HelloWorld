@@ -15,8 +15,11 @@ public class DoubleHashTable<K extends HashValue, V> {
     private int loadFactor = 75;
     private boolean rebuildComplete = true;
 
+    /* это поля для сбора информации о количестве операций - по названию видно назначение */
     private int countCollision = 0;
     private int countRebuild = 0;
+    private int countRemove = 0;
+    private int countChange = 0;
 
     public DoubleHashTable() {
         table = new ItemHashTable[sizeTable];
@@ -104,6 +107,7 @@ public class DoubleHashTable<K extends HashValue, V> {
                         tempItem.setNext(currentItem.getNext());
                     }
                     size--;
+                    countRemove++;
                     return;
                 }
             tempItem = currentItem;
@@ -114,10 +118,12 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void change(K keyOne, K keyTwo) {
         if (keyOne == null || keyTwo == null)
             throw new IllegalArgumentException("Key is null!");
+
         V tempValue = get(keyTwo);
         remove(keyTwo);
-
         add(keyOne, tempValue);
+
+        countChange++;
     }
 
     public Iterator<ItemHashTable<K, V>> getIterator() {
@@ -153,15 +159,6 @@ public class DoubleHashTable<K extends HashValue, V> {
             }
         };
     }
-
-//    private void copyTable() {
-//        ItemHashTable<K, V>[] tempTable = table;
-//        table = new ItemHashTable[sizeTable(sizeTable)];
-//
-//        for (ItemHashTable<K, V> hashTable : tempTable)
-//            if (hashTable != null)
-//                add(hashTable.key, hashTable.value);
-//    }
 
     private void rebuildTable() {
         rebuildComplete = false;
@@ -281,16 +278,18 @@ public class DoubleHashTable<K extends HashValue, V> {
             hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
         }
 
-//        System.out.println(hashTable.get(722));
+        hashTable.remove(new IntegerHashValue(5984));
 
-//        hashTable.remove(553);
-
-//        hashTable.change(120, 286);
+        hashTable.change(new IntegerHashValue(120), new IntegerHashValue(286));
 
         for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
             ItemHashTable<IntegerHashValue, String> temp = it.next();
             System.out.println(temp.key + " : " + temp.value);
         }
+
+        System.out.println("\n--------------------------------\n");
+
+        System.out.println(hashTable.get(new IntegerHashValue(722)));
 
         /* StringHashValue, String */
 //        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
@@ -313,16 +312,18 @@ public class DoubleHashTable<K extends HashValue, V> {
 //            hashTable.add(new StringHashValue("Хэш-функции" + randomNumOne + " для строк" + randomNumTwo), "value" + randomNumOne);
 //        }
 
-//        System.out.println(hashTable.get("value1"));
+//        hashTable.remove(new StringHashValue("value7"));
 
-//        hashTable.remove("value7");
-
-//        hashTable.change("value2", "value6");
+//        hashTable.change(new StringHashValue("value2"), new StringHashValue("value6"));
 
 //        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
 //            ItemHashTable<StringHashValue, String> temp = it.next();
 //            System.out.println(temp.key + " : " + temp.value);
 //        }
+
+//        System.out.println("\n--------------------------------\n");
+
+//        System.out.println(hashTable.get(new StringHashValue("value1")));
 
         System.out.println("\n--------------------------------\n");
 
@@ -331,6 +332,8 @@ public class DoubleHashTable<K extends HashValue, V> {
         System.out.println("Количество коллизий при последнем перестроении: " + hashTable.countCollision);
         System.out.println("Реальное количество занятых ячеек в массиве table: " + hashTable.realSizeTable());
         System.out.println("Количество перестроений таблицы: " + hashTable.countRebuild);
+        System.out.println("Количество удаленных пар: " + hashTable.countRemove);
+        System.out.println("Количество измененных значений: " + hashTable.countChange);
     }
 
 }
