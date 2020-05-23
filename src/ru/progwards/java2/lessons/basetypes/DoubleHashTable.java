@@ -328,8 +328,9 @@ public class DoubleHashTable<K extends HashValue, V> {
         int min = 100;
         int max = 1000;
         for (int i = 0; i < 500; i++) {
-            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add(new StringHashValue("key" + randomNum), "value" + randomNum);
+            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
+            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
+            hashTable.add(new StringHashValue("Хэш-функции"  + randomNumTwo + " для строк" + randomNumOne), "value" + randomNumOne);
         }
 
 //        System.out.println(hashTable.get("value1"));

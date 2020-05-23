@@ -3,7 +3,7 @@
 
 package ru.progwards.java2.lessons.basetypes;
 
-import java.math.BigDecimal;
+import java.util.zip.CRC32;
 
 public class StringHashValue implements HashValue {
 
@@ -13,30 +13,77 @@ public class StringHashValue implements HashValue {
         this.key = key;
     }
 
+//    @Override
+//    public int getHash() {
+//        /* rs — простая хэш-функция из книги Роберта Седжвика 'Фундаментальные алгоритмы на C' */
+//        long b = 378551;
+//        long a = 63689;
+//        long hash = 0;
+//        for (int i = 0; i < key.length(); i++) {
+//            hash = unsignedInt(hash * a + key.charAt(i));
+//            a = unsignedInt(a * b);
+//        }
+//        return (int) hash;
+//    }
+//
+//    static final long UINT_MAX = 4294967295L;
+//
+//    static long unsignedInt(long num) {
+//        return num % UINT_MAX;
+//    }
+
+//    @Override
+//    public int getHash() {
+//        /* BKDR — хэш-функция из книги Брайана Кернигана и Денниса Ритчи 'Язык программирования C' */
+//        long seed = 131;
+//        long hash = 0;
+//
+//        for (int i = 0; i < key.length(); i++) {
+//            hash = unsignedLong((hash * seed) + key.charAt(i));
+//        }
+//        return unsignedInt(hash);
+//    }
+//
+//    private static final long LONG_MAX = Long.MAX_VALUE;
+//
+//    private static long unsignedLong(long hash) {
+//        return hash % LONG_MAX;
+//    }
+//
+//    private static final int INT_MAX = Integer.MAX_VALUE;
+//
+//    private static int unsignedInt(long hash) {
+//        return (int) (hash % INT_MAX);
+//    }
+
     @Override
     public int getHash() {
-        /* BKDR — хэш-функция из книги Брайана Кернигана и Денниса Ритчи 'Язык программирования C' */
-        long seed = 131;
-        long hash = 0;
+        /* CRC32 — стандартная контрольная сумма с полиномом */
 
-        for (int i = 0; i < key.length(); i++) {
-            hash = unsignedLong((hash * seed) + key.charAt(i));
+        String[] str = key.split("");
+        CRC32 crc = new CRC32();
+        for (String string : str) {
+            crc.update(string.getBytes());
         }
-
-        return unsignedInt(hash);
+        return (int) (crc.getValue());
     }
 
-    static final long LONG_MAX = Long.MAX_VALUE;
-
-    static long unsignedLong(long hash) {
-        return hash % LONG_MAX;
-    }
-
-    static final int INT_MAX = Integer.MAX_VALUE;
-
-    static int unsignedInt(long hash) {
-        return (int) (hash % INT_MAX);
-    }
+//    @Override
+//    public int getHash() {
+//        /* SDBM — специальный алгоритм, используемый в проекте SDBM' */
+//        long hash = 0;
+//
+//        for (int i = 0; i < key.length(); i++) {
+//            hash = key.charAt(i) + (hash << 6) + (hash << 16) - hash;
+//        }
+//        return unsignedInt(hash);
+//    }
+//
+//    private static final int INT_MAX = Integer.MAX_VALUE;
+//
+//    private static int unsignedInt(long hash) {
+//        return (int) (hash % INT_MAX);
+//    }
 
 //    @Override
 //    public int getHash() {
