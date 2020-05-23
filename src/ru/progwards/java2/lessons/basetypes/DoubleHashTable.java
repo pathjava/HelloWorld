@@ -166,7 +166,7 @@ public class DoubleHashTable<K extends HashValue, V> {
     }
 
     public static class ItemHashTable<K, V> {
-        private K key;
+        private final K key;
         private V value;
         private int hash;
         private ItemHashTable<K, V> next;
@@ -176,21 +176,9 @@ public class DoubleHashTable<K extends HashValue, V> {
             this.value = value;
         }
 
-        public void setHash(int hash) {
-            this.hash = hash;
-        }
-
         public K getKey() {
             return key;
         }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-//        public int getHash() {
-//            return hashCode();
-//        }
 
         public V getValue() {
             return value;
@@ -330,7 +318,7 @@ public class DoubleHashTable<K extends HashValue, V> {
         for (int i = 0; i < 500; i++) {
             int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
             int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add(new StringHashValue("Хэш-функции"  + randomNumTwo + " для строк" + randomNumOne), "value" + randomNumOne);
+            hashTable.add(new StringHashValue("Хэш-функции" + randomNumTwo + " для строк" + randomNumOne), "value" + randomNumOne);
         }
 
 //        System.out.println(hashTable.get("value1"));
