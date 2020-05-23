@@ -19,7 +19,17 @@ public class IntegerHashValue implements HashValue {
         return hashCode;
     }
 
-//    private int hashDivInt(K key) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IntegerHashValue that = (IntegerHashValue) o;
+
+        return key == that.key;
+    }
+
+    //    private int hashDivInt(K key) {
 //        return (int) key % table.length;
 //    }
 

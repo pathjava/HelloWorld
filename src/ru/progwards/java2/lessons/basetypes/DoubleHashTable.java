@@ -10,9 +10,9 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
     private int newSize = 0;
-    private int sizeTable = 5;
+    private int sizeTable = 101;
     private ItemHashTable<K, V>[] table;
-    private int loadFactor = 4;
+    private int loadFactor = 75;
     private boolean rebuildComplete = true;
 
     private int countCollision = 0;
@@ -182,6 +182,7 @@ public class DoubleHashTable<K extends HashValue, V> {
             i++;
         }
         rebuildComplete = true;
+        countCollision = 0;
         size = newSize;
     }
 
@@ -226,47 +227,7 @@ public class DoubleHashTable<K extends HashValue, V> {
             this.next = next;
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            ItemHashTable<?, ?> that = (ItemHashTable<?, ?>) o;
-
-            if (key != null ? !key.equals(that.key) : that.key != null) return false;
-            return value != null ? value.equals(that.value) : that.value == null;
-        }
-
-        //        @Override
-//        public int hashCode() {
-//            int hashCode;
-//            if (key instanceof String) {
-//                /* PJW - алгоритм, основанный на работе Peter J. Weinberger */
-//                String str = (String) key;
-//                long BitsInUnsignedInt = 4 * 8;
-//                long ThreeQuarters = (BitsInUnsignedInt * 3) / 4;
-//                long OneEighth = BitsInUnsignedInt / 8;
-//                long HighBits = (long) (0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
-//                long hash = 0;
-//                long test;
-//
-//                for (int i = 0; i < str.length(); i++) {
-//                    hash = (hash << OneEighth) + str.charAt(i);
-//
-//                    if ((test = hash & HighBits) != 0) {
-//                        hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
-//                    }
-//                }
-//                hashCode = (int) hash;
-//            } else {
-//                hashCode = (int) key;
-//                hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-//                hashCode = hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
-//            }
-//            hash = hashCode;
-//            return hashCode;
-//        }
-
+        /* данный toString переопределен только для отладки в ходе написания кода */
         @Override
         public String toString() {
             return "key=" + key + ", value=" + value;
@@ -300,7 +261,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     public static void main(String[] args) {
         /* IntegerHashValue, String */
-//        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
+        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add(new IntegerHashValue(321), "value1");
 //        hashTable.add(new IntegerHashValue(321), "valueNew1");
@@ -312,44 +273,45 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        hashTable.add(new IntegerHashValue(553), "value7");
 //        hashTable.add(new IntegerHashValue(225), "valueNew3");
 
-//        int min = 100;
-//        int max = 10000;
-//        for (int i = 0; i < 1000; i++) {
-//            int randomNum = min + (int) (Math.random() * ((max - min) + 1));
-//            hashTable.add(new IntegerHashValue(randomNum), "value" + randomNum);
-//        }
-
-//        System.out.println(hashTable.get(722));
-//
-//        hashTable.remove(553);
-//
-//        hashTable.change(120, 286);
-
-//        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-//            ItemHashTable<IntegerHashValue, String> temp = it.next();
-//            System.out.println(temp.key + " : " + temp.value);
-//        }
-
-        /* StringHashValue, String */
-        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
-
-//        hashTable.add("value1", "Vvalue1");
-//        hashTable.add("value1", "VvalueNew1");
-//        hashTable.add("ключ2", "Vvalue2");
-//        hashTable.add("value3", "Vvalue3");
-//        hashTable.add("value4", "Vvalue4");
-//        hashTable.add("ключ тестовый 5", "Vvalue5");
-//        hashTable.add("value6", "Vvalue6");
-//        hashTable.add("value проверка длины ключа 7", "Vvalue7");
-//        hashTable.add("value3", "VvalueNew3");
-
         int min = 100;
-        int max = 1000;
-        for (int i = 0; i < 500; i++) {
+        int max = 10000;
+        for (int i = 0; i < 1000; i++) {
             int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
             int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add(new StringHashValue("Хэш-функции" + randomNumTwo + " для строк" + randomNumOne), "value" + randomNumOne);
+            hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
         }
+
+//        System.out.println(hashTable.get(722));
+
+//        hashTable.remove(553);
+
+//        hashTable.change(120, 286);
+
+        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<IntegerHashValue, String> temp = it.next();
+            System.out.println(temp.key + " : " + temp.value);
+        }
+
+        /* StringHashValue, String */
+//        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
+
+//        hashTable.add(new StringHashValue("value1"), "Vvalue1");
+//        hashTable.add(new StringHashValue("value1"), "VvalueNew1");
+//        hashTable.add(new StringHashValue("ключ2"), "Vvalue2");
+//        hashTable.add(new StringHashValue("value3"), "Vvalue3");
+//        hashTable.add(new StringHashValue("value4"), "Vvalue4");
+//        hashTable.add(new StringHashValue("ключ тестовый 5"), "Vvalue5");
+//        hashTable.add(new StringHashValue("value6"), "Vvalue6");
+//        hashTable.add(new StringHashValue("value проверка длины ключа 7"), "Vvalue7");
+//        hashTable.add(new StringHashValue("value3"), "VvalueNew3");
+
+//        int min = 100;
+//        int max = 1000;
+//        for (int i = 0; i < 1000; i++) {
+//            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
+//            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
+//            hashTable.add(new StringHashValue("Хэш-функции" + randomNumOne + " для строк" + randomNumTwo), "value" + randomNumOne);
+//        }
 
 //        System.out.println(hashTable.get("value1"));
 
@@ -357,14 +319,16 @@ public class DoubleHashTable<K extends HashValue, V> {
 
 //        hashTable.change("value2", "value6");
 
-        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<StringHashValue, String> temp = it.next();
-            System.out.println(temp.key + " : " + temp.value);
-        }
+//        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+//            ItemHashTable<StringHashValue, String> temp = it.next();
+//            System.out.println(temp.key + " : " + temp.value);
+//        }
 
-        System.out.println("Размер хеш таблицы: " + hashTable.size());
-        System.out.println("Размер table: " + hashTable.table.length);
-        System.out.println("Количество коллизий: " + hashTable.countCollision);
+        System.out.println("\n--------------------------------\n");
+
+        System.out.println("Размер хеш таблицы (количество пар ключ/значение): " + hashTable.size());
+        System.out.println("Размер (количество ячеек) в массиве table: " + hashTable.table.length);
+        System.out.println("Количество коллизий при последнем перестроении: " + hashTable.countCollision);
         System.out.println("Реальное количество занятых ячеек в массиве table: " + hashTable.realSizeTable());
         System.out.println("Количество перестроений таблицы: " + hashTable.countRebuild);
     }
