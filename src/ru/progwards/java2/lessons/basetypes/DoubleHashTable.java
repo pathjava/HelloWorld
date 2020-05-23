@@ -10,11 +10,13 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
     private int newSize = 0;
-    private int countCollision = 0;
     private int sizeTable = 5;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 4;
     private boolean rebuildComplete = true;
+
+    private int countCollision = 0;
+    private int countRebuild = 0;
 
     public DoubleHashTable() {
         table = new ItemHashTable[sizeTable];
@@ -23,15 +25,17 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void add(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-        if (rebuildComplete) {
+        if (rebuildComplete)
             if (size + 1 >= loadFactor) {
                 rebuildTable();
                 loadFactor = (int) (table.length * (75.0f / 100.0f));
+                countRebuild++;
             }
-        }
+
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         newItem.hash = key.getHash();
         int index = getIndex(newItem.hash);
+
         if (table[index] == null)
             addSingle(newItem, index);
         else
@@ -164,18 +168,11 @@ public class DoubleHashTable<K extends HashValue, V> {
         ItemHashTable<K, V>[] tempTable = table;
         table = new ItemHashTable[sizeTable(sizeTable)];
         int i = 0;
-        ItemHashTable<K, V> current = tempTable[i];
+        ItemHashTable<K, V> current;
 
         while (i < tempTable.length) {
-            if (tempTable[i] == null){
-                while (i < tempTable.length) {
-                    if (tempTable[i] != null) {
-                        current = tempTable[i];
-                        break;
-                    } else
-                        i++;
-                }
-            } else {
+            if (tempTable[i] != null) {
+                current = tempTable[i];
                 while (current != null) {
                     add(current.key, current.value);
                     newSize++;
@@ -357,7 +354,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        System.out.println(hashTable.get("value1"));
 
 //        hashTable.remove("value7");
-//
+
 //        hashTable.change("value2", "value6");
 
         for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
@@ -365,9 +362,11 @@ public class DoubleHashTable<K extends HashValue, V> {
             System.out.println(temp.key + " : " + temp.value);
         }
 
-        System.out.println("Размер таблицы: " + hashTable.size());
+        System.out.println("Размер хеш таблицы: " + hashTable.size());
+        System.out.println("Размер table: " + hashTable.table.length);
         System.out.println("Количество коллизий: " + hashTable.countCollision);
         System.out.println("Реальное количество занятых ячеек в массиве table: " + hashTable.realSizeTable());
+        System.out.println("Количество перестроений таблицы: " + hashTable.countRebuild);
     }
 
 }
