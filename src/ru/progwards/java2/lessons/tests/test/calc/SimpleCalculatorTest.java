@@ -5,14 +5,38 @@ package ru.progwards.java2.lessons.tests.test.calc;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import ru.progwards.java2.lessons.tests.calc.SimpleCalculator;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(Parameterized.class)
 public class SimpleCalculatorTest {
 
-    private int val1 = 5;
-    private int val2 = 7;
+    private final int valOne;
+    private final int valTwo;
+    private final int expected;
+
+    public SimpleCalculatorTest(int valOne, int valTwo, int expected) {
+        this.valOne = valOne;
+        this.valTwo = valTwo;
+        this.expected = expected;
+    }
+
+    @Parameterized.Parameters
+    public static List<Integer[]> isEmptyData() {
+        return Arrays.asList(new Integer[][]{
+                {7, 5, 12},
+                {7, 0, 7},
+                {20, 20, 40},
+                {55, 5, 60},
+        });
+    }
+
     public static SimpleCalculator simpleCalculator;
 
     @BeforeClass
@@ -22,36 +46,26 @@ public class SimpleCalculatorTest {
 
     @Test
     public void sumTestMethod() {
-        int actual = simpleCalculator.sum(7, Integer.MAX_VALUE);
-        int expected = 12;
-        assertEquals(expected, actual);
+        assertEquals(expected, simpleCalculator.sum(valOne, valTwo));
     }
 
     @Test
     public void diffTestMethod() {
-        int actual = simpleCalculator.diff(7, 5);
-        int expected = 2;
-        assertEquals(expected, actual);
+        assertEquals(expected, simpleCalculator.diff(valOne, valTwo));
     }
 
     @Test
     public void multTestMethod() {
-        int actual = simpleCalculator.mult(7, 5);
-        int expected = 35;
-        assertEquals(expected, actual);
+        assertEquals(expected, simpleCalculator.mult(valOne, valTwo));
     }
 
     @Test
     public void divTestMethod() {
-        int actual = simpleCalculator.div(7, 5);
-        int expected = 1;
-        assertEquals(expected, actual);
+        assertEquals(expected, simpleCalculator.div(valOne, valTwo));
     }
 
     @Test(expected = ArithmeticException.class)
     public void divTestByZero() {
-        int actual = simpleCalculator.div(7, 0);
-        int expected = 1;
-        assertEquals(expected, actual);
+        assertEquals(expected, simpleCalculator.div(valOne, valTwo));
     }
 }
