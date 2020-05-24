@@ -27,12 +27,12 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void add(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-//        if (rebuildComplete)
-            if (rebuildComplete && size + 1 >= loadFactor) {
-                rebuildTable();
-                loadFactor = (int) (table.length * (75.0f / 100.0f));
-                countRebuild++;
-            }
+
+        if (rebuildComplete && size + 1 >= loadFactor) {
+            rebuildTable();
+            loadFactor = (int) (table.length * (75.0f / 100.0f));
+            countRebuild++;
+        }
 
         ItemHashTable<K, V> newItem = new ItemHashTable<>(key, value);
         newItem.hash = key.getHash();
@@ -80,9 +80,8 @@ public class DoubleHashTable<K extends HashValue, V> {
 
         while (currentItem != null) {
             if (currentItem.hash == hash)
-                if (currentItem.key.equals(key)) {
+                if (currentItem.key.equals(key))
                     return currentItem.value;
-                }
             currentItem = currentItem.next;
         }
         return null;
@@ -102,9 +101,9 @@ public class DoubleHashTable<K extends HashValue, V> {
                     if (tempItem == null) {
                         currentItem = currentItem.getNext();
                         table[index] = currentItem;
-                    } else {
+                    } else
                         tempItem.setNext(currentItem.getNext());
-                    }
+
                     size--;
                     countRemove++;
                     return;
@@ -256,7 +255,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     public static void main(String[] args) {
         /* IntegerHashValue, String */
-        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
+//        DoubleHashTable<IntegerHashValue, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add(new IntegerHashValue(321), "value1");
 //        hashTable.add(new IntegerHashValue(321), "valueNew1");
@@ -268,30 +267,30 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        hashTable.add(new IntegerHashValue(553), "value7");
 //        hashTable.add(new IntegerHashValue(225), "valueNew3");
 
-        int min = 100;
-        int max = 10000;
-        for (int i = 0; i < 1000; i++) {
-            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
-            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add(new IntegerHashValue(i), "value" + randomNumTwo);
-//            hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
-        }
+//        int min = 100;
+//        int max = 10000;
+//        for (int i = 0; i < 10000; i++) {
+//            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
+//            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
+//            hashTable.add(new IntegerHashValue(i), "value" + randomNumTwo);
+////            hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
+//        }
 
-        hashTable.remove(new IntegerHashValue(5984));
+//        hashTable.remove(new IntegerHashValue(984));
 
-        hashTable.change(new IntegerHashValue(120), new IntegerHashValue(286));
+//        hashTable.change(new IntegerHashValue(120), new IntegerHashValue(286));
 
-        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-            ItemHashTable<IntegerHashValue, String> temp = it.next();
-            System.out.println(temp.key + " : " + temp.value);
-        }
+//        for (Iterator<ItemHashTable<IntegerHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+//            ItemHashTable<IntegerHashValue, String> temp = it.next();
+//            System.out.println(temp.key + " : " + temp.value);
+//        }
 
-        System.out.println("\n--------------------------------\n");
+//        System.out.println("\n--------------------------------\n");
 
-        System.out.println(hashTable.get(new IntegerHashValue(722)));
+//        System.out.println(hashTable.get(new IntegerHashValue(722)));
 
         /* StringHashValue, String */
-//        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
+        DoubleHashTable<StringHashValue, String> hashTable = new DoubleHashTable<>();
 
 //        hashTable.add(new StringHashValue("value1"), "Vvalue1");
 //        hashTable.add(new StringHashValue("value1"), "VvalueNew1");
@@ -303,26 +302,27 @@ public class DoubleHashTable<K extends HashValue, V> {
 //        hashTable.add(new StringHashValue("value проверка длины ключа 7"), "Vvalue7");
 //        hashTable.add(new StringHashValue("value3"), "VvalueNew3");
 
-//        int min = 100;
-//        int max = 1000;
-//        for (int i = 0; i < 1000; i++) {
-//            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
-//            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
+        int min = 100;
+        int max = 10000;
+        for (int i = 0; i < 10000; i++) {
+            int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
+            int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
 //            hashTable.add(new StringHashValue("Хэш-функции" + randomNumOne + " для строк" + randomNumTwo), "value" + randomNumOne);
-//        }
+            hashTable.add(new StringHashValue("Хэш-функции для строк" + i), "value" + randomNumOne);
+        }
 
 //        hashTable.remove(new StringHashValue("value7"));
-
+//
 //        hashTable.change(new StringHashValue("value2"), new StringHashValue("value6"));
 
-//        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
-//            ItemHashTable<StringHashValue, String> temp = it.next();
-//            System.out.println(temp.key + " : " + temp.value);
-//        }
+        for (Iterator<ItemHashTable<StringHashValue, String>> it = hashTable.getIterator(); it.hasNext(); ) {
+            ItemHashTable<StringHashValue, String> temp = it.next();
+            System.out.println(temp.key + " : " + temp.value);
+        }
 
-//        System.out.println("\n--------------------------------\n");
+        System.out.println("\n--------------------------------\n");
 
-//        System.out.println(hashTable.get(new StringHashValue("value1")));
+        System.out.println(hashTable.get(new StringHashValue("value1")));
 
         System.out.println("\n--------------------------------\n");
 

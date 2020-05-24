@@ -13,43 +13,34 @@ public class StringHashValue implements HashValue {
         this.key = key;
     }
 
+    /* данный метод хеширования показал меньше всего коллизий */
     @Override
     public int getHash() {
-        /* CRC32 — стандартная контрольная сумма с полиномом */
-        String[] str = key.split("");
-        CRC32 crc = new CRC32();
-        for (String string : str) {
-            crc.update(string.getBytes());
+        /* SDBM — специальный алгоритм, используемый в проекте SDBM' */
+        long hash = 0;
+
+        for (int i = 0; i < key.length(); i++) {
+            hash = key.charAt(i) + (hash << 6) + (hash << 16) - hash;
         }
-        return (int) (crc.getValue());
+        return unsignedInt(hash);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    private static final int INT_MAX = Integer.MAX_VALUE;
 
-        StringHashValue that = (StringHashValue) o;
-
-        return key != null ? key.equals(that.key) : that.key == null;
+    private static int unsignedInt(long hash) {
+        return (int) (hash % INT_MAX);
     }
 
     /* данные методы хеширования также рабочие */
 //    @Override
 //    public int getHash() {
-//        /* SDBM — специальный алгоритм, используемый в проекте SDBM' */
-//        long hash = 0;
-//
-//        for (int i = 0; i < key.length(); i++) {
-//            hash = key.charAt(i) + (hash << 6) + (hash << 16) - hash;
+//        /* CRC32 — стандартная контрольная сумма с полиномом */
+//        String[] str = key.split("");
+//        CRC32 crc = new CRC32();
+//        for (String string : str) {
+//            crc.update(string.getBytes());
 //        }
-//        return unsignedInt(hash);
-//    }
-//
-//    private static final int INT_MAX = Integer.MAX_VALUE;
-//
-//    private static int unsignedInt(long hash) {
-//        return (int) (hash % INT_MAX);
+//        return (int) (crc.getValue());
 //    }
 
 //    @Override
@@ -117,6 +108,16 @@ public class StringHashValue implements HashValue {
 //        hashCode = (int) hash;
 //        return hashCode;
 //    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StringHashValue that = (StringHashValue) o;
+
+        return key != null ? key.equals(that.key) : that.key == null;
+    }
 
     @Override
     public String toString() {
