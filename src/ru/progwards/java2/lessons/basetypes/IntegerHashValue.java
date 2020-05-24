@@ -29,10 +29,6 @@ public class IntegerHashValue implements HashValue {
         return key == that.key;
     }
 
-    //    private int hashDivInt(K key) {
-//        return (int) key % table.length;
-//    }
-
     @Override
     public String toString() {
         return "" + key;

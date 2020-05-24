@@ -3,8 +3,6 @@
 
 package ru.progwards.java2.lessons.basetypes;
 
-import java.util.zip.CRC32;
-
 public class StringHashValue implements HashValue {
 
     public String key;
