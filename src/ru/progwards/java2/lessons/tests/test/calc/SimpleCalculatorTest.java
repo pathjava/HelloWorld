@@ -22,7 +22,7 @@ public class SimpleCalculatorTest {
 
     @Test
     public void sumTestMethod() {
-        int actual = simpleCalculator.sum(7, 5);
+        int actual = simpleCalculator.sum(7, Integer.MAX_VALUE);
         int expected = 12;
         assertEquals(expected, actual);
     }
