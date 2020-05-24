@@ -9,7 +9,6 @@ import java.util.Iterator;
 public class DoubleHashTable<K extends HashValue, V> {
 
     private int size = 0;
-    private int newSize = 0;
     private int sizeTable = 101;
     private ItemHashTable<K, V>[] table;
     private int loadFactor = 75;
@@ -28,8 +27,8 @@ public class DoubleHashTable<K extends HashValue, V> {
     public void add(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("Key is null!");
-        if (rebuildComplete)
-            if (size + 1 >= loadFactor) {
+//        if (rebuildComplete)
+            if (rebuildComplete && size + 1 >= loadFactor) {
                 rebuildTable();
                 loadFactor = (int) (table.length * (75.0f / 100.0f));
                 countRebuild++;
@@ -162,6 +161,7 @@ public class DoubleHashTable<K extends HashValue, V> {
 
     private void rebuildTable() {
         rebuildComplete = false;
+        size = 0;
         ItemHashTable<K, V>[] tempTable = table;
         table = new ItemHashTable[sizeTable(sizeTable)];
         int i = 0;
@@ -172,7 +172,6 @@ public class DoubleHashTable<K extends HashValue, V> {
                 current = tempTable[i];
                 while (current != null) {
                     add(current.key, current.value);
-                    newSize++;
                     current = current.next;
                 }
             }
@@ -180,7 +179,6 @@ public class DoubleHashTable<K extends HashValue, V> {
         }
         rebuildComplete = true;
         countCollision = 0;
-        size = newSize;
     }
 
     public int size() {
@@ -275,7 +273,8 @@ public class DoubleHashTable<K extends HashValue, V> {
         for (int i = 0; i < 1000; i++) {
             int randomNumOne = min + (int) (Math.random() * ((max - min) + 1));
             int randomNumTwo = min + (int) (Math.random() * ((max - min) + 1));
-            hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
+            hashTable.add(new IntegerHashValue(i), "value" + randomNumTwo);
+//            hashTable.add(new IntegerHashValue(randomNumOne + randomNumTwo), "value" + randomNumTwo);
         }
 
         hashTable.remove(new IntegerHashValue(5984));
