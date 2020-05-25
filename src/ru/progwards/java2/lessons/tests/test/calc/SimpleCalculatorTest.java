@@ -111,6 +111,7 @@ public class SimpleCalculatorTest {
                     {-55, 5, -60},
                     {-55, -5, -50},
                     {Integer.MIN_VALUE, Integer.MIN_VALUE, 0},
+                    {Integer.MAX_VALUE, Integer.MAX_VALUE, 0},
             });
         }
 
@@ -137,6 +138,9 @@ public class SimpleCalculatorTest {
             return Arrays.asList(new Integer[][]{
                     {Integer.MIN_VALUE, 5, 2},
                     {5, Integer.MIN_VALUE, 2},
+                    {Integer.MIN_VALUE, Integer.MAX_VALUE, 0},
+                    {Integer.MAX_VALUE, Integer.MIN_VALUE, 0},
+                    {Integer.MIN_VALUE, Integer.MAX_VALUE, 0},
             });
         }
 
@@ -196,6 +200,10 @@ public class SimpleCalculatorTest {
         public static List<Integer[]> multTest() {
             return Arrays.asList(new Integer[][]{
                     {7, Integer.MAX_VALUE, 35},
+                    {Integer.MAX_VALUE, 7, 35},
+                    {Integer.MAX_VALUE, Integer.MAX_VALUE, 35},
+                    {Integer.MAX_VALUE, Integer.MIN_VALUE, 35},
+                    {Integer.MIN_VALUE, Integer.MAX_VALUE, 35},
             });
         }
 
