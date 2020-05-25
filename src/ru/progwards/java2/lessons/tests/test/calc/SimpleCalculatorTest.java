@@ -41,18 +41,18 @@ public class SimpleCalculatorTest {
         @Parameterized.Parameters
         public static List<Integer[]> sumTest() {
             return Arrays.asList(new Integer[][]{
-                    {7, 5, 12},
+                    {0, 0, 0},
                     {0, 5, 5},
                     {5, 0, 5},
+                    {7, 5, 12},
                     {-7, 0, -7},
                     {20, -20, 0},
                     {-12, -5, -17},
-                    {0, 0, 0},
             });
         }
 
         @Test
-        public void sumTestMethod() {
+        public void sumWithNormalValuesTestMethod() {
             assertEquals(expected, simpleCalculator.sum(valOne, valTwo));
         }
     }
@@ -100,6 +100,7 @@ public class SimpleCalculatorTest {
         @Parameterized.Parameters
         public static List<Integer[]> diffTest() {
             return Arrays.asList(new Integer[][]{
+                    {0, 0, 0},
                     {7, 5, 2},
                     {7, 0, 7},
                     {0, 7, -7},
@@ -109,13 +110,12 @@ public class SimpleCalculatorTest {
                     {-5, 55, -60},
                     {-55, 5, -60},
                     {-55, -5, -50},
-                    {0, 0, 0},
                     {Integer.MIN_VALUE, Integer.MIN_VALUE, 0},
             });
         }
 
         @Test
-        public void diffTestMethod() {
+        public void diffWithNormalValuesTestMethod() {
             assertEquals(expected, simpleCalculator.diff(valOne, valTwo));
         }
     }
@@ -162,20 +162,20 @@ public class SimpleCalculatorTest {
         @Parameterized.Parameters
         public static List<Integer[]> multTest() {
             return Arrays.asList(new Integer[][]{
-                    {7, 5, 35},
+                    {0, 0, 0},
                     {7, 0, 0},
                     {0, 7, 0},
-                    {20, 20, 400},
+                    {7, 5, 35},
                     {55, 5, 275},
+                    {20, 20, 400},
                     {55, -5, -275},
                     {-55, 5, -275},
                     {-55, -5, 275},
-                    {0, 0, 0},
             });
         }
 
         @Test
-        public void multTestMethod() {
+        public void multWithNormalValuesTestMethod() {
             assertEquals(expected, simpleCalculator.mult(valOne, valTwo));
         }
     }
@@ -222,8 +222,8 @@ public class SimpleCalculatorTest {
         public static List<Integer[]> divTest() {
             return Arrays.asList(new Integer[][]{
                     {7, 5, 1},
-                    {27, 9, 3},
                     {0, 3, 0},
+                    {27, 9, 3},
                     {20, 20, 1},
                     {55, 5, 11},
                     {55, -5, -11},
@@ -233,7 +233,7 @@ public class SimpleCalculatorTest {
         }
 
         @Test
-        public void divTestMethod() {
+        public void divWithNormalValuesTestMethod() {
             assertEquals(expected, simpleCalculator.div(valOne, valTwo));
         }
     }
