@@ -42,6 +42,8 @@ public class SimpleCalculatorTest {
         public static List<Integer[]> sumTest() {
             return Arrays.asList(new Integer[][]{
                     {7, 5, 12},
+                    {0, 5, 5},
+                    {5, 0, 5},
                     {-7, 0, -7},
                     {20, -20, 0},
                     {-12, -5, -17},
@@ -100,6 +102,7 @@ public class SimpleCalculatorTest {
             return Arrays.asList(new Integer[][]{
                     {7, 5, 2},
                     {7, 0, 7},
+                    {0, 7, -7},
                     {20, 20, 0},
                     {55, 5, 50},
                     {5, 55, -50},
@@ -161,6 +164,7 @@ public class SimpleCalculatorTest {
             return Arrays.asList(new Integer[][]{
                     {7, 5, 35},
                     {7, 0, 0},
+                    {0, 7, 0},
                     {20, 20, 400},
                     {55, 5, 275},
                     {55, -5, -275},
@@ -219,6 +223,7 @@ public class SimpleCalculatorTest {
             return Arrays.asList(new Integer[][]{
                     {7, 5, 1},
                     {27, 9, 3},
+                    {0, 3, 0},
                     {20, 20, 1},
                     {55, 5, 11},
                     {55, -5, -11},
