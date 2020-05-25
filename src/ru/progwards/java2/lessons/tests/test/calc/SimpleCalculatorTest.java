@@ -27,12 +27,12 @@ public class SimpleCalculatorTest {
 
     /* Summation */
     @RunWith(Parameterized.class)
-    public static class SumCalculatorTest {
+    public static class SumNormalValuesCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
 
-        public SumCalculatorTest(int valOne, int valTwo, int expected) {
+        public SumNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
             this.valTwo = valTwo;
             this.expected = expected;
@@ -84,12 +84,12 @@ public class SimpleCalculatorTest {
 
     /* Subtraction */
     @RunWith(Parameterized.class)
-    public static class DiffCalculatorTest {
+    public static class DiffNormalValuesCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
 
-        public DiffCalculatorTest(int valOne, int valTwo, int expected) {
+        public DiffNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
             this.valTwo = valTwo;
             this.expected = expected;
@@ -140,12 +140,12 @@ public class SimpleCalculatorTest {
 
     /* Multiplication */
     @RunWith(Parameterized.class)
-    public static class MultCalculatorTest {
+    public static class MultNormalValuesCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
 
-        public MultCalculatorTest(int valOne, int valTwo, int expected) {
+        public MultNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
             this.valTwo = valTwo;
             this.expected = expected;
@@ -194,12 +194,12 @@ public class SimpleCalculatorTest {
 
     /* Division */
     @RunWith(Parameterized.class)
-    public static class DivCalculatorTest {
+    public static class DivNormalValuesCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
 
-        public DivCalculatorTest(int valOne, int valTwo, int expected) {
+        public DivNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
             this.valTwo = valTwo;
             this.expected = expected;
@@ -237,8 +237,6 @@ public class SimpleCalculatorTest {
         public static List<Integer[]> divTest() {
             return Arrays.asList(new Integer[][]{
                     {7, 0, 7},
-                    {27, 0, 27},
-                    {20, 0, 20},
             });
         }
 
