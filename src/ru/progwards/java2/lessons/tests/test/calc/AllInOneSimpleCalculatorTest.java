@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(Enclosed.class)
-public class SimpleCalculatorTest {
+public class AllInOneSimpleCalculatorTest {
 
     public static SimpleCalculator simpleCalculator;
 
