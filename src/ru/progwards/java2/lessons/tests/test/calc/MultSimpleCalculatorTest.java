@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.tests.test.calc;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -23,6 +24,11 @@ public class MultSimpleCalculatorTest {
     @BeforeClass
     public static void createInstance() {
         simpleCalculator = new SimpleCalculator();
+    }
+
+    @AfterClass
+    public static void removeInstance(){
+        simpleCalculator = null;
     }
 
     /* Multiplication */
