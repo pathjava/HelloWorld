@@ -13,6 +13,11 @@ public class Heap {
 
     public int malloc(int size){
 
+        return 0;
+    }
+
+    public void free(int ptr){
+
     }
 
 }
