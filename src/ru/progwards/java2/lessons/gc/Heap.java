@@ -3,12 +3,19 @@
 
 package ru.progwards.java2.lessons.gc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Heap {
 
     private byte[] bytes;
+    private Map<EmptyBlock, EmptyBlock> emptyBlocks;
+    private Map<FilledBlock, FilledBlock> filledBlocks;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
+        filledBlocks = new HashMap<>(maxHeapSize);
+        emptyBlocks = new HashMap<>(maxHeapSize);
     }
 
     public int malloc(int size){
