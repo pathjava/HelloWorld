@@ -38,6 +38,7 @@ public class HeapTest {
             size %= maxBig;
         else
             size %= maxHuge;
+
         if (size > maxSize - allocated)
             size = maxSize - allocated;
         return size;
