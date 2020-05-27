@@ -9,8 +9,8 @@ import java.util.Map;
 public class Heap {
 
     private byte[] bytes;
-    private Map<EmptyBlock, EmptyBlock> emptyBlocks;
-    private Map<FilledBlock, FilledBlock> filledBlocks;
+    private Map<Integer, EmptyBlock> emptyBlocks;
+    private Map<Integer, FilledBlock> filledBlocks;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
