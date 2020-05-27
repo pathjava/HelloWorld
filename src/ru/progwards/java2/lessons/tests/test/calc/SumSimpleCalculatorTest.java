@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.tests.test.calc;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -19,21 +20,24 @@ import static org.junit.Assert.*;
 @RunWith(Enclosed.class)
 public class SumSimpleCalculatorTest {
 
-    public static SimpleCalculator simpleCalculator;
-
-    @BeforeClass
-    public static void createInstance() {
-        simpleCalculator = new SimpleCalculator();
-    }
-
-    @AfterClass
-    public static void removeInstance(){
-        simpleCalculator = null;
-    }
+//    public static SimpleCalculator simpleCalculator;
+//
+//    @BeforeClass
+//    public static void createInstance() {
+//        simpleCalculator = new SimpleCalculator();
+//    }
+//
+//    @AfterClass
+//    public static void removeInstance(){
+//        simpleCalculator = null;
+//    }
 
     /* Summation */
     @RunWith(Parameterized.class)
     public static class SumNormalValuesCalculatorTest {
+
+        public static SimpleCalculator simpleCalculator = new SimpleCalculator();
+
         private final int valOne;
         private final int valTwo;
         private final int expected;
@@ -65,6 +69,9 @@ public class SumSimpleCalculatorTest {
 
     @RunWith(Parameterized.class)
     public static class SumGetArithmeticExceptionCalculatorTest {
+
+        public static SimpleCalculator simpleCalculator = new SimpleCalculator();
+
         private final int valOne;
         private final int valTwo;
         private final int expected;
