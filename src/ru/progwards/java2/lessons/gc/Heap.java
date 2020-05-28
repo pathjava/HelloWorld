@@ -8,15 +8,16 @@ import java.util.*;
 public class Heap {
 
     private byte[] bytes;
-    private TreeSet<EmptyBlock> emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-    private TreeSet<FilledBlock> filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
-    private NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
-    private NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
+    private TreeSet<EmptyBlock> emptyBlockSet;
+    private final TreeSet<FilledBlock> filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
+    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
+    private final NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
 
     private int countAddBlocks = 1;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1));
         emptyBlocksMap.put(bytes.length, emptyBlockSet);
     }
@@ -45,8 +46,12 @@ public class Heap {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getEndIndexEmpty();
         int newKey = currentKey - size;
-        emptyBlocksMap.remove(currentKey);
-        emptyBlockSet.pollFirst();
+
+        if (emptyBlocksMap.get(currentKey).size() == 1) {
+            emptyBlocksMap.remove(currentKey);
+            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        } else
+            emptyBlockSet.pollFirst();
         emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex));
         emptyBlocksMap.put(newKey, emptyBlockSet);
     }
@@ -66,7 +71,7 @@ public class Heap {
 
     public static void main(String[] args) {
         Heap test = new Heap(100);
-        test.malloc(12);
+        test.malloc(5);
         test.malloc(15);
     }
 
