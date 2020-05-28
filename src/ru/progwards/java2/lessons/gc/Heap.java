@@ -13,7 +13,7 @@ public class Heap {
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
     private final NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
 
-    private int countAddBlocks = 1;
+    private int countAddBlocks = 0;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
@@ -28,13 +28,13 @@ public class Heap {
         if (currentKeyAndSizeEmptyBlock >= size) {
             index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
             addBlockToHeap(index, size, currentKeyAndSizeEmptyBlock);
-            countAddBlocks++;
         } else
             compact();
         return index;
     }
 
     private void addBlockToHeap(int index, int size, int currentKeyAndSizeEmptyBlock) {
+        countAddBlocks++;
         for (int i = 0; i < size; i++) {
             bytes[index + i] = (byte) countAddBlocks;
         }
@@ -77,6 +77,8 @@ public class Heap {
         Heap test = new Heap(100);
         test.malloc(5);
         test.malloc(6);
+        test.malloc(6);
+        test.malloc(7);
         test.malloc(7);
     }
 
