@@ -22,15 +22,18 @@ public class Heap {
     }
 
     public int malloc(int size) {
+        int index = 0; //TODO проверить правильность постоянной инициализации нулем
         if (emptyBlocksMap.ceilingKey(size) >= size) {
-            addBlockToHeap(size);
+            index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+            addBlockToHeap(index, size);
             countAddBlocks++;
         }
-        return 0;
+        else
+            compact();
+        return index;
     }
 
-    private void addBlockToHeap(int size) {
-        int index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+    private void addBlockToHeap(int index, int size) {
         for (int i = 0; i < size; i++) {
             bytes[index + i] = (byte) countAddBlocks;
         }
@@ -47,6 +50,10 @@ public class Heap {
     }
 
     public void free(int ptr) {
+
+    }
+
+    public void compact(){
 
     }
 
