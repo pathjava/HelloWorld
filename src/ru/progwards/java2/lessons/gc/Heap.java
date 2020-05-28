@@ -13,19 +13,37 @@ public class Heap {
     private NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
     private NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
 
+    private int countAddBlocks = 1;
+
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1));
-        emptyBlocksMap.put(bytes.length - 1, (TreeSet<EmptyBlock>) emptyBlockSet);
+        emptyBlocksMap.put(bytes.length, (TreeSet<EmptyBlock>) emptyBlockSet);
     }
 
     public int malloc(int size) {
         if (emptyBlocksMap.ceilingKey(size) >= size) {
-            for (int i = 0; i < size; i++) {
-                bytes[emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty()+i] = 1;
-            }
+            addBlockToHeap(size);
+            countAddBlocks++;
         }
         return 0;
+    }
+
+    private void addBlockToHeap(int size) {
+        int index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+        for (int i = 0; i < size; i++) {
+            bytes[index + i] = (byte) countAddBlocks;
+        }
+        changeEmptyBlocksMap(index, size);
+        changeFilledBlocksMap(index, size);
+    }
+
+    private void changeEmptyBlocksMap(int index, int size){
+
+    }
+
+    private void changeFilledBlocksMap(int index, int size){
+
     }
 
     public void free(int ptr) {
