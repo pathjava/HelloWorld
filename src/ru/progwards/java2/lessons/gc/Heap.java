@@ -9,7 +9,7 @@ public class Heap {
 
     private byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
-    private final TreeSet<FilledBlock> filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
+    private TreeSet<FilledBlock> filledBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
     private final NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
 
@@ -24,31 +24,31 @@ public class Heap {
 
     public int malloc(int size) {
         int index = 0; //TODO проверить правильность постоянной инициализации нулем
-        int currentKey = emptyBlocksMap.ceilingKey(size);
-        if (currentKey >= size) {
+        int currentKeyAndSizeEmptyBlock = emptyBlocksMap.ceilingKey(size);
+        if (currentKeyAndSizeEmptyBlock >= size) {
             index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
-            addBlockToHeap(index, size, currentKey);
+            addBlockToHeap(index, size, currentKeyAndSizeEmptyBlock);
             countAddBlocks++;
         } else
             compact();
         return index;
     }
 
-    private void addBlockToHeap(int index, int size, int currentKey) {
+    private void addBlockToHeap(int index, int size, int currentKeyAndSizeEmptyBlock) {
         for (int i = 0; i < size; i++) {
             bytes[index + i] = (byte) countAddBlocks;
         }
-        changeEmptyBlocksMap(index, size, currentKey);
-        changeFilledBlocksMap(index, size);
+        addEmptyBlocksMap(index, size, currentKeyAndSizeEmptyBlock);
+        addFilledBlocksMap(index, size);
     }
 
-    private void changeEmptyBlocksMap(int index, int size, int currentKey) {
+    private void addEmptyBlocksMap(int index, int size, int currentKeyAndSizeEmptyBlock) {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getEndIndexEmpty();
-        int newKey = currentKey - size;
+        int newKey = currentKeyAndSizeEmptyBlock - size;
 
-        if (emptyBlocksMap.get(currentKey).size() == 1) {
-            emptyBlocksMap.remove(currentKey);
+        if (emptyBlocksMap.get(currentKeyAndSizeEmptyBlock).size() == 1) {
+            emptyBlocksMap.remove(currentKeyAndSizeEmptyBlock);
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         } else
             emptyBlockSet.pollFirst();
@@ -56,8 +56,9 @@ public class Heap {
         emptyBlocksMap.put(newKey, emptyBlockSet);
     }
 
-    private void changeFilledBlocksMap(int index, int size) {
-
+    private void addFilledBlocksMap(int index, int size) {
+        int endIndex = index + (size - 1);
+        filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
     }
 
     public void free(int ptr) {
