@@ -67,8 +67,14 @@ public class Heap {
     public void free(int ptr) {
         int endIndex = 0; //TODO проверить правильность постоянной инициализации нулем
         for (Map.Entry<Integer, TreeSet<FilledBlock>> entry : filledBlocksMap.entrySet()) {
-            if (entry.getValue().iterator().next().getStartIndexFilled() == ptr)
-                endIndex = entry.getValue().iterator().next().getEndIndexFilled();
+            if (entry.getValue().size() == 1) {
+                if (entry.getValue().iterator().next().getStartIndexFilled() == ptr)
+                    endIndex = entry.getValue().iterator().next().getEndIndexFilled();
+            } else
+                for (FilledBlock block : filledBlockSet) {
+                    if (block.getStartIndexFilled() == ptr)
+                        endIndex = block.getEndIndexFilled();
+                }
             //TODO сделать проверку, если ptr нет или указывает на середину блока
         }
         int sizeRemoveBlock = (endIndex - ptr) + 1;
@@ -77,7 +83,7 @@ public class Heap {
 
     }
 
-    private void removeFilledBlockFromMap(){
+    private void removeFilledBlockFromMap() {
 
     }
 
