@@ -71,8 +71,9 @@ public class Heap {
                 endIndex = entry.getValue().iterator().next().getEndIndexFilled();
             //TODO сделать проверку, если ptr нет или указывает на середину блока
         }
-        int sizeRemoveBlock = endIndex - ptr;
+        int sizeRemoveBlock = (endIndex - ptr) + 1;
 
+//        if (filledBlocksMap.containsKey(sizeRemoveBlock))
 
     }
 
@@ -90,6 +91,7 @@ public class Heap {
         test.malloc(5);
         test.malloc(6);
         test.malloc(6);
+        test.free(11);
         test.malloc(7);
         test.malloc(7);
     }
