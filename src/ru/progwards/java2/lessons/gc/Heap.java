@@ -29,7 +29,7 @@ public class Heap {
             index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
             addBlockToHeap(index, size, currentKeyAndSizeEmptyBlock);
         } else
-            compact();
+            compact(); //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
         return index;
     }
 
@@ -38,11 +38,11 @@ public class Heap {
         for (int i = 0; i < size; i++) {
             bytes[index + i] = (byte) countAddBlocks;
         }
-        addEmptyBlockMap(index, size, currentKeyAndSizeEmptyBlock);
-        addFilledBlockMap(index, size);
+        addEmptyBlockToMap(index, size, currentKeyAndSizeEmptyBlock);
+        addFilledBlockToMap(index, size);
     }
 
-    private void addEmptyBlockMap(int index, int size, int currentKeyAndSizeEmptyBlock) {
+    private void addEmptyBlockToMap(int index, int size, int currentKeyAndSizeEmptyBlock) {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getEndIndexEmpty();
         int newKey = currentKeyAndSizeEmptyBlock - size;
@@ -56,7 +56,7 @@ public class Heap {
         emptyBlocksMap.put(newKey, emptyBlockSet);
     }
 
-    private void addFilledBlockMap(int index, int size) {
+    private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
         if (!filledBlocksMap.containsKey(size))
             filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
@@ -65,6 +65,18 @@ public class Heap {
     }
 
     public void free(int ptr) {
+        int endIndex = 0; //TODO проверить правильность постоянной инициализации нулем
+        for (Map.Entry<Integer, TreeSet<FilledBlock>> entry : filledBlocksMap.entrySet()) {
+            if (entry.getValue().iterator().next().getStartIndexFilled() == ptr)
+                endIndex = entry.getValue().iterator().next().getEndIndexFilled();
+            //TODO сделать проверку, если ptr нет или указывает на середину блока
+        }
+        int sizeRemoveBlock = endIndex - ptr;
+
+
+    }
+
+    private void removeFilledBlockFromMap(){
 
     }
 
