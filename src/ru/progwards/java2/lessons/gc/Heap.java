@@ -67,7 +67,7 @@ public class Heap {
     public void free(int ptr) {
         int endIndex = 0; //TODO проверить правильность постоянной инициализации нулем
         for (Map.Entry<Integer, TreeSet<FilledBlock>> entry : filledBlocksMap.entrySet()) {
-            if (entry.getValue().size() == 1) {
+            if (entry.getValue().size() == 1) { //TODO объеденить два if в один, тем самым уменьшив код
                 if (entry.getValue().iterator().next().getStartIndexFilled() == ptr)
                     endIndex = entry.getValue().iterator().next().getEndIndexFilled();
             } else
