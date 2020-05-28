@@ -38,11 +38,11 @@ public class Heap {
         for (int i = 0; i < size; i++) {
             bytes[index + i] = (byte) countAddBlocks;
         }
-        addEmptyBlocksMap(index, size, currentKeyAndSizeEmptyBlock);
-        addFilledBlocksMap(index, size);
+        addEmptyBlockMap(index, size, currentKeyAndSizeEmptyBlock);
+        addFilledBlockMap(index, size);
     }
 
-    private void addEmptyBlocksMap(int index, int size, int currentKeyAndSizeEmptyBlock) {
+    private void addEmptyBlockMap(int index, int size, int currentKeyAndSizeEmptyBlock) {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getEndIndexEmpty();
         int newKey = currentKeyAndSizeEmptyBlock - size;
@@ -56,9 +56,12 @@ public class Heap {
         emptyBlocksMap.put(newKey, emptyBlockSet);
     }
 
-    private void addFilledBlocksMap(int index, int size) {
+    private void addFilledBlockMap(int index, int size) {
         int endIndex = index + (size - 1);
-        filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
+        if (!filledBlocksMap.containsKey(size))
+            filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
+        filledBlockSet.add(new FilledBlock(index, endIndex));
+        filledBlocksMap.put(size, filledBlockSet);
     }
 
     public void free(int ptr) {
@@ -73,7 +76,8 @@ public class Heap {
     public static void main(String[] args) {
         Heap test = new Heap(100);
         test.malloc(5);
-        test.malloc(15);
+        test.malloc(6);
+        test.malloc(7);
     }
 
 }
