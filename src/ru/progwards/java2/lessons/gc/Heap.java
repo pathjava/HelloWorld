@@ -9,8 +9,9 @@ public class Heap {
 
     private byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
-    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
-    private final Map<Integer, FilledBlock> filledBlocksMap = new HashMap<>();
+    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
+    private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
+    private final NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>();
 
     private final int maxSizeHeap;
     private int currentFilledSizeHeap;
@@ -20,20 +21,20 @@ public class Heap {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
-        emptyBlocksMap.put(maxHeapSize, emptyBlockSet);
+        emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
         maxSizeHeap = maxHeapSize;
     }
 
     public int malloc(int size) {
         int emptyBlockSuitableSize;
-        if (!(emptyBlocksMap.ceilingKey(size) == null))
-            emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
+        if (!(emptyBlocksTM.ceilingKey(size) == null))
+            emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         else {
             compact();
-            if (emptyBlocksMap.ceilingKey(size) == null)
+            if (emptyBlocksTM.ceilingKey(size) == null)
                 throw new OutOfMemoryError("Недостаточно места");
             else
-                emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
+                emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         }
 
         if ((currentFilledSizeHeap + size) > maxSizeHeap) {
@@ -43,7 +44,7 @@ public class Heap {
         }
 
         //TODO проверить правильность постоянной инициализации нулем
-        int index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+        int index = emptyBlocksTM.get(emptyBlocksTM.ceilingKey(size)).iterator().next().getStartIndexEmpty();
         addBlockToHeap(index, size, emptyBlockSuitableSize);
         //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
 
@@ -61,22 +62,23 @@ public class Heap {
 
     private void addEmptyBlockToMap(int index, int size, int emptyBlockSuitableSize) {
         int newStartIndex = index + size;
-        int oldEndIndex = emptyBlocksMap.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
+        int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size;
 
-        if (emptyBlocksMap.get(emptyBlockSuitableSize).size() == 1) {
-            emptyBlocksMap.remove(emptyBlockSuitableSize);
+        if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
+            emptyBlocksTM.remove(emptyBlockSuitableSize);
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         } else
             emptyBlockSet.pollFirst();
         emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
-        emptyBlocksMap.put(newKeyAndBlockSize, emptyBlockSet);
+        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
         currentFilledSizeHeap += size;
     }
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
-        filledBlocksMap.put(index, new FilledBlock(index, endIndex, size));
+        filledBlocksHM.put(index, new FilledBlock(index, endIndex, size));
+        filledBlocksTM.put(index, new FilledBlock(index, endIndex, size));
         //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
@@ -84,10 +86,11 @@ public class Heap {
         int endIndex;
         int sizeRemoveBlock;
 
-        if (filledBlocksMap.containsKey(ptr)) {
-            endIndex = filledBlocksMap.get(ptr).getEndIndexFilled();
-            sizeRemoveBlock = filledBlocksMap.get(ptr).getSizeFilledBlock();
-            filledBlocksMap.remove(ptr);
+        if (filledBlocksHM.containsKey(ptr)) {
+            endIndex = filledBlocksHM.get(ptr).getEndIndexFilled();
+            sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock();
+            filledBlocksHM.remove(ptr);
+            filledBlocksTM.remove(ptr);
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock);
 
             for (int i = ptr; i <= endIndex; i++) {
@@ -98,11 +101,11 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        if (!emptyBlocksMap.containsKey(sizeEmptyBlock)) {
+        if (!emptyBlocksTM.containsKey(sizeEmptyBlock)) {
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
-        emptyBlocksMap.put(sizeEmptyBlock, emptyBlockSet);
+        emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
         currentFilledSizeHeap -= sizeEmptyBlock;
     }
 
