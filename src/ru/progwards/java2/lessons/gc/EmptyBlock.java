@@ -8,10 +8,12 @@ public class EmptyBlock {
 
     private int startIndexEmpty;
     private int endIndexEmpty;
+    private int sizeEmptyBlock;
 
-    public EmptyBlock(int startIndexEmpty, int endIndexEmpty) {
+    public EmptyBlock(int startIndexEmpty, int endIndexEmpty, int sizeEmptyBlock) {
         this.startIndexEmpty = startIndexEmpty;
         this.endIndexEmpty = endIndexEmpty;
+        this.sizeEmptyBlock = sizeEmptyBlock;
     }
 
     public int getStartIndexEmpty() {
@@ -28,5 +30,13 @@ public class EmptyBlock {
 
     public void setEndIndexEmpty(int endIndexEmpty) {
         this.endIndexEmpty = endIndexEmpty;
+    }
+
+    public int getSizeEmptyBlock() {
+        return sizeEmptyBlock;
+    }
+
+    public void setSizeEmptyBlock(int sizeEmptyBlock) {
+        this.sizeEmptyBlock = sizeEmptyBlock;
     }
 }
