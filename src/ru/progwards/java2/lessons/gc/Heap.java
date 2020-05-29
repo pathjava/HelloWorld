@@ -112,6 +112,7 @@ public class Heap {
     public void compact() {
         int emptyCellIndex = 0;
         int filledCellIndex;
+        filledBlocksHM.clear();
         for (int i = 0; i < bytes.length; i++) {
             if (!(filledBlocksTM.size() == 0))
                 filledCellIndex = filledBlocksTM.firstKey();
@@ -133,9 +134,14 @@ public class Heap {
                 if (count == movableBlockSize)
                     break;
             }
+            int endIndex = emptyCellIndex + (movableBlockSize - 1);
+            filledBlocksHM.put(emptyCellIndex, new FilledBlock(emptyCellIndex, endIndex, movableBlockSize));
+
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());
         }
+        filledBlocksTM.clear();
+        filledBlocksTM.putAll(filledBlocksHM);
     }
 
 
