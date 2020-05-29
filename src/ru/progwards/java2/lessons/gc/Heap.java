@@ -9,9 +9,8 @@ public class Heap {
 
     private byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
-    private TreeSet<FilledBlock> filledBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksMap = new TreeMap<>();
-    private final NavigableMap<Integer, TreeSet<FilledBlock>> filledBlocksMap = new TreeMap<>();
+    private final Map<Integer, FilledBlock> filledBlocksMap = new HashMap<>();
 
     private int countAddBlocks = 0;
 
@@ -58,28 +57,19 @@ public class Heap {
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
-        if (!filledBlocksMap.containsKey(size))
-            filledBlockSet = new TreeSet<>(Comparator.comparingInt(FilledBlock::getStartIndexFilled));
-        filledBlockSet.add(new FilledBlock(index, endIndex));
-        filledBlocksMap.put(size, filledBlockSet);
+        filledBlocksMap.put(index, new FilledBlock(index, endIndex, size));
     }
 
     public void free(int ptr) {
         int endIndex = 0; //TODO проверить правильность постоянной инициализации нулем
-        for (Map.Entry<Integer, TreeSet<FilledBlock>> entry : filledBlocksMap.entrySet()) {
-            if (entry.getValue().size() == 1) { //TODO объеденить два if в один, тем самым уменьшив код
-                if (entry.getValue().iterator().next().getStartIndexFilled() == ptr)
-                    endIndex = entry.getValue().iterator().next().getEndIndexFilled();
-            } else
-                for (FilledBlock block : filledBlockSet) {
-                    if (block.getStartIndexFilled() == ptr)
-                        endIndex = block.getEndIndexFilled();
-                }
+        if (filledBlocksMap.containsKey(ptr)) {
+            endIndex = filledBlocksMap.get(ptr).getEndIndexFilled();
+
+            for (int i = ptr; i <= endIndex; i++) {
+                bytes[i] = 0;
+            }
             //TODO сделать проверку, если ptr нет или указывает на середину блока
         }
-        int sizeRemoveBlock = (endIndex - ptr) + 1;
-
-//        if (filledBlocksMap.containsKey(sizeRemoveBlock))
 
     }
 

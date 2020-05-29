@@ -8,10 +8,12 @@ public class FilledBlock {
 
     private int startIndexFilled;
     private int endIndexFilled;
+    private int sizeFilledBlock;
 
-    public FilledBlock(int startIndexFilled, int endIndexFilled) {
+    public FilledBlock(int startIndexFilled, int endIndexFilled, int sizeFilledBlock) {
         this.startIndexFilled = startIndexFilled;
         this.endIndexFilled = endIndexFilled;
+        this.sizeFilledBlock = sizeFilledBlock;
     }
 
     public int getStartIndexFilled() {
@@ -28,5 +30,13 @@ public class FilledBlock {
 
     public void setEndIndexFilled(int endIndexFilled) {
         this.endIndexFilled = endIndexFilled;
+    }
+
+    public int getSizeFilledBlock() {
+        return sizeFilledBlock;
+    }
+
+    public void setSizeFilledBlock(int sizeFilledBlock) {
+        this.sizeFilledBlock = sizeFilledBlock;
     }
 }
