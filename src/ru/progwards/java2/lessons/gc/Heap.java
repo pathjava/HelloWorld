@@ -118,13 +118,15 @@ public class Heap {
                 filledCellIndex = filledBlocksTM.firstKey();
             else
                 break;
-            int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
+
             for (int k = emptyCellIndex; k < bytes.length; k++) {
                 if (bytes[k] == 0) {
                     emptyCellIndex = k;
                     break;
                 }
             }
+
+            int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
             for (int j = emptyCellIndex; j < bytes.length; j++) {
                 bytes[j] = bytes[filledCellIndex];
@@ -134,6 +136,7 @@ public class Heap {
                 if (count == movableBlockSize)
                     break;
             }
+
             int endIndex = emptyCellIndex + (movableBlockSize - 1);
             filledBlocksHM.put(emptyCellIndex, new FilledBlock(emptyCellIndex, endIndex, movableBlockSize));
 
