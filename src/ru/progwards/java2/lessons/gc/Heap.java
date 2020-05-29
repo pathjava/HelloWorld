@@ -25,16 +25,27 @@ public class Heap {
     }
 
     public int malloc(int size) {
-        int index = 0; //TODO проверить правильность постоянной инициализации нулем
-        int emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
+        int emptyBlockSuitableSize;
+        if (!(emptyBlocksMap.ceilingKey(size) == null))
+            emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
+        else {
+            compact();
+            if (emptyBlocksMap.ceilingKey(size) == null)
+                throw new OutOfMemoryError("Недостаточно места");
+            else
+                emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
+        }
 
-        if ((currentFilledSizeHeap + size) <= maxSizeHeap) {
-            if (emptyBlockSuitableSize >= size) {
-                index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
-                addBlockToHeap(index, size, emptyBlockSuitableSize);
-            } else
-                compact(); //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
-        } //TODO сделать что-то при условии, что (currentFilledSizeHeap + size) <= maxSizeHeap будет false
+        if ((currentFilledSizeHeap + size) > maxSizeHeap) {
+            compact();
+            if ((currentFilledSizeHeap + size) > maxSizeHeap)
+                throw new OutOfMemoryError("Недостаточно места");
+        }
+
+        //TODO проверить правильность постоянной инициализации нулем
+        int index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+        addBlockToHeap(index, size, emptyBlockSuitableSize);
+        //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
 
         return index;
     }
@@ -83,7 +94,7 @@ public class Heap {
                 bytes[i] = 0;
             }
         } else
-            throw new IndexOutOfBoundsException(); //TODO сделать проверку, если ptr нет или указывает на середину блока
+            throw new IndexOutOfBoundsException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
@@ -107,6 +118,11 @@ public class Heap {
         test.malloc(6);
         test.free(11);
         test.malloc(7);
+        test.malloc(10);
+        test.free(0);
+        test.malloc(25);
+        test.malloc(20);
+        test.malloc(18);
         test.malloc(7);
     }
 
