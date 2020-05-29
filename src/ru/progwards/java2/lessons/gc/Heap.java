@@ -77,15 +77,11 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock){
-        if (emptyBlocksMap.get(sizeEmptyBlock).size() > 1) {
-            emptyBlockSet.add(new EmptyBlock(startIndex, endIndex));
-            emptyBlocksMap.put(sizeEmptyBlock, emptyBlockSet);
-
-        } else {
+        if (!emptyBlocksMap.containsKey(sizeEmptyBlock)) {
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-            emptyBlockSet.add(new EmptyBlock(startIndex, endIndex));
-            emptyBlocksMap.put(sizeEmptyBlock, emptyBlockSet);
         }
+        emptyBlockSet.add(new EmptyBlock(startIndex, endIndex));
+        emptyBlocksMap.put(sizeEmptyBlock, emptyBlockSet);
     }
 
     public void compact() {
