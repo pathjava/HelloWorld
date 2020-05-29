@@ -27,12 +27,15 @@ public class Heap {
     public int malloc(int size) {
         int index = 0; //TODO проверить правильность постоянной инициализации нулем
         int emptyBlockSuitableSize = emptyBlocksMap.ceilingKey(size);
-        if (emptyBlockSuitableSize >= size && (currentFilledSizeHeap + size) <= maxSizeHeap) {
-            index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
-            addBlockToHeap(index, size, emptyBlockSuitableSize);
-        } else
-            compact(); //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
-        //TODO сделать что-то при условии, что (currentFilledSizeHeap + size) <= maxSizeHeap будет false
+
+        if ((currentFilledSizeHeap + size) <= maxSizeHeap) {
+            if (emptyBlockSuitableSize >= size) {
+                index = emptyBlocksMap.get(emptyBlocksMap.ceilingKey(size)).iterator().next().getStartIndexEmpty();
+                addBlockToHeap(index, size, emptyBlockSuitableSize);
+            } else
+                compact(); //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
+        } //TODO сделать что-то при условии, что (currentFilledSizeHeap + size) <= maxSizeHeap будет false
+
         return index;
     }
 
@@ -63,11 +66,13 @@ public class Heap {
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
         filledBlocksMap.put(index, new FilledBlock(index, endIndex, size));
+        //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
     public void free(int ptr) {
         int endIndex;
         int sizeRemoveBlock;
+
         if (filledBlocksMap.containsKey(ptr)) {
             endIndex = filledBlocksMap.get(ptr).getEndIndexFilled();
             sizeRemoveBlock = filledBlocksMap.get(ptr).getSizeFilledBlock();
@@ -77,8 +82,8 @@ public class Heap {
             for (int i = ptr; i <= endIndex; i++) {
                 bytes[i] = 0;
             }
-            //TODO сделать проверку, если ptr нет или указывает на середину блока
-        }
+        } else
+            throw new IndexOutOfBoundsException(); //TODO сделать проверку, если ptr нет или указывает на середину блока
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
