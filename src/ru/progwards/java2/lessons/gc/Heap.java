@@ -110,7 +110,32 @@ public class Heap {
     }
 
     public void compact() {
-
+        int emptyCellIndex = 0;
+        int filledCellIndex;
+        for (int i = 0; i < bytes.length; i++) {
+            if (!(filledBlocksTM.size() == 0))
+                filledCellIndex = filledBlocksTM.firstKey();
+            else
+                break;
+            int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
+            for (int k = emptyCellIndex; k < bytes.length; k++) {
+                if (bytes[k] == 0) {
+                    emptyCellIndex = k;
+                    break;
+                }
+            }
+            int count = 0;
+            for (int j = emptyCellIndex; j < bytes.length; j++) {
+                bytes[j] = bytes[filledCellIndex];
+                bytes[filledCellIndex] = 0;
+                filledCellIndex++;
+                count++;
+                if (count == movableBlockSize)
+                    break;
+            }
+            emptyCellIndex += movableBlockSize;
+            filledBlocksTM.remove(filledBlocksTM.firstKey());
+        }
     }
 
 
