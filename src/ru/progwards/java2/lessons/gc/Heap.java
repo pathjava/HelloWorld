@@ -61,21 +61,19 @@ public class Heap {
     }
 
     public void free(int ptr) {
-        int endIndex = 0; //TODO проверить правильность постоянной инициализации нулем
+        int endIndex;
         if (filledBlocksMap.containsKey(ptr)) {
             endIndex = filledBlocksMap.get(ptr).getEndIndexFilled();
+            filledBlocksMap.remove(ptr);
+
 
             for (int i = ptr; i <= endIndex; i++) {
                 bytes[i] = 0;
             }
             //TODO сделать проверку, если ptr нет или указывает на середину блока
         }
-
     }
 
-    private void removeFilledBlockFromMap() {
-
-    }
 
     public void compact() {
 
