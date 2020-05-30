@@ -140,9 +140,16 @@ public class Heap {
 
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());
-            filledCellIndex = filledBlocksTM.firstKey();
+            if (!(filledBlocksTM.size() == 0))
+                filledCellIndex = filledBlocksTM.firstKey();
         }
         filledBlocksTM.putAll(filledBlocksHM);
+
+        emptyBlocksTM.clear();
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        int newKeyAndBlockSize = bytes.length - emptyCellIndex;
+        emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
+        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
     }
 
 
@@ -158,7 +165,7 @@ public class Heap {
         test.malloc(25);
         test.malloc(20);
         test.malloc(18);
-        test.malloc(17);
+        test.malloc(16);
     }
 
 }
