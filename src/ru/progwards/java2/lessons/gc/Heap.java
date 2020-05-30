@@ -22,6 +22,8 @@ public class Heap {
     }
 
     public int malloc(int size) {
+        if (size < 0 || size > bytes.length)
+            throw new IllegalArgumentException();
         int emptyBlockSuitableSize;
         if (!(emptyBlocksTM.ceilingKey(size) == null))
             emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
@@ -73,6 +75,8 @@ public class Heap {
     }
 
     public void free(int ptr) {
+        if (ptr < 0 || ptr > bytes.length - 1)
+            return;
         int endIndex;
         int sizeRemoveBlock;
 
