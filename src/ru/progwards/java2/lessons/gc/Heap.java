@@ -32,17 +32,8 @@ public class Heap {
             else
                 emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         }
-
-//        if ((currentFilledSizeHeap + size) > maxSizeHeap) {
-//            compact();
-//            if ((currentFilledSizeHeap + size) > maxSizeHeap)
-//                throw new OutOfMemoryError("Недостаточно места");
-//        }
-
-        //TODO проверить правильность постоянной инициализации нулем
         int index = emptyBlocksTM.get(emptyBlocksTM.ceilingKey(size)).iterator().next().getStartIndexEmpty();
         addBlockToHeap(index, size, emptyBlockSuitableSize);
-        //TODO если и после уплотнения места под новый блок не будет, бросаем исключение
 
         return index;
     }
