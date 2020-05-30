@@ -108,12 +108,16 @@ public class Heap {
 
     public void compact() {
         int emptyCellIndex = 0;
+        int countIteration = 0;
         for (int i = emptyCellIndex; i < bytes.length; i++) {
             if (bytes[i] == 0) {
                 emptyCellIndex = i;
                 break;
             }
+            countIteration++;
         }
+        if (countIteration == bytes.length)
+            return;
 
         NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>(filledBlocksHM);
         filledBlocksHM.clear();
