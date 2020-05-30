@@ -11,10 +11,7 @@ public class Heap {
     private TreeSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
-//    private final NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>();
 
-    //    private final int maxSizeHeap;
-//    private int currentFilledSizeHeap;
     private int countAddBlocks = 0;
 
     public Heap(int maxHeapSize) {
@@ -22,7 +19,6 @@ public class Heap {
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
-//        maxSizeHeap = maxHeapSize;
     }
 
     public int malloc(int size) {
@@ -72,13 +68,11 @@ public class Heap {
             emptyBlockSet.pollFirst();
         emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
         emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
-//        currentFilledSizeHeap += size;
     }
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
         filledBlocksHM.put(index, new FilledBlock(index, endIndex, size));
-//        filledBlocksTM.put(index, new FilledBlock(index, endIndex, size));
         //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
@@ -90,7 +84,6 @@ public class Heap {
             endIndex = filledBlocksHM.get(ptr).getEndIndexFilled();
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock();
             filledBlocksHM.remove(ptr);
-//            filledBlocksTM.remove(ptr);
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock);
 
             for (int i = ptr; i <= endIndex; i++) {
@@ -106,14 +99,13 @@ public class Heap {
         }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
-//        currentFilledSizeHeap -= sizeEmptyBlock;
     }
 
     public void compact() {
         int emptyCellIndex = 0;
-        for (int k = emptyCellIndex; k < bytes.length; k++) {
-            if (bytes[k] == 0) {
-                emptyCellIndex = k;
+        for (int i = emptyCellIndex; i < bytes.length; i++) {
+            if (bytes[i] == 0) {
+                emptyCellIndex = i;
                 break;
             }
         }
