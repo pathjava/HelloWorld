@@ -11,10 +11,10 @@ public class Heap {
     private TreeSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
-    private final NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>();
+//    private final NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>();
 
-    private final int maxSizeHeap;
-    private int currentFilledSizeHeap;
+    //    private final int maxSizeHeap;
+//    private int currentFilledSizeHeap;
     private int countAddBlocks = 0;
 
     public Heap(int maxHeapSize) {
@@ -22,7 +22,7 @@ public class Heap {
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
-        maxSizeHeap = maxHeapSize;
+//        maxSizeHeap = maxHeapSize;
     }
 
     public int malloc(int size) {
@@ -37,11 +37,11 @@ public class Heap {
                 emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         }
 
-        if ((currentFilledSizeHeap + size) > maxSizeHeap) {
-            compact();
-            if ((currentFilledSizeHeap + size) > maxSizeHeap)
-                throw new OutOfMemoryError("Недостаточно места");
-        }
+//        if ((currentFilledSizeHeap + size) > maxSizeHeap) {
+//            compact();
+//            if ((currentFilledSizeHeap + size) > maxSizeHeap)
+//                throw new OutOfMemoryError("Недостаточно места");
+//        }
 
         //TODO проверить правильность постоянной инициализации нулем
         int index = emptyBlocksTM.get(emptyBlocksTM.ceilingKey(size)).iterator().next().getStartIndexEmpty();
@@ -72,13 +72,13 @@ public class Heap {
             emptyBlockSet.pollFirst();
         emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
         emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
-        currentFilledSizeHeap += size;
+//        currentFilledSizeHeap += size;
     }
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
         filledBlocksHM.put(index, new FilledBlock(index, endIndex, size));
-        filledBlocksTM.put(index, new FilledBlock(index, endIndex, size));
+//        filledBlocksTM.put(index, new FilledBlock(index, endIndex, size));
         //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
@@ -90,7 +90,7 @@ public class Heap {
             endIndex = filledBlocksHM.get(ptr).getEndIndexFilled();
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock();
             filledBlocksHM.remove(ptr);
-            filledBlocksTM.remove(ptr);
+//            filledBlocksTM.remove(ptr);
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock);
 
             for (int i = ptr; i <= endIndex; i++) {
@@ -106,25 +106,25 @@ public class Heap {
         }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
-        currentFilledSizeHeap -= sizeEmptyBlock;
+//        currentFilledSizeHeap -= sizeEmptyBlock;
     }
 
     public void compact() {
         int emptyCellIndex = 0;
-        int filledCellIndex;
-        filledBlocksHM.clear();
-        for (int i = 0; i < bytes.length; i++) {
-            if (!(filledBlocksTM.size() == 0))
-                filledCellIndex = filledBlocksTM.firstKey();
-            else
+        for (int k = emptyCellIndex; k < bytes.length; k++) {
+            if (bytes[k] == 0) {
+                emptyCellIndex = k;
                 break;
-
-            for (int k = emptyCellIndex; k < bytes.length; k++) {
-                if (bytes[k] == 0) {
-                    emptyCellIndex = k;
-                    break;
-                }
             }
+        }
+        int filledCellIndex;
+        NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>(filledBlocksHM);
+        filledBlocksHM.clear();
+
+        while (!(filledBlocksTM.size() == 0)) {
+            if (filledBlocksTM.firstKey() == 0)
+                filledBlocksTM.remove(filledBlocksTM.firstKey());
+            filledCellIndex = filledBlocksTM.firstKey();
 
             int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
@@ -143,7 +143,6 @@ public class Heap {
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());
         }
-        filledBlocksTM.clear();
         filledBlocksTM.putAll(filledBlocksHM);
     }
 
