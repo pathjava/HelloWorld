@@ -76,7 +76,7 @@ public class Heap {
 
     public void free(int ptr) {
         if (ptr < 0 || ptr > bytes.length - 1)
-            return;
+            throw new IllegalArgumentException();
         int endIndex;
         int sizeRemoveBlock;
 
@@ -90,7 +90,7 @@ public class Heap {
                 bytes[i] = 0;
             }
         } else
-            throw new IndexOutOfBoundsException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
+            throw new IllegalArgumentException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
@@ -123,7 +123,8 @@ public class Heap {
                 checkFilledIndex = true;
             } else {
                 filledBlocksHM.put(filledBlocksTM.firstKey(),
-                        new FilledBlock(filledBlocksTM.firstKey(), filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
+                        new FilledBlock(filledBlocksTM.firstKey(),
+                                filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
                                 filledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
                 filledBlocksTM.remove(filledBlocksTM.firstKey());
                 filledCellIndex = filledBlocksTM.firstKey();
@@ -155,6 +156,10 @@ public class Heap {
         int newKeyAndBlockSize = bytes.length - emptyCellIndex;
         emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
         emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+    }
+
+    public void defrag() {
+
     }
 
 
