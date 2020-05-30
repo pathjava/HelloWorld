@@ -117,15 +117,21 @@ public class Heap {
                 break;
             }
         }
-        int filledCellIndex;
+
         NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>(filledBlocksHM);
+        int filledCellIndex = filledBlocksTM.firstKey();
+        boolean checkFilledIndex = false;
+        while (!checkFilledIndex) {
+            if (filledCellIndex > emptyCellIndex) {
+                checkFilledIndex = true;
+            } else {
+                filledBlocksTM.remove(filledBlocksTM.firstKey());
+                filledCellIndex = filledBlocksTM.firstKey();
+            }
+        }
         filledBlocksHM.clear();
 
         while (!(filledBlocksTM.size() == 0)) {
-            if (filledBlocksTM.firstKey() == 0)
-                filledBlocksTM.remove(filledBlocksTM.firstKey());
-            filledCellIndex = filledBlocksTM.firstKey();
-
             int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
             for (int j = emptyCellIndex; j < bytes.length; j++) {
@@ -142,6 +148,7 @@ public class Heap {
 
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());
+            filledCellIndex = filledBlocksTM.firstKey();
         }
         filledBlocksTM.putAll(filledBlocksHM);
     }
@@ -155,11 +162,11 @@ public class Heap {
         test.free(11);
         test.malloc(7);
         test.malloc(10);
-        test.free(0);
+        test.free(17);
         test.malloc(25);
         test.malloc(20);
         test.malloc(18);
-        test.malloc(7);
+        test.malloc(17);
     }
 
 }
