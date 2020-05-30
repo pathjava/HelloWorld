@@ -61,13 +61,18 @@ public class Heap {
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size;
 
-        if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
+        if (!(newStartIndex > bytes.length - 1)) {
+            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
+                emptyBlocksTM.remove(emptyBlockSuitableSize);
+                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+            } else
+                emptyBlockSet.pollFirst();
+            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
+            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+        } else {
             emptyBlocksTM.remove(emptyBlockSuitableSize);
-            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        } else
-            emptyBlockSet.pollFirst();
-        emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
-        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+            emptyBlockSet.clear();
+        }
     }
 
     private void addFilledBlockToMap(int index, int size) {
@@ -111,19 +116,23 @@ public class Heap {
         }
 
         NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>(filledBlocksHM);
+        filledBlocksHM.clear();
         int filledCellIndex = filledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
         while (!checkFilledIndex) {
             if (filledCellIndex > emptyCellIndex) {
                 checkFilledIndex = true;
             } else {
+                filledBlocksHM.put(filledBlocksTM.firstKey(),
+                        new FilledBlock(filledBlocksTM.firstKey(), filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
+                                filledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
                 filledBlocksTM.remove(filledBlocksTM.firstKey());
                 filledCellIndex = filledBlocksTM.firstKey();
             }
         }
-        filledBlocksHM.clear();
 
         while (!(filledBlocksTM.size() == 0)) {
+            filledCellIndex = filledBlocksTM.firstKey();
             int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
             for (int j = emptyCellIndex; j < bytes.length; j++) {
@@ -134,14 +143,11 @@ public class Heap {
                 if (count == movableBlockSize)
                     break;
             }
-
             int endIndex = emptyCellIndex + (movableBlockSize - 1);
             filledBlocksHM.put(emptyCellIndex, new FilledBlock(emptyCellIndex, endIndex, movableBlockSize));
 
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());
-            if (!(filledBlocksTM.size() == 0))
-                filledCellIndex = filledBlocksTM.firstKey();
         }
         filledBlocksTM.putAll(filledBlocksHM);
 
@@ -166,6 +172,7 @@ public class Heap {
         test.malloc(20);
         test.malloc(18);
         test.malloc(16);
+        test.malloc(3);
     }
 
 }
