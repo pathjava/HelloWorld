@@ -159,24 +159,42 @@ public class Heap {
     }
 
     public void defrag() {
-
+        TreeSet<EmptyBlock> tempEmptyBlocks = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        for (Map.Entry<Integer, TreeSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
+            if (entry.getValue().size() == 1)
+                tempEmptyBlocks.add(new EmptyBlock(entry.getValue().iterator().next().getStartIndexEmpty(),
+                        entry.getValue().iterator().next().getEndIndexEmpty(),
+                        entry.getValue().iterator().next().getSizeEmptyBlock()));
+            else
+                for (EmptyBlock block : entry.getValue()) {
+                    tempEmptyBlocks.add(new EmptyBlock(block.getStartIndexEmpty(),
+                            block.getEndIndexEmpty(), block.getSizeEmptyBlock()));
+                }
+        }
+        for (EmptyBlock block : tempEmptyBlocks) {
+            System.out.println(block);
+        }
     }
 
 
     public static void main(String[] args) {
         Heap test = new Heap(100);
         test.malloc(5);
-        test.malloc(6);
-        test.malloc(6);
-        test.free(11);
+        test.malloc(2);
+        test.malloc(2);
+        test.malloc(5);
+        test.malloc(5);
+        test.malloc(5);
+        test.malloc(5);
         test.malloc(7);
+        test.malloc(8);
         test.malloc(10);
-        test.free(17);
-        test.malloc(25);
-        test.malloc(20);
-        test.malloc(18);
-        test.malloc(16);
-        test.malloc(3);
+        test.free(5);
+        test.free(7);
+        test.free(29);
+        test.malloc(10);
+
+        test.defrag();
     }
 
 }

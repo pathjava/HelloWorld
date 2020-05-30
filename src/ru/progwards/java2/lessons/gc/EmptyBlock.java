@@ -39,4 +39,13 @@ public class EmptyBlock {
     public void setSizeEmptyBlock(int sizeEmptyBlock) {
         this.sizeEmptyBlock = sizeEmptyBlock;
     }
+
+    @Override
+    public String toString() {
+        return "EmptyBlock{" +
+                "startIndexEmpty=" + startIndexEmpty +
+                ", endIndexEmpty=" + endIndexEmpty +
+                ", sizeEmptyBlock=" + sizeEmptyBlock +
+                '}';
+    }
 }
