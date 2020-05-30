@@ -16,14 +16,14 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(Enclosed.class)
-public class AllInOneSimpleCalculatorTest {
+public class SimpleCalculatorTest {
 
-    public static SimpleCalculator simpleCalculator;
-
-    @BeforeClass
-    public static void createInstance() {
-        simpleCalculator = new SimpleCalculator();
-    }
+//    public static SimpleCalculator simpleCalculator;
+//
+//    @BeforeClass
+//    public static void createInstance() {
+//        simpleCalculator = new SimpleCalculator();
+//    }
 
     /* Summation */
     @RunWith(Parameterized.class)
@@ -31,6 +31,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public SumNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -62,6 +63,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public SumGetArithmeticExceptionCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -90,6 +92,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public DiffNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -126,6 +129,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public DiffGetArithmeticExceptionCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -156,6 +160,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public MultNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -189,6 +194,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public MultGetArithmeticExceptionCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -219,6 +225,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public DivNormalValuesCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
@@ -251,6 +258,7 @@ public class AllInOneSimpleCalculatorTest {
         private final int valOne;
         private final int valTwo;
         private final int expected;
+        private final SimpleCalculator simpleCalculator = new SimpleCalculator();
 
         public DivByZeroArithmeticExceptionCalculatorTest(int valOne, int valTwo, int expected) {
             this.valOne = valOne;
