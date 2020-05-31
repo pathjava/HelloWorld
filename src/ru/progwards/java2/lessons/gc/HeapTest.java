@@ -59,7 +59,12 @@ public class HeapTest {
             allocated += size;
             count++;
             lstart = System.currentTimeMillis();
-            int ptr = heap.malloc(size);
+            int ptr = 0;
+            try {
+                ptr = heap.malloc(size);
+            } catch (OutOfMemoryException e) {
+                e.printStackTrace();
+            }
             lstop = System.currentTimeMillis();
             allocTime += lstop - lstart;
             blocks.add(new Block(ptr, size));
@@ -68,7 +73,11 @@ public class HeapTest {
                 n = Math.abs(ThreadLocalRandom.current().nextInt() % blocks.size());
                 Block block = blocks.get(n);
                 lstart = System.currentTimeMillis();
-                heap.free(block.ptr);
+                try {
+                    heap.free(block.ptr);
+                } catch (InvalidPointerException e) {
+                    e.printStackTrace();
+                }
                 lstop = System.currentTimeMillis();
                 freeTime += lstop - lstart;
                 allocated -= block.size;
