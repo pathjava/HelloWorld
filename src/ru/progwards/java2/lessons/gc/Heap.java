@@ -174,28 +174,32 @@ public class Heap {
         }
         tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmpty));
 
-        int prevEnd = 0;
-        int prevStart = tempEmptyBlocks.listIterator().next().getStartIndexEmpty();
-        int tempEnd = tempEmptyBlocks.listIterator().next().getEndIndexEmpty();
-        int currentStart;
         int count = 0;
-        int startIndex = 0;
-        int endIndex = 0;
         for (int i = 0; i < tempEmptyBlocks.size(); i++) {
-            currentStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
-            if (tempEnd + 1 == currentStart) {
-                if (count == 0) {
-                    prevEnd = tempEnd;
-                    count++;
-                }
-                tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
-                endIndex = i;
-            } else if (count > 0) {
-                tempEmptyBlocks.add(new EmptyBlock(prevStart, tempEnd, (tempEnd - prevStart) + 1));
-                int countRemove = startIndex;
-                while (countRemove <= endIndex) {
-                    tempEmptyBlocks.remove(startIndex);
-                    countRemove++;
+            int endIndex = 0;
+            int startIndex = i;
+            int prevStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
+            int tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+            for (int j = i + 1; j < tempEmptyBlocks.size(); j++) {
+                int currentStart = tempEmptyBlocks.listIterator(j).next().getStartIndexEmpty();
+                if (tempEnd + 1 == currentStart) {
+                    if (count == 0) {
+                        count++;
+                    }
+                    tempEnd = tempEmptyBlocks.listIterator(j).next().getEndIndexEmpty();
+                    endIndex = j;
+                } else if (count > 0) {
+                    tempEmptyBlocks.add(new EmptyBlock(prevStart, tempEnd, (tempEnd - prevStart) + 1));
+                    int countRemove = startIndex;
+                    while (countRemove <= endIndex) {
+                        tempEmptyBlocks.remove(startIndex);
+                        countRemove++;
+                    }
+                } else {
+                    i++;
+                    startIndex = i;
+                    prevStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
+                    tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
                 }
             }
         }
@@ -205,21 +209,25 @@ public class Heap {
 
     public static void main(String[] args) {
         Heap test = new Heap(100);
+        test.malloc(3);
         test.malloc(5);
         test.malloc(2);
         test.malloc(2);
+        test.malloc(5);
         test.malloc(2);
         test.malloc(2);
         test.malloc(2);
         test.malloc(5);
         test.malloc(7);
+        test.malloc(1);
         test.malloc(8);
         test.malloc(10);
-        test.free(5);
-        test.free(7);
-        test.free(9);
-        test.free(11);
-        test.free(20);
+        test.free(0);
+        test.free(8);
+        test.free(10);
+        test.free(12);
+        test.free(28);
+        test.free(35);
         test.malloc(10);
 
         test.defrag();
