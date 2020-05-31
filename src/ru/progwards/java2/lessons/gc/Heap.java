@@ -91,7 +91,7 @@ public class Heap {
                 bytes[i] = 0;
             }
         } else
-            throw new InvalidPointerException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
+            throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
