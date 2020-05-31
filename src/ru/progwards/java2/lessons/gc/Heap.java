@@ -12,7 +12,7 @@ public class Heap {
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
 
-    private int countAddBlocks = 0;
+    private int countAddBlocks = 0; /* данный каунт для отладки */
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
@@ -22,14 +22,14 @@ public class Heap {
     }
 
     public int malloc(int size) throws OutOfMemoryException {
-        if (size < 1 || size > bytes.length)
+        if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
         int emptyBlockSuitableSize;
-        if (!(emptyBlocksTM.ceilingKey(size) == null))
+        if (!(emptyBlocksTM.ceilingKey(size) == null)) /* если размер свободного блока не найден подходящего размера */
             emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         else {
-            compact();
-            if (emptyBlocksTM.ceilingKey(size) == null)
+            compact(); /* тогда запускаем компактизацию кучи */
+            if (emptyBlocksTM.ceilingKey(size) == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
             else
                 emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
@@ -42,11 +42,11 @@ public class Heap {
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
         countAddBlocks++;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = (byte) countAddBlocks;
         }
-        addEmptyBlockToMap(index, size, emptyBlockSuitableSize);
-        addFilledBlockToMap(index, size);
+        addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
+        addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
     }
 
     private void addEmptyBlockToMap(int index, int size, int emptyBlockSuitableSize) {
