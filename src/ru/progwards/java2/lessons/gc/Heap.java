@@ -21,7 +21,7 @@ public class Heap {
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
     }
 
-    public int malloc(int size) {
+    public int malloc(int size) throws OutOfMemoryException {
         if (size < 1 || size > bytes.length)
             throw new IllegalArgumentException();
         int emptyBlockSuitableSize;
@@ -30,7 +30,7 @@ public class Heap {
         else {
             compact();
             if (emptyBlocksTM.ceilingKey(size) == null)
-                throw new OutOfMemoryError("Недостаточно места");
+                throw new OutOfMemoryException ();
             else
                 emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         }
@@ -74,10 +74,9 @@ public class Heap {
         //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
-    public void free(int ptr) {
-        //TODO проверить ситуацию, если один указатель прищел дважды подряд
+    public void free(int ptr) throws InvalidPointerException {
         if (ptr < 0 || ptr > bytes.length - 1)
-            throw new IllegalArgumentException();
+            throw new InvalidPointerException();
         int endIndex;
         int sizeRemoveBlock;
 
@@ -223,26 +222,38 @@ public class Heap {
 
     public static void main(String[] args) {
         Heap test = new Heap(100);
-        test.malloc(3);
-        test.malloc(5);
-        test.malloc(2);
-        test.malloc(2);
-        test.malloc(5);
-        test.malloc(2);
-        test.malloc(2);
-        test.malloc(2);
-        test.malloc(5);
-        test.malloc(7);
-        test.malloc(1);
-        test.malloc(8);
-        test.malloc(10);
-        test.free(0);
-        test.free(8);
-        test.free(10);
-        test.free(12);
-        test.free(28);
-        test.free(35);
-        test.malloc(10);
+        try {
+            test.malloc(3);
+            test.malloc(5);
+            test.malloc(2);
+            test.malloc(2);
+            test.malloc(5);
+            test.malloc(2);
+            test.malloc(2);
+            test.malloc(2);
+            test.malloc(5);
+            test.malloc(7);
+            test.malloc(1);
+            test.malloc(8);
+            test.malloc(10);
+        } catch (OutOfMemoryException e) {
+            e.printStackTrace();
+        }
+        try {
+            test.free(0);
+            test.free(8);
+            test.free(10);
+            test.free(12);
+            test.free(28);
+            test.free(35);
+        } catch (InvalidPointerException e) {
+            e.printStackTrace();
+        }
+        try {
+            test.malloc(10);
+        } catch (OutOfMemoryException e) {
+            e.printStackTrace();
+        }
 
         test.defrag();
     }
