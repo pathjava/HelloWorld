@@ -4,7 +4,7 @@
 package ru.progwards.java2.lessons.gc;
 
 public class InvalidPointerException extends Throwable {
-    public InvalidPointerException() {
+    public InvalidPointerException(String s) {
     }
 
 }

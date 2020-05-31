@@ -30,7 +30,7 @@ public class Heap {
         else {
             compact();
             if (emptyBlocksTM.ceilingKey(size) == null)
-                throw new OutOfMemoryException ();
+                throw new OutOfMemoryException("Недостаточно памяти!");
             else
                 emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         }
@@ -76,7 +76,7 @@ public class Heap {
 
     public void free(int ptr) throws InvalidPointerException {
         if (ptr < 0 || ptr > bytes.length - 1)
-            throw new InvalidPointerException();
+            throw new IllegalArgumentException();
         int endIndex;
         int sizeRemoveBlock;
 
@@ -90,7 +90,7 @@ public class Heap {
                 bytes[i] = 0;
             }
         } else
-            throw new IllegalArgumentException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
+            throw new InvalidPointerException("Неверный указатель: " + ptr); //TODO ??? сделать проверку, если ptr нет или указывает на середину блока
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
