@@ -174,36 +174,40 @@ public class Heap {
         }
         tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmpty));
 
-        int count = 0;
+        blockMerging(tempEmptyBlocks);
+    }
+
+    private void blockMerging(List<EmptyBlock> tempEmptyBlocks) {
         for (int i = 0; i < tempEmptyBlocks.size(); i++) {
+            boolean lock = false;
             int endIndex = 0;
             int startIndex = i;
-            int prevStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
-            int tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+            int startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
+            int endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
             for (int j = i + 1; j < tempEmptyBlocks.size(); j++) {
                 int currentStart = tempEmptyBlocks.listIterator(j).next().getStartIndexEmpty();
-                if (tempEnd + 1 == currentStart) {
-                    if (count == 0) {
-                        count++;
-                    }
-                    tempEnd = tempEmptyBlocks.listIterator(j).next().getEndIndexEmpty();
+                if (endSearch + 1 == currentStart) {
+                    if (!lock)
+                        lock = true;
+                    endSearch = tempEmptyBlocks.listIterator(j).next().getEndIndexEmpty();
                     endIndex = j;
-                } else if (count > 0) {
-                    tempEmptyBlocks.add(new EmptyBlock(prevStart, tempEnd, (tempEnd - prevStart) + 1));
+                } else if (lock) {
+                    tempEmptyBlocks.add(new EmptyBlock(startSearch, endSearch, (endSearch - startSearch) + 1));
                     int countRemove = startIndex;
                     while (countRemove <= endIndex) {
                         tempEmptyBlocks.remove(startIndex);
                         countRemove++;
                     }
+                    i = startIndex - 1;
+                    break;
                 } else {
                     i++;
                     startIndex = i;
-                    prevStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
-                    tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+                    startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
+                    endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
                 }
             }
         }
-
     }
 
 
