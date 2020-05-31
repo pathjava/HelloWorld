@@ -72,7 +72,7 @@ public class Heap {
         int endIndex = index + (size - 1);
         if (filledBlocksHM.containsKey(index))
             throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
-        filledBlocksHM.put(index, new FilledBlock(index, endIndex, size));
+        filledBlocksHM.put(index, new FilledBlock(endIndex, size));
     }
 
     public void free(int ptr) throws InvalidPointerException {
@@ -124,8 +124,7 @@ public class Heap {
                 checkFilledIndex = true;
             } else {
                 filledBlocksHM.put(filledBlocksTM.firstKey(),
-                        new FilledBlock(filledBlocksTM.firstKey(),
-                                filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
+                        new FilledBlock(filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
                                 filledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
                 filledBlocksTM.remove(filledBlocksTM.firstKey());
                 filledCellIndex = filledBlocksTM.firstKey();
@@ -145,7 +144,7 @@ public class Heap {
                     break;
             }
             int endIndex = emptyCellIndex + (movableBlockSize - 1);
-            filledBlocksHM.put(emptyCellIndex, new FilledBlock(emptyCellIndex, endIndex, movableBlockSize));
+            filledBlocksHM.put(emptyCellIndex, new FilledBlock(endIndex, movableBlockSize));
 
             emptyCellIndex += movableBlockSize;
             filledBlocksTM.remove(filledBlocksTM.firstKey());

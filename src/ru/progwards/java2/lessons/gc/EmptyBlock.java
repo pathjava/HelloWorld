@@ -6,9 +6,9 @@ package ru.progwards.java2.lessons.gc;
 
 public class EmptyBlock {
 
-    private int startIndexEmpty;
-    private int endIndexEmpty;
-    private int sizeEmptyBlock;
+    private final int startIndexEmpty;
+    private final int endIndexEmpty;
+    private final int sizeEmptyBlock;
 
     public EmptyBlock(int startIndexEmpty, int endIndexEmpty, int sizeEmptyBlock) {
         this.startIndexEmpty = startIndexEmpty;
@@ -20,26 +20,15 @@ public class EmptyBlock {
         return startIndexEmpty;
     }
 
-    public void setStartIndexEmpty(int startIndexEmpty) {
-        this.startIndexEmpty = startIndexEmpty;
-    }
-
     public int getEndIndexEmpty() {
         return endIndexEmpty;
-    }
-
-    public void setEndIndexEmpty(int endIndexEmpty) {
-        this.endIndexEmpty = endIndexEmpty;
     }
 
     public int getSizeEmptyBlock() {
         return sizeEmptyBlock;
     }
 
-    public void setSizeEmptyBlock(int sizeEmptyBlock) {
-        this.sizeEmptyBlock = sizeEmptyBlock;
-    }
-
+    /* переопределен для отладки */
     @Override
     public String toString() {
         return "EmptyBlock{" +
