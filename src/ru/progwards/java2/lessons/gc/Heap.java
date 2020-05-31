@@ -160,7 +160,7 @@ public class Heap {
     }
 
     public void defrag() {
-        TreeSet<EmptyBlock> tempEmptyBlocks = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        List<EmptyBlock> tempEmptyBlocks = new ArrayList<>();
         for (Map.Entry<Integer, TreeSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
             if (entry.getValue().size() == 1)
                 tempEmptyBlocks.add(new EmptyBlock(entry.getValue().iterator().next().getStartIndexEmpty(),
@@ -172,23 +172,34 @@ public class Heap {
                             block.getEndIndexEmpty(), block.getSizeEmptyBlock()));
                 }
         }
+        tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmpty));
 
-        Iterator<EmptyBlock> it = tempEmptyBlocks.iterator();
-        int previous;
-        int next;
-        if (it.hasNext()) {
-            previous = it.next().getEndIndexEmpty();
-            while (it.hasNext()) {
-                next = it.next().getStartIndexEmpty();
-                if (previous + 1 == next)
-                    previous = next;
+        int prevEnd = 0;
+        int prevStart = tempEmptyBlocks.listIterator().next().getStartIndexEmpty();
+        int tempEnd = tempEmptyBlocks.listIterator().next().getEndIndexEmpty();
+        int currentStart;
+        int count = 0;
+        int startIndex = 0;
+        int endIndex = 0;
+        for (int i = 0; i < tempEmptyBlocks.size(); i++) {
+            currentStart = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
+            if (tempEnd + 1 == currentStart) {
+                if (count == 0) {
+                    prevEnd = tempEnd;
+                    count++;
+                }
+                tempEnd = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+                endIndex = i;
+            } else if (count > 0) {
+                tempEmptyBlocks.add(new EmptyBlock(prevStart, tempEnd, (tempEnd - prevStart) + 1));
+                int countRemove = startIndex;
+                while (countRemove <= endIndex) {
+                    tempEmptyBlocks.remove(startIndex);
+                    countRemove++;
+                }
             }
         }
 
-
-//        for (EmptyBlock block : tempEmptyBlocks) {
-//            System.out.println(block);
-//        }
     }
 
 
