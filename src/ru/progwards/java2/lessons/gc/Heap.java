@@ -70,8 +70,9 @@ public class Heap {
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
+        if (filledBlocksHM.containsKey(index))
+            throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
         filledBlocksHM.put(index, new FilledBlock(index, endIndex, size));
-        //TODO проверить ситуацию уже существования в мапе индекса, хотя такого быть не должно
     }
 
     public void free(int ptr) throws InvalidPointerException {
