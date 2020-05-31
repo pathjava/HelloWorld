@@ -223,26 +223,39 @@ public class Heap {
     public static void main(String[] args) {
         Heap test = new Heap(100);
         try {
-            test.malloc(3);
+//            test.malloc(3);
+//            test.malloc(5);
+//            test.malloc(2);
+//            test.malloc(2);
+//            test.malloc(5);
+//            test.malloc(2);
+//            test.malloc(2);
+//            test.malloc(2);
+//            test.malloc(5);
+//            test.malloc(7);
+//            test.malloc(1);
+//            test.malloc(8);
+//            test.malloc(10);
+//            test.free(0);
+//            test.free(8);
+//            test.free(10);
+//            test.free(12);
+//            test.free(28);
+//            test.free(35);
+//            test.malloc(10);
+
             test.malloc(5);
-            test.malloc(2);
-            test.malloc(2);
-            test.malloc(5);
-            test.malloc(2);
-            test.malloc(2);
-            test.malloc(2);
-            test.malloc(5);
+            test.malloc(6);
+            test.malloc(6);
+            test.free(11);
             test.malloc(7);
-            test.malloc(1);
-            test.malloc(8);
             test.malloc(10);
-            test.free(0);
-            test.free(8);
-            test.free(10);
-            test.free(12);
-            test.free(28);
-            test.free(35);
-            test.malloc(10);
+            test.free(17);
+            test.malloc(25);
+            test.malloc(20);
+            test.malloc(18);
+            test.malloc(14);
+            test.malloc(2);
         } catch (OutOfMemoryException|InvalidPointerException e) {
             e.printStackTrace();
         }
