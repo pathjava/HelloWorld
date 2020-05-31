@@ -236,22 +236,14 @@ public class Heap {
             test.malloc(1);
             test.malloc(8);
             test.malloc(10);
-        } catch (OutOfMemoryException e) {
-            e.printStackTrace();
-        }
-        try {
             test.free(0);
             test.free(8);
             test.free(10);
             test.free(12);
             test.free(28);
             test.free(35);
-        } catch (InvalidPointerException e) {
-            e.printStackTrace();
-        }
-        try {
             test.malloc(10);
-        } catch (OutOfMemoryException e) {
+        } catch (OutOfMemoryException|InvalidPointerException e) {
             e.printStackTrace();
         }
 
