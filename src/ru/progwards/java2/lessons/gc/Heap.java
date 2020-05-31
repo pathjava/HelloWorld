@@ -22,7 +22,7 @@ public class Heap {
     }
 
     public int malloc(int size) {
-        if (size < 0 || size > bytes.length)
+        if (size < 1 || size > bytes.length)
             throw new IllegalArgumentException();
         int emptyBlockSuitableSize;
         if (!(emptyBlocksTM.ceilingKey(size) == null))
@@ -75,6 +75,7 @@ public class Heap {
     }
 
     public void free(int ptr) {
+        //TODO проверить ситуацию, если один указатель прищел дважды подряд
         if (ptr < 0 || ptr > bytes.length - 1)
             throw new IllegalArgumentException();
         int endIndex;
@@ -171,9 +172,23 @@ public class Heap {
                             block.getEndIndexEmpty(), block.getSizeEmptyBlock()));
                 }
         }
-        for (EmptyBlock block : tempEmptyBlocks) {
-            System.out.println(block);
+
+        Iterator<EmptyBlock> it = tempEmptyBlocks.iterator();
+        int previous;
+        int next;
+        if (it.hasNext()) {
+            previous = it.next().getEndIndexEmpty();
+            while (it.hasNext()) {
+                next = it.next().getStartIndexEmpty();
+                if (previous + 1 == next)
+                    previous = next;
+            }
         }
+
+
+//        for (EmptyBlock block : tempEmptyBlocks) {
+//            System.out.println(block);
+//        }
     }
 
 
@@ -182,16 +197,18 @@ public class Heap {
         test.malloc(5);
         test.malloc(2);
         test.malloc(2);
-        test.malloc(5);
-        test.malloc(5);
-        test.malloc(5);
+        test.malloc(2);
+        test.malloc(2);
+        test.malloc(2);
         test.malloc(5);
         test.malloc(7);
         test.malloc(8);
         test.malloc(10);
         test.free(5);
         test.free(7);
-        test.free(29);
+        test.free(9);
+        test.free(11);
+        test.free(20);
         test.malloc(10);
 
         test.defrag();
