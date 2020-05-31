@@ -175,6 +175,7 @@ public class Heap {
         tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmpty));
 
         blockMerging(tempEmptyBlocks);
+        rebuildEmptyBlocksTM(tempEmptyBlocks);
     }
 
     private void blockMerging(List<EmptyBlock> tempEmptyBlocks) {
@@ -192,7 +193,8 @@ public class Heap {
                     endSearch = tempEmptyBlocks.listIterator(j).next().getEndIndexEmpty();
                     endIndex = j;
                 } else if (lock) {
-                    tempEmptyBlocks.add(new EmptyBlock(startSearch, endSearch, (endSearch - startSearch) + 1));
+                    tempEmptyBlocks.add(new EmptyBlock(startSearch,
+                            endSearch, (endSearch - startSearch) + 1));
                     int countRemove = startIndex;
                     while (countRemove <= endIndex) {
                         tempEmptyBlocks.remove(startIndex);
@@ -207,6 +209,14 @@ public class Heap {
                     endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
                 }
             }
+        }
+    }
+
+    private void rebuildEmptyBlocksTM(List<EmptyBlock> tempEmptyBlocks){
+        emptyBlocksTM.clear();
+        for (EmptyBlock block : tempEmptyBlocks) {
+            addEmptyBlockAfterRemove(block.getStartIndexEmpty(),
+                    block.getEndIndexEmpty(), block.getSizeEmptyBlock());
         }
     }
 
