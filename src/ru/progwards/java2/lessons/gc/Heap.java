@@ -54,7 +54,7 @@ public class Heap {
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size;
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер массива*/
+        if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
                 emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
             } else
@@ -75,16 +75,16 @@ public class Heap {
     }
 
     public void free(int ptr) throws InvalidPointerException {
-        if (ptr < 0 || ptr > bytes.length - 1)
+        if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
             throw new IllegalArgumentException();
         int endIndex;
         int sizeRemoveBlock;
 
         if (filledBlocksHM.containsKey(ptr)) {
-            endIndex = filledBlocksHM.get(ptr).getEndIndexFilled();
-            sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock();
-            filledBlocksHM.remove(ptr);
-            addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock);
+            endIndex = filledBlocksHM.get(ptr).getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
+            sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
+            filledBlocksHM.remove(ptr); /* удаляем блок */
+            addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
 
             for (int i = ptr; i <= endIndex; i++) {
                 bytes[i] = 0;
