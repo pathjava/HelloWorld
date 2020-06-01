@@ -135,11 +135,7 @@ public class Heap {
         }
         blockMovingFromOldToNewPlace(tempFilledBlocksTM, emptyCellIndex); /* вызываем методо перемещения блока в куче */
 
-        emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        int newKeyAndBlockSize = bytes.length - emptyCellIndex;
-        emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
-        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+        rebuildEmptyBlocksTM(emptyCellIndex);
     }
 
     private void blockMovingFromOldToNewPlace(NavigableMap<Integer, FilledBlock> tempFilledBlocksTM, int emptyCellIndex) {
@@ -162,6 +158,14 @@ public class Heap {
             emptyCellIndex += movableBlockSize;
             tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* удаляем перенесенный блок из временной тримап */
         }
+    }
+
+    private void rebuildEmptyBlocksTM(int emptyCellIndex) {
+        emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        int newKeyAndBlockSize = bytes.length - emptyCellIndex;
+        emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
+        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
     }
 
     public void defrag() {
