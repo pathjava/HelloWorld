@@ -44,9 +44,9 @@ public class Heap {
         for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = 1;
         }
-        if (!(size == emptyBlockSuitableSize))
+        if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
-        else
+        else /* иначе удаляем свободный блок */
             emptyBlocksTM.remove(emptyBlockSuitableSize);
         addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
     }
