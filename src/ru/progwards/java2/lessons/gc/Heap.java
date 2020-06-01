@@ -3,6 +3,8 @@
 
 package ru.progwards.java2.lessons.gc;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 import java.util.*;
 
 public class Heap {
@@ -42,7 +44,10 @@ public class Heap {
         for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = 1;
         }
-        addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
+        if (!(size == emptyBlockSuitableSize))
+            addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
+        else
+            emptyBlocksTM.remove(emptyBlockSuitableSize);
         addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
     }
 
@@ -50,8 +55,11 @@ public class Heap {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size;
+        if (newStartIndex > oldEndIndex)
+            throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
+
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
+        if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
                 emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
             } else
@@ -80,7 +88,7 @@ public class Heap {
         if (filledBlocksHM.containsKey(ptr)) {
             endIndex = filledBlocksHM.get(ptr).getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
-            filledBlocksHM.remove(ptr); /* удаляем блок из памы, хранящей данные о заполненных блоках в куче  */
+            filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
 
             for (int i = ptr; i <= endIndex; i++) {
@@ -243,19 +251,26 @@ public class Heap {
 //            test.malloc(10);
 
             test.malloc(5);
-            test.malloc(4);
             test.malloc(5);
-            test.malloc(4);
-            test.malloc(4);
             test.malloc(5);
             test.free(5);
-            test.free(14);
-            test.free(18);
-            test.malloc(6);
-            test.malloc(7);
-            test.malloc(2);
-            test.free(0);
-            test.malloc(20);
+            test.malloc(5);
+            test.malloc(5);
+
+
+//            test.malloc(4);
+//            test.malloc(5);
+//            test.malloc(4);
+//            test.malloc(4);
+//            test.malloc(5);
+//            test.free(5);
+//            test.free(14);
+//            test.free(18);
+//            test.malloc(6);
+//            test.malloc(7);
+//            test.malloc(2);
+//            test.free(0);
+//            test.malloc(20);
 
 //            test.malloc(5);
 //            test.malloc(6);
