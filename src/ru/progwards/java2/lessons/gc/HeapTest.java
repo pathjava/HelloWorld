@@ -55,7 +55,7 @@ public class HeapTest {
         // alloc and free 30% random
         while ((maxSize - allocated) > maxSize / 100000) {
             long lstart, lstop;
-            int size = getRandomSize();
+            int size = getRandomSize() + 1;
             allocated += size;
             count++;
             lstart = System.currentTimeMillis();

@@ -12,8 +12,6 @@ public class Heap {
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
 
-    private int countAddBlocks = 0; /* данный каунт для отладки */
-
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
@@ -41,9 +39,8 @@ public class Heap {
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
-        countAddBlocks++;
         for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
-            bytes[index + i] = (byte) countAddBlocks;
+            bytes[index + i] = 1;
         }
         addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
         addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
@@ -94,9 +91,7 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        if (!emptyBlocksTM.containsKey(sizeEmptyBlock)) { /* добавление пустого блока после удаления из кучи */
-            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        }
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
