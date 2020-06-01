@@ -3,8 +3,6 @@
 
 package ru.progwards.java2.lessons.gc;
 
-import org.apache.logging.log4j.core.util.JsonUtils;
-
 import java.util.*;
 
 public class Heap {
@@ -105,6 +103,8 @@ public class Heap {
     }
 
     public void compact() { /* компактизация кучи */
+        System.out.println("Alarm!");
+
         int emptyCellIndex = 0;
         int countIteration = 0;
         for (int i = emptyCellIndex; i < bytes.length; i++) { /* ищем первую свободную ячейку в куче */
