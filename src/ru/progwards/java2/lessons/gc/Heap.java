@@ -53,17 +53,16 @@ public class Heap {
         int newStartIndex = index + size;
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size;
-
-        if (!(newStartIndex > bytes.length - 1)) {
-            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
-                emptyBlocksTM.remove(emptyBlockSuitableSize);
-                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер массива*/
+            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
+                emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
             } else
-                emptyBlockSet.pollFirst();
-            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
-            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* если не один, то удаляем первый в treeset списке блоков */
+            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize)); /* добавляем данные в treeset блок */
+            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet); /* добавляем ключ-размер блока и объект treeset с данными блока */
         } else {
-            emptyBlocksTM.remove(emptyBlockSuitableSize);
+            emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
             emptyBlockSet.clear();
         }
     }
@@ -72,7 +71,7 @@ public class Heap {
         int endIndex = index + (size - 1);
         if (filledBlocksHM.containsKey(index))
             throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
-        filledBlocksHM.put(index, new FilledBlock(endIndex, size));
+        filledBlocksHM.put(index, new FilledBlock(endIndex, size)); /* заполняем hashmap данными о заполненных блоках - ключ индекс */
     }
 
     public void free(int ptr) throws InvalidPointerException {
@@ -211,7 +210,7 @@ public class Heap {
         }
     }
 
-    private void rebuildEmptyBlocksTM(List<EmptyBlock> tempEmptyBlocks){
+    private void rebuildEmptyBlocksTM(List<EmptyBlock> tempEmptyBlocks) {
         emptyBlocksTM.clear();
         for (EmptyBlock block : tempEmptyBlocks) {
             addEmptyBlockAfterRemove(block.getStartIndexEmpty(),
@@ -245,18 +244,33 @@ public class Heap {
 //            test.malloc(10);
 
             test.malloc(5);
+            test.malloc(4);
+            test.malloc(5);
+            test.malloc(4);
+            test.malloc(4);
+            test.malloc(5);
+            test.free(5);
+            test.free(14);
+            test.free(18);
             test.malloc(6);
-            test.malloc(6);
-            test.free(11);
             test.malloc(7);
-            test.malloc(10);
-            test.free(17);
-            test.malloc(25);
-            test.malloc(20);
-            test.malloc(18);
-            test.malloc(14);
             test.malloc(2);
-        } catch (OutOfMemoryException|InvalidPointerException e) {
+            test.free(0);
+            test.malloc(20);
+
+//            test.malloc(5);
+//            test.malloc(6);
+//            test.malloc(6);
+//            test.free(11);
+//            test.malloc(7);
+//            test.malloc(10);
+//            test.free(17);
+//            test.malloc(25);
+//            test.malloc(20);
+//            test.malloc(18);
+//            test.malloc(14);
+//            test.malloc(2);
+        } catch (OutOfMemoryException | InvalidPointerException e) {
             e.printStackTrace();
         }
 
