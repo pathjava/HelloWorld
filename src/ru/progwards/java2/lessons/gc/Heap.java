@@ -83,78 +83,82 @@ public class Heap {
         if (filledBlocksHM.containsKey(ptr)) {
             endIndex = filledBlocksHM.get(ptr).getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
-            filledBlocksHM.remove(ptr); /* удаляем блок */
+            filledBlocksHM.remove(ptr); /* удаляем блок из памы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
 
             for (int i = ptr; i <= endIndex; i++) {
-                bytes[i] = 0;
+                bytes[i] = 0; /* заменяем значения на ноли */
             }
         } else
             throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        if (!emptyBlocksTM.containsKey(sizeEmptyBlock)) {
+        if (!emptyBlocksTM.containsKey(sizeEmptyBlock)) { /* добавление пустого блока после удаления из кучи */
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
 
-    public void compact() {
+    public void compact() { /* компактизация кучи */
         int emptyCellIndex = 0;
         int countIteration = 0;
-        for (int i = emptyCellIndex; i < bytes.length; i++) {
+        for (int i = emptyCellIndex; i < bytes.length; i++) { /* ищем первую свободную ячейку в куче */
             if (bytes[i] == 0) {
                 emptyCellIndex = i;
                 break;
             }
             countIteration++;
         }
-        if (countIteration == bytes.length)
+        if (countIteration == bytes.length) /* если каунт равен размеру кучи, значи свободных ячеек нет - выходим из метода*/
             return;
 
-        NavigableMap<Integer, FilledBlock> filledBlocksTM = new TreeMap<>(filledBlocksHM);
+        /* для поиска заполненных блоков отсортированных по индексу, перегоняем из hashmap в treemap */
+        NavigableMap<Integer, FilledBlock> tempFilledBlocksTM = new TreeMap<>(filledBlocksHM);
         filledBlocksHM.clear();
-        int filledCellIndex = filledBlocksTM.firstKey();
+        int filledCellIndex = tempFilledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
-        while (!checkFilledIndex) {
+        while (!checkFilledIndex) { /* ищем индекс первого заполненного блока, который > индекса свободной ячейки в куче */
             if (filledCellIndex > emptyCellIndex) {
                 checkFilledIndex = true;
-            } else {
-                filledBlocksHM.put(filledBlocksTM.firstKey(),
-                        new FilledBlock(filledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
-                                filledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
-                filledBlocksTM.remove(filledBlocksTM.firstKey());
-                filledCellIndex = filledBlocksTM.firstKey();
+            } else { /* если индекс <, тогда сохраняем заполненный блок в хеш мапе */
+                filledBlocksHM.put(tempFilledBlocksTM.firstKey(),
+                        new FilledBlock(tempFilledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
+                                tempFilledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
+                tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* после чего удаляем из временной тримапы */
+                filledCellIndex = tempFilledBlocksTM.firstKey();
             }
         }
+        blockMovingFromOldToNewPlace(tempFilledBlocksTM, emptyCellIndex); /* вызываем методо перемещения блока в куче */
 
-        while (!(filledBlocksTM.size() == 0)) {
-            filledCellIndex = filledBlocksTM.firstKey();
-            int movableBlockSize = filledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
+        emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        int newKeyAndBlockSize = bytes.length - emptyCellIndex;
+        emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
+        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
+    }
+
+    private void blockMovingFromOldToNewPlace(NavigableMap<Integer, FilledBlock> tempFilledBlocksTM, int emptyCellIndex) {
+        while (!(tempFilledBlocksTM.size() == 0)) {
+            int filledCellIndex = tempFilledBlocksTM.firstKey();
+            int movableBlockSize = tempFilledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
-            for (int j = emptyCellIndex; j < bytes.length; j++) {
+            for (int j = emptyCellIndex; j < bytes.length; j++) { /* перемещаем значения из старого индекса в новый */
                 bytes[j] = bytes[filledCellIndex];
-                bytes[filledCellIndex] = 0;
+                bytes[filledCellIndex] = 0; /* старые затираем в ноль */
                 filledCellIndex++;
                 count++;
                 if (count == movableBlockSize)
                     break;
             }
             int endIndex = emptyCellIndex + (movableBlockSize - 1);
+            /* добавляем информацию о заполненном блоке */
             filledBlocksHM.put(emptyCellIndex, new FilledBlock(endIndex, movableBlockSize));
 
             emptyCellIndex += movableBlockSize;
-            filledBlocksTM.remove(filledBlocksTM.firstKey());
+            tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* удаляем перенесенный блок из временной тримап */
         }
-        filledBlocksTM.putAll(filledBlocksHM);
-
-        emptyBlocksTM.clear();
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        int newKeyAndBlockSize = bytes.length - emptyCellIndex;
-        emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
-        emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
     }
 
     public void defrag() {
