@@ -118,6 +118,7 @@ public class Heap {
     }
 
     public void compact() { /* компактизация кучи */
+//        System.out.println("start");
         int emptyCellIndex = 0;
         int countIteration = 0;
         for (int i = emptyCellIndex; i < bytes.length; i++) { /* ищем первую свободную ячейку в куче */
@@ -181,6 +182,7 @@ public class Heap {
     }
 
     public void defrag() {
+//        System.out.println("start");
         List<EmptyBlock> tempEmptyBlocks = new ArrayList<>();
         for (Map.Entry<Integer, TreeSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
             if (entry.getValue().size() == 1)
