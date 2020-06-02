@@ -98,11 +98,10 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        if (emptyBlocksTM.containsKey(sizeEmptyBlock)) {
+        if (emptyBlocksTM.containsKey(sizeEmptyBlock))
             emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock);
-        } else {
+        else
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-        }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
