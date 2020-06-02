@@ -26,6 +26,7 @@ public class Heap {
         if (!(emptyBlocksTM.ceilingKey(size) == null)) /* если размер свободного блока не найден подходящего размера */
             emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         else {
+//            defrag();
             compact(); /* тогда запускаем компактизацию кучи */
             if (emptyBlocksTM.ceilingKey(size) == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
