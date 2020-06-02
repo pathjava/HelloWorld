@@ -42,11 +42,14 @@ public class Heap {
         for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = 1;
         }
-        //TODO а если пустой блок был предложен из трисет - то есть данного объема блоков несколько
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
-        else /* иначе удаляем свободный блок */
-            emptyBlocksTM.remove(emptyBlockSuitableSize);
+        else { /* иначе удаляем свободный блок */
+            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
+                emptyBlocksTM.remove(emptyBlockSuitableSize);
+            else
+                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst();
+        }
         addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
     }
 
@@ -57,18 +60,35 @@ public class Heap {
         if (newStartIndex > oldEndIndex)
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
 
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
-            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
-                emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
-            } else
-                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* если не один, то удаляем первый в treeset списке блоков */
-            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize)); /* добавляем данные в treeset блок */
-            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet); /* добавляем ключ-размер блока и объект treeset с данными блока */
+            if (emptyBlocksTM.containsKey(newKeyAndBlockSize)) {
+                emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize);
+            } else {
+                if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
+                    emptyBlocksTM.remove(emptyBlockSuitableSize);
+                } else
+                    emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst();
+                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+            }
+            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
+            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
         } else {
             emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
             emptyBlockSet.clear();
         }
+
+//        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+//        if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
+//            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
+//                emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
+//            } else
+//                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* если не один, то удаляем первый в treeset списке блоков */
+//            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize)); /* добавляем данные в treeset блок */
+//            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet); /* добавляем ключ-размер блока и объект treeset с данными блока */
+//        } else {
+//            emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
+//            emptyBlockSet.clear();
+//        }
     }
 
     private void addFilledBlockToMap(int index, int size) {
@@ -107,7 +127,7 @@ public class Heap {
     }
 
     public void compact() { /* компактизация кучи */
-        System.out.println("Alarm!");
+        System.out.println("Alarm!"); //TODO remove
 
         int emptyCellIndex = 0;
         int countIteration = 0;
@@ -120,12 +140,13 @@ public class Heap {
         }
         if (countIteration == bytes.length) /* если каунт равен размеру кучи, значи свободных ячеек нет - выходим из метода*/
             return;
-
+        System.out.println("Alarm-2!"); //TODO remove
         /* для поиска заполненных блоков отсортированных по индексу, перегоняем из hashmap в treemap */
         NavigableMap<Integer, FilledBlock> tempFilledBlocksTM = new TreeMap<>(filledBlocksHM);
         filledBlocksHM.clear();
         int filledCellIndex = tempFilledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
+        System.out.println("Alarm-3!"); //TODO remove
         while (!checkFilledIndex) { /* ищем индекс первого заполненного блока, который > индекса свободной ячейки в куче */
             if (filledCellIndex > emptyCellIndex) {
                 checkFilledIndex = true;
@@ -137,8 +158,9 @@ public class Heap {
                 filledCellIndex = tempFilledBlocksTM.firstKey();
             }
         }
+        System.out.println("Alarm-4!"); //TODO remove
         blockMovingFromOldToNewPlace(tempFilledBlocksTM, emptyCellIndex); /* вызываем методо перемещения блока в куче */
-
+        System.out.println("Alarm-5!"); //TODO remove
         rebuildEmptyBlocksTM(emptyCellIndex);
     }
 
@@ -259,12 +281,15 @@ public class Heap {
 //            test.malloc(10);
 
             test.malloc(5);
+            test.malloc(3);
+            test.malloc(5);
+            test.malloc(3);
             test.malloc(1);
             test.malloc(5);
-            test.malloc(5);
-            test.free(6);
             test.free(5);
-            test.free(11);
+            test.free(13);
+            test.free(16);
+            test.malloc(2);
             test.malloc(5);
             test.malloc(5);
 
