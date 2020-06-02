@@ -80,19 +80,6 @@ public class Heap {
             emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
             emptyBlockSet.clear();
         }
-
-//        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
-//        if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
-//            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
-//                emptyBlocksTM.remove(emptyBlockSuitableSize); /* тогда удаляем его */
-//            } else
-//                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* если не один, то удаляем первый в treeset списке блоков */
-//            emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize)); /* добавляем данные в treeset блок */
-//            emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet); /* добавляем ключ-размер блока и объект treeset с данными блока */
-//        } else {
-//            emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
-//            emptyBlockSet.clear();
-//        }
     }
 
     private void addFilledBlockToMap(int index, int size) {
