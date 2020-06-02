@@ -42,6 +42,7 @@ public class Heap {
         for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = 1;
         }
+        //TODO а если пустой блок был предложен из трисет - то есть данного объема блоков несколько
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
         else /* иначе удаляем свободный блок */
@@ -97,7 +98,11 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        if (emptyBlocksTM.containsKey(sizeEmptyBlock)) {
+            emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock);
+        } else {
+            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        }
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock));
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
@@ -255,9 +260,12 @@ public class Heap {
 //            test.malloc(10);
 
             test.malloc(5);
+            test.malloc(1);
             test.malloc(5);
             test.malloc(5);
+            test.free(6);
             test.free(5);
+            test.free(11);
             test.malloc(5);
             test.malloc(5);
 
