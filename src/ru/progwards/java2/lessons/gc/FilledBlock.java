@@ -22,6 +22,7 @@ public class FilledBlock {
         return sizeFilledBlock;
     }
 
+    /* переопределен для отладки */
     @Override
     public String toString() {
         return "FilledBlock{" +
