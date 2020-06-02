@@ -118,7 +118,7 @@ public class Heap {
     }
 
     public void compact() { /* компактизация кучи */
-//        System.out.println("start");
+        System.out.println("start");
         int emptyCellIndex = 0;
         int countIteration = 0;
         for (int i = emptyCellIndex; i < bytes.length; i++) { /* ищем первую свободную ячейку в куче */
@@ -132,28 +132,23 @@ public class Heap {
             return;
         /* для поиска заполненных блоков отсортированных по индексу, перегоняем из hashmap в treemap */
         NavigableMap<Integer, FilledBlock> tempFilledBlocksTM = new TreeMap<>(filledBlocksHM);
-        filledBlocksHM.clear();
-
         int filledCellIndex = tempFilledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
         while (!checkFilledIndex) { /* ищем индекс первого заполненного блока, который > индекса свободной ячейки в куче */
             if (filledCellIndex > emptyCellIndex) {
                 checkFilledIndex = true;
-            } else { /* если индекс <, тогда сохраняем заполненный блок в хеш мапе */
-                filledBlocksHM.put(tempFilledBlocksTM.firstKey(),
-                        new FilledBlock(tempFilledBlocksTM.firstEntry().getValue().getEndIndexFilled(),
-                                tempFilledBlocksTM.firstEntry().getValue().getSizeFilledBlock()));
+            } else {
                 tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* после чего удаляем из временной тримапы */
                 filledCellIndex = tempFilledBlocksTM.firstKey();
             }
         }
         blockMovingFromOldToNewPlace(tempFilledBlocksTM, emptyCellIndex); /* вызываем методо перемещения блока в куче */
-        rebuildEmptyBlocksTM(emptyCellIndex);
     }
 
     private void blockMovingFromOldToNewPlace(NavigableMap<Integer, FilledBlock> tempFilledBlocksTM, int emptyCellIndex) {
         while (!(tempFilledBlocksTM.size() == 0)) {
             int filledCellIndex = tempFilledBlocksTM.firstKey();
+            int tempIndex = filledCellIndex;
             int movableBlockSize = tempFilledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
             int count = 0;
             for (int j = emptyCellIndex; j < bytes.length; j++) { /* перемещаем значения из старого индекса в новый */
@@ -165,12 +160,15 @@ public class Heap {
                     break;
             }
             int endIndex = emptyCellIndex + (movableBlockSize - 1);
+
+            filledBlocksHM.remove(tempIndex);
             /* добавляем информацию о заполненном блоке */
             filledBlocksHM.put(emptyCellIndex, new FilledBlock(endIndex, movableBlockSize));
 
             emptyCellIndex += movableBlockSize;
             tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* удаляем перенесенный блок из временной тримап */
         }
+        rebuildEmptyBlocksTM(emptyCellIndex);
     }
 
     private void rebuildEmptyBlocksTM(int emptyCellIndex) {
@@ -268,18 +266,18 @@ public class Heap {
 //            test.free(35);
 //            test.malloc(10);
 
-            test.malloc(5);
-            test.malloc(3);
-            test.malloc(5);
-            test.malloc(3);
-            test.malloc(1);
-            test.malloc(5);
-            test.free(5);
-            test.free(13);
-            test.free(16);
-            test.malloc(2);
-            test.malloc(5);
-            test.malloc(5);
+//            test.malloc(5);
+//            test.malloc(3);
+//            test.malloc(5);
+//            test.malloc(3);
+//            test.malloc(1);
+//            test.malloc(5);
+//            test.free(5);
+//            test.free(13);
+//            test.free(16);
+//            test.malloc(2);
+//            test.malloc(5);
+//            test.malloc(5);
 
 
 //            test.malloc(4);
@@ -296,18 +294,19 @@ public class Heap {
 //            test.free(0);
 //            test.malloc(20);
 
-//            test.malloc(5);
-//            test.malloc(6);
-//            test.malloc(6);
-//            test.free(11);
-//            test.malloc(7);
-//            test.malloc(10);
-//            test.free(17);
-//            test.malloc(25);
-//            test.malloc(20);
-//            test.malloc(18);
-//            test.malloc(14);
-//            test.malloc(2);
+            test.malloc(5);
+            test.malloc(6);
+            test.malloc(6);
+            test.free(11);
+            test.malloc(7);
+            test.malloc(10);
+            test.free(17);
+            test.malloc(25);
+            test.malloc(20);
+            test.malloc(18);
+            test.malloc(14);
+            test.malloc(2);
+
         } catch (OutOfMemoryException | InvalidPointerException e) {
             e.printStackTrace();
         }
