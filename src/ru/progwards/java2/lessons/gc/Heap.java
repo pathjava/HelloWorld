@@ -76,7 +76,7 @@ public class Heap {
             emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
             emptyBlockSet.clear();
         }
-
+//        System.out.println("Empty: "+ newKeyAndBlockSize +" : "+ newStartIndex + " : "+ oldEndIndex); //TODO remove
 //        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
 //        if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
 //            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) { /* если пустой блок данного размера только один */
@@ -91,14 +91,21 @@ public class Heap {
 //        }
     }
 
+    int count = 0; //TODO remove
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
+//        System.out.println("Add: "+count); //TODO remove
+        System.out.println("AddIndex: "+index + " AddSize: "+ size); //TODO remove
         if (filledBlocksHM.containsKey(index))
             throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
         filledBlocksHM.put(index, new FilledBlock(endIndex, size)); /* заполняем hashmap данными о заполненных блоках - ключ индекс */
+        System.out.println("Added: "+index +" : "+ filledBlocksHM.get(index)); //TODO remove
+        count++;
     }
 
+    int countRemove = 0; //TODO remove
     public void free(int ptr) throws InvalidPointerException {
+        System.out.println("Remove: " + countRemove); //TODO remove
         if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
             throw new IllegalArgumentException();
         int endIndex;
@@ -107,14 +114,15 @@ public class Heap {
         if (filledBlocksHM.containsKey(ptr)) {
             endIndex = filledBlocksHM.get(ptr).getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
+            System.out.println("Removed: "+ptr +" : "+ filledBlocksHM.get(ptr)); //TODO remove
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
-
             for (int i = ptr; i <= endIndex; i++) {
                 bytes[i] = 0; /* заменяем значения на ноли */
             }
         } else
             throw new InvalidPointerException("Неверный указатель: " + ptr);
+        countRemove++; //TODO remove
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
@@ -128,7 +136,6 @@ public class Heap {
 
     public void compact() { /* компактизация кучи */
         System.out.println("Alarm!"); //TODO remove
-
         int emptyCellIndex = 0;
         int countIteration = 0;
         for (int i = emptyCellIndex; i < bytes.length; i++) { /* ищем первую свободную ячейку в куче */
@@ -144,6 +151,7 @@ public class Heap {
         /* для поиска заполненных блоков отсортированных по индексу, перегоняем из hashmap в treemap */
         NavigableMap<Integer, FilledBlock> tempFilledBlocksTM = new TreeMap<>(filledBlocksHM);
         filledBlocksHM.clear();
+
         int filledCellIndex = tempFilledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
         System.out.println("Alarm-3!"); //TODO remove
@@ -165,6 +173,7 @@ public class Heap {
     }
 
     private void blockMovingFromOldToNewPlace(NavigableMap<Integer, FilledBlock> tempFilledBlocksTM, int emptyCellIndex) {
+        System.out.println("Alarm-6!"); //TODO remove
         while (!(tempFilledBlocksTM.size() == 0)) {
             int filledCellIndex = tempFilledBlocksTM.firstKey();
             int movableBlockSize = tempFilledBlocksTM.firstEntry().getValue().getSizeFilledBlock();
@@ -187,6 +196,7 @@ public class Heap {
     }
 
     private void rebuildEmptyBlocksTM(int emptyCellIndex) {
+        System.out.println("Alarm-7!"); //TODO remove
         emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         int newKeyAndBlockSize = bytes.length - emptyCellIndex;

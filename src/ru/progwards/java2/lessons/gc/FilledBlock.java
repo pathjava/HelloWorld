@@ -21,4 +21,12 @@ public class FilledBlock {
     public int getSizeFilledBlock() {
         return sizeFilledBlock;
     }
+
+    @Override
+    public String toString() {
+        return "FilledBlock{" +
+                "endIndexFilled=" + endIndexFilled +
+                ", sizeFilledBlock=" + sizeFilledBlock +
+                '}';
+    }
 }
