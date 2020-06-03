@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.reflection;
 
 
 import java.lang.reflect.*;
-import java.util.Arrays;
 
 public class ClassInspector {
 
@@ -44,7 +43,6 @@ public class ClassInspector {
             int mod = constructor.getModifiers();
             String modStr = Modifier.toString(mod);
             String name = constructor.getDeclaringClass().getSimpleName();
-
             System.out.print(modStr + " " + name);
             checkParameters(constructor.getParameters());
         }
@@ -60,7 +58,7 @@ public class ClassInspector {
             stringParam.append(type).append(" ").append(name).append(comma);
             count--;
         }
-        System.out.println("(" + stringParam.toString() + ")");
+        System.out.println("(" + stringParam.toString() + ") {}");
     }
 
     private static void checkModifiers(int mod) {
