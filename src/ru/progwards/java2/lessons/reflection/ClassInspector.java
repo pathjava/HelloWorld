@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.reflection;
 
 
 import java.lang.reflect.*;
+import java.util.Arrays;
 
 public class ClassInspector {
 
@@ -16,6 +17,8 @@ public class ClassInspector {
 
         printClass(inspectedClass);
         printFields(inspectedClass);
+        System.out.println("");
+        printConstructors(inspectedClass);
 
     }
 
@@ -32,6 +35,26 @@ public class ClassInspector {
             int mod = field.getModifiers();
             String modStr = Modifier.toString(mod);
             System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
+        }
+    }
+
+    private static void printConstructors(Class<?> inspectedClass) {
+        Constructor<?>[] constructors = inspectedClass.getConstructors();
+        for (Constructor<?> constructor : constructors) {
+            int mod = constructor.getModifiers();
+            String modStr = Modifier.toString(mod);
+            String name = constructor.getDeclaringClass().getSimpleName();
+
+            Parameter[] params = constructor.getParameters();
+            checkParameters(params);
+            System.out.println(modStr + " " + name + " ()");
+        }
+    }
+
+    private static void checkParameters(Parameter[] parameters) {
+        StringBuilder stringParam = new StringBuilder();
+        for (Parameter parameter : parameters) {
+
         }
     }
 
@@ -55,8 +78,12 @@ public class ClassInspector {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        inspect("ru.progwards.java2.lessons.reflection.Person");
+    public static void main(String[] args) {
+        try {
+            inspect("ru.progwards.java2.lessons.reflection.Person");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
