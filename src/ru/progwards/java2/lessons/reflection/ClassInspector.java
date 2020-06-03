@@ -31,7 +31,7 @@ public class ClassInspector {
         for (Field field : fields) {
             int mod = field.getModifiers();
             String modStr = Modifier.toString(mod);
-            System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName());
+            System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
         }
     }
 

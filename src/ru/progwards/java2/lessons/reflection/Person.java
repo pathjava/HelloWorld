@@ -9,6 +9,7 @@ public class Person {
     private int age;
     private String city;
     protected final double height = 1.80;
+    public boolean lock = true;
 
     private enum Days {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
 
