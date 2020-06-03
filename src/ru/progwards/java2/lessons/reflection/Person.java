@@ -5,9 +5,10 @@ package ru.progwards.java2.lessons.reflection;
 
 public class Person {
 
-    private String name;
+    private static String name;
     private int age;
     private String city;
+    protected final double height = 1.80;
 
     private enum Days {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
 
@@ -42,5 +43,9 @@ public class Person {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public double getHeight() {
+        return height;
     }
 }

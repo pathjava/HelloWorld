@@ -4,7 +4,7 @@
 package ru.progwards.java2.lessons.reflection;
 
 
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 
 public class ClassInspector {
 
@@ -14,26 +14,25 @@ public class ClassInspector {
 
         Class<?> inspectedClass = Class.forName(clazz);
 
-//        int result = Modifier.classModifiers();
-//        String str = Modifier.toString(result);
-//        System.out.println(str);
-
         printClass(inspectedClass);
+        printFields(inspectedClass);
 
-//        String classOrInterface = Modifier.isInterface(mod) ? "interface " : "class ";
-//        System.out.println(classOrInterface);
-
-//        System.out.println(inspectedClass.getSimpleName());
-//
-//        int modifierClass = inspectedClass.getModifiers();
-//        String modStr = Modifier.toString(modifierClass);
     }
 
     private static void printClass(Class<?> inspectedClass) {
         int mod = inspectedClass.getModifiers();
         checkModifiers(mod);
         checkClassOrInterface(mod);
-        System.out.print(inspectedClass.getSimpleName() + " {");
+        System.out.println(inspectedClass.getSimpleName() + " {");
+    }
+
+    private static void printFields(Class<?> inspectedClass) {
+        Field[] fields = inspectedClass.getDeclaredFields();
+        for (Field field : fields) {
+            int mod = field.getModifiers();
+            String modStr = Modifier.toString(mod);
+            System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName());
+        }
     }
 
     private static void checkModifiers(int mod) {
