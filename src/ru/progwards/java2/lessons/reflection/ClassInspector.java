@@ -39,23 +39,25 @@ public class ClassInspector {
     }
 
     private static void printConstructors(Class<?> inspectedClass) {
-        Constructor<?>[] constructors = inspectedClass.getConstructors();
+        Constructor<?>[] constructors = inspectedClass.getDeclaredConstructors();
         for (Constructor<?> constructor : constructors) {
             int mod = constructor.getModifiers();
             String modStr = Modifier.toString(mod);
             String name = constructor.getDeclaringClass().getSimpleName();
 
-            Parameter[] params = constructor.getParameters();
-            checkParameters(params);
-            System.out.println(modStr + " " + name + " ()");
+            System.out.print(modStr + " " + name);
+            checkParameters(constructor.getParameters());
         }
     }
 
     private static void checkParameters(Parameter[] parameters) {
         StringBuilder stringParam = new StringBuilder();
         for (Parameter parameter : parameters) {
-
+            String type = parameter.getType().getSimpleName();
+            String name = parameter.getName();
+            stringParam.append(type).append(" ").append(name).append(", ");
         }
+        System.out.println("("+stringParam.toString()+")");
     }
 
     private static void checkModifiers(int mod) {
@@ -81,6 +83,7 @@ public class ClassInspector {
     public static void main(String[] args) {
         try {
             inspect("ru.progwards.java2.lessons.reflection.Person");
+//            inspect("ru.progwards.java2.lessons.gc.Heap");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
