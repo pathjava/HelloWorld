@@ -52,12 +52,15 @@ public class ClassInspector {
 
     private static void checkParameters(Parameter[] parameters) {
         StringBuilder stringParam = new StringBuilder();
+        int count = parameters.length;
         for (Parameter parameter : parameters) {
             String type = parameter.getType().getSimpleName();
             String name = parameter.getName();
-            stringParam.append(type).append(" ").append(name).append(", ");
+            String comma = count > 1 ? ", " : "";
+            stringParam.append(type).append(" ").append(name).append(comma);
+            count--;
         }
-        System.out.println("("+stringParam.toString()+")");
+        System.out.println("(" + stringParam.toString() + ")");
     }
 
     private static void checkModifiers(int mod) {
