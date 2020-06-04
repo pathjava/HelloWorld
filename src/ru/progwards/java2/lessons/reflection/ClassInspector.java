@@ -6,15 +6,17 @@ package ru.progwards.java2.lessons.reflection;
 
 import java.io.IOException;
 import java.lang.reflect.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ClassInspector {
 
+    private static List<String> list = new ArrayList<>();
+    private static StringBuilder result = new StringBuilder();
     public static void inspect(String clazz, String outFolder) throws ClassNotFoundException {
         Class<?> inspectedClass = Class.forName(clazz);
 
