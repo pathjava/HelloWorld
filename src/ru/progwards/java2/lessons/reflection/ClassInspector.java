@@ -21,80 +21,90 @@ public class ClassInspector {
         Class<?> inspectedClass = Class.forName(clazz);
 
         showClass(inspectedClass);
+        showFields(inspectedClass);
+        showConstructors(inspectedClass);
+        showMethods(inspectedClass);
+        list.add("}");
 
-        String className = inspectedClass.getSimpleName();
-        Path dirOut = Paths.get(outFolder).resolve("output");
-        Path newFile = dirOut.resolve(className + ".java");
-        if (!Files.exists(dirOut)) {
-            try {
-                Files.createDirectory(dirOut);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for (String s : list) {
+            System.out.print(s);
         }
-        if (!Files.exists(newFile)) {
-            try {
-                Files.createFile(newFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (Files.exists(newFile)) {
-            try {
-                Files.write(newFile, className.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
+//        String className = inspectedClass.getSimpleName();
+//        Path dirOut = Paths.get(outFolder).resolve("output");
+//        Path newFile = dirOut.resolve(className + ".java");
+//        if (!Files.exists(dirOut)) {
+//            try {
+//                Files.createDirectory(dirOut);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (!Files.exists(newFile)) {
+//            try {
+//                Files.createFile(newFile);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (Files.exists(newFile)) {
+//            try {
+//                Files.write(newFile, className.getBytes());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private static void showClass(Class<?> inspectedClass) {
         int mod = inspectedClass.getModifiers();
-        checkModifiers(mod);
-        checkClassOrInterface(mod);
-        System.out.println(inspectedClass.getSimpleName() + " {");
-        showFields(inspectedClass);
-        showConstructors(inspectedClass);
-        showMethods(inspectedClass);
-        System.out.println("}");
+        list.add(checkModifiers(mod));
+        list.add(checkClassOrInterface(mod));
+        list.add(inspectedClass.getSimpleName());
+        list.add(" {\n");
     }
 
     private static void showFields(Class<?> inspectedClass) {
+        StringBuilder builder = new StringBuilder();
         Field[] fields = inspectedClass.getDeclaredFields();
         for (Field field : fields) {
             int mod = field.getModifiers();
             String modStr = Modifier.toString(mod);
-            System.out.println("    " + modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";");
+            builder.append("    ").append(modStr).append(" ").append(field.getType().getSimpleName()).
+                    append(" ").append(field.getName()).append(";\n");
         }
-        System.out.println();
+        list.add(builder.toString());
+        list.add("\n");
     }
 
     private static void showConstructors(Class<?> inspectedClass) {
+        StringBuilder builder = new StringBuilder();
         Constructor<?>[] constructors = inspectedClass.getDeclaredConstructors();
         for (Constructor<?> constructor : constructors) {
             int mod = constructor.getModifiers();
             String modStr = Modifier.toString(mod);
             String nameCons = constructor.getDeclaringClass().getSimpleName();
-            System.out.print("    " + modStr + " " + nameCons);
-            checkParameters(constructor.getParameters());
+            builder.append("    ").append(modStr).append(" ").append(nameCons)
+                    .append(checkParameters(constructor.getParameters())).append("\n");
         }
-        System.out.println();
+        list.add(builder.toString());
+        list.add("\n");
     }
 
     private static void showMethods(Class<?> inspectedClass) {
+        StringBuilder builder = new StringBuilder();
         Method[] methods = inspectedClass.getDeclaredMethods();
         Arrays.sort(methods, (o1, o2) -> Integer.compare(o1.getName().compareTo(o2.getName()), 1));
         for (Method method : methods) {
             int mod = method.getModifiers();
-            System.out.print("    ");
-            checkModifiers(mod);
-            System.out.print(method.getReturnType().getSimpleName() + " ");
-            System.out.print(method.getName());
-            checkParameters(method.getParameters());
+            builder.append("    ").append(checkModifiers(mod)).append(method.getReturnType().getSimpleName())
+                    .append(" ").append(method.getName()).append(checkParameters(method.getParameters())).append("\n");
         }
+        list.add(builder.toString());
     }
 
-    private static void checkParameters(Parameter[] parameters) {
+    private static String checkParameters(Parameter[] parameters) {
+        StringBuilder builder = new StringBuilder();
         StringBuilder stringParam = new StringBuilder();
         int count = parameters.length;
         for (Parameter parameter : parameters) {
@@ -104,12 +114,13 @@ public class ClassInspector {
             stringParam.append(type).append(" ").append(nameParam).append(comma);
             count--;
         }
-        System.out.println("(" + stringParam.toString() + ") {}");
+        builder.append("(").append(stringParam.toString()).append(") {}");
+        return builder.toString();
     }
 
-    private static void checkModifiers(int mod) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(Modifier.isPublic(mod) ? "public " : "")
+    private static String checkModifiers(int mod) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(Modifier.isPublic(mod) ? "public " : "")
                 .append(Modifier.isPrivate(mod) ? "private " : "")
                 .append(Modifier.isProtected(mod) ? "protected " : "")
                 .append(Modifier.isStatic(mod) ? "static " : "")
@@ -120,11 +131,11 @@ public class ClassInspector {
                 .append(Modifier.isVolatile(mod) ? "volatile " : "")
                 .append(Modifier.isStrict(mod) ? "strictfp " : "")
                 .append(Modifier.isFinal(mod) ? "final " : "");
-        System.out.print(stringBuilder.toString());
+        return builder.toString();
     }
 
-    private static void checkClassOrInterface(int mod) {
-        System.out.print(Modifier.isInterface(mod) ? "interface " : "class ");
+    private static String checkClassOrInterface(int mod) {
+        return Modifier.isInterface(mod) ? "interface " : "class ";
     }
 
 
