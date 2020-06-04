@@ -13,10 +13,10 @@ public class Person {
 
     private enum Days {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
 
-    public Person(String name, int age, String city) {
-        this.name = name;
+    public Person(int age, String city, boolean lock) {
         this.age = age;
         this.city = city;
+        this.lock = lock;
     }
 
     public Person() {

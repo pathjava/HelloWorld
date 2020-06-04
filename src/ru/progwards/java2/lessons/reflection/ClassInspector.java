@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ClassInspector {
 
-    private static List<String> list = new ArrayList<>();
-    private static StringBuilder result = new StringBuilder();
+    private static final List<String> list = new ArrayList<>();
+
     public static void inspect(String clazz, String outFolder) throws ClassNotFoundException {
         Class<?> inspectedClass = Class.forName(clazz);
 
@@ -24,44 +24,44 @@ public class ClassInspector {
         showFields(inspectedClass);
         showConstructors(inspectedClass);
         showMethods(inspectedClass);
-        list.add("}");
+        list.add("} \n */");
 
         for (String s : list) {
             System.out.print(s);
         }
 
-//        String className = inspectedClass.getSimpleName();
-//        Path dirOut = Paths.get(outFolder).resolve("output");
-//        Path newFile = dirOut.resolve(className + ".java");
-//        if (!Files.exists(dirOut)) {
-//            try {
-//                Files.createDirectory(dirOut);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (!Files.exists(newFile)) {
-//            try {
-//                Files.createFile(newFile);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (Files.exists(newFile)) {
-//            try {
-//                Files.write(newFile, className.getBytes());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        String className = inspectedClass.getSimpleName();
+        Path dirOut = Paths.get(outFolder).resolve("output");
+        Path newFile = dirOut.resolve(className + ".java");
+        if (!Files.exists(dirOut)) {
+            try {
+                Files.createDirectory(dirOut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!Files.exists(newFile)) {
+            try {
+                Files.createFile(newFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (Files.exists(newFile)) {
+            try {
+                Files.write(newFile, list);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void showClass(Class<?> inspectedClass) {
+        StringBuilder builder = new StringBuilder();
         int mod = inspectedClass.getModifiers();
-        list.add(checkModifiers(mod));
-        list.add(checkClassOrInterface(mod));
-        list.add(inspectedClass.getSimpleName());
-        list.add(" {\n");
+        builder.append("/* \n").append(checkModifiers(mod)).append(checkClassOrInterface(mod))
+                .append(inspectedClass.getSimpleName()).append(" {\n");
+        list.add(builder.toString());
     }
 
     private static void showFields(Class<?> inspectedClass) {
@@ -74,7 +74,7 @@ public class ClassInspector {
                     append(" ").append(field.getName()).append(";\n");
         }
         list.add(builder.toString());
-        list.add("\n");
+//        list.add("\n");
     }
 
     private static void showConstructors(Class<?> inspectedClass) {
@@ -88,7 +88,7 @@ public class ClassInspector {
                     .append(checkParameters(constructor.getParameters())).append("\n");
         }
         list.add(builder.toString());
-        list.add("\n");
+//        list.add("\n");
     }
 
     private static void showMethods(Class<?> inspectedClass) {
@@ -141,11 +141,12 @@ public class ClassInspector {
 
     public static void main(String[] args) {
         try {
-//            inspect("ru.progwards.java2.lessons.reflection.PersonInterface");
-//            inspect("ru.progwards.java2.lessons.reflection.PersonAbstract");
+//            inspect("ru.progwards.java2.lessons.reflection.PersonInterface",
+//                    "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
+//            inspect("ru.progwards.java2.lessons.reflection.PersonAbstract",
+//                    "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
             inspect("ru.progwards.java2.lessons.reflection.Person",
                     "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
-//            inspect("ru.progwards.java2.lessons.gc.Heap");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
