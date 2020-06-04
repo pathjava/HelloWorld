@@ -4,15 +4,46 @@
 package ru.progwards.java2.lessons.reflection;
 
 
+import java.io.IOException;
 import java.lang.reflect.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class ClassInspector {
 
-    public static void inspect(String clazz) throws ClassNotFoundException {
+    public static void inspect(String clazz, String outFolder) throws ClassNotFoundException {
         Class<?> inspectedClass = Class.forName(clazz);
 
         showClass(inspectedClass);
+
+        String className = inspectedClass.getSimpleName();
+        Path dirOut = Paths.get(outFolder).resolve("output");
+        Path newFile = dirOut.resolve(className + ".java");
+        if (!Files.exists(dirOut)) {
+            try {
+                Files.createDirectory(dirOut);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!Files.exists(newFile)) {
+            try {
+                Files.createFile(newFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (Files.exists(newFile)) {
+            try {
+                Files.write(newFile, className.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void showClass(Class<?> inspectedClass) {
@@ -31,7 +62,7 @@ public class ClassInspector {
         for (Field field : fields) {
             int mod = field.getModifiers();
             String modStr = Modifier.toString(mod);
-            System.out.println("    " + modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
+            System.out.println("    " + modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";");
         }
         System.out.println();
     }
@@ -99,7 +130,8 @@ public class ClassInspector {
         try {
 //            inspect("ru.progwards.java2.lessons.reflection.PersonInterface");
 //            inspect("ru.progwards.java2.lessons.reflection.PersonAbstract");
-            inspect("ru.progwards.java2.lessons.reflection.Person");
+            inspect("ru.progwards.java2.lessons.reflection.Person",
+                    "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
 //            inspect("ru.progwards.java2.lessons.gc.Heap");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
