@@ -19,7 +19,14 @@ public class ClassInspector {
     }
 
     private static void showMethods(Class<?> inspectedClass) {
-
+        Method[] methods = inspectedClass.getDeclaredMethods();
+        for (Method method : methods) {
+            int mod = method.getModifiers();
+            checkModifiers(mod);
+            System.out.print(method.getName());
+            checkParameters(method.getParameters());
+        }
+        System.out.println();
     }
 
     private static void showClass(Class<?> inspectedClass) {
