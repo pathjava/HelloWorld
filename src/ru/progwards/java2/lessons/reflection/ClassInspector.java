@@ -8,27 +8,24 @@ import java.lang.reflect.*;
 
 public class ClassInspector {
 
-    public static StringBuilder stringBuilder = new StringBuilder();
-
     public static void inspect(String clazz) throws ClassNotFoundException {
-
         Class<?> inspectedClass = Class.forName(clazz);
 
-        printClass(inspectedClass);
-        printFields(inspectedClass);
+        showClass(inspectedClass);
+        showFields(inspectedClass);
         System.out.println("");
-        printConstructors(inspectedClass);
+        showConstructors(inspectedClass);
 
     }
 
-    private static void printClass(Class<?> inspectedClass) {
+    private static void showClass(Class<?> inspectedClass) {
         int mod = inspectedClass.getModifiers();
         checkModifiers(mod);
         checkClassOrInterface(mod);
         System.out.println(inspectedClass.getSimpleName() + " {");
     }
 
-    private static void printFields(Class<?> inspectedClass) {
+    private static void showFields(Class<?> inspectedClass) {
         Field[] fields = inspectedClass.getDeclaredFields();
         for (Field field : fields) {
             int mod = field.getModifiers();
@@ -37,7 +34,7 @@ public class ClassInspector {
         }
     }
 
-    private static void printConstructors(Class<?> inspectedClass) {
+    private static void showConstructors(Class<?> inspectedClass) {
         Constructor<?>[] constructors = inspectedClass.getDeclaredConstructors();
         for (Constructor<?> constructor : constructors) {
             int mod = constructor.getModifiers();
@@ -62,6 +59,7 @@ public class ClassInspector {
     }
 
     private static void checkModifiers(int mod) {
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(Modifier.isPublic(mod) ? "public " : "")
                 .append(Modifier.isPrivate(mod) ? "private " : "")
                 .append(Modifier.isProtected(mod) ? "protected " : "")
@@ -73,16 +71,18 @@ public class ClassInspector {
                 .append(Modifier.isVolatile(mod) ? "volatile " : "")
                 .append(Modifier.isStrict(mod) ? "strictfp " : "")
                 .append(Modifier.isFinal(mod) ? "final " : "");
+        System.out.print(stringBuilder.toString());
     }
 
     private static void checkClassOrInterface(int mod) {
-        stringBuilder.append(Modifier.isInterface(mod) ? "interface " : "class ");
-        System.out.print(stringBuilder.toString());
+        System.out.print(Modifier.isInterface(mod) ? "interface " : "class ");
     }
 
 
     public static void main(String[] args) {
         try {
+//            inspect("ru.progwards.java2.lessons.reflection.PersonInterface");
+//            inspect("ru.progwards.java2.lessons.reflection.PersonAbstract");
             inspect("ru.progwards.java2.lessons.reflection.Person");
 //            inspect("ru.progwards.java2.lessons.gc.Heap");
         } catch (ClassNotFoundException e) {
