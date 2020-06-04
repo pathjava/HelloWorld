@@ -49,4 +49,8 @@ public class Person {
     public double getHeight() {
         return height;
     }
+
+    private static void testMethod(){
+
+    }
 }

@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.reflection;
 
 
 import java.lang.reflect.*;
+import java.util.Arrays;
 
 public class ClassInspector {
 
@@ -12,21 +13,6 @@ public class ClassInspector {
         Class<?> inspectedClass = Class.forName(clazz);
 
         showClass(inspectedClass);
-        showFields(inspectedClass);
-        showConstructors(inspectedClass);
-        showMethods(inspectedClass);
-
-    }
-
-    private static void showMethods(Class<?> inspectedClass) {
-        Method[] methods = inspectedClass.getDeclaredMethods();
-        for (Method method : methods) {
-            int mod = method.getModifiers();
-            checkModifiers(mod);
-            System.out.print(method.getName());
-            checkParameters(method.getParameters());
-        }
-        System.out.println();
     }
 
     private static void showClass(Class<?> inspectedClass) {
@@ -34,6 +20,10 @@ public class ClassInspector {
         checkModifiers(mod);
         checkClassOrInterface(mod);
         System.out.println(inspectedClass.getSimpleName() + " {");
+        showFields(inspectedClass);
+        showConstructors(inspectedClass);
+        showMethods(inspectedClass);
+        System.out.println("}");
     }
 
     private static void showFields(Class<?> inspectedClass) {
@@ -41,7 +31,7 @@ public class ClassInspector {
         for (Field field : fields) {
             int mod = field.getModifiers();
             String modStr = Modifier.toString(mod);
-            System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
+            System.out.println("    " + modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
         }
         System.out.println();
     }
@@ -52,10 +42,23 @@ public class ClassInspector {
             int mod = constructor.getModifiers();
             String modStr = Modifier.toString(mod);
             String nameCons = constructor.getDeclaringClass().getSimpleName();
-            System.out.print(modStr + " " + nameCons);
+            System.out.print("    " + modStr + " " + nameCons);
             checkParameters(constructor.getParameters());
         }
         System.out.println();
+    }
+
+    private static void showMethods(Class<?> inspectedClass) {
+        Method[] methods = inspectedClass.getDeclaredMethods();
+        Arrays.sort(methods, (o1, o2) -> Integer.compare(o1.getName().compareTo(o2.getName()), 1));
+        for (Method method : methods) {
+            int mod = method.getModifiers();
+            System.out.print("    ");
+            checkModifiers(mod);
+            System.out.print(method.getReturnType().getSimpleName() + " ");
+            System.out.print(method.getName());
+            checkParameters(method.getParameters());
+        }
     }
 
     private static void checkParameters(Parameter[] parameters) {
