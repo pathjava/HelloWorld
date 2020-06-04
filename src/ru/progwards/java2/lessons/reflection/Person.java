@@ -5,7 +5,7 @@ package ru.progwards.java2.lessons.reflection;
 
 public class Person {
 
-    private static String names;
+    private static String name;
     private int age;
     private String city;
     protected final double height = 1.80;
@@ -13,8 +13,8 @@ public class Person {
 
     private enum Days {SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY}
 
-    public Person(String names, int age, String city) {
-        this.names = names;
+    public Person(String name, int age, String city) {
+        this.name = name;
         this.age = age;
         this.city = city;
     }
@@ -23,11 +23,11 @@ public class Person {
     }
 
     public String getName() {
-        return names;
+        return name;
     }
 
     public void setName(String name) {
-        this.names = names;
+        this.name = Person.name;
     }
 
     public int getAge() {

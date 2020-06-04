@@ -13,8 +13,12 @@ public class ClassInspector {
 
         showClass(inspectedClass);
         showFields(inspectedClass);
-        System.out.println("");
         showConstructors(inspectedClass);
+        showMethods(inspectedClass);
+
+    }
+
+    private static void showMethods(Class<?> inspectedClass) {
 
     }
 
@@ -32,6 +36,7 @@ public class ClassInspector {
             String modStr = Modifier.toString(mod);
             System.out.println(modStr + " " + field.getType().getSimpleName() + " " + field.getName() + ";"); //TODO value
         }
+        System.out.println();
     }
 
     private static void showConstructors(Class<?> inspectedClass) {
@@ -39,10 +44,11 @@ public class ClassInspector {
         for (Constructor<?> constructor : constructors) {
             int mod = constructor.getModifiers();
             String modStr = Modifier.toString(mod);
-            String name = constructor.getDeclaringClass().getSimpleName();
-            System.out.print(modStr + " " + name);
+            String nameCons = constructor.getDeclaringClass().getSimpleName();
+            System.out.print(modStr + " " + nameCons);
             checkParameters(constructor.getParameters());
         }
+        System.out.println();
     }
 
     private static void checkParameters(Parameter[] parameters) {
@@ -50,9 +56,9 @@ public class ClassInspector {
         int count = parameters.length;
         for (Parameter parameter : parameters) {
             String type = parameter.getType().getSimpleName();
-            String name = parameter.getName();
+            String nameParam = parameter.getName();
             String comma = count > 1 ? ", " : "";
-            stringParam.append(type).append(" ").append(name).append(comma);
+            stringParam.append(type).append(" ").append(nameParam).append(comma);
             count--;
         }
         System.out.println("(" + stringParam.toString() + ") {}");
