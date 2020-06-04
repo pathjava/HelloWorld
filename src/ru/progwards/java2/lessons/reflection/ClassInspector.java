@@ -141,11 +141,11 @@ public class ClassInspector {
 
     public static void main(String[] args) {
         try {
-//            inspect("ru.progwards.java2.lessons.reflection.PersonInterface",
+//            inspect("ru.progwards.java2.lessons.reflection.testfiles.PersonInterface",
 //                    "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
-//            inspect("ru.progwards.java2.lessons.reflection.PersonAbstract",
+//            inspect("ru.progwards.java2.lessons.reflection.testfiles.PersonAbstract",
 //                    "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
-            inspect("ru.progwards.java2.lessons.reflection.Person",
+            inspect("ru.progwards.java2.lessons.reflection.testfiles.Person",
                     "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\reflection");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

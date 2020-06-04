@@ -1,7 +1,10 @@
 // Oleg Kiselev
+// 04.06.2020, 18:22
+
+// Oleg Kiselev
 // 03.06.2020, 12:27
 
-package ru.progwards.java2.lessons.reflection;
+package ru.progwards.java2.lessons.reflection.testfiles;
 
 public class Person {
 
