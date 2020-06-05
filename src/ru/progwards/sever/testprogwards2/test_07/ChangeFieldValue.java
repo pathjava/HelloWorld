@@ -4,10 +4,12 @@
 package ru.progwards.sever.testprogwards2.test_07;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ChangeFieldValue {
 
-    public static void setName(Person person, String name) {
+    void setName(Person person, String name) {
         Class<?> clazz = person.getClass();
         Field field = null;
         try {
@@ -24,12 +26,27 @@ public class ChangeFieldValue {
         }
     }
 
-    public static void callSetName(Person person, String name){
-
+    void callSetName(Person person, String name)  {
+        Class<?> clazz = person.getClass();
+        Method method = null;
+        try {
+            method = clazz.getDeclaredMethod("setName", String.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assert method != null;
+        method.setAccessible(true);
+        try {
+            method.invoke(person, name);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public static void main(String[] args) {
+        Person person = new Person("Mike");
+        new ChangeFieldValue().callSetName(person, "Bill");
 
     }
 }
