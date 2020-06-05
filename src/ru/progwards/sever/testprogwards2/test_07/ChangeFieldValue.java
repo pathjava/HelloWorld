@@ -3,10 +3,7 @@
 
 package ru.progwards.sever.testprogwards2.test_07;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 public class ChangeFieldValue {
 
