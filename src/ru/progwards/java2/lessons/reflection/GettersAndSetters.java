@@ -7,9 +7,7 @@ package ru.progwards.java2.lessons.reflection;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +17,6 @@ public class GettersAndSetters {
         Class<?> clazz = Class.forName(string);
 
         checkFields(clazz);
-        checkGettersAndSetters(clazz);
     }
 
     private static final List<String> listFields = new ArrayList<>();
@@ -27,62 +24,60 @@ public class GettersAndSetters {
     private static void checkFields(Class<?> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            String tempName = field.getName();
-            String getName = "get" + tempName.substring(0, 1).toUpperCase() + tempName.substring(1);
-            listFields.add(getName);
-            String setName = "set" + tempName.substring(0, 1).toUpperCase() + tempName.substring(1);
-            listFields.add(setName);
+            int mod = field.getModifiers();
+            if (Modifier.isPrivate(mod) && !Modifier.isStatic(mod) && !Modifier.isFinal(mod)) {
+                String tempName = field.getName();
+                String getName = "get" + tempName.substring(0, 1).toUpperCase() + tempName.substring(1);
+                listFields.add(getName);
+                String setName = "set" + tempName.substring(0, 1).toUpperCase() + tempName.substring(1);
+                listFields.add(setName);
+            }
         }
+        checkGettersAndSetters(clazz);
     }
 
     private static void checkGettersAndSetters(Class<?> clazz) {
-        StringBuilder builder = new StringBuilder();
         Method[] methods = clazz.getDeclaredMethods();
-        List<Method> listMethods = new ArrayList<>(Arrays.asList(methods));
-
         for (Iterator<String> it = listFields.iterator(); it.hasNext(); ) {
             String listField = it.next();
-            for (Method listMethod : listMethods) {
-                String nameStr = listMethod.getName();
+            for (Method method : methods) {
+                String nameStr = method.getName();
                 if (listField.equals(nameStr))
                     it.remove();
             }
         }
-        for (String listField : listFields) {
-            System.out.println(listField);
+        builderGettersAndSetters(clazz);
+    }
+
+    private static void builderGettersAndSetters(Class<?> clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            String typeField = field.getType().getSimpleName();
+            for (String listField : listFields) {
+                String name = listField.substring(3).toLowerCase();
+                String prefName = listField.substring(0, 3).toLowerCase();
+                if (fieldName.equals(name) && prefName.equals("get"))
+                    builderGetters(typeField, listField);
+                if (fieldName.equals(name) && prefName.equals("set"))
+                    builderSetters(typeField, listField, fieldName);
+            }
         }
     }
 
-    private static String checkParameters(Parameter[] parameters) {
+    private static void builderSetters(String typeField, String listField, String fieldName) {
         StringBuilder builder = new StringBuilder();
-        StringBuilder stringParam = new StringBuilder();
-        int count = parameters.length;
-        for (Parameter parameter : parameters) {
-            String type = parameter.getType().getSimpleName();
-            String nameParam = parameter.getName();
-            String comma = count > 1 ? ", " : "";
-            stringParam.append(type).append(" ").append(nameParam).append(comma);
-            count--;
-        }
-        builder.append("(").append(stringParam.toString()).append(")");
-        return builder.toString();
+        builder.append("public void ").append(listField).append("(")
+                .append(typeField).append(" ").append(fieldName).append(")");
+        System.out.println(builder.toString());
     }
 
-    private static String checkModifiers(int mod) {
+    private static void builderGetters(String typeField, String listField) {
         StringBuilder builder = new StringBuilder();
-        builder.append(Modifier.isPublic(mod) ? "public " : "")
-                .append(Modifier.isPrivate(mod) ? "private " : "")
-                .append(Modifier.isProtected(mod) ? "protected " : "")
-                .append(Modifier.isStatic(mod) ? "static " : "")
-                .append(Modifier.isAbstract(mod) ? "abstract " : "")
-                .append(Modifier.isNative(mod) ? "native " : "")
-                .append(Modifier.isTransient(mod) ? "transient " : "")
-                .append(Modifier.isSynchronized(mod) ? "synchronized " : "")
-                .append(Modifier.isVolatile(mod) ? "volatile " : "")
-                .append(Modifier.isStrict(mod) ? "strictfp " : "")
-                .append(Modifier.isFinal(mod) ? "final " : "");
-        return builder.toString();
+        builder.append("public ").append(typeField).append(" ").append(listField).append("()");
+        System.out.println(builder.toString());
     }
+
 
     public static void main(String[] args) {
         try {

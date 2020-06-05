@@ -7,6 +7,8 @@ public class PersonGettersAndSetters {
     private String name;
     private int age;
     private boolean sex;
+    public String secondName;
+    private static String nextName;
 
 
     public String getName() {
