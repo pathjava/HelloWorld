@@ -3,6 +3,7 @@
 
 package ru.progwards.sever.testprogwards2.test_07;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -43,11 +44,36 @@ public class ChangeFieldValue {
         }
     }
 
+    Person callConstructor(String name){
+        Class<?> clazz = Person.class;
+        Constructor<?> constructor = null;
+        try {
+            constructor = clazz.getDeclaredConstructor(String.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        assert constructor != null;
+        constructor.setAccessible(true);
+        try {
+            return (Person) constructor.newInstance(name);
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public static void main(String[] args) {
         Person person = new Person("Mike");
-        new ChangeFieldValue().callSetName(person, "Bill");
+        ChangeFieldValue test = new ChangeFieldValue();
 
+        System.out.println(person.getName());
+        test.setName(person, "John");
+        System.out.println(person.getName());
+        test.callSetName(person, "Bill");
+        System.out.println(person.getName());
+        test.callConstructor("George");
+        System.out.println(person.getName());
     }
 }
 
@@ -60,6 +86,10 @@ class Person {
 
     private void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 
