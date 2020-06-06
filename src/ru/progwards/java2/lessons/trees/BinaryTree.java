@@ -5,23 +5,38 @@ package ru.progwards.java2.lessons.trees;
 
 import java.util.function.Consumer;
 
-public class BinaryTree<K extends Comparable<K>, V> {
+public class BinaryTree<K extends Comparable<K>, V> extends TreeIterator<K,V>{
     private static final String KEYEXIST = "Key already exist";
     private static final String KEYNOTEXIST = "Key not exist";
 
     class TreeLeaf<K extends Comparable<K>, V> {
         K key;
         V value;
-        TreeLeaf<K,V> parent;
-        TreeLeaf<K,V> left;
-        TreeLeaf<K,V> right;
+        private TreeLeaf<K, V> parent;
+        private TreeLeaf<K, V> left;
+        private TreeLeaf<K, V> right;
+
+        public TreeLeaf<K, V> getParent() {
+            return parent;
+        }
+
+        public TreeLeaf<K, V> getLeft() {
+            return left;
+        }
+
+        public TreeLeaf<K, V> getRight() {
+            return right;
+        }
+
+        public TreeLeaf() {
+        }
 
         public TreeLeaf(K key, V value) {
             this.key = key;
             this.value = value;
         }
 
-        private TreeLeaf<K,V> find(K key) {
+        private TreeLeaf<K, V> find(K key) {
             int cmp = key.compareTo(this.key);
             if (cmp > 0)
                 if (right != null)
@@ -66,10 +81,10 @@ public class BinaryTree<K extends Comparable<K>, V> {
         }
 
         public String toString() {
-            return "("+key+","+value+")";
+            return "(" + key + "," + value + ")";
         }
 
-        public void process(Consumer<TreeLeaf<K,V>> consumer) {
+        public void process(Consumer<TreeLeaf<K, V>> consumer) {
             if (left != null)
                 left.process(consumer);
             consumer.accept(this);
@@ -77,13 +92,18 @@ public class BinaryTree<K extends Comparable<K>, V> {
                 right.process(consumer);
         }
     }
+
     private TreeLeaf<K, V> root;
+
+    public TreeLeaf<K, V> getRoot() {
+        return root;
+    }
 
     public V find(K key) {
         if (root == null)
             return null;
-        TreeLeaf<K,V> found = root.find(key);
-        return found.key.compareTo(key) == 0 ? (V)found.value : null;
+        TreeLeaf<K, V> found = root.find(key);
+        return found.key.compareTo(key) == 0 ? (V) found.value : null;
     }
 
     public void add(TreeLeaf<K, V> leaf) throws TreeException {
@@ -105,7 +125,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
         if (root == null)
             throw new TreeException(KEYNOTEXIST);
 
-        TreeLeaf<K,V> found = root.find(key);
+        TreeLeaf<K, V> found = root.find(key);
         int cmp = found.key.compareTo(key);
         if (cmp != 0)
             throw new TreeException(KEYNOTEXIST);
@@ -129,9 +149,18 @@ public class BinaryTree<K extends Comparable<K>, V> {
         add(current);
     }
 
-    public void process(Consumer<TreeLeaf<K,V>> consumer) {
+    public void process(Consumer<TreeLeaf<K, V>> consumer) {
         if (root != null)
             root.process(consumer);
     }
+
+    public TreeIterator<K,V> getIterator() {
+        for (BinaryTree<K, V> iter = new BinaryTree<>(); iter.hasNext(); ) {
+
+        }
+
+        return getIterator();
+    }
+
 }
 
