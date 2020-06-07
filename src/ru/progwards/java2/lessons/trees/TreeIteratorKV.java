@@ -9,11 +9,11 @@ public class TreeIteratorKV<K, V> {
 
     private final Stack<BinaryTree<?, ?>.TreeLeaf<?, ?>> stack;
 
-    public TreeIteratorKV(BinaryTree<?, ?>.TreeLeaf<?, ?> root) {
+    public TreeIteratorKV(BinaryTree<?, ?>.TreeLeaf<?, ?> rootTree) {
         stack = new Stack<>();
-        while (root != null) {
-            stack.push(root);
-            root = root.left;
+        while (rootTree != null) {
+            stack.push(rootTree);
+            rootTree = rootTree.left;
         }
     }
 
@@ -22,13 +22,13 @@ public class TreeIteratorKV<K, V> {
     }
 
     public BinaryTree<?, ?>.TreeLeaf<?, ?> next() {
-        BinaryTree<?, ?>.TreeLeaf<?, ?> node = stack.pop();
-        BinaryTree<?, ?>.TreeLeaf<?, ?> result = node;
-        if (node.right != null) {
-            node = node.right;
-            while (node != null) {
-                stack.push(node);
-                node = node.left;
+        BinaryTree<?, ?>.TreeLeaf<?, ?> tempNode = stack.pop();
+        BinaryTree<?, ?>.TreeLeaf<?, ?> result = tempNode;
+        if (tempNode.right != null) {
+            tempNode = tempNode.right;
+            while (tempNode != null) {
+                stack.push(tempNode);
+                tempNode = tempNode.left;
             }
         }
         return result;
@@ -36,8 +36,6 @@ public class TreeIteratorKV<K, V> {
 
     @Override
     public String toString() {
-        return "TreeIteratorKV{" +
-                "stack=" + stack +
-                '}';
+        return "stack=" + stack;
     }
 }

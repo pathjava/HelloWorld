@@ -9,11 +9,11 @@ public class TreeIterator {
 
     private final Stack<BinaryTree<?, ?>.TreeLeaf<?, ?>> stack;
 
-    public TreeIterator(BinaryTree<?, ?>.TreeLeaf<?, ?> root) {
+    public TreeIterator(BinaryTree<?, ?>.TreeLeaf<?, ?> rootTree) {
         stack = new Stack<>();
-        while (root != null) {
-            stack.push(root);
-            root = root.left;
+        while (rootTree != null) {
+            stack.push(rootTree);
+            rootTree = rootTree.left;
         }
     }
 
@@ -22,13 +22,13 @@ public class TreeIterator {
     }
 
     public BinaryTree<?, ?>.TreeLeaf<?, ?> next() {
-        BinaryTree<?, ?>.TreeLeaf<?, ?> node = stack.pop();
-        BinaryTree<?, ?>.TreeLeaf<?, ?> result = node;
-        if (node.right != null) {
-            node = node.right;
-            while (node != null) {
-                stack.push(node);
-                node = node.left;
+        BinaryTree<?, ?>.TreeLeaf<?, ?> tempNode = stack.pop();
+        BinaryTree<?, ?>.TreeLeaf<?, ?> result = tempNode;
+        if (tempNode.right != null) {
+            tempNode = tempNode.right;
+            while (tempNode != null) {
+                stack.push(tempNode);
+                tempNode = tempNode.left;
             }
         }
         return result;
