@@ -44,6 +44,7 @@ public class TreeTest {
         /* вызов итератора через вызов метода getIterator() в BinaryTree */
         tree.getIterator();
 
+        /* это вызов метода с возвращаемым типом TreeIteratorKV<K, V> */
 //        tree.getIteratorVK();
     }
 }

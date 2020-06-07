@@ -145,6 +145,7 @@ public class BinaryTree<K extends Comparable<K>, V> {
         }
     }
 
+    /* зачем делать данный метод с возвращаемым типом TreeIteratorKV<K, V> я не понял */
     public TreeIteratorKV<K, V> getIteratorVK() {
         TreeIteratorKV<K, V> result = null;
         for (TreeIterator it = new TreeIterator(this.getRoot()); it.hasNext(); ) {
