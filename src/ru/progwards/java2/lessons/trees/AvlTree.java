@@ -3,7 +3,7 @@
 
 package ru.progwards.java2.lessons.trees;
 
-public class AvlTree<K, V> {
+public class AvlTree<K extends Comparable<K>, V> {
 
     private Node<K, V> root;
     private int size = 0;
@@ -73,6 +73,16 @@ public class AvlTree<K, V> {
         public String toString() {
             return "key=" + key + ", value=" + value;
         }
+    }
+
+    public void put(K key, V value){
+
+    }
+
+
+    public static void main(String[] args) {
+        AvlTree<Integer,String> test = new AvlTree<>();
+        test.put(5,"five");
     }
 
 }
