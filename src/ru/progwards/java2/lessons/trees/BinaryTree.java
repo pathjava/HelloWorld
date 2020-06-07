@@ -5,28 +5,16 @@ package ru.progwards.java2.lessons.trees;
 
 import java.util.function.Consumer;
 
-public class BinaryTree<K extends Comparable<K>, V> extends TreeIterator<K,V>{
+public class BinaryTree<K extends Comparable<K>, V> {
     private static final String KEYEXIST = "Key already exist";
     private static final String KEYNOTEXIST = "Key not exist";
 
     class TreeLeaf<K extends Comparable<K>, V> {
         K key;
         V value;
-        private TreeLeaf<K, V> parent;
-        private TreeLeaf<K, V> left;
-        private TreeLeaf<K, V> right;
-
-        public TreeLeaf<K, V> getParent() {
-            return parent;
-        }
-
-        public TreeLeaf<K, V> getLeft() {
-            return left;
-        }
-
-        public TreeLeaf<K, V> getRight() {
-            return right;
-        }
+        TreeLeaf<K, V> parent;
+        TreeLeaf<K, V> left;
+        TreeLeaf<K, V> right;
 
         public TreeLeaf() {
         }
@@ -118,10 +106,10 @@ public class BinaryTree<K extends Comparable<K>, V> extends TreeIterator<K,V>{
     }
 
     public void delete(K key) throws TreeException {
-        internaldDelete(key);
+        internalDelete(key);
     }
 
-    public TreeLeaf<K, V> internaldDelete(K key) throws TreeException {
+    public TreeLeaf<K, V> internalDelete(K key) throws TreeException {
         if (root == null)
             throw new TreeException(KEYNOTEXIST);
 
@@ -144,7 +132,7 @@ public class BinaryTree<K extends Comparable<K>, V> extends TreeIterator<K,V>{
     }
 
     public void change(K oldKey, K newKey) throws TreeException {
-        TreeLeaf<K, V> current = internaldDelete(oldKey);
+        TreeLeaf<K, V> current = internalDelete(oldKey);
         current.key = newKey;
         add(current);
     }
@@ -154,8 +142,8 @@ public class BinaryTree<K extends Comparable<K>, V> extends TreeIterator<K,V>{
             root.process(consumer);
     }
 
-    public TreeIterator<K,V> getIterator() {
-        for (BinaryTree<K, V> iter = new BinaryTree<>(); iter.hasNext(); ) {
+    public TreeIterator<K, V> getIterator() {
+        for (BinaryTree<K, V> it = new BinaryTree<>(); it.hasNext(); ) {
 
         }
 

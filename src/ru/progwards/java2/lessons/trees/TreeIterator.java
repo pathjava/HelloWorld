@@ -9,14 +9,14 @@ public class TreeIterator<K extends Comparable<K>, V> {
     private boolean left = true;
     private boolean right = false;
 
-    BinaryTree<K, V> iter = new BinaryTree<>();
+    BinaryTree<K, V> it = new BinaryTree<>();
 
     public boolean hasNext() {
-        if (iter.getRoot() == null)
+        if (it.getRoot() == null)
             return false;
 
         if (left)
-            if (iter.new TreeLeaf<K, V>().getLeft() != null)
+            if (it.new TreeLeaf<K, V>().left != null)
                 return true;
             else {
                 left = false;
@@ -24,12 +24,13 @@ public class TreeIterator<K extends Comparable<K>, V> {
             }
 
         if (right)
-            return iter.new TreeLeaf<K, V>().getRight() != null;
+            return it.new TreeLeaf<K, V>().right != null;
 
         return false;
     }
 
     public BinaryTree<K, V>.TreeLeaf<K, V> next() {
+        return (BinaryTree<K, V>.TreeLeaf<K, V>) it.new TreeLeaf<K, V>().value;
 
     }
 
