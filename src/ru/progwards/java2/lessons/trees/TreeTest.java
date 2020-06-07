@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.trees;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,8 +44,5 @@ public class TreeTest {
 
         /* вызов итератора через вызов метода getIterator() в BinaryTree */
         tree.getIterator();
-
-        /* это вызов метода с возвращаемым типом TreeIteratorKV<K, V> */
-//        tree.getIteratorVK();
     }
 }

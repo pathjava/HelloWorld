@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.trees;
 
+
 import java.util.function.Consumer;
 
 public class BinaryTree<K extends Comparable<K>, V> {
@@ -143,15 +144,6 @@ public class BinaryTree<K extends Comparable<K>, V> {
         for (TreeIterator it = new TreeIterator(this.getRoot()); it.hasNext(); ) {
             System.out.println(it.next());
         }
-    }
-
-    /* зачем делать данный метод с возвращаемым типом TreeIteratorKV<K, V> я не понял */
-    public TreeIteratorKV<K, V> getIteratorVK() {
-        TreeIteratorKV<K, V> result = null;
-        for (TreeIterator it = new TreeIterator(this.getRoot()); it.hasNext(); ) {
-            System.out.println(result = new TreeIteratorKV<>(it.next()));
-        }
-        return result;
     }
 }
 
