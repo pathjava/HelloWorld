@@ -80,14 +80,16 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         Node<K, V> node = new Node<>(key, value); //TODO как инициализировать - определить стартовую точку root?
         int comparision = key.compareTo(node.key);
-        if (root == null)
+        if (root == null) {
             root = new Node<>(key, value);
+            return;
+        }
         if (comparision == 0)
             node.value = value;
         if (comparision < 0) {
-            if (node.left == null)
+            if (node.left == null) {
                 new Node<>(key, value);
-            else
+            }else
                 put(node.key, value);
         } else {
             if (node.right == null)
@@ -101,6 +103,8 @@ public class AvlTree<K extends Comparable<K>, V> {
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(5, "five");
+        test.put(3, "three");
+        test.put(6, "six");
     }
 
 }
