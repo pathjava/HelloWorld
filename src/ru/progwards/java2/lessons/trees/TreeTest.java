@@ -22,9 +22,9 @@ public class TreeTest {
         }
         System.out.println("add passed OK");
         //tree.process(System.out::println);
-        ArrayList<BinaryTree.TreeLeaf> sorted = new ArrayList<>();
+        ArrayList<BinaryTree<?, ?>.TreeLeaf<?, ?>> sorted = new ArrayList<>();
         tree.process(sorted::add);
-        for (BinaryTree.TreeLeaf leaf : sorted) {
+        for (BinaryTree<?, ?>.TreeLeaf<?, ?> leaf : sorted) {
             System.out.println(leaf.toString());
         }
 
@@ -33,5 +33,9 @@ public class TreeTest {
             tree.delete(i);
         }
         System.out.println("find&delete passed OK");
+
+        for (TreeIterator it = new TreeIterator(new BinaryTree<>().getRoot()); it.hasNext();) {
+            System.out.println(it.next());
+        }
     }
 }

@@ -4,34 +4,34 @@
 package ru.progwards.java2.lessons.trees;
 
 
-public class TreeIterator<K extends Comparable<K>, V> {
+import java.util.Stack;
 
-    private boolean left = true;
-    private boolean right = false;
+public class TreeIterator {
 
-    BinaryTree<K, V> it = new BinaryTree<>();
+    Stack<BinaryTree<?, ?>.TreeLeaf<?, ?>> stack;
+
+    public TreeIterator(BinaryTree<?, ?>.TreeLeaf<?, ?> root) {
+        stack = new Stack<>();
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
 
     public boolean hasNext() {
-        if (it.getRoot() == null)
-            return false;
+        return !stack.isEmpty();
+    }
 
-        if (left)
-            if (it.new TreeLeaf<K, V>().left != null)
-                return true;
-            else {
-                left = false;
-                right = true;
+    public BinaryTree<?, ?>.TreeLeaf<?, ?> next() {
+        BinaryTree<?, ?>.TreeLeaf<?, ?> node = stack.pop();
+        BinaryTree<?, ?>.TreeLeaf<?, ?> result = (BinaryTree<?, ?>.TreeLeaf<?, ?>) node.value;
+        if (node.right != null) {
+            node = node.right;
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
             }
-
-        if (right)
-            return it.new TreeLeaf<K, V>().right != null;
-
-        return false;
+        }
+        return result;
     }
-
-    public BinaryTree<K, V>.TreeLeaf<K, V> next() {
-        return (BinaryTree<K, V>.TreeLeaf<K, V>) it.new TreeLeaf<K, V>().value;
-
-    }
-
 }

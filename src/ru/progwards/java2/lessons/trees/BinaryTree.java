@@ -5,7 +5,7 @@ package ru.progwards.java2.lessons.trees;
 
 import java.util.function.Consumer;
 
-public class BinaryTree<K extends Comparable<K>, V> {
+public class BinaryTree<K extends Comparable<K>, V>{
     private static final String KEYEXIST = "Key already exist";
     private static final String KEYNOTEXIST = "Key not exist";
 
@@ -142,10 +142,10 @@ public class BinaryTree<K extends Comparable<K>, V> {
             root.process(consumer);
     }
 
-    public TreeIterator<K, V> getIterator() {
-        for (BinaryTree<K, V> it = new BinaryTree<>(); it.hasNext(); ) {
-
-        }
+    public TreeIterator getIterator() {
+//        for (BinaryTree<K, V> it = new BinaryTree<>(); it.getIterator().hasNext();) {
+//
+//        }
 
         return getIterator();
     }
