@@ -16,9 +16,6 @@ public class BinaryTree<K extends Comparable<K>, V>{
         TreeLeaf<K, V> left;
         TreeLeaf<K, V> right;
 
-        public TreeLeaf() {
-        }
-
         public TreeLeaf(K key, V value) {
             this.key = key;
             this.value = value;
@@ -143,12 +140,7 @@ public class BinaryTree<K extends Comparable<K>, V>{
     }
 
     public TreeIterator getIterator() {
-//        for (BinaryTree<K, V> it = new BinaryTree<>(); it.getIterator().hasNext();) {
-//
-//        }
-
         return getIterator();
     }
-
 }
 

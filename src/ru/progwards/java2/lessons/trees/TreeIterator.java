@@ -24,7 +24,7 @@ public class TreeIterator {
 
     public BinaryTree<?, ?>.TreeLeaf<?, ?> next() {
         BinaryTree<?, ?>.TreeLeaf<?, ?> node = stack.pop();
-        BinaryTree<?, ?>.TreeLeaf<?, ?> result = (BinaryTree<?, ?>.TreeLeaf<?, ?>) node.value;
+        BinaryTree<?, ?>.TreeLeaf<?, ?> result = node;
         if (node.right != null) {
             node = node.right;
             while (node != null) {
