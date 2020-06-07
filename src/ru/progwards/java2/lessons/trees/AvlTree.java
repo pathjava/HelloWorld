@@ -75,19 +75,32 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    public void put(K key, V value){
+    public void put(K key, V value) {
         if (key == null)
-            throw new IllegalArgumentException("Key is null!");
-        Node<K, V> node = new Node<>(key, value);
+            throw new IllegalArgumentException("The key cannot be null!");
+        Node<K, V> node = new Node<>(key, value); //TODO как инициализировать - определить стартовую точку root?
+        int comparision = key.compareTo(node.key);
         if (root == null)
-            root = node;
-
+            root = new Node<>(key, value);
+        if (comparision == 0)
+            node.value = value;
+        if (comparision < 0) {
+            if (node.left == null)
+                new Node<>(key, value);
+            else
+                put(node.key, value);
+        } else {
+            if (node.right == null)
+                new Node<>(key, value);
+            else
+                put(node.key, value);
+        }
     }
 
 
     public static void main(String[] args) {
-        AvlTree<Integer,String> test = new AvlTree<>();
-        test.put(5,"five");
+        AvlTree<Integer, String> test = new AvlTree<>();
+        test.put(5, "five");
     }
 
 }
