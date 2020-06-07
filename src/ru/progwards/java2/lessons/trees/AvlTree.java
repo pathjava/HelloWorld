@@ -76,6 +76,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     public void put(K key, V value){
+        if (key == null)
+            throw new IllegalArgumentException("Key is null!");
+        Node<K, V> node = new Node<>(key, value);
+        if (root == null)
+            root = node;
 
     }
 
