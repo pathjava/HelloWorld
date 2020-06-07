@@ -1,15 +1,15 @@
 // Oleg Kiselev
-// 05.06.2020, 21:09
+// 07.06.2020, 14:57
 
 package ru.progwards.java2.lessons.trees;
 
 import java.util.Stack;
 
-public class TreeIterator {
+public class TreeIteratorKV<K, V> {
 
     private final Stack<BinaryTree<?, ?>.TreeLeaf<?, ?>> stack;
 
-    public TreeIterator(BinaryTree<?, ?>.TreeLeaf<?, ?> root) {
+    public TreeIteratorKV(BinaryTree<?, ?>.TreeLeaf<?, ?> root) {
         stack = new Stack<>();
         while (root != null) {
             stack.push(root);
@@ -32,5 +32,12 @@ public class TreeIterator {
             }
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TreeIteratorKV{" +
+                "stack=" + stack +
+                '}';
     }
 }

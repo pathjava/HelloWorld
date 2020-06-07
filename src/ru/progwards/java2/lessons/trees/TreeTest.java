@@ -35,10 +35,15 @@ public class TreeTest {
 //        }
 //        System.out.println("find & delete passed OK");
 
-        System.out.println("start Iterator");
-        for (TreeIterator it = new TreeIterator(tree.getRoot()); it.hasNext();) {
-            System.out.println(it.next());
-        }
-        System.out.println("finish Iterator");
+
+        /* вызов итератора TreeIterator через цикл for без вызова метода getIterator() */
+//        for (TreeIterator it = new TreeIterator(tree.getRoot()); it.hasNext();) {
+//            System.out.println(it.next());
+//        }
+
+        /* вызов итератора через вызов метода getIterator() в BinaryTree */
+        tree.getIterator();
+
+//        tree.getIteratorVK();
     }
 }
