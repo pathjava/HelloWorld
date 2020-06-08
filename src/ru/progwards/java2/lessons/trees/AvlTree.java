@@ -46,7 +46,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         addFromPut(node, key, value);
     }
 
-    private Node<K, V> addFromPut(Node<K, V> node, K key, V value) {
+    private void addFromPut(Node<K, V> node, K key, V value) {
         Node<K, V> newNode;
         int comparision = key.compareTo(node.key);
         if (comparision < 0) {
@@ -60,7 +60,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left.value = value;
             else {
                 newNode = node.left;
-                return addFromPut(newNode, key, value);
+                addFromPut(newNode, key, value);
             }
         } else {
             if (node.right == null) {
@@ -73,10 +73,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right.value = value;
             else {
                 newNode = node.right;
-                return addFromPut(newNode, key, value);
+                addFromPut(newNode, key, value);
             }
         }
-        return null; //TODO - правильно ли возвращать NULL?
     }
 
     public void delete(K key) {
@@ -137,7 +136,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         keyReplacementFromChange(node, oldKey, newKey);
     }
 
-    private Node<K, V> keyReplacementFromChange(Node<K, V> node, K oldKey, K newKey) {
+    private void keyReplacementFromChange(Node<K, V> node, K oldKey, K newKey) {
         Node<K, V> newNode;
         int comparision = oldKey.compareTo(node.key);
         if (comparision < 0) {
@@ -148,7 +147,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 //TODO запускаем перестроение
             } else {
                 newNode = node.left;
-                return keyReplacementFromChange(newNode, oldKey, newKey);
+                keyReplacementFromChange(newNode, oldKey, newKey);
             }
         } else {
             if (node.right == null)
@@ -158,10 +157,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 //TODO запускаем перестроение
             } else {
                 newNode = node.right;
-                return keyReplacementFromChange(newNode, oldKey, newKey);
+                keyReplacementFromChange(newNode, oldKey, newKey);
             }
         }
-        return null; //TODO - правильно ли возвращать NULL?
     }
 
     private int currentHeight(Node<K, V> node) {
@@ -169,7 +167,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private int recalculateHeight(Node<K, V> node) {
-        return Math.max(node.left.height, node.right.height)+1;
+        return Math.max(node.left.height, node.right.height) + 1;
     }
 
     private int balanceFactor(Node<K, V> node) {
@@ -194,7 +192,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(14, "*14*");
         System.out.println(test.find(10));
         System.out.println(test.size);
-        test.change(10,11);
+        test.change(10, 11);
     }
 
 }
