@@ -80,16 +80,19 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
-        test.put(5, "five");
+        test.put(15, "*15*");
 //        test.put(5, "newFive");
-        test.put(3, "three");
-        test.put(6, "six");
+        test.put(12, "*12*");
+        test.put(16, "*16*");
 //        test.put(3, "newThree");
 //        test.put(6, "newSix");
-        test.put(4, "four");
-        test.put(2, "two");
-        test.put(7, "seven");
-        test.put(10, "ten");
+        test.put(40, "*40*");
+        test.put(7, "*7*");
+        test.put(10, "*10*");
+        test.put(25, "*25*");
+        test.put(2, "*2*");
+        test.put(7, "*new-7*");
+        test.put(14, "*14*");
     }
 
 }
