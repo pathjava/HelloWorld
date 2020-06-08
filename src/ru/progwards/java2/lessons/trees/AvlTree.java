@@ -90,27 +90,25 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> keyAndValueSearch(Node<K, V> node, K key) {
-        Node<K, V> newNode = null;
+        Node<K, V> newNode;
         int comparision = key.compareTo(node.key);
         if (comparision < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("Key not found!");
             else if (key.compareTo(node.left.key) == 0) {
                 newNode = node.left;
-                return newNode;
             } else {
                 newNode = node.left;
-                keyAndValueSearch(newNode, key);
+                return keyAndValueSearch(newNode, key);
             }
         } else {
             if (node.right == null)
                 throw new IllegalArgumentException("Key not found!");
             else if (key.compareTo(node.right.key) == 0) {
                 newNode = node.right;
-                return newNode;
             } else {
                 newNode = node.right;
-                keyAndValueSearch(newNode, key);
+                return keyAndValueSearch(newNode, key);
             }
         }
         return newNode;
@@ -132,6 +130,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(2, "*2*");
         test.put(7, "*new-7*");
         test.put(14, "*14*");
+        System.out.println(test.find(10));
     }
 
 }
