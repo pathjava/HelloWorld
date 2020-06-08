@@ -95,18 +95,18 @@ public class AvlTree<K extends Comparable<K>, V> {
         if (comparision < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("Key not found!");
-            else if (key.compareTo(node.left.key) == 0) {
+            else if (key.compareTo(node.left.key) == 0)
                 newNode = node.left;
-            } else {
+            else {
                 newNode = node.left;
                 return keyAndValueSearch(newNode, key);
             }
         } else {
             if (node.right == null)
                 throw new IllegalArgumentException("Key not found!");
-            else if (key.compareTo(node.right.key) == 0) {
+            else if (key.compareTo(node.right.key) == 0)
                 newNode = node.right;
-            } else {
+            else {
                 newNode = node.right;
                 return keyAndValueSearch(newNode, key);
             }
