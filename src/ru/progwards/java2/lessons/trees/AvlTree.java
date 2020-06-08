@@ -8,7 +8,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     private Node<K, V> root;
     private int size = 0;
 
-    public static class Node<K, V> {
+    public static class Node<K extends Comparable<K>, V> {
         private int height;
         private K key;
         private V value;
