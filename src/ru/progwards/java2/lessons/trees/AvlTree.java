@@ -10,7 +10,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public class Node<K, V> {
         private int height;
-        private K key;
+        private final K key;
         private V value;
         private Node<K, V> parent;
         private Node<K, V> left;
@@ -19,54 +19,10 @@ public class AvlTree<K extends Comparable<K>, V> {
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
-        }
-
-        public int getHeight() {
-            return height;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-
-        public Node<K, V> getParent() {
-            return parent;
-        }
-
-        public void setParent(Node<K, V> parent) {
-            this.parent = parent;
-        }
-
-        public Node<K, V> getLeft() {
-            return left;
-        }
-
-        public void setLeft(Node<K, V> left) {
-            this.left = left;
-        }
-
-        public Node<K, V> getRight() {
-            return right;
-        }
-
-        public void setRight(Node<K, V> right) {
-            this.right = right;
+            this.height = 0;
+            this.parent = null;
+            this.left = null;
+            this.right = null;
         }
 
         @Override
@@ -78,23 +34,32 @@ public class AvlTree<K extends Comparable<K>, V> {
     public void put(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
-        Node<K, V> node = new Node<>(key, value); //TODO как инициализировать - определить стартовую точку root?
-        int comparision = key.compareTo(node.key);
-        if (root == null) {
+        Node<K, V> node = root;
+        Node<K, V> newNode;
+        if (node == null) {
             root = new Node<>(key, value);
+            size++;
             return;
         }
+        int comparision = key.compareTo(node.key);
         if (comparision == 0)
             node.value = value;
+
         if (comparision < 0) {
             if (node.left == null) {
-                new Node<>(key, value);
-            }else
+                newNode = new Node<>(key, value);
+                node.left = newNode;
+                newNode.parent = node;
+                size++;
+            } else
                 put(node.key, value);
         } else {
-            if (node.right == null)
-                new Node<>(key, value);
-            else
+            if (node.right == null) {
+                newNode = new Node<>(key, value);
+                node.right = newNode;
+                newNode.parent = node;
+                size++;
+            } else
                 put(node.key, value);
         }
     }
