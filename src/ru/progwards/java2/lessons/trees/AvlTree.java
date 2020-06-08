@@ -84,7 +84,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-
+        //TODO - что дальше? Надо перестроение!
     }
 
     public V find(K key) {
@@ -195,6 +195,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(14, "*14*");
         System.out.println(test.find(10));
         System.out.println(test.size);
+        test.change(10,11);
     }
 
 }
