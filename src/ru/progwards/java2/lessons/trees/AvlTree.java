@@ -46,7 +46,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         add(node, key, value);
     }
 
-    private void add(Node<K, V> node, K key, V value) {
+    private Node<K, V> add(Node<K, V> node, K key, V value) {
         Node<K, V> newNode;
         int comparision = key.compareTo(node.key);
         if (comparision < 0) {
@@ -57,8 +57,10 @@ public class AvlTree<K extends Comparable<K>, V> {
                 size++;
             } else if (key.compareTo(node.left.key) == 0)
                 node.left.value = value;
-            else
-                add(node, key, value);
+            else {
+                newNode = node.left;
+                return add(newNode, key, value);
+            }
         } else {
             if (node.right == null) {
                 newNode = new Node<>(key, value);
@@ -67,21 +69,27 @@ public class AvlTree<K extends Comparable<K>, V> {
                 size++;
             } else if (key.compareTo(node.right.key) == 0)
                 node.right.value = value;
-            else
-                add(node, key, value);
+            else {
+                newNode = node.right;
+                return add(newNode, key, value);
+            }
         }
+        return null;
     }
 
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(5, "five");
-        test.put(5, "newFive");
+//        test.put(5, "newFive");
         test.put(3, "three");
         test.put(6, "six");
-        test.put(3, "newThree");
-        test.put(6, "newSix");
+//        test.put(3, "newThree");
+//        test.put(6, "newSix");
         test.put(4, "four");
+        test.put(2, "two");
+        test.put(7, "seven");
+        test.put(10, "ten");
     }
 
 }
