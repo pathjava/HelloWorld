@@ -8,7 +8,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     private Node<K, V> root;
     private int size = 0;
 
-    public class Node<K, V> {
+    public static class Node<K, V> {
         private int height;
         private final K key;
         private V value;
@@ -34,24 +34,27 @@ public class AvlTree<K extends Comparable<K>, V> {
     public void put(K key, V value) {
         if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
-        Node<K, V> node = root;
-        Node<K, V> newNode;
-        if (node == null) {
+        if (root == null) {
             root = new Node<>(key, value);
             size++;
             return;
+        } else if (key.compareTo(root.key) == 0) {
+            root.value = value;
+            return;
         }
-        int comparision = key.compareTo(node.key);
-        if (comparision == 0)
-            node.value = value;
+        Node<K, V> node = root;
+        Node<K, V> newNode;
 
+        int comparision = key.compareTo(node.key);
         if (comparision < 0) {
             if (node.left == null) {
                 newNode = new Node<>(key, value);
                 node.left = newNode;
                 newNode.parent = node;
                 size++;
-            } else
+            } else if (key.compareTo(node.left.key) == 0)
+                node.left.value = value;
+            else
                 put(node.key, value);
         } else {
             if (node.right == null) {
@@ -59,7 +62,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right = newNode;
                 newNode.parent = node;
                 size++;
-            } else
+            } else if (key.compareTo(node.right.key) == 0)
+                node.right.value = value;
+            else
                 put(node.key, value);
         }
     }
@@ -68,8 +73,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(5, "five");
+        test.put(5, "newFive");
         test.put(3, "three");
         test.put(6, "six");
+        test.put(3, "newThree");
+        test.put(6, "newSix");
     }
 
 }
