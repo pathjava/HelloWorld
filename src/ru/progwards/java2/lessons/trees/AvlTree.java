@@ -123,6 +123,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         return newNode;
     }
 
+    // TODO - сделать замену через удаление и добавление (с сохранением value удаляемого ключа)
     public void change(K oldKey, K newKey) {
         if (oldKey == null || newKey == null)
             throw new IllegalArgumentException("The key cannot be null!");
