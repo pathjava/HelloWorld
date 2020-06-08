@@ -43,10 +43,10 @@ public class AvlTree<K extends Comparable<K>, V> {
             return;
         }
         Node<K, V> node = root;
-        add(node, key, value);
+        addFromPut(node, key, value);
     }
 
-    private Node<K, V> add(Node<K, V> node, K key, V value) {
+    private Node<K, V> addFromPut(Node<K, V> node, K key, V value) {
         Node<K, V> newNode;
         int comparision = key.compareTo(node.key);
         if (comparision < 0) {
@@ -59,7 +59,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left.value = value;
             else {
                 newNode = node.left;
-                return add(newNode, key, value);
+                return addFromPut(newNode, key, value);
             }
         } else {
             if (node.right == null) {
@@ -71,7 +71,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right.value = value;
             else {
                 newNode = node.right;
-                return add(newNode, key, value);
+                return addFromPut(newNode, key, value);
             }
         }
         return null;
