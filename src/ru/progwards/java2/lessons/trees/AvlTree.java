@@ -10,7 +10,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static class Node<K, V> {
         private int height;
-        private final K key;
+        private K key;
         private V value;
         private Node<K, V> parent;
         private Node<K, V> left;
@@ -33,7 +33,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public void put(K key, V value) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException("The key cannot be null!"); //TODO change all exception
         if (root == null) {
             root = new Node<>(key, value);
             size++;
@@ -55,6 +55,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left = newNode;
                 newNode.parent = node;
                 size++;
+                //TODO запускаем перестроение
             } else if (key.compareTo(node.left.key) == 0)
                 node.left.value = value;
             else {
@@ -67,6 +68,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right = newNode;
                 newNode.parent = node;
                 size++;
+                //TODO запускаем перестроение
             } else if (key.compareTo(node.right.key) == 0)
                 node.right.value = value;
             else {
@@ -74,14 +76,22 @@ public class AvlTree<K extends Comparable<K>, V> {
                 return addFromPut(newNode, key, value);
             }
         }
-        return null;
+        return null; //TODO - правильно ли возвращать NULL?
+    }
+
+    public void delete(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("The key cannot be null!");
+        if (root == null)
+            throw new IllegalArgumentException("AVL Tree is empty!");
+
     }
 
     public V find(K key) {
         if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!"); //TODO change exception
+            throw new IllegalArgumentException("AVL Tree is empty!");
         if (key.compareTo(root.key) == 0)
             return root.value;
         Node<K, V> node = root;
@@ -114,6 +124,59 @@ public class AvlTree<K extends Comparable<K>, V> {
         return newNode;
     }
 
+    public void change(K oldKey, K newKey) {
+        if (oldKey == null || newKey == null)
+            throw new IllegalArgumentException("The key cannot be null!");
+        if (root == null)
+            throw new IllegalArgumentException("AVL Tree is empty!");
+        if (oldKey.compareTo(root.key) == 0) {
+            root.key = newKey;
+            //TODO запускаем перестроение
+        }
+        Node<K, V> node = root;
+        keyReplacementFromChange(node, oldKey, newKey);
+    }
+
+    private Node<K, V> keyReplacementFromChange(Node<K, V> node, K oldKey, K newKey) {
+        Node<K, V> newNode;
+        int comparision = oldKey.compareTo(node.key);
+        if (comparision < 0) {
+            if (node.left == null)
+                throw new IllegalArgumentException("Key not found!");
+            else if (oldKey.compareTo(node.left.key) == 0) {
+                node.left.key = newKey;
+                //TODO запускаем перестроение
+            } else {
+                newNode = node.left;
+                return keyReplacementFromChange(newNode, oldKey, newKey);
+            }
+        } else {
+            if (node.right == null)
+                throw new IllegalArgumentException("Key not found!");
+            else if (oldKey.compareTo(node.right.key) == 0) {
+                node.right.key = newKey;
+                //TODO запускаем перестроение
+            } else {
+                newNode = node.right;
+                return keyReplacementFromChange(newNode, oldKey, newKey);
+            }
+        }
+        return null; //TODO - правильно ли возвращать NULL?
+    }
+
+    private int currentHeight(Node<K, V> node) {
+        return node == null ? 0 : node.height;
+    }
+
+    private void recalculateHeight() {
+
+    }
+
+    private int balanceFactor() {
+        int height = 0;
+        return height;
+    }
+
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
@@ -131,6 +194,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(7, "*new-7*");
         test.put(14, "*14*");
         System.out.println(test.find(10));
+        System.out.println(test.size);
     }
 
 }
