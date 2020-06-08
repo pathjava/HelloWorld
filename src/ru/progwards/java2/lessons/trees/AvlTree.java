@@ -77,6 +77,45 @@ public class AvlTree<K extends Comparable<K>, V> {
         return null;
     }
 
+    public V find(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("The key cannot be null!");
+        if (root == null)
+            throw new IllegalArgumentException("AVL Tree is empty!"); //TODO change exception
+        if (key.compareTo(root.key) == 0)
+            return root.value;
+        Node<K, V> node = root;
+        Node<K, V> newNode = keyAndValueSearch(node, key);
+        return newNode.value;
+    }
+
+    private Node<K, V> keyAndValueSearch(Node<K, V> node, K key) {
+        Node<K, V> newNode = null;
+        int comparision = key.compareTo(node.key);
+        if (comparision < 0) {
+            if (node.left == null)
+                throw new IllegalArgumentException("Key not found!");
+            else if (key.compareTo(node.left.key) == 0) {
+                newNode = node.left;
+                return newNode;
+            } else {
+                newNode = node.left;
+                keyAndValueSearch(newNode, key);
+            }
+        } else {
+            if (node.right == null)
+                throw new IllegalArgumentException("Key not found!");
+            else if (key.compareTo(node.right.key) == 0) {
+                newNode = node.right;
+                return newNode;
+            } else {
+                newNode = node.right;
+                keyAndValueSearch(newNode, key);
+            }
+        }
+        return newNode;
+    }
+
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
