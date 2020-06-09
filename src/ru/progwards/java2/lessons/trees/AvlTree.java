@@ -83,7 +83,53 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-        //TODO - что дальше? Надо перестроение!
+
+        Node<K, V> newNode;
+        if (key.compareTo(root.key) == 0) {
+            if (root.left == null && root.right == null)
+                root = null;
+            else
+                rebuildNodes(root, key);
+        } else {
+            Node<K, V> node = root;
+            newNode = keyAndValueSearch(node, key);
+            rebuildNodes(newNode, key);
+        }
+    }
+
+    private void rebuildNodes(Node<K, V> node, K key) {
+        Node<K, V> tempNode;
+        if (node.left == null && node.right == null)
+            node = null;
+        else {
+            if (balanceFactor(node) > 0) {
+                tempNode = searchMaxKey(node, key);
+            } else {
+                tempNode = searchMinKey(node, key);
+            }
+            node = tempNode;
+            tempNode = null;
+        }
+    }
+
+    private Node<K, V> searchMaxKey(Node<K, V> node, K key) {
+        Node<K, V> newNode;
+        if (key.compareTo(node.left.key) > 0)
+            if (node.right != null) {
+                newNode = node.right;
+                return searchMaxKey(newNode, key);
+            }
+        return null;
+    }
+
+    private Node<K, V> searchMinKey(Node<K, V> node, K key) {
+        Node<K, V> newNode;
+        if (key.compareTo(node.right.key) > 0)
+            if (node.left != null) {
+                newNode = node.left;
+                return searchMinKey(newNode, key);
+            }
+        return null;
     }
 
     public V find(K key) {
@@ -124,6 +170,10 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     // TODO - сделать замену через удаление и добавление (с сохранением value удаляемого ключа)
+    public void change(K oldKey, K newKey) {
+
+    }
+
     public void changeValue(K key, V newValue) {
         if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
@@ -132,10 +182,10 @@ public class AvlTree<K extends Comparable<K>, V> {
         if (key.compareTo(root.key) == 0)
             root.value = newValue;
         Node<K, V> node = root;
-        keyReplacementFromChange(node, key, newValue);
+        replacementValueFromChangeValue(node, key, newValue);
     }
 
-    private void keyReplacementFromChange(Node<K, V> node, K key, V newValue) {
+    private void replacementValueFromChangeValue(Node<K, V> node, K key, V newValue) {
         Node<K, V> newNode;
         int comparision = key.compareTo(node.key);
         if (comparision < 0) {
@@ -145,7 +195,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left.value = newValue;
             else {
                 newNode = node.left;
-                keyReplacementFromChange(newNode, key, newValue);
+                replacementValueFromChangeValue(newNode, key, newValue);
             }
         } else {
             if (node.right == null)
@@ -154,7 +204,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right.value = newValue;
             else {
                 newNode = node.right;
-                keyReplacementFromChange(newNode, key, newValue);
+                replacementValueFromChangeValue(newNode, key, newValue);
             }
         }
     }
@@ -174,22 +224,25 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
-        test.put(15, "*15*");
-//        test.put(5, "newFive");
-        test.put(12, "*12*");
-        test.put(16, "*16*");
-//        test.put(3, "newThree");
-//        test.put(6, "newSix");
-        test.put(40, "*40*");
-        test.put(7, "*7*");
-        test.put(10, "*10*");
+        test.put(32, "*32*");
+        test.put(45, "*45*");
         test.put(25, "*25*");
-        test.put(2, "*2*");
-        test.put(7, "*new-7*");
-        test.put(14, "*14*");
-        System.out.println(test.find(10));
+        test.put(27, "*27*");
+        test.put(29, "*29*");
+        test.put(28, "*28*");
+        test.put(38, "*38*");
+        test.put(50, "*50*");
+        test.put(47, "*47*");
+        test.put(26, "*26*");
+        test.put(23, "*23*");
+        test.put(24, "*24*");
+        test.put(19, "*19*");
+        test.put(20, "*20*");
+        test.put(17, "*17*");
+        test.put(21, "*21*");
+        System.out.println(test.find(26));
         System.out.println(test.size);
-        test.changeValue(10, "*new-10*");
+        test.changeValue(26, "*new-26*");
     }
 
 }
