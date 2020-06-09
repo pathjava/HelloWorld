@@ -124,41 +124,37 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     // TODO - сделать замену через удаление и добавление (с сохранением value удаляемого ключа)
-    public void change(K oldKey, K newKey) {
-        if (oldKey == null || newKey == null)
+    public void changeValue(K key, V newValue) {
+        if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-        if (oldKey.compareTo(root.key) == 0) {
-            root.key = newKey;
-            //TODO запускаем перестроение
-        }
+        if (key.compareTo(root.key) == 0)
+            root.value = newValue;
         Node<K, V> node = root;
-        keyReplacementFromChange(node, oldKey, newKey);
+        keyReplacementFromChange(node, key, newValue);
     }
 
-    private void keyReplacementFromChange(Node<K, V> node, K oldKey, K newKey) {
+    private void keyReplacementFromChange(Node<K, V> node, K key, V newValue) {
         Node<K, V> newNode;
-        int comparision = oldKey.compareTo(node.key);
+        int comparision = key.compareTo(node.key);
         if (comparision < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("Key not found!");
-            else if (oldKey.compareTo(node.left.key) == 0) {
-                node.left.key = newKey;
-                //TODO запускаем перестроение
-            } else {
+            else if (key.compareTo(node.left.key) == 0)
+                node.left.value = newValue;
+            else {
                 newNode = node.left;
-                keyReplacementFromChange(newNode, oldKey, newKey);
+                keyReplacementFromChange(newNode, key, newValue);
             }
         } else {
             if (node.right == null)
                 throw new IllegalArgumentException("Key not found!");
-            else if (oldKey.compareTo(node.right.key) == 0) {
-                node.right.key = newKey;
-                //TODO запускаем перестроение
-            } else {
+            else if (key.compareTo(node.right.key) == 0)
+                node.right.value = newValue;
+            else {
                 newNode = node.right;
-                keyReplacementFromChange(newNode, oldKey, newKey);
+                keyReplacementFromChange(newNode, key, newValue);
             }
         }
     }
@@ -193,7 +189,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(14, "*14*");
         System.out.println(test.find(10));
         System.out.println(test.size);
-        test.change(10, 11);
+        test.changeValue(10, "*new-10*");
     }
 
 }
