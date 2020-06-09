@@ -108,7 +108,9 @@ public class AvlTree<K extends Comparable<K>, V> {
             } else {
                 tempNode = searchMinKey(node, key);
             }
-            node = tempNode;
+            assert tempNode != null;
+            node.key = tempNode.key;
+            node.value = tempNode.value;
             tempNode = null;
         }
     }
@@ -124,13 +126,14 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> searchMinKey(Node<K, V> node, K key) {
-        Node<K, V> newNode;
-        if (key.compareTo(node.right.key) > 0)
+        Node<K, V> newNode = null;
+        if (key.compareTo(node.right.key) < 0)
             if (node.left != null) {
                 newNode = node.left;
-                return searchMinKey(newNode, key);
+                if (newNode.left != null)
+                    return searchMinKey(newNode, key);
             }
-        return null;
+        return newNode;
     }
 
     private int currentHeight(Node<K, V> node) {
@@ -226,22 +229,22 @@ public class AvlTree<K extends Comparable<K>, V> {
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(32, "*32*");
-        test.delete(32);
-//        test.put(45, "*45*");
-//        test.put(25, "*25*");
-//        test.put(27, "*27*");
-//        test.put(29, "*29*");
-//        test.put(28, "*28*");
-//        test.put(38, "*38*");
-//        test.put(50, "*50*");
-//        test.put(47, "*47*");
-//        test.put(26, "*26*");
-//        test.put(23, "*23*");
-//        test.put(24, "*24*");
-//        test.put(19, "*19*");
-//        test.put(20, "*20*");
-//        test.put(17, "*17*");
-//        test.put(21, "*21*");
+        test.put(45, "*45*");
+        test.put(25, "*25*");
+        test.put(27, "*27*");
+        test.put(29, "*29*");
+        test.put(28, "*28*");
+        test.put(38, "*38*");
+        test.put(50, "*50*");
+        test.put(47, "*47*");
+        test.put(26, "*26*");
+        test.put(23, "*23*");
+        test.put(24, "*24*");
+        test.put(19, "*19*");
+        test.put(20, "*20*");
+        test.put(17, "*17*");
+        test.put(21, "*21*");
+        test.delete(27);
 //        System.out.println(test.find(26));
 //        System.out.println(test.size);
 //        test.changeValue(26, "*new-26*");
