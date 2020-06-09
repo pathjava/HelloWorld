@@ -101,13 +101,15 @@ public class AvlTree<K extends Comparable<K>, V> {
     private void rebuildNodes(Node<K, V> node, K key) {
         Node<K, V> tempNode;
         if (node.left == null && node.right == null)
-            node = null;
+            if (key.compareTo(node.parent.key) < 0)
+                node.parent.left = null;
+            else
+                node.parent.right = null;
         else {
-            if (balanceFactor(node) > 0) {
+            if (balanceFactor(node) > 0)
                 tempNode = searchMaxKey(node, key);
-            } else {
+            else
                 tempNode = searchMinKey(node, key);
-            }
             assert tempNode != null;
             node.key = tempNode.key;
             node.value = tempNode.value;
