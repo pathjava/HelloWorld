@@ -86,9 +86,10 @@ public class AvlTree<K extends Comparable<K>, V> {
 
         Node<K, V> newNode;
         if (key.compareTo(root.key) == 0) {
-            if (root.left == null && root.right == null)
+            if (root.left == null && root.right == null) {
                 root = null;
-            else
+                size--;
+            } else
                 rebuildNodes(root, key);
         } else {
             Node<K, V> node = root;
@@ -130,6 +131,18 @@ public class AvlTree<K extends Comparable<K>, V> {
                 return searchMinKey(newNode, key);
             }
         return null;
+    }
+
+    private int currentHeight(Node<K, V> node) {
+        return node == null ? 0 : node.height;
+    }
+
+    private int recalculateHeight(Node<K, V> node) {
+        return Math.max(node.left.height, node.right.height) + 1;
+    }
+
+    private int balanceFactor(Node<K, V> node) {
+        return node.left.height - node.right.height;
     }
 
     public V find(K key) {
@@ -209,40 +222,29 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    private int currentHeight(Node<K, V> node) {
-        return node == null ? 0 : node.height;
-    }
-
-    private int recalculateHeight(Node<K, V> node) {
-        return Math.max(node.left.height, node.right.height) + 1;
-    }
-
-    private int balanceFactor(Node<K, V> node) {
-        return node.left.height - node.right.height;
-    }
-
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(32, "*32*");
-        test.put(45, "*45*");
-        test.put(25, "*25*");
-        test.put(27, "*27*");
-        test.put(29, "*29*");
-        test.put(28, "*28*");
-        test.put(38, "*38*");
-        test.put(50, "*50*");
-        test.put(47, "*47*");
-        test.put(26, "*26*");
-        test.put(23, "*23*");
-        test.put(24, "*24*");
-        test.put(19, "*19*");
-        test.put(20, "*20*");
-        test.put(17, "*17*");
-        test.put(21, "*21*");
-        System.out.println(test.find(26));
-        System.out.println(test.size);
-        test.changeValue(26, "*new-26*");
+        test.delete(32);
+//        test.put(45, "*45*");
+//        test.put(25, "*25*");
+//        test.put(27, "*27*");
+//        test.put(29, "*29*");
+//        test.put(28, "*28*");
+//        test.put(38, "*38*");
+//        test.put(50, "*50*");
+//        test.put(47, "*47*");
+//        test.put(26, "*26*");
+//        test.put(23, "*23*");
+//        test.put(24, "*24*");
+//        test.put(19, "*19*");
+//        test.put(20, "*20*");
+//        test.put(17, "*17*");
+//        test.put(21, "*21*");
+//        System.out.println(test.find(26));
+//        System.out.println(test.size);
+//        test.changeValue(26, "*new-26*");
     }
 
 }
