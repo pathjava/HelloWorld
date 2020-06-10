@@ -135,12 +135,12 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.parent.right = null;
             else
                 node.parent.left = null;
-        else if (node.right == null) {
-            node.parent.right = node.left;
-            node.left.parent = node.parent;
-        } else if (node.left == null) {
+        else if (node.right != null) {
             node.parent.right = node.right;
             node.right.parent = node.parent;
+        } else if (node.left != null) { // TODO - how here?
+            node.parent.right = node.left;
+            node.left.parent = node.parent;
         }
     }
 
@@ -260,29 +260,48 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
-        test.put(32, "*32*");
-        test.put(45, "*45*");
-        test.put(25, "*25*");
-        test.put(27, "*27*");
-        test.put(29, "*29*");
-        test.put(28, "*28*");
-        test.put(38, "*38*");
-        test.put(36, "*36*");
-        test.put(37, "*37*");
-        test.put(33, "*33*");
-        test.put(34, "*34*");
-        test.put(50, "*50*");
-        test.put(47, "*47*");
-        test.put(48, "*48*");
-        test.put(49, "*49*");
-        test.put(26, "*26*");
-        test.put(23, "*23*");
-        test.put(24, "*24*");
-        test.put(19, "*19*");
-        test.put(20, "*20*");
-        test.put(17, "*17*");
-        test.put(21, "*21*");
+        test.put(14, "***");
+        test.put(6, "***");
+        test.put(25, "***");
+        test.put(35, "***");
+        test.put(20, "***");
+        test.put(22, "***");
+        test.put(15, "***");
+        test.put(21, "***");
+        test.put(41, "***");
+        test.put(32, "***");
+        test.put(33, "***");
+        test.put(11, "***");
+        test.put(3, "***");
+        test.put(12, "***");
+        test.put(10, "***");
+        test.put(4, "***");
+        test.put(2, "***");
         test.delete(36);
+
+//        test.put(32, "*32*");
+//        test.put(45, "*45*");
+//        test.put(25, "*25*");
+//        test.put(27, "*27*");
+//        test.put(29, "*29*");
+//        test.put(28, "*28*");
+//        test.put(38, "*38*");
+//        test.put(36, "*36*");
+//        test.put(37, "*37*");
+//        test.put(33, "*33*");
+//        test.put(34, "*34*");
+//        test.put(50, "*50*");
+//        test.put(47, "*47*");
+//        test.put(48, "*48*");
+//        test.put(49, "*49*");
+//        test.put(26, "*26*");
+//        test.put(23, "*23*");
+//        test.put(24, "*24*");
+//        test.put(19, "*19*");
+//        test.put(20, "*20*");
+//        test.put(17, "*17*");
+//        test.put(21, "*21*");
+//        test.delete(36);
 //        System.out.println(test.find(26));
 //        System.out.println(test.size);
 //        test.changeValue(26, "*new-26*");
