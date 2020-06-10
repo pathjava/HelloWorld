@@ -125,10 +125,22 @@ public class AvlTree<K extends Comparable<K>, V> {
                 tempNode = searchMinKey(node.right);
             node.key = tempNode.key;
             node.value = tempNode.value;
-            if (tempNode.left != null) {
-                tempNode.parent.right = tempNode.left;
-                tempNode.left.parent = tempNode.parent;
-            }
+            removeMin(tempNode);
+        }
+    }
+
+    private void removeMin(Node<K, V> node) {
+        if (node.right == null && node.left == null)
+            if (node.parent.key.compareTo(node.key) < 0)
+                node.parent.right = null;
+            else
+                node.parent.left = null;
+        else if (node.right == null) {
+            node.parent.right = node.left;
+            node.left.parent = node.parent;
+        } else if (node.left == null) {
+            node.parent.right = node.right;
+            node.right.parent = node.parent;
         }
     }
 
