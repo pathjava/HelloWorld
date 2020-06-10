@@ -119,6 +119,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private void replaceKeyRightTree(Node<K, V> node) {
+        Node<K, V> tempNode;
         if (node.right == null && node.left == null)
             node.parent.right = null;
         else if (node.right == null) {
@@ -128,7 +129,13 @@ public class AvlTree<K extends Comparable<K>, V> {
             node.parent.right = node.right;
             node.right.parent = node.parent;
         } else {
-
+            tempNode = searchMaxKey(node);
+            node.key = tempNode.key;
+            node.value = tempNode.value;
+            if (tempNode.left != null) {
+                tempNode.parent.right = tempNode.left;
+                tempNode.left.parent = tempNode.parent;
+            }
         }
     }
 
@@ -147,14 +154,13 @@ public class AvlTree<K extends Comparable<K>, V> {
             node.parent.right = null;
     }
 
-    private Node<K, V> searchMaxKey(Node<K, V> node, K key) {
+    private Node<K, V> searchMaxKey(Node<K, V> node) {
         Node<K, V> newNode = null;
-        if (key.compareTo(node.left.key) > 0)
-            if (node.right != null) {
-                newNode = node.right;
-                if (newNode.right != null)
-                    return searchMaxKey(newNode, key);
-            }
+        if (node.right != null) {
+            newNode = node.right;
+            if (newNode.right != null)
+                return searchMaxKey(newNode);
+        }
         return newNode;
     }
 
@@ -277,7 +283,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(20, "*20*");
         test.put(17, "*17*");
         test.put(21, "*21*");
-        test.delete(20);
+        test.delete(25);
 //        System.out.println(test.find(26));
 //        System.out.println(test.size);
 //        test.changeValue(26, "*new-26*");
