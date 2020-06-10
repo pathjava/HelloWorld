@@ -89,7 +89,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 root = null;
                 size--;
             } else
-                replaceKeyRoot(root, key); //TODO - старое использование - проверить и возможно переделать на replaceKey
+                replaceKeyRoot(root); //TODO - старое использование - проверить и возможно переделать на replaceKey
         } else {
             Node<K, V> node = root;
             rebuildNodes(node, key);
@@ -104,34 +104,39 @@ public class AvlTree<K extends Comparable<K>, V> {
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.left;
             if (key.compareTo(newNode.key) == 0)
-                replaceKeyLeftTree(newNode, key);
+                replaceKeyLeftTree(newNode);
             else
-                rebuildNodes(newNode,key);
+                rebuildNodes(newNode, key);
         } else { // или на право
             if (node.right == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.right;
             if (key.compareTo(newNode.key) == 0)
-                replaceKeyRightTree(newNode, key);
+                replaceKeyRightTree(newNode);
             else
-                rebuildNodes(newNode,key);
+                rebuildNodes(newNode, key);
         }
     }
 
-    private void replaceKeyRightTree(Node<K, V> node, K key) {
+    private void replaceKeyRightTree(Node<K, V> node) {
         if (node.right == null && node.left == null)
             node.parent.right = null;
-        if (node.right == null) {
+        else if (node.right == null) {
             node.parent.right = node.left;
             node.left.parent = node.parent;
+        } else if (node.left == null) {
+            node.parent.right = node.right;
+            node.right.parent = node.parent;
+        } else {
+
         }
     }
 
-    private void replaceKeyLeftTree(Node<K, V> node, K key) {
+    private void replaceKeyLeftTree(Node<K, V> node) {
 
     }
 
-    private void replaceKeyRoot(Node<K, V> rootNode, K key) {
+    private void replaceKeyRoot(Node<K, V> rootNode) {
 
     }
 
@@ -272,7 +277,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(20, "*20*");
         test.put(17, "*17*");
         test.put(21, "*21*");
-        test.delete(29);
+        test.delete(20);
 //        System.out.println(test.find(26));
 //        System.out.println(test.size);
 //        test.changeValue(26, "*new-26*");
