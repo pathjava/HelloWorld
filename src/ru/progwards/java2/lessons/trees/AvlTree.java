@@ -104,7 +104,7 @@ public class AvlTree<K extends Comparable<K>, V> {
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.left;
             if (key.compareTo(newNode.key) == 0)
-                replaceKeyLeftTree(newNode);
+                replaceKeyLeft(newNode);
             else
                 rebuildNodes(newNode, key);
         } else { // или на право
@@ -112,13 +112,13 @@ public class AvlTree<K extends Comparable<K>, V> {
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.right;
             if (key.compareTo(newNode.key) == 0)
-                replaceKeyRightTree(newNode);
+                replaceKeyRight(newNode);
             else
                 rebuildNodes(newNode, key);
         }
     }
 
-    private void replaceKeyRightTree(Node<K, V> node) {
+    private void replaceKeyRight(Node<K, V> node) {
         Node<K, V> tempNode;
         if (node.right == null && node.left == null)
             node.parent.right = null;
@@ -139,8 +139,25 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    private void replaceKeyLeftTree(Node<K, V> node) {
-
+    private void replaceKeyLeft(Node<K, V> node) {
+        Node<K, V> tempNode;
+        if (node.right == null && node.left == null)
+            node.parent.left = null;
+        else if (node.left == null) {
+            node.parent.left = node.right;
+            node.right.parent = node.parent;
+        } else if (node.right == null) {
+            node.parent.left = node.left;
+            node.left.parent = node.parent;
+        } else {
+            tempNode = searchMinKey(node);
+            node.key = tempNode.key;
+            node.value = tempNode.value;
+            if (tempNode.right != null) {
+                tempNode.parent.left = tempNode.right;
+                tempNode.right.parent = tempNode.parent;
+            }
+        }
     }
 
     private void replaceKeyRoot(Node<K, V> rootNode) {
@@ -164,14 +181,13 @@ public class AvlTree<K extends Comparable<K>, V> {
         return newNode;
     }
 
-    private Node<K, V> searchMinKey(Node<K, V> node, K key) {
+    private Node<K, V> searchMinKey(Node<K, V> node) {
         Node<K, V> newNode = null;
-        if (key.compareTo(node.right.key) < 0)
-            if (node.left != null) {
-                newNode = node.left;
-                if (newNode.left != null)
-                    return searchMinKey(newNode, key);
-            }
+        if (node.left != null) {
+            newNode = node.left;
+            if (newNode.left != null)
+                return searchMinKey(newNode);
+        }
         return newNode;
     }
 
