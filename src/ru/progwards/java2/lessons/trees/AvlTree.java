@@ -101,30 +101,35 @@ public class AvlTree<K extends Comparable<K>, V> {
     private void rebuildNodes(Node<K, V> node, K key) {
         Node<K, V> tempNode;
         if (node.left == null && node.right == null)
-            if (key.compareTo(node.parent.key) < 0)
-                node.parent.left = null;
-            else
-                node.parent.right = null;
+            removeEdgeNode(node, key);
         else {
-            if (balanceFactor(node) > 0)
+            if (balanceFactor(node) == 0) //TODO исправить == на <
                 tempNode = searchMaxKey(node, key);
             else
                 tempNode = searchMinKey(node, key);
             assert tempNode != null;
             node.key = tempNode.key;
             node.value = tempNode.value;
-            tempNode = null;
+            removeEdgeNode(tempNode, key);
         }
     }
 
+    private void removeEdgeNode(Node<K, V> node, K key) {
+        if (key.compareTo(node.parent.key) < 0)
+            node.parent.left = null;
+        else
+            node.parent.right = null;
+    }
+
     private Node<K, V> searchMaxKey(Node<K, V> node, K key) {
-        Node<K, V> newNode;
+        Node<K, V> newNode = null;
         if (key.compareTo(node.left.key) > 0)
             if (node.right != null) {
                 newNode = node.right;
-                return searchMaxKey(newNode, key);
+                if (newNode.right != null)
+                    return searchMaxKey(newNode, key);
             }
-        return null;
+        return newNode;
     }
 
     private Node<K, V> searchMinKey(Node<K, V> node, K key) {
@@ -246,7 +251,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(20, "*20*");
         test.put(17, "*17*");
         test.put(21, "*21*");
-        test.delete(27);
+        test.delete(23);
 //        System.out.println(test.find(26));
 //        System.out.println(test.size);
 //        test.changeValue(26, "*new-26*");
