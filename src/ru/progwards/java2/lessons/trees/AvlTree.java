@@ -113,14 +113,25 @@ public class AvlTree<K extends Comparable<K>, V> {
             node.key = newNode.key;
             node.value = newNode.value;
             if (newNode.left != null) {
-                if (newNode.left.key.compareTo(newNode.parent.key) > 0) {
+                if (newNode.left.key.compareTo(newNode.parent.key) > 0)
                     newNode.parent.right = newNode.left;
-                } else {
+                else
                     newNode.parent.left = newNode.left;
-                }
                 newNode.left.parent = newNode.parent;
             } else
                 newNode.parent.right = null;
+        } else if (node.right != null) {
+            newNode = searchMinKey(node.right);
+            node.key = newNode.key;
+            node.value = newNode.value;
+            if (newNode.right != null) {
+                if (newNode.right.key.compareTo(newNode.parent.key) < 0)
+                    newNode.parent.left = newNode.right;
+                else
+                    newNode.parent.right = newNode.right;
+                newNode.right.parent = newNode.parent;
+            } else
+                newNode.parent.left = null;
         }
     }
 
@@ -261,7 +272,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(19, "***");
         test.put(23, "***");
         test.put(25, "***");
-//        test.put(27, "***");
+        test.put(27, "***");
         test.put(30, "***");
         test.put(2, "***");
         test.put(4, "***");
@@ -271,7 +282,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(22, "***");
         test.put(1, "***");
 
-        test.delete(29);
+        test.delete(13);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
