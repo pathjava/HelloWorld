@@ -84,79 +84,42 @@ public class AvlTree<K extends Comparable<K>, V> {
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
 
-        if (key.compareTo(root.key) == 0) {
-            if (root.left == null && root.right == null) {
-                root = null;
-                size--;
-            } else
-                replaceKeyRoot(root); //TODO - старое использование - проверить и возможно переделать на replaceKey
-        } else {
-            Node<K, V> node = root;
-            rebuildNodes(node, key);
-        }
+        Node<K, V> node = root;
+        searchNode(node, key);
+
     }
 
-    private void rebuildNodes(Node<K, V> node, K key) {
+    private void searchNode(Node<K, V> node, K key) {
         Node<K, V> newNode;
-        int comparision = key.compareTo(node.key); // куда идем
-        if (comparision < 0) { // на лево
+        if (key.compareTo(node.key) < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.left;
-        } else { // или на право
+        } else {
             if (node.right == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.right;
         }
         if (key.compareTo(newNode.key) == 0)
-            replaceKeys(newNode);
+            rebuildNodes(newNode);
         else
-            rebuildNodes(newNode, key);
+            searchNode(newNode, key);
     }
 
-    private void replaceKeys(Node<K, V> node) {
-        Node<K, V> tempNode;
-        if (node.right == null && node.left == null) // удаление конечного листа
-            if (node.parent.key.compareTo(node.key) < 0)
-                node.parent.right = null;
-            else
-                node.parent.left = null;
-        else {
-            if (node.left != null)
-                tempNode = searchMaxKey(node.left);
-            else
-                tempNode = searchMinKey(node.right);
-            node.key = tempNode.key;
-            node.value = tempNode.value;
-            removeMin(tempNode);
+    private void rebuildNodes(Node<K, V> node) {
+        Node<K, V> newNode;
+        if (node.left != null) {
+            newNode = searchMaxKey(node.left);
+            node.key = newNode.key;
+            node.value = newNode.value;
+            if (newNode.left != null) {
+                newNode.parent.right = newNode.left;
+                newNode.left.parent = newNode.parent;
+            } else
+                newNode.parent.right = null;
         }
     }
 
-    private void removeMin(Node<K, V> node) {
-        if (node.right == null && node.left == null)
-            if (node.parent.key.compareTo(node.key) < 0)
-                node.parent.left = null;
-            else
-                node.parent.right = null;
-        else if (node.left == null) {
-            if (node.parent.right.key.compareTo(node.key) == 0)
-                node.parent.right = node.right;
-            else
-                node.parent.left = node.right;
-        } else {
-            if (node.parent.left.key.compareTo(node.key) == 0) {
-                node.parent.left = node.left;
-                node.parent.left.parent = node.parent;
-            } else {
-                node.parent.right = node.left;
-                node.parent.right.parent = node.parent;
-            }
-        }
-    }
-
-    private void replaceKeyRoot(Node<K, V> rootNode) {
-
-    }
 
     private Node<K, V> searchMaxKey(Node<K, V> node) {
         Node<K, V> newNode;
@@ -270,24 +233,41 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
-        test.put(14, "***");
-        test.put(6, "***");
-        test.put(25, "***");
-        test.put(35, "***");
-        test.put(20, "***");
-        test.put(22, "***");
-        test.put(15, "***");
         test.put(21, "***");
-        test.put(41, "***");
+        test.put(13, "***");
+        test.put(29, "***");
+        test.put(8, "***");
+        test.put(18, "***");
+        test.put(26, "***");
         test.put(32, "***");
-        test.put(33, "***");
+        test.put(5, "***");
         test.put(11, "***");
+        test.put(16, "***");
+        test.put(20, "***");
+        test.put(24, "***");
+        test.put(28, "***");
+        test.put(31, "***");
+        test.put(33, "***");
         test.put(3, "***");
-        test.put(12, "***");
+        test.put(7, "***");
         test.put(10, "***");
-        test.put(4, "***");
+        test.put(12, "***");
+        test.put(15, "***");
+        test.put(17, "***");
+        test.put(19, "***");
+        test.put(23, "***");
+        test.put(25, "***");
+        test.put(27, "***");
+        test.put(30, "***");
         test.put(2, "***");
-        test.delete(2);
+        test.put(4, "***");
+        test.put(6, "***");
+        test.put(9, "***");
+        test.put(14, "***");
+        test.put(22, "***");
+        test.put(1, "***");
+
+        test.delete(26);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
