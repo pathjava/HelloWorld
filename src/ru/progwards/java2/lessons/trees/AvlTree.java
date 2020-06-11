@@ -107,11 +107,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private void rebuildNodes(Node<K, V> node) {
-        if (node.left != null) {
+        if (node.left != null)
             rebuildNodesLeft(node);
-        } else if (node.right != null) {
+        else if (node.right != null)
             rebuildNodesRight(node);
-        } else
+        else
             root = null;
     }
 
