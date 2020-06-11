@@ -107,37 +107,46 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private void rebuildNodes(Node<K, V> node) {
-        Node<K, V> newNode;
         if (node.left != null) {
-            newNode = searchMaxKey(node.left);
-            node.key = newNode.key;
-            node.value = newNode.value;
-            if (newNode.left != null) {
-                if (newNode.left.key.compareTo(newNode.parent.key) > 0)
-                    newNode.parent.right = newNode.left;
-                else
-                    newNode.parent.left = newNode.left;
-                newNode.left.parent = newNode.parent;
-            } else if (newNode.right == null)
-                newNode.parent.left = null;
-            else
-                newNode.parent.right = null;
+            rebuildNodesLeft(node);
         } else if (node.right != null) {
-            newNode = searchMinKey(node.right);
-            node.key = newNode.key;
-            node.value = newNode.value;
-            if (newNode.right != null) {
-                if (newNode.right.key.compareTo(newNode.parent.key) < 0)
-                    newNode.parent.left = newNode.right;
-                else
-                    newNode.parent.right = newNode.right;
-                newNode.right.parent = newNode.parent;
-            } else if (newNode.left == null)
-                newNode.parent.right = null;
-            else
-                newNode.parent.left = null;
+            rebuildNodesRight(node);
         } else
             root = null;
+    }
+
+    private void rebuildNodesLeft(Node<K, V> node) {
+        Node<K, V> newNode;
+        newNode = searchMaxKey(node.left);
+        node.key = newNode.key;
+        node.value = newNode.value;
+        if (newNode.left != null) {
+            if (newNode.left.key.compareTo(newNode.parent.key) > 0)
+                newNode.parent.right = newNode.left;
+            else
+                newNode.parent.left = newNode.left;
+            newNode.left.parent = newNode.parent;
+        } else if (newNode.right == null)
+            newNode.parent.left = null;
+        else
+            newNode.parent.right = null;
+    }
+
+    private void rebuildNodesRight(Node<K, V> node) {
+        Node<K, V> newNode;
+        newNode = searchMinKey(node.right);
+        node.key = newNode.key;
+        node.value = newNode.value;
+        if (newNode.right != null) {
+            if (newNode.right.key.compareTo(newNode.parent.key) < 0)
+                newNode.parent.left = newNode.right;
+            else
+                newNode.parent.right = newNode.right;
+            newNode.right.parent = newNode.parent;
+        } else if (newNode.left == null)
+            newNode.parent.right = null;
+        else
+            newNode.parent.left = null;
     }
 
     private Node<K, V> searchMaxKey(Node<K, V> node) {
