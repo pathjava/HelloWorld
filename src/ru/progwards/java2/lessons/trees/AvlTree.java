@@ -261,7 +261,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(19, "***");
         test.put(23, "***");
         test.put(25, "***");
-        test.put(27, "***");
+//        test.put(27, "***");
         test.put(30, "***");
         test.put(2, "***");
         test.put(4, "***");
@@ -271,7 +271,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(22, "***");
         test.put(1, "***");
 
-        test.delete(24);
+        test.delete(29);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
