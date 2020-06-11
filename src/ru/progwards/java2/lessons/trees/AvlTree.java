@@ -94,7 +94,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             if (node.left == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.left;
-        } else if (key.compareTo(node.key) > 0){
+        } else if (key.compareTo(node.key) > 0) {
             if (node.right == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.right;
@@ -118,7 +118,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 else
                     newNode.parent.left = newNode.left;
                 newNode.left.parent = newNode.parent;
-            } else
+            } else if (newNode.right == null)
+                newNode.parent.left = null;
+            else
                 newNode.parent.right = null;
         } else if (node.right != null) {
             newNode = searchMinKey(node.right);
@@ -130,7 +132,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 else
                     newNode.parent.right = newNode.right;
                 newNode.right.parent = newNode.parent;
-            } else
+            } else if (newNode.left == null)
+                newNode.parent.right = null;
+            else
                 newNode.parent.left = null;
         } else
             root = null;
