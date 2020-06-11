@@ -116,8 +116,8 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     private void replaceKeys(Node<K, V> node) {
         Node<K, V> tempNode;
-        if (node.right == null && node.left == null)
-            if (node.parent.right.key.compareTo(node.key) == 0)
+        if (node.right == null && node.left == null) // удаление конечного листа
+            if (node.parent.key.compareTo(node.key) < 0)
                 node.parent.right = null;
             else
                 node.parent.left = null;
@@ -134,7 +134,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     private void removeMin(Node<K, V> node) {
         if (node.right == null && node.left == null)
-            if (node.parent.left.key.compareTo(node.key) == 0)
+            if (node.parent.key.compareTo(node.key) < 0)
                 node.parent.left = null;
             else
                 node.parent.right = null;
@@ -287,7 +287,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(10, "***");
         test.put(4, "***");
         test.put(2, "***");
-        test.delete(25);
+        test.delete(2);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
