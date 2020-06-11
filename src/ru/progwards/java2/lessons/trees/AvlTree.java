@@ -48,8 +48,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     private void addFromPut(Node<K, V> node, K key, V value) {
         Node<K, V> newNode;
-        int comparision = key.compareTo(node.key);
-        if (comparision < 0) {
+        if (key.compareTo(node.key) < 0) {
             if (node.left == null) {
                 newNode = new Node<>(key, value);
                 node.left = newNode;
