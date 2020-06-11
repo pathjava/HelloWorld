@@ -144,10 +144,13 @@ public class AvlTree<K extends Comparable<K>, V> {
             else
                 node.parent.left = node.right;
         } else {
-            if (node.parent.left.key.compareTo(node.key) == 0)
+            if (node.parent.left.key.compareTo(node.key) == 0) {
                 node.parent.left = node.left;
-            else
+                node.parent.left.parent = node.parent;
+            } else {
                 node.parent.right = node.left;
+                node.parent.right.parent = node.parent;
+            }
         }
     }
 
@@ -284,7 +287,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(10, "***");
         test.put(4, "***");
         test.put(2, "***");
-        test.delete(3);
+        test.delete(25);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
