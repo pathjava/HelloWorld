@@ -86,7 +86,6 @@ public class AvlTree<K extends Comparable<K>, V> {
 
         Node<K, V> node = root;
         searchNode(node, key);
-
     }
 
     private void searchNode(Node<K, V> node, K key) {
@@ -95,11 +94,12 @@ public class AvlTree<K extends Comparable<K>, V> {
             if (node.left == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.left;
-        } else {
+        } else if (key.compareTo(node.key) > 0){
             if (node.right == null)
                 throw new IllegalArgumentException("This key is not exist!");
             newNode = node.right;
-        }
+        } else
+            newNode = root;
         if (key.compareTo(newNode.key) == 0)
             rebuildNodes(newNode);
         else
@@ -132,9 +132,9 @@ public class AvlTree<K extends Comparable<K>, V> {
                 newNode.right.parent = newNode.parent;
             } else
                 newNode.parent.left = null;
-        }
+        } else
+            root = null;
     }
-
 
     private Node<K, V> searchMaxKey(Node<K, V> node) {
         Node<K, V> newNode;
@@ -250,39 +250,39 @@ public class AvlTree<K extends Comparable<K>, V> {
         AvlTree<Integer, String> test = new AvlTree<>();
         test.put(21, "***");
         test.put(13, "***");
-        test.put(29, "***");
-        test.put(8, "***");
-        test.put(18, "***");
-        test.put(26, "***");
-        test.put(32, "***");
-        test.put(5, "***");
-        test.put(11, "***");
-        test.put(16, "***");
-        test.put(20, "***");
-        test.put(24, "***");
-        test.put(28, "***");
-        test.put(31, "***");
-        test.put(33, "***");
-        test.put(3, "***");
-        test.put(7, "***");
-        test.put(10, "***");
-        test.put(12, "***");
-        test.put(15, "***");
-        test.put(17, "***");
-        test.put(19, "***");
-        test.put(23, "***");
-        test.put(25, "***");
-        test.put(27, "***");
-        test.put(30, "***");
-        test.put(2, "***");
-        test.put(4, "***");
-        test.put(6, "***");
-        test.put(9, "***");
-        test.put(14, "***");
-        test.put(22, "***");
-        test.put(1, "***");
+//        test.put(29, "***");
+//        test.put(8, "***");
+//        test.put(18, "***");
+//        test.put(26, "***");
+//        test.put(32, "***");
+//        test.put(5, "***");
+//        test.put(11, "***");
+//        test.put(16, "***");
+//        test.put(20, "***");
+//        test.put(24, "***");
+//        test.put(28, "***");
+//        test.put(31, "***");
+//        test.put(33, "***");
+//        test.put(3, "***");
+//        test.put(7, "***");
+//        test.put(10, "***");
+//        test.put(12, "***");
+//        test.put(15, "***");
+//        test.put(17, "***");
+//        test.put(19, "***");
+//        test.put(23, "***");
+//        test.put(25, "***");
+//        test.put(27, "***");
+//        test.put(30, "***");
+//        test.put(2, "***");
+//        test.put(4, "***");
+//        test.put(6, "***");
+//        test.put(9, "***");
+//        test.put(14, "***");
+//        test.put(22, "***");
+//        test.put(1, "***");
 
-        test.delete(13);
+        test.delete(21);
 
 //        test.put(32, "*32*");
 //        test.put(45, "*45*");
