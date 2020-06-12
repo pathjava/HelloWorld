@@ -185,24 +185,20 @@ public class AvlTree<K extends Comparable<K>, V> {
         recalculateHeight(node);
         int balance = getBalance(node);
         if (balance > 1) {
-            if (height(node.right.right) > height(node.right.left)) {
+            if (height(node.right.right) > height(node.right.left))
                 leftSmallRotate(node);
-            } else {
-                node.right = rightSmallRotate(node.right);
-                leftSmallRotate(node);
-            }
+            else
+                rightBigRotate(node);
         } else if (balance < -1) {
             if (height(node.left.left) > height(node.left.right))
                 rightSmallRotate(node);
-            else {
-                node.left = leftSmallRotate(node.left);
-                rightSmallRotate(node);
-            }
+            else
+                leftBigRotate(node);
         }
     }
 
     private int height(Node<K, V> node) {
-        return node == null ? -1 : node.height;
+        return node == null ? 0 : node.height;
     }
 
     private void recalculateHeight(Node<K, V> node) {
@@ -223,6 +219,11 @@ public class AvlTree<K extends Comparable<K>, V> {
         return tempNode;
     }
 
+    private void leftBigRotate(Node<K, V> node) {
+        node.left = leftSmallRotate(node.left);
+        rightSmallRotate(node);
+    }
+
     private Node<K, V> rightSmallRotate(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = node.left;
@@ -231,6 +232,11 @@ public class AvlTree<K extends Comparable<K>, V> {
         recalculateHeight(node);
         recalculateHeight(tempNode);
         return tempNode;
+    }
+
+    private void rightBigRotate(Node<K, V> node) {
+        node.right = rightSmallRotate(node.right);
+        leftSmallRotate(node);
     }
 
     public V find(K key) {
@@ -318,7 +324,6 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(26, "***");
         test.put(32, "***");
         test.put(5, "***");
-        test.put(4, "***");
         test.put(3, "***");
         test.put(2, "***");
 
