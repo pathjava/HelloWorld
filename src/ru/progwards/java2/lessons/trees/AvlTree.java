@@ -197,11 +197,12 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> leftSmallRotate(Node<K, V> node) {
-        Node<K, V> tempNode;
-        tempNode = node.right;
-        node.right = tempNode.left;
-        tempNode.left = node;
-        return tempNode;
+        Node<K, V> rebuildNodeOne = node.right;
+        Node<K, V> rebuildNodeTwo = rebuildNodeOne.left;
+        rebuildNodeOne.left = node;
+        node.right = rebuildNodeTwo;
+
+        return rebuildNodeOne;
     }
 
     private Node<K, V> leftBigRotate(Node<K, V> node) {
@@ -210,11 +211,12 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> rightSmallRotate(Node<K, V> node) {
-        Node<K, V> tempNode;
-        tempNode = node.left;
-        node.left = tempNode.right;
-        tempNode.right = node;
-        return tempNode;
+        Node<K, V> rebuildNodeOne = node.left;
+        Node<K, V> rebuildNodeTwo = rebuildNodeOne.right;
+        rebuildNodeOne.right = node;
+        node.left = rebuildNodeTwo;
+
+        return rebuildNodeOne;
     }
 
     private Node<K, V> rightBigRotate(Node<K, V> node) {
