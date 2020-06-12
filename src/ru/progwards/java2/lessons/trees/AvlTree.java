@@ -185,7 +185,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         recalculateHeight(node);
         int balance = getBalance(node);
         if (balance > 1) {
-            if (height(node.right.right) > height(node.right.left))
+            if (height(node) - height(node.parent.right) == 2)
                 leftSmallRotate(node);
             else
                 rightBigRotate(node);
