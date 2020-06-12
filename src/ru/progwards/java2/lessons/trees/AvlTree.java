@@ -224,13 +224,13 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> rightSmallRotate(Node<K, V> node) {
-        Node<K, V> rebuildNodeOne = node.left;
-        Node<K, V> rebuildNodeTwo = rebuildNodeOne.right;
-        rebuildNodeOne.right = node;
-        node.left = rebuildNodeTwo;
+        Node<K, V> tempNode;
+        tempNode = node.left;
+        node.left = tempNode.right;
+        tempNode.right = node;
         recalculateHeight(node);
-        recalculateHeight(rebuildNodeOne);
-        return rebuildNodeOne;
+        recalculateHeight(tempNode);
+        return tempNode;
     }
 
     public V find(K key) {
