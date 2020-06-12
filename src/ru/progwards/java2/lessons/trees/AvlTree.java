@@ -54,7 +54,6 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left = newNode;
                 newNode.parent = node;
                 size++;
-//                rebuildBalanceTree(newNode);
             } else if (key.compareTo(node.left.key) == 0)
                 node.left.value = value;
             else {
@@ -68,7 +67,6 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right = newNode;
                 newNode.parent = node;
                 size++;
-//                rebuildBalanceTree(newNode);
             } else if (key.compareTo(node.right.key) == 0)
                 node.right.value = value;
             else {
@@ -84,7 +82,6 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-
         Node<K, V> node = root;
         searchNode(node, key);
         size--;
@@ -226,11 +223,6 @@ public class AvlTree<K extends Comparable<K>, V> {
         return rebuildNodeOne;
     }
 
-    private Node<K, V> leftBigRotate(Node<K, V> node) {
-        node.left = leftSmallRotate(node.left);
-        return rightSmallRotate(node);
-    }
-
     private Node<K, V> rightSmallRotate(Node<K, V> node) {
         Node<K, V> rebuildNodeOne = node.left;
         Node<K, V> rebuildNodeTwo = rebuildNodeOne.right;
@@ -239,11 +231,6 @@ public class AvlTree<K extends Comparable<K>, V> {
         recalculateHeight(node);
         recalculateHeight(rebuildNodeOne);
         return rebuildNodeOne;
-    }
-
-    private Node<K, V> rightBigRotate(Node<K, V> node) {
-        node.right = rightSmallRotate(node.right);
-        return leftSmallRotate(node);
     }
 
     public V find(K key) {
