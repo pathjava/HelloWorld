@@ -180,20 +180,37 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    private void balanceTree(Node<K, V> node) {
-
+    private Node<K, V> rebuildBalanceTree(Node<K, V> node) {
+        recalculateHeight(node);
+        int balance = getBalance(node);
+        if (balance > 1) {
+            if (height(node.right.right) > height(node.right.left)) {
+                node = leftSmallRotate(node);
+            } else {
+                node.right = rightSmallRotate(node.right);
+                node = leftSmallRotate(node);
+            }
+        } else if (balance < -1) {
+            if (height(node.left.left) > height(node.left.right))
+                node = rightSmallRotate(node);
+            else {
+                node.left = leftSmallRotate(node.left);
+                node = rightSmallRotate(node);
+            }
+        }
+        return node;
     }
 
-    private int currentHeight(Node<K, V> node) {
+    private int height(Node<K, V> node) {
         return node == null ? 0 : node.height;
     }
 
-    private int recalculateHeight(Node<K, V> node) {
-        return Math.max(currentHeight(node.left), currentHeight(node.right)) + 1;
+    private void recalculateHeight(Node<K, V> node) {
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
     }
 
-    private int balanceFactor(Node<K, V> node) {
-        return currentHeight(node.left) - currentHeight(node.right);
+    private int getBalance(Node<K, V> node) {
+        return node == null ? 0 : height(node.left) - height(node.right);
     }
 
     private Node<K, V> leftSmallRotate(Node<K, V> node) {
@@ -201,7 +218,8 @@ public class AvlTree<K extends Comparable<K>, V> {
         Node<K, V> rebuildNodeTwo = rebuildNodeOne.left;
         rebuildNodeOne.left = node;
         node.right = rebuildNodeTwo;
-
+        recalculateHeight(node);
+        recalculateHeight(rebuildNodeOne);
         return rebuildNodeOne;
     }
 
@@ -215,7 +233,8 @@ public class AvlTree<K extends Comparable<K>, V> {
         Node<K, V> rebuildNodeTwo = rebuildNodeOne.right;
         rebuildNodeOne.right = node;
         node.left = rebuildNodeTwo;
-
+        recalculateHeight(node);
+        recalculateHeight(rebuildNodeOne);
         return rebuildNodeOne;
     }
 
