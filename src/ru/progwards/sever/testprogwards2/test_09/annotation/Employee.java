@@ -5,7 +5,7 @@ package ru.progwards.sever.testprogwards2.test_09.annotation;
 
 public class Employee {
 
-    @Name(name = "hhh", value = "ddd")
+    @First(name = "hhh", value = "ddd")
     public void getEmployee(){
         System.out.println();
     }
