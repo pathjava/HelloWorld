@@ -196,26 +196,30 @@ public class AvlTree<K extends Comparable<K>, V> {
         return currentHeight(node.left) - currentHeight(node.right);
     }
 
-    private void leftSmallRotate(Node<K, V> node) {
+    private Node<K, V> leftSmallRotate(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = node.right;
         node.right = tempNode.left;
         tempNode.left = node;
+        return tempNode;
     }
 
-    private void leftBigRotate(Node<K, V> node) {
-
+    private Node<K, V> leftBigRotate(Node<K, V> node) {
+        node.left = leftSmallRotate(node.left);
+        return rightSmallRotate(node);
     }
 
-    private void rightSmallRotate(Node<K, V> node) {
+    private Node<K, V> rightSmallRotate(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = node.left;
         node.left = tempNode.right;
         tempNode.right = node;
+        return tempNode;
     }
 
-    private void rightBigRotate(Node<K, V> node) {
-
+    private Node<K, V> rightBigRotate(Node<K, V> node) {
+        node.right = rightSmallRotate(node.right);
+        return leftSmallRotate(node);
     }
 
     public V find(K key) {
