@@ -54,12 +54,13 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.left = newNode;
                 newNode.parent = node;
                 size++;
-                //TODO запускаем перестроение
+//                rebuildBalanceTree(newNode);
             } else if (key.compareTo(node.left.key) == 0)
                 node.left.value = value;
             else {
                 newNode = node.left;
                 addFromPut(newNode, key, value);
+                rebuildBalanceTree(newNode);
             }
         } else {
             if (node.right == null) {
@@ -67,12 +68,13 @@ public class AvlTree<K extends Comparable<K>, V> {
                 node.right = newNode;
                 newNode.parent = node;
                 size++;
-                //TODO запускаем перестроение
+//                rebuildBalanceTree(newNode);
             } else if (key.compareTo(node.right.key) == 0)
                 node.right.value = value;
             else {
                 newNode = node.right;
                 addFromPut(newNode, key, value);
+                rebuildBalanceTree(newNode);
             }
         }
     }
@@ -130,6 +132,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             tempNode.parent.left = null;
         else
             tempNode.parent.right = null;
+        rebuildBalanceTree(tempNode);
     }
 
     private void removeNodesRight(Node<K, V> node) {
@@ -147,6 +150,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             tempNode.parent.right = null;
         else
             tempNode.parent.left = null;
+        rebuildBalanceTree(tempNode);
     }
 
     private void removeLeaf(Node<K, V> node) {
@@ -180,25 +184,24 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    private Node<K, V> rebuildBalanceTree(Node<K, V> node) {
+    private void rebuildBalanceTree(Node<K, V> node) {
         recalculateHeight(node);
         int balance = getBalance(node);
         if (balance > 1) {
             if (height(node.right.right) > height(node.right.left)) {
-                node = leftSmallRotate(node);
+                leftSmallRotate(node);
             } else {
                 node.right = rightSmallRotate(node.right);
-                node = leftSmallRotate(node);
+                leftSmallRotate(node);
             }
         } else if (balance < -1) {
             if (height(node.left.left) > height(node.left.right))
-                node = rightSmallRotate(node);
+                rightSmallRotate(node);
             else {
                 node.left = leftSmallRotate(node.left);
-                node = rightSmallRotate(node);
+                rightSmallRotate(node);
             }
         }
-        return node;
     }
 
     private int height(Node<K, V> node) {
@@ -328,31 +331,10 @@ public class AvlTree<K extends Comparable<K>, V> {
         test.put(26, "***");
         test.put(32, "***");
         test.put(5, "***");
-        test.put(11, "*11*");
-        test.put(16, "***");
-        test.put(20, "***");
-        test.put(24, "***");
-        test.put(28, "***");
-        test.put(31, "*31*");
-        test.put(33, "***");
-        test.put(3, "***");
-        test.put(7, "***");
-        test.put(10, "***");
-        test.put(12, "***");
-        test.put(15, "***");
-        test.put(17, "*17*");
-        test.put(19, "***");
-        test.put(23, "***");
-        test.put(25, "***");
-        test.put(27, "***");
-        test.put(30, "***");
-        test.put(2, "***");
         test.put(4, "***");
-        test.put(6, "***");
-        test.put(9, "***");
-        test.put(14, "***");
-        test.put(22, "***");
-        test.put(1, "***");
+        test.put(3, "***");
+        test.put(2, "***");
+
 
 //        test.change(11, 34);
 
