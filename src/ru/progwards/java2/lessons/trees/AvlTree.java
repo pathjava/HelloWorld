@@ -202,7 +202,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private int height(Node<K, V> node) {
-        return node == null ? 0 : node.height;
+        return node == null ? -1 : node.height;
     }
 
     private void recalculateHeight(Node<K, V> node) {
@@ -214,13 +214,13 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> leftSmallRotate(Node<K, V> node) {
-        Node<K, V> rebuildNodeOne = node.right;
-        Node<K, V> rebuildNodeTwo = rebuildNodeOne.left;
-        rebuildNodeOne.left = node;
-        node.right = rebuildNodeTwo;
+        Node<K, V> tempNode;
+        tempNode = node.right;
+        node.right = tempNode.left;
+        tempNode.right = node;
         recalculateHeight(node);
-        recalculateHeight(rebuildNodeOne);
-        return rebuildNodeOne;
+        recalculateHeight(tempNode);
+        return tempNode;
     }
 
     private Node<K, V> rightSmallRotate(Node<K, V> node) {
