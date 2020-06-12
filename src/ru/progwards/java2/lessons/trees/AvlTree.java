@@ -108,14 +108,14 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     private void rebuildNodes(Node<K, V> node) {
         if (node.left != null)
-            rebuildNodesLeft(node);
+            removeNodesLeft(node);
         else if (node.right != null)
-            rebuildNodesRight(node);
+            removeNodesRight(node);
         else
             removeLeaf(node);
     }
 
-    private void rebuildNodesLeft(Node<K, V> node) {
+    private void removeNodesLeft(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = searchMaxKey(node.left);
         node.key = tempNode.key;
@@ -132,7 +132,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             tempNode.parent.right = null;
     }
 
-    private void rebuildNodesRight(Node<K, V> node) {
+    private void removeNodesRight(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = searchMinKey(node.right);
         node.key = tempNode.key;
@@ -180,16 +180,42 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
+    private void balanceTree(Node<K, V> node) {
+
+    }
+
     private int currentHeight(Node<K, V> node) {
         return node == null ? 0 : node.height;
     }
 
     private int recalculateHeight(Node<K, V> node) {
-        return Math.max(node.left.height, node.right.height) + 1;
+        return Math.max(currentHeight(node.left), currentHeight(node.right)) + 1;
     }
 
     private int balanceFactor(Node<K, V> node) {
-        return node.left.height - node.right.height;
+        return currentHeight(node.left) - currentHeight(node.right);
+    }
+
+    private void leftSmallRotate(Node<K, V> node) {
+        Node<K, V> tempNode;
+        tempNode = node.right;
+        node.right = tempNode.left;
+        tempNode.left = node;
+    }
+
+    private void leftBigRotate(Node<K, V> node) {
+
+    }
+
+    private void rightSmallRotate(Node<K, V> node) {
+        Node<K, V> tempNode;
+        tempNode = node.left;
+        node.left = tempNode.right;
+        tempNode.right = node;
+    }
+
+    private void rightBigRotate(Node<K, V> node) {
+
     }
 
     public V find(K key) {
