@@ -330,11 +330,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 
 //        test.change(11, 34);
 
-        System.out.println(test.find(31));
-        test.delete(17);
-
-        System.out.println(test.size);
-        test.changeValue(20, "*20*");
+//        System.out.println(test.find(31));
+//        test.delete(17);
+//
+//        System.out.println(test.size);
+//        test.changeValue(20, "*20*");
     }
 
 }
