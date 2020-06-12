@@ -83,11 +83,11 @@ public class AvlTree<K extends Comparable<K>, V> {
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
         Node<K, V> node = root;
-        searchNode(node, key);
+        searchDeleteNode(node, key);
         size--;
     }
 
-    private void searchNode(Node<K, V> node, K key) {
+    private void searchDeleteNode(Node<K, V> node, K key) {
         Node<K, V> tempNode;
         if (key.compareTo(node.key) < 0) {
             if (node.left == null)
@@ -100,21 +100,21 @@ public class AvlTree<K extends Comparable<K>, V> {
         } else
             tempNode = root;
         if (key.compareTo(tempNode.key) == 0)
-            rebuildNodes(tempNode);
+            rebuildDeleteNodes(tempNode);
         else
-            searchNode(tempNode, key);
+            searchDeleteNode(tempNode, key);
     }
 
-    private void rebuildNodes(Node<K, V> node) {
+    private void rebuildDeleteNodes(Node<K, V> node) {
         if (node.left != null)
-            removeNodesLeft(node);
+            deleteNodesLeft(node);
         else if (node.right != null)
-            removeNodesRight(node);
+            deleteNodesRight(node);
         else
-            removeLeaf(node);
+            deleteLeaf(node);
     }
 
-    private void removeNodesLeft(Node<K, V> node) {
+    private void deleteNodesLeft(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = searchMaxKey(node.left);
         node.key = tempNode.key;
@@ -132,7 +132,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         rebuildBalanceTree(tempNode);
     }
 
-    private void removeNodesRight(Node<K, V> node) {
+    private void deleteNodesRight(Node<K, V> node) {
         Node<K, V> tempNode;
         tempNode = searchMinKey(node.right);
         node.key = tempNode.key;
@@ -150,7 +150,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         rebuildBalanceTree(tempNode);
     }
 
-    private void removeLeaf(Node<K, V> node) {
+    private void deleteLeaf(Node<K, V> node) {
         if (node.parent == null)
             root = null;
         else {
