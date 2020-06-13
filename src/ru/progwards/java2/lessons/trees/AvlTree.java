@@ -232,27 +232,27 @@ public class AvlTree<K extends Comparable<K>, V> {
         put(newKey, oldValue);
     }
 
-    public void changeValue(K key, V newValue) {
+    public void updateValue(K key, V newValue) {
         if (key == null)
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-        replacementValueFromChangeValue(root, key, newValue);
+        replacementValueFromUpdateValue(root, key, newValue);
     }
 
-    private void replacementValueFromChangeValue(Node<K, V> node, K key, V newValue) {
+    private void replacementValueFromUpdateValue(Node<K, V> node, K key, V newValue) {
         if (node.key.compareTo(key) == 0)
             node.value = newValue;
         if (key.compareTo(node.key) < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("Key not found!");
             else
-                replacementValueFromChangeValue(node.left, key, newValue);
+                replacementValueFromUpdateValue(node.left, key, newValue);
         } else if (key.compareTo(node.key) > 0) {
             if (node.right == null)
                 throw new IllegalArgumentException("Key not found!");
             else
-                replacementValueFromChangeValue(node.right, key, newValue);
+                replacementValueFromUpdateValue(node.right, key, newValue);
         }
     }
 
@@ -287,7 +287,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 //        test.delete(17);
 //
 //        System.out.println(test.size);
-        test.changeValue(21, "*21*");
+        test.updateValue(21, "*21*");
         System.out.println(test.find(21));
     }
 
