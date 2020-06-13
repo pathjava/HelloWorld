@@ -236,32 +236,45 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
-        test.put(50, "***");
-        test.put(25, "***");
-        test.put(75, "***");
-        test.put(12, "***");
-        test.put(37, "***");
-        test.put(53, "***");
-        test.put(87, "***");
-        test.put(6, "***");
-        test.put(18, "***");
-        test.put(31, "***");
-        test.put(43, "***");
-        test.put(47, "***");
-        test.put(59, "***");
-        test.put(81, "***");
-        test.put(93, "*93*");
-        test.put(15, "***");
-        test.put(21, "***");
-        test.put(14, "*14*");
+        test.put(21, "*21*");
         test.put(13, "***");
+        test.put(29, "***");
+        test.put(8, "***");
+        test.put(18, "***");
+        test.put(26, "***");
+        test.put(32, "***");
+        test.put(5, "***");
+        test.put(11, "*11*");
+        test.put(16, "***");
+        test.put(20, "***");
+        test.put(24, "***");
+        test.put(28, "***");
+        test.put(31, "*31*");
+        test.put(33, "***");
+        test.put(3, "***");
+        test.put(7, "***");
+        test.put(10, "***");
+        test.put(12, "***");
+        test.put(15, "***");
+        test.put(17, "*17*");
+        test.put(19, "***");
         test.put(23, "***");
+        test.put(25, "***");
+        test.put(27, "***");
+        test.put(30, "***");
+        test.put(2, "***");
+        test.put(4, "***");
+        test.put(6, "***");
+        test.put(9, "***");
+        test.put(14, "***");
+        test.put(22, "***");
+        test.put(1, "***");
 
 
 //        test.change(11, 34);
         System.out.println(test.size);
 //        System.out.println(test.find(14));
-        test.delete(31);
+        test.delete(18);
 
         System.out.println(test.size);
 
