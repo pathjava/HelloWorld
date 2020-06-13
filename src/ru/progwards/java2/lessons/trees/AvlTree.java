@@ -60,17 +60,37 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("AVL Tree is empty!");
         if (!containsKey(key))
             throw new IllegalArgumentException("This key is not exist!");
-        searchDeleteNode(root, key);
+        root = searchDeleteNode(root, key);
         size--;
     }
 
-    private void searchDeleteNode(Node<K, V> node, K key) {
-        if (key.compareTo(node.key) == 0)
-            rebuildDeleteNodes(node);
+    private Node<K, V> searchDeleteNode(Node<K, V> node, K key) {
         if (key.compareTo(node.key) < 0)
-            searchDeleteNode(node.left, key);
+            node.left = searchDeleteNode(node.left, key);
         else if (key.compareTo(node.key) > 0)
-            searchDeleteNode(node.right, key);
+            node.right = searchDeleteNode(node.right, key);
+        else {
+            if (node.left == null)
+                return node.right;
+            else if (node.right == null)
+                return node.left;
+            else {
+                Node<K, V> tempNode = node;
+                node = searchMinKey(tempNode.right);
+                node.right = deleteMin(tempNode.right);
+                node.left = tempNode.left;
+            }
+        }
+        node.height = recalculateHeight(node);
+        return rebuildBalanceTree(node);
+    }
+
+    private Node<K, V> deleteMin(Node<K, V> node) {
+        if (node.left == null)
+            return node.right;
+        node.left = deleteMin(node.left);
+        node.height = recalculateHeight(node);
+        return rebuildBalanceTree(node);
     }
 
     private void rebuildDeleteNodes(Node<K, V> node) {
@@ -130,23 +150,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> searchMaxKey(Node<K, V> node) {
-        Node<K, V> tempNode;
-        if (node.right == null)
-            return node;
-        else {
-            tempNode = node.right;
-            return searchMaxKey(tempNode);
-        }
+        return node.right == null ? node : searchMaxKey(node.right);
     }
 
     private Node<K, V> searchMinKey(Node<K, V> node) {
-        Node<K, V> tempNode;
-        if (node.left == null)
-            return node;
-        else {
-            tempNode = node.left;
-            return searchMinKey(tempNode);
-        }
+        return node.left == null ? node : searchMinKey(node.left);
     }
 
     private Node<K, V> rebuildBalanceTree(Node<K, V> node) {
@@ -293,11 +301,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 //        test.change(11, 34);
 
 //        System.out.println(test.find(14));
-//        test.delete(17);
+        test.delete(31);
 //
 //        System.out.println(test.size);
-        test.updateValue(21, "*21*");
-        System.out.println(test.find(15));
+//        test.updateValue(21, "*21*");
+        System.out.println(test.find(31));
 
 //        boolean result = test.containsKey(2);
 //        System.out.println(result);
