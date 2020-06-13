@@ -14,7 +14,7 @@ public class AvlTree<K extends Comparable<K>, V> {
     private static final String IS_EMPTY = "AVL Tree is empty!";
     private static final String KEY_NULL = "The key cannot be null!";
 
-    public static class Node<K extends Comparable<K>, V> {
+    public static class Node<K extends Comparable<K>, V> { /* узел АВЛ дерева */
         private int height;
         private final K key;
         private V value;
@@ -34,7 +34,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             return "key=" + key + ", value=" + value;
         }
 
-        public void process(Consumer<AvlTree.Node<K, V>> consumer) {
+        public void process(Consumer<AvlTree.Node<K, V>> consumer) { /* обход всего дерева */
             if (left != null)
                 left.process(consumer);
             consumer.accept(this);
@@ -43,7 +43,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         }
     }
 
-    public void put(K key, V value) {
+    public void put(K key, V value) { /* добавление узла в дерево */
         if (key == null)
             throw new IllegalArgumentException(KEY_NULL);
         root = addFromPut(root, key, value);
@@ -51,21 +51,21 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> addFromPut(Node<K, V> node, K key, V value) {
-        if (node == null)
+        if (node == null) /* если узел null, создаем и возвращаем новый */
             return new Node<>(key, value);
-        if (key.compareTo(node.key) < 0)
-            node.left = addFromPut(node.left, key, value);
-        else if (key.compareTo(node.key) > 0)
-            node.right = addFromPut(node.right, key, value);
-        else {
-            node.value = value;
+        if (key.compareTo(node.key) < 0) /* если добавляемый ключ меньше ключа из node, идём в левое поддерево */
+            node.left = addFromPut(node.left, key, value); /* рекурсивно создаем узел в левое поддерево */
+        else if (key.compareTo(node.key) > 0) /* если больше, идем в правое поддерево */
+            node.right = addFromPut(node.right, key, value); /* рекурсивно создаем узел в правом поддереве */
+        else { /* в противном случае ключи равны */
+            node.value = value; /* обновляем значения */
             return node;
         }
-        node.height = recalculateHeight(node);
-        return rebuildBalanceTree(node);
+        node.height = recalculateHeight(node); /* пересчитываем высоту для узла */
+        return rebuildBalanceTree(node); /* если необходимо, восстанавливаем баланс дерева */
     }
 
-    public void delete(K key) {
+    public void delete(K key) { /* удаление узла из дерева */
         if (key == null)
             throw new IllegalArgumentException(KEY_NULL);
         if (root == null)
@@ -77,24 +77,24 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private Node<K, V> searchDeleteNode(Node<K, V> node, K key) {
-        if (key.compareTo(node.key) < 0)
+        if (key.compareTo(node.key) < 0) /* если ключ меньше node, ищем удаляемый узел в левом поддереве */
             node.left = searchDeleteNode(node.left, key);
-        else if (key.compareTo(node.key) > 0)
+        else if (key.compareTo(node.key) > 0) /* если ключ больше node, ищем удаляемый узел в правом поддереве */
             node.right = searchDeleteNode(node.right, key);
-        else {
+        else { /* если ключи равны */
             if (node.left == null)
-                return node.right;
+                return node.right; /* возвращаем правый узел/null и в обратном ходе рекурсии удаляем крайний узел/лист */
             else if (node.right == null)
-                return node.left;
-            else {
-                Node<K, V> tempNode = node;
-                node = searchMinKey(tempNode.right);
-                node.right = deleteMin(tempNode.right);
-                node.left = tempNode.left;
+                return node.left; /* возвращаем левый узел/null и в обратном ходе рекурсии удаляем крайний узел/лист */
+            else { /* если удаляемый узел имеет обоих потомков */
+                Node<K, V> tempNode = node; /* кладем удаляемый узел во временный узел */
+                node = searchMinKey(tempNode.right); /* находим минимальный правый узел */
+                node.right = deleteMin(tempNode.right); /* удаляем минимальный узел и присваиваем новому узлу правое поддерево */
+                node.left = tempNode.left; /* присваиваем новому узлу левое поддерево */
             }
         }
-        node.height = recalculateHeight(node);
-        return rebuildBalanceTree(node);
+        node.height = recalculateHeight(node); /* пересчитываем высоту для узла */
+        return rebuildBalanceTree(node); /* если необходимо, восстанавливаем баланс дерева */
     }
 
     private Node<K, V> deleteMin(Node<K, V> node) {
