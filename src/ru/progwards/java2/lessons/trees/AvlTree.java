@@ -3,18 +3,21 @@
 
 package ru.progwards.java2.lessons.trees;
 
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 public class AvlTree<K extends Comparable<K>, V> {
 
     private Node<K, V> root;
     private int size = 0;
+    private static final String NOT_EXIST = "The key does not exist!";
+    private static final String IS_EMPTY = "AVL Tree is empty!";
+    private static final String KEY_NULL = "The key cannot be null!";
 
     public static class Node<K extends Comparable<K>, V> {
         private int height;
-        private K key;
+        private final K key;
         private V value;
-        private Node<K, V> parent;
         private Node<K, V> left;
         private Node<K, V> right;
 
@@ -22,7 +25,6 @@ public class AvlTree<K extends Comparable<K>, V> {
             this.key = key;
             this.value = value;
             this.height = 0;
-            this.parent = null;
             this.left = null;
             this.right = null;
         }
@@ -43,7 +45,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public void put(K key, V value) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!"); //TODO change all exception
+            throw new IllegalArgumentException(KEY_NULL);
         root = addFromPut(root, key, value);
         size++;
     }
@@ -65,11 +67,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public void delete(K key) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException(KEY_NULL);
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!");
+            throw new NoSuchElementException(IS_EMPTY);
         if (!containsKey(key))
-            throw new IllegalArgumentException("This key is not exist!");
+            throw new NoSuchElementException(NOT_EXIST);
         root = searchDeleteNode(root, key);
         size--;
     }
@@ -105,7 +107,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public K maxKey() {
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!");
+            throw new NoSuchElementException(IS_EMPTY);
         return searchMaxKey(root).key;
     }
 
@@ -115,7 +117,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public K minKey() {
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!");
+            throw new NoSuchElementException(IS_EMPTY);
         return searchMinKey(root).key;
     }
 
@@ -168,11 +170,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public V find(K key) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException(KEY_NULL);
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!");
+            throw new NoSuchElementException(IS_EMPTY);
         if (!containsKey(key))
-            throw new IllegalArgumentException("This key is not exist!");
+            throw new NoSuchElementException(NOT_EXIST);
         Node<K, V> tempNode = searchValueFromFind(root, key);
         return tempNode.value;
     }
@@ -190,9 +192,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public void change(K oldKey, K newKey) {
         if (oldKey == null || newKey == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException(KEY_NULL);
+        if (root == null)
+            throw new NoSuchElementException(IS_EMPTY);
         if (!containsKey(oldKey))
-            throw new IllegalArgumentException("This key is not exist!");
+            throw new NoSuchElementException(NOT_EXIST);
         V oldValue = find(oldKey);
         delete(oldKey);
         put(newKey, oldValue);
@@ -200,11 +204,11 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public void updateValue(K key, V newValue) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException(KEY_NULL);
         if (root == null)
-            throw new IllegalArgumentException("AVL Tree is empty!");
+            throw new NoSuchElementException(IS_EMPTY);
         if (!containsKey(key))
-            throw new IllegalArgumentException("This key is not exist!");
+            throw new NoSuchElementException(NOT_EXIST);
         replacementValueFromUpdateValue(root, key, newValue);
     }
 
@@ -220,7 +224,7 @@ public class AvlTree<K extends Comparable<K>, V> {
 
     public boolean containsKey(K key) {
         if (key == null)
-            throw new IllegalArgumentException("The key cannot be null!");
+            throw new IllegalArgumentException(KEY_NULL);
         return checkContainsKey(root, key);
     }
 
