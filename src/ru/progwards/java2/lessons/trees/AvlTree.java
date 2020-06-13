@@ -58,6 +58,8 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
+        if (!containsKey(key))
+            throw new IllegalArgumentException("This key is not exist!");
         searchDeleteNode(root, key);
         size--;
     }
@@ -204,6 +206,8 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
+        if (!containsKey(key))
+            throw new IllegalArgumentException("This key is not exist!");
         Node<K, V> tempNode = searchValueFromFind(root, key);
         return tempNode.value;
     }
@@ -212,15 +216,9 @@ public class AvlTree<K extends Comparable<K>, V> {
         if (node.key.compareTo(key) == 0)
             return node;
         if (key.compareTo(node.key) < 0) {
-            if (node.left == null)
-                throw new IllegalArgumentException("Key not found!");
-            else
-                return searchValueFromFind(node.left, key);
+            return searchValueFromFind(node.left, key);
         } else if (key.compareTo(node.key) > 0) {
-            if (node.right == null)
-                throw new IllegalArgumentException("Key not found!");
-            else
-                return searchValueFromFind(node.right, key);
+            return searchValueFromFind(node.right, key);
         } else
             return node;
     }
@@ -238,23 +236,42 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
+        if (!containsKey(key))
+            throw new IllegalArgumentException("This key is not exist!");
         replacementValueFromUpdateValue(root, key, newValue);
     }
 
     private void replacementValueFromUpdateValue(Node<K, V> node, K key, V newValue) {
-        if (node.key.compareTo(key) == 0)
+        if (key.compareTo(node.key) == 0)
             node.value = newValue;
         if (key.compareTo(node.key) < 0) {
+            replacementValueFromUpdateValue(node.left, key, newValue);
+        } else if (key.compareTo(node.key) > 0) {
+            replacementValueFromUpdateValue(node.right, key, newValue);
+        }
+    }
+
+    public boolean containsKey(K key) {
+        if (key == null)
+            throw new IllegalArgumentException("The key cannot be null!");
+        return checkContainsKey(root, key);
+    }
+
+    private boolean checkContainsKey(Node<K, V> node, K key) {
+        if (key.compareTo(node.key) == 0)
+            return true;
+        if (key.compareTo(node.key) < 0) {
             if (node.left == null)
-                throw new IllegalArgumentException("Key not found!");
+                return false;
             else
-                replacementValueFromUpdateValue(node.left, key, newValue);
+                return checkContainsKey(node.left, key);
         } else if (key.compareTo(node.key) > 0) {
             if (node.right == null)
-                throw new IllegalArgumentException("Key not found!");
+                return false;
             else
-                replacementValueFromUpdateValue(node.right, key, newValue);
+                return checkContainsKey(node.right, key);
         }
+        return false;
     }
 
 
@@ -289,7 +306,10 @@ public class AvlTree<K extends Comparable<K>, V> {
 //
 //        System.out.println(test.size);
         test.updateValue(21, "*21*");
-        System.out.println(test.find(21));
+        System.out.println(test.find(15));
+
+//        boolean result = test.containsKey(2);
+//        System.out.println(result);
     }
 
 }
