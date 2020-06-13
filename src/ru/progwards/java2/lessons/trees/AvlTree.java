@@ -3,6 +3,8 @@
 
 package ru.progwards.java2.lessons.trees;
 
+import org.apache.logging.log4j.core.util.JsonUtils;
+
 public class AvlTree<K extends Comparable<K>, V> {
 
     private Node<K, V> root;
@@ -93,64 +95,20 @@ public class AvlTree<K extends Comparable<K>, V> {
         return rebuildBalanceTree(node);
     }
 
-    private void rebuildDeleteNodes(Node<K, V> node) {
-        if (node.left != null)
-            deleteNodesLeft(node);
-        else if (node.right != null)
-            deleteNodesRight(node);
-        else
-            deleteLeaf(node);
-    }
-
-    private void deleteNodesLeft(Node<K, V> node) {
-        Node<K, V> tempNode;
-        tempNode = searchMaxKey(node.left);
-        node.key = tempNode.key;
-        node.value = tempNode.value;
-        if (tempNode.left != null) {
-            if (tempNode.left.key.compareTo(tempNode.parent.key) > 0)
-                tempNode.parent.right = tempNode.left;
-            else
-                tempNode.parent.left = tempNode.left;
-            tempNode.left.parent = tempNode.parent;
-        } else if (tempNode.right == null)
-            tempNode.parent.left = null;
-        else
-            tempNode.parent.right = null;
-        rebuildBalanceTree(tempNode);
-    }
-
-    private void deleteNodesRight(Node<K, V> node) {
-        Node<K, V> tempNode;
-        tempNode = searchMinKey(node.right);
-        node.key = tempNode.key;
-        node.value = tempNode.value;
-        if (tempNode.right != null) {
-            if (tempNode.right.key.compareTo(tempNode.parent.key) < 0)
-                tempNode.parent.left = tempNode.right;
-            else
-                tempNode.parent.right = tempNode.right;
-            tempNode.right.parent = tempNode.parent;
-        } else if (tempNode.left == null)
-            tempNode.parent.right = null;
-        else
-            tempNode.parent.left = null;
-        rebuildBalanceTree(tempNode);
-    }
-
-    private void deleteLeaf(Node<K, V> node) {
-        if (node.parent == null)
-            root = null;
-        else {
-            if (node.key.compareTo(node.parent.key) < 0)
-                node.parent.left = null;
-            else
-                node.parent.right = null;
-        }
+    public K maxKey(){
+        if (root == null)
+            throw new IllegalArgumentException("AVL Tree is empty!");
+        return searchMaxKey(root).key;
     }
 
     private Node<K, V> searchMaxKey(Node<K, V> node) {
         return node.right == null ? node : searchMaxKey(node.right);
+    }
+
+    public K minKey(){
+        if (root == null)
+            throw new IllegalArgumentException("AVL Tree is empty!");
+        return searchMinKey(root).key;
     }
 
     private Node<K, V> searchMinKey(Node<K, V> node) {
@@ -225,6 +183,8 @@ public class AvlTree<K extends Comparable<K>, V> {
     public void change(K oldKey, K newKey) {
         if (oldKey == null || newKey == null)
             throw new IllegalArgumentException("The key cannot be null!");
+        if (!containsKey(oldKey))
+            throw new IllegalArgumentException("This key is not exist!");
         V oldValue = find(oldKey);
         delete(oldKey);
         put(newKey, oldValue);
@@ -299,13 +259,17 @@ public class AvlTree<K extends Comparable<K>, V> {
 
 
 //        test.change(11, 34);
-
+        System.out.println(test.size);
 //        System.out.println(test.find(14));
         test.delete(31);
-//
-//        System.out.println(test.size);
+
+        System.out.println(test.size);
+
+        System.out.println(test.minKey());
+        System.out.println(test.maxKey());
+
 //        test.updateValue(21, "*21*");
-        System.out.println(test.find(31));
+//        System.out.println(test.find(31));
 
 //        boolean result = test.containsKey(2);
 //        System.out.println(result);
