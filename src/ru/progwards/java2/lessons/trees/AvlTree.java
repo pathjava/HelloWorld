@@ -58,8 +58,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-        Node<K, V> node = root;
-        searchDeleteNode(node, key);
+        searchDeleteNode(root, key);
         size--;
     }
 
@@ -205,28 +204,30 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException("The key cannot be null!");
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
-        Node<K, V> tempNode = keyAndValueSearchFromFind(root, key);
+        Node<K, V> tempNode = searchValueFromFind(root, key);
         return tempNode.value;
     }
 
-    private Node<K, V> keyAndValueSearchFromFind(Node<K, V> node, K key) {
+    private Node<K, V> searchValueFromFind(Node<K, V> node, K key) {
         if (node.key.compareTo(key) == 0)
             return node;
         if (key.compareTo(node.key) < 0) {
             if (node.left == null)
                 throw new IllegalArgumentException("Key not found!");
             else
-                return keyAndValueSearchFromFind(node.left, key);
+                return searchValueFromFind(node.left, key);
         } else if (key.compareTo(node.key) > 0) {
             if (node.right == null)
                 throw new IllegalArgumentException("Key not found!");
             else
-                return keyAndValueSearchFromFind(node.right, key);
+                return searchValueFromFind(node.right, key);
         } else
             return node;
     }
 
     public void change(K oldKey, K newKey) {
+        if (oldKey == null || newKey == null)
+            throw new IllegalArgumentException("The key cannot be null!");
         V oldValue = find(oldKey);
         delete(oldKey);
         put(newKey, oldValue);
