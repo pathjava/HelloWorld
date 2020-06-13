@@ -3,7 +3,7 @@
 
 package ru.progwards.java2.lessons.trees;
 
-import org.apache.logging.log4j.core.util.JsonUtils;
+import java.util.function.Consumer;
 
 public class AvlTree<K extends Comparable<K>, V> {
 
@@ -30,6 +30,14 @@ public class AvlTree<K extends Comparable<K>, V> {
         @Override
         public String toString() {
             return "key=" + key + ", value=" + value;
+        }
+
+        public void process(Consumer<AvlTree.Node<K, V>> consumer) {
+            if (left != null)
+                left.process(consumer);
+            consumer.accept(this);
+            if (right != null)
+                right.process(consumer);
         }
     }
 
@@ -95,7 +103,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         return rebuildBalanceTree(node);
     }
 
-    public K maxKey(){
+    public K maxKey() {
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
         return searchMaxKey(root).key;
@@ -105,7 +113,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         return node.right == null ? node : searchMaxKey(node.right);
     }
 
-    public K minKey(){
+    public K minKey() {
         if (root == null)
             throw new IllegalArgumentException("AVL Tree is empty!");
         return searchMinKey(root).key;
@@ -233,6 +241,11 @@ public class AvlTree<K extends Comparable<K>, V> {
         return false;
     }
 
+    public void process(Consumer<AvlTree.Node<K, V>> consumer) {
+        if (root != null)
+            root.process(consumer);
+    }
+
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
@@ -286,6 +299,6 @@ public class AvlTree<K extends Comparable<K>, V> {
 
 //        boolean result = test.containsKey(2);
 //        System.out.println(result);
+        test.process(System.out::println);
     }
-
 }
