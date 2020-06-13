@@ -19,7 +19,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.height = 1;
+            this.height = 0;
             this.parent = null;
             this.left = null;
             this.right = null;
