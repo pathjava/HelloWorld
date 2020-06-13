@@ -198,11 +198,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private int height(Node<K, V> node) {
-        return node == null ? 0 : node.height;
+        return node == null ? -1 : node.height;
     }
 
     private void recalculateHeight(Node<K, V> node) {
-        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        node.height = 1 + Math.max(height(node.left), height(node.right));
     }
 
     private int getBalance(Node<K, V> node) {
