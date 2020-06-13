@@ -65,21 +65,12 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private void searchDeleteNode(Node<K, V> node, K key) {
-        Node<K, V> tempNode;
-        if (key.compareTo(node.key) < 0) {
-            if (node.left == null)
-                throw new IllegalArgumentException("This key is not exist!");
-            tempNode = node.left;
-        } else if (key.compareTo(node.key) > 0) {
-            if (node.right == null)
-                throw new IllegalArgumentException("This key is not exist!");
-            tempNode = node.right;
-        } else
-            tempNode = root;
-        if (key.compareTo(tempNode.key) == 0)
-            rebuildDeleteNodes(tempNode);
-        else
-            searchDeleteNode(tempNode, key);
+        if (key.compareTo(node.key) == 0)
+            rebuildDeleteNodes(node);
+        if (key.compareTo(node.key) < 0)
+            searchDeleteNode(node.left, key);
+        else if (key.compareTo(node.key) > 0)
+            searchDeleteNode(node.right, key);
     }
 
     private void rebuildDeleteNodes(Node<K, V> node) {
