@@ -13,8 +13,8 @@ public class AVLTreeAndTreeMapTest {
     private static final AvlTree<Integer, Integer> avlTreeNumbers = new AvlTree<>();
     private static final Map<Integer, Integer> treeMapNumbers = new TreeMap<>();
 
-    private static final AvlTree<Integer, String> avlTreeStrings = new AvlTree<>();
-    private static final Map<Integer, String> treeMapStrings = new TreeMap<>();
+    private static final AvlTree<Integer, String> avlTreeWords = new AvlTree<>();
+    private static final Map<Integer, String> treeMapWords = new TreeMap<>();
 
     private static final List<Integer> sortedNumbers = new ArrayList<>();
     private static final List<Integer> sortedShuffleNumbers = new ArrayList<>();
@@ -46,9 +46,8 @@ public class AVLTreeAndTreeMapTest {
         int count = 0;
         while (count < 5) {
             long start = System.currentTimeMillis();
-            for (int num : sortedNumbers) {
+            for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
-            }
             long end = System.currentTimeMillis();
             results.add(end - start);
             avlTreeNumbers.clear();
@@ -62,9 +61,8 @@ public class AVLTreeAndTreeMapTest {
         int count = 0;
         while (count < 5) {
             long start = System.currentTimeMillis();
-            for (int num : sortedNumbers) {
+            for (int num : sortedNumbers)
                 treeMapNumbers.put(num, num);
-            }
             long end = System.currentTimeMillis();
             results.add(end - start);
             treeMapNumbers.clear();
@@ -84,9 +82,8 @@ public class AVLTreeAndTreeMapTest {
         int count = 0;
         while (count < 5) {
             long start = System.currentTimeMillis();
-            for (int num : randomNumbers) {
+            for (int num : randomNumbers)
                 avlTreeNumbers.put(num, num);
-            }
             long end = System.currentTimeMillis();
             results.add(end - start);
             avlTreeNumbers.clear();
@@ -100,9 +97,8 @@ public class AVLTreeAndTreeMapTest {
         int count = 0;
         while (count < 5) {
             long start = System.currentTimeMillis();
-            for (int num : randomNumbers) {
+            for (int num : randomNumbers)
                 treeMapNumbers.put(num, num);
-            }
             long end = System.currentTimeMillis();
             results.add(end - start);
             treeMapNumbers.clear();
@@ -124,12 +120,12 @@ public class AVLTreeAndTreeMapTest {
             int num = 0;
             long start = System.currentTimeMillis();
             for (String str : tokensList) {
-                avlTreeStrings.put(num, str);
+                avlTreeWords.put(num, str);
                 num++;
             }
             long end = System.currentTimeMillis();
             results.add(end - start);
-            avlTreeStrings.clear();
+            avlTreeWords.clear();
             count++;
         }
         return results;
@@ -142,12 +138,12 @@ public class AVLTreeAndTreeMapTest {
             int num = 0;
             long start = System.currentTimeMillis();
             for (String str : tokensList) {
-                treeMapStrings.put(num, str);
+                treeMapWords.put(num, str);
                 num++;
             }
             long end = System.currentTimeMillis();
             results.add(end - start);
-            treeMapStrings.clear();
+            treeMapWords.clear();
             count++;
         }
         return results;
@@ -166,10 +162,8 @@ public class AVLTreeAndTreeMapTest {
             for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
-            for (int num : sortedShuffleNumbers) {
-                if (avlTreeNumbers.containsKey(num))
-                    avlTreeNumbers.delete(num);
-            }
+            for (int num : sortedShuffleNumbers)
+                avlTreeNumbers.delete(num);
             long end = System.currentTimeMillis();
             results.add(end - start);
             avlTreeNumbers.clear();
@@ -208,10 +202,9 @@ public class AVLTreeAndTreeMapTest {
             for (int num : randomNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
-            for (int num : randomShuffleNumbers) {
+            for (int num : randomShuffleNumbers)
                 if (avlTreeNumbers.containsKey(num))
                     avlTreeNumbers.delete(num);
-            }
             long end = System.currentTimeMillis();
             results.add(end - start);
             avlTreeNumbers.clear();
@@ -341,15 +334,16 @@ public class AVLTreeAndTreeMapTest {
 
         System.out.printf("%-39s %-12s %-12s %n", str, "AVL Tree", "TreeMap");
         System.out.printf("%-41s %-12d %d %n", "Минимальное время теста: ", resAvl.get(0), resMap.get(0));
-        System.out.printf("%-41s %-12.1f %.1f %n", "Среднее арифметическое время теста: ", calculateAverageTestsTime(resAvl), calculateAverageTestsTime(resMap));
-        System.out.printf("%-41s %-12d %d %n%n", "Максимальное время теста: ", resAvl.get(resAvl.size() - 1), resMap.get(resMap.size() - 1));
+        System.out.printf("%-41s %-12.1f %.1f %n", "Среднее арифметическое время теста: ",
+                calculateAverageTestsTime(resAvl), calculateAverageTestsTime(resMap));
+        System.out.printf("%-41s %-12d %d %n%n", "Максимальное время теста: ",
+                resAvl.get(resAvl.size() - 1), resMap.get(resMap.size() - 1));
     }
 
     private static double calculateAverageTestsTime(List<Long> results) {
         Double sum = 0.0;
-        for (Long result : results) {
+        for (Long result : results)
             sum += result;
-        }
         return sum / results.size();
     }
 
@@ -372,7 +366,7 @@ public class AVLTreeAndTreeMapTest {
             while ((line = br.readLine()) != null) {
                 String[] words = line.split("\\s");
                 Arrays.stream(words).filter(str -> str.matches("[a-zA-Zа-яёА-ЯЁ]+"))
-                        .forEachOrdered(str -> tokensList.add(str));
+                        .forEachOrdered(tokensList::add);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -382,6 +376,5 @@ public class AVLTreeAndTreeMapTest {
 
     public static void main(String[] args) {
         testing("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\trees\\wiki.train.tokens");
-
     }
 }
