@@ -21,6 +21,7 @@ public class AVLTreeAndTreeMapTest {
     private static final List<Integer> randomNumbers = new ArrayList<>();
     private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
     private static final List<String> tokensList = new ArrayList<>();
+    private static final int COUNT_LOOP = 5;
 
     public static void testing(String tokensFile) {
         fillingSortedData();
@@ -43,7 +44,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             long start = System.currentTimeMillis();
             for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
@@ -58,7 +59,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             long start = System.currentTimeMillis();
             for (int num : sortedNumbers)
                 treeMapNumbers.put(num, num);
@@ -79,7 +80,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             long start = System.currentTimeMillis();
             for (int num : randomNumbers)
                 avlTreeNumbers.put(num, num);
@@ -94,7 +95,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             long start = System.currentTimeMillis();
             for (int num : randomNumbers)
                 treeMapNumbers.put(num, num);
@@ -115,7 +116,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToAvlTreeString() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             int num = 0;
             long start = System.currentTimeMillis();
             for (String str : tokensList) {
@@ -133,7 +134,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testAddToTreeMapString() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             int num = 0;
             long start = System.currentTimeMillis();
             for (String str : tokensList) {
@@ -157,7 +158,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testDeleteFromAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -174,7 +175,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testDeleteFromTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : sortedNumbers)
                 treeMapNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -197,7 +198,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testDeleteFromAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : randomNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -215,7 +216,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testDeleteFromTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : randomNumbers)
                 treeMapNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -238,7 +239,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testFindValueInAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : randomNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -255,7 +256,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testFindValueInTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : randomNumbers)
                 treeMapNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -278,7 +279,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testFindValueInAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -295,7 +296,7 @@ public class AVLTreeAndTreeMapTest {
     private static List<Long> testFindValueInTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
-        while (count < 5) {
+        while (count < COUNT_LOOP) {
             for (int num : sortedNumbers)
                 treeMapNumbers.put(num, num);
             long start = System.currentTimeMillis();
@@ -308,7 +309,6 @@ public class AVLTreeAndTreeMapTest {
         }
         return results;
     }
-
 
     private static void resultTests(List<Long> resAvl, List<Long> resMap, String operation) {
         Collections.sort(resAvl);
