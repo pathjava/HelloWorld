@@ -227,20 +227,14 @@ public class AvlTree<K extends Comparable<K>, V> {
     }
 
     private boolean checkContainsKey(Node<K, V> node, K key) {
-        if (key.compareTo(node.key) == 0) /* есл искомый ключ и ключ узла равны, возвращаем истину */
-            return true;
-        if (key.compareTo(node.key) < 0) { /* в противном случае определяем в какое поддерево идти */
-            if (node.left == null) /* если узел null, возвращаем ложь */
-                return false;
-            else
-                return checkContainsKey(node.left, key); /* в противном случае рекурсивно вызываем следующий узел */
+        if (node == null)
+            return false;
+        if (key.compareTo(node.key) < 0) { /* определяем в какое поддерево идти */
+            return checkContainsKey(node.left, key); /* рекурсивно вызываем следующий узел */
         } else if (key.compareTo(node.key) > 0) {
-            if (node.right == null)
-                return false;
-            else
-                return checkContainsKey(node.right, key);
-        }
-        return false;
+            return checkContainsKey(node.right, key);
+        } else
+            return true;
     }
 
     public void process(Consumer<AvlTree.Node<K, V>> consumer) { /* метод обхода дерева */
@@ -248,7 +242,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             root.process(consumer);
     }
 
-    public void clear(){
+    public void clear() {
         root = null;
         size = 0;
     }

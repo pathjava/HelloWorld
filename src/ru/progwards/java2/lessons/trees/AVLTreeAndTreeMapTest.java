@@ -17,7 +17,9 @@ public class AVLTreeAndTreeMapTest {
     private static final Map<Integer, String> treeMapStrings = new TreeMap<>();
 
     private static final List<Integer> sortedNumbers = new ArrayList<>();
+    private static List<Integer> sortedShuffleNumbers;
     private static final List<Integer> randomNumbers = new ArrayList<>();
+    private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
     private static List<String> tokensList = new ArrayList<>();
 
     private static final String MINIMUM_TIME = "Минимальное время теста: ";
@@ -34,13 +36,14 @@ public class AVLTreeAndTreeMapTest {
 
     public static void testing(String tokensFile) {
         fillingSortedData();
-        readFile(tokensFile);
+//        readFile(tokensFile);
         testAddToAvlTreeSortedNum();
-        testAddToTreeMapSortedNum();
-        testAddToAvlTreeRandomNum();
-        testAddToTreeMapRandomNum();
-        testAddToAvlTreeString();
-        testAddToTreeMapString();
+//        testAddToTreeMapSortedNum();
+//        testAddToAvlTreeRandomNum();
+//        testAddToTreeMapRandomNum();
+//        testAddToAvlTreeString();
+//        testAddToTreeMapString();
+        testDeleteFromAvlTreeSortedNum();
     }
 
     private static void testAddToAvlTreeSortedNum() {
@@ -143,6 +146,26 @@ public class AVLTreeAndTreeMapTest {
         resultTest(results, ADD_TIME, WORDS, TREE_MAP);
     }
 
+    private static void testDeleteFromAvlTreeSortedNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : sortedNumbers) {
+                avlTreeNumbers.put(num, num);
+            }
+            long start = System.currentTimeMillis();
+            for (int num : sortedShuffleNumbers) {
+                if (avlTreeNumbers.containsKey(num))
+                    avlTreeNumbers.delete(num);
+            }
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            avlTreeNumbers.clear();
+            count++;
+        }
+        resultTest(results, REMOVE_TIME, SORTED_NUM, AVL_TREE);
+    }
+
     private static void resultTest(List<Long> results, String desc, String data, String type) {
         Collections.sort(results);
         System.out.println(desc + data + type);
@@ -163,6 +186,11 @@ public class AVLTreeAndTreeMapTest {
         IntStream.range(0, 1000000).forEachOrdered(sortedNumbers::add);
         IntStream.range(0, 1000000).map(i -> ThreadLocalRandom.current()
                 .nextInt(10, 500000 + 1)).forEachOrdered(randomNumbers::add);
+//        Collections.copy(sortedShuffleNumbers, sortedNumbers);
+        sortedShuffleNumbers = List.copyOf(sortedNumbers);
+//        Collections.shuffle(sortedShuffleNumbers);
+//        Collections.copy(randomShuffleNumbers, randomNumbers);
+//        Collections.shuffle(randomShuffleNumbers);
     }
 
     private static void readFile(String file) {
