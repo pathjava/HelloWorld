@@ -247,6 +247,10 @@ public class AvlTree<K extends Comparable<K>, V> {
         size = 0;
     }
 
+    public int size(){
+        return size;
+    }
+
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();

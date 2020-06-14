@@ -20,7 +20,8 @@ public class AVLTreeAndTreeMapTest {
     private static final List<Integer> sortedShuffleNumbers = new ArrayList<>();
     private static final List<Integer> randomNumbers = new ArrayList<>();
     private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
-    private static List<String> tokensList = new ArrayList<>();
+    private static final List<String> tokensList = new ArrayList<>();
+    private static final List<String> tokensShuffleList = new ArrayList<>();
 
     public static void testing(String tokensFile) {
         fillingSortedData();
@@ -30,6 +31,8 @@ public class AVLTreeAndTreeMapTest {
         testAddToAvlAndTreeMapTreeString();
         testDeleteFromAvlTreeAndTreeMapTreeSortedNum();
         testDeleteFromAvlTreeAndTreeMapTreeRandomNum();
+        testFindValueInAvlTreeAndTreeMapTreeRandomNum();
+        testFindValueInAvlTreeAndTreeMapTreeSortedNum();
     }
 
     private static void testAddToAvlAndTreeMapTreeSortedNum() {
@@ -234,6 +237,87 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
+    private static void testFindValueInAvlTreeAndTreeMapTreeRandomNum() {
+        List<Long> resultAvl = testFindValueInAvlTreeRandomNum();
+        List<Long> resultMap = testFindValueInTreeMapRandomNum();
+        resultTests(resultAvl, resultMap, "findRand");
+    }
+
+    private static List<Long> testFindValueInAvlTreeRandomNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : randomNumbers)
+                avlTreeNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : randomShuffleNumbers)
+                avlTreeNumbers.find(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            avlTreeNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static List<Long> testFindValueInTreeMapRandomNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : randomNumbers)
+                treeMapNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : randomShuffleNumbers)
+                treeMapNumbers.get(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            treeMapNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static void testFindValueInAvlTreeAndTreeMapTreeSortedNum() {
+        List<Long> resultAvl = testFindValueInAvlTreeSortedNum();
+        List<Long> resultMap = testFindValueInTreeMapSortedNum();
+        resultTests(resultAvl, resultMap, "findSort");
+    }
+
+    private static List<Long> testFindValueInAvlTreeSortedNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : sortedNumbers)
+                avlTreeNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : sortedNumbers)
+                avlTreeNumbers.find(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            avlTreeNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static List<Long> testFindValueInTreeMapSortedNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : sortedNumbers)
+                treeMapNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : sortedNumbers)
+                treeMapNumbers.get(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            treeMapNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+
     private static void resultTests(List<Long> resAvl, List<Long> resMap, String operation) {
         Collections.sort(resAvl);
         Collections.sort(resMap);
@@ -249,6 +333,10 @@ public class AVLTreeAndTreeMapTest {
             str = "Время удаления сортированных чисел из";
         else if (operation.contains("delRand"))
             str = "Время удаления рандомных чисел из";
+        else if (operation.contains("findRand"))
+            str = "Время поиска по рандомным ключам в";
+        else if (operation.contains("findSort"))
+            str = "Время поиска по сортированным ключам в";
 
 
         System.out.printf("%-39s %-12s %-12s %n", str, "AVL Tree", "TreeMap");
@@ -273,6 +361,8 @@ public class AVLTreeAndTreeMapTest {
         Collections.shuffle(sortedShuffleNumbers);
         randomShuffleNumbers.addAll(randomNumbers);
         Collections.shuffle(randomShuffleNumbers);
+        tokensShuffleList.addAll(tokensList);
+        Collections.shuffle(tokensShuffleList);
     }
 
     private static void readFile(String file) {
