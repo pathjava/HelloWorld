@@ -21,7 +21,6 @@ public class AVLTreeAndTreeMapTest {
     private static final List<Integer> randomNumbers = new ArrayList<>();
     private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
     private static final List<String> tokensList = new ArrayList<>();
-    private static final List<String> tokensShuffleList = new ArrayList<>();
 
     public static void testing(String tokensFile) {
         fillingSortedData();
@@ -354,8 +353,6 @@ public class AVLTreeAndTreeMapTest {
         Collections.shuffle(sortedShuffleNumbers);
         randomShuffleNumbers.addAll(randomNumbers);
         Collections.shuffle(randomShuffleNumbers);
-        tokensShuffleList.addAll(tokensList);
-        Collections.shuffle(tokensShuffleList);
     }
 
     private static void readFile(String file) {
