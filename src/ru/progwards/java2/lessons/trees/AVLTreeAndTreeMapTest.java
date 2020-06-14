@@ -23,14 +23,22 @@ public class AVLTreeAndTreeMapTest {
     private static final String MINIMUM_TIME = "Минимальное время теста: ";
     private static final String AVERAGE_TIME = "Среднее арифметическое время теста: ";
     private static final String MAXIMUM_TIME = "Максимальное время теста: ";
+    private static final String AVL_TREE = "AVL Tree -";
+    private static final String TREE_MAP = "TreeMap -";
+    private static final String SORTED_NUM = "Sorted Num ";
+    private static final String RANDOM_NUM = "Random Num ";
+    private static final String WORDS = "Words ";
+    private static final String ADD_TIME = "- Время добавления ";
+    private static final String REMOVE_TIME = "- Время удаления ";
+
 
     public static void testing(String tokensFile) {
-//        fillingSortedData();
+        fillingSortedData();
         readFile(tokensFile);
-//        testAddToAvlTreeSortedNum();
-//        testAddToTreeMapSortedNum();
-//        testAddToAvlTreeRandomNum();
-//        testAddToTreeMapRandomNum();
+        testAddToAvlTreeSortedNum();
+        testAddToTreeMapSortedNum();
+        testAddToAvlTreeRandomNum();
+        testAddToTreeMapRandomNum();
         testAddToAvlTreeString();
         testAddToTreeMapString();
     }
@@ -48,7 +56,7 @@ public class AVLTreeAndTreeMapTest {
             avlTreeNumbers.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, SORTED_NUM, AVL_TREE);
     }
 
     private static void testAddToTreeMapSortedNum() {
@@ -64,7 +72,7 @@ public class AVLTreeAndTreeMapTest {
             treeMapNumbers.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, SORTED_NUM, TREE_MAP);
     }
 
     private static void testAddToAvlTreeRandomNum() {
@@ -80,7 +88,7 @@ public class AVLTreeAndTreeMapTest {
             avlTreeNumbers.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, RANDOM_NUM, AVL_TREE);
     }
 
     private static void testAddToTreeMapRandomNum() {
@@ -96,7 +104,7 @@ public class AVLTreeAndTreeMapTest {
             treeMapNumbers.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, RANDOM_NUM, TREE_MAP);
     }
 
     private static void testAddToAvlTreeString() {
@@ -114,7 +122,7 @@ public class AVLTreeAndTreeMapTest {
             avlTreeStrings.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, WORDS, AVL_TREE);
     }
 
     private static void testAddToTreeMapString() {
@@ -132,14 +140,15 @@ public class AVLTreeAndTreeMapTest {
             treeMapStrings.clear();
             count++;
         }
-        resultTest(results);
+        resultTest(results, ADD_TIME, WORDS, TREE_MAP);
     }
 
-    private static void resultTest(List<Long> results){
+    private static void resultTest(List<Long> results, String desc, String data, String type) {
         Collections.sort(results);
-        System.out.println(MINIMUM_TIME + results.get(0));
-        System.out.println(AVERAGE_TIME + calculateAverageTestsTime(results));
-        System.out.println(MAXIMUM_TIME + results.get(results.size() - 1));
+        System.out.println(desc + data + type);
+        System.out.printf("%-36s %d %n", MINIMUM_TIME, results.get(0));
+        System.out.printf("%-36s %.1f %n", AVERAGE_TIME, calculateAverageTestsTime(results));
+        System.out.printf("%-36s %d %n%n", MAXIMUM_TIME, results.get(results.size() - 1));
     }
 
     private static double calculateAverageTestsTime(List<Long> results) {
