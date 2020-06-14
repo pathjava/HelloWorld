@@ -22,28 +22,20 @@ public class AVLTreeAndTreeMapTest {
     private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
     private static List<String> tokensList = new ArrayList<>();
 
-    private static final String MINIMUM_TIME = "Минимальное время теста: ";
-    private static final String AVERAGE_TIME = "Среднее арифметическое время теста: ";
-    private static final String MAXIMUM_TIME = "Максимальное время теста: ";
-    private static final String SORTED_NUM = "Sorted Num ";
-    private static final String RANDOM_NUM = "Random Num ";
-    private static final String WORDS = "Words ";
-    private static final String ADD_TIME = "- Время добавления ";
-    private static final String REMOVE_TIME = "- Время удаления ";
-
-
     public static void testing(String tokensFile) {
         fillingSortedData();
         readFile(tokensFile);
         testAddToAvlAndTreeMapTreeSortedNum();
         testAddToAvlAndTreeMapTreeRandomNum();
         testAddToAvlAndTreeMapTreeString();
+        testDeleteFromAvlTreeAndTreeMapTreeSortedNum();
+        testDeleteFromAvlTreeAndTreeMapTreeRandomNum();
     }
 
     private static void testAddToAvlAndTreeMapTreeSortedNum() {
         List<Long> resultAvl = testAddToAvlTreeSortedNum();
         List<Long> resultMap = testAddToTreeMapSortedNum();
-        resultTests(resultAvl, resultMap, ADD_TIME, SORTED_NUM);
+        resultTests(resultAvl, resultMap, "addSort");
     }
 
     private static List<Long> testAddToAvlTreeSortedNum() {
@@ -81,7 +73,7 @@ public class AVLTreeAndTreeMapTest {
     private static void testAddToAvlAndTreeMapTreeRandomNum() {
         List<Long> resultAvl = testAddToAvlTreeRandomNum();
         List<Long> resultMap = testAddToTreeMapRandomNum();
-        resultTests(resultAvl, resultMap, ADD_TIME, RANDOM_NUM);
+        resultTests(resultAvl, resultMap, "addRand");
     }
 
     private static List<Long> testAddToAvlTreeRandomNum() {
@@ -119,7 +111,7 @@ public class AVLTreeAndTreeMapTest {
     private static void testAddToAvlAndTreeMapTreeString() {
         List<Long> resultAvl = testAddToAvlTreeString();
         List<Long> resultMap = testAddToTreeMapString();
-        resultTests(resultAvl, resultMap, ADD_TIME, WORDS);
+        resultTests(resultAvl, resultMap, "addWords");
     }
 
     private static List<Long> testAddToAvlTreeString() {
@@ -158,13 +150,18 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testDeleteFromAvlTreeSortedNum() {
+    private static void testDeleteFromAvlTreeAndTreeMapTreeSortedNum() {
+        List<Long> resultAvl = testDeleteFromAvlTreeSortedNum();
+        List<Long> resultMap = testDeleteFromTreeMapSortedNum();
+        resultTests(resultAvl, resultMap, "delSort");
+    }
+
+    private static List<Long> testDeleteFromAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < 5) {
-            for (int num : sortedNumbers) {
+            for (int num : sortedNumbers)
                 avlTreeNumbers.put(num, num);
-            }
             long start = System.currentTimeMillis();
             for (int num : sortedShuffleNumbers) {
                 if (avlTreeNumbers.containsKey(num))
@@ -175,16 +172,89 @@ public class AVLTreeAndTreeMapTest {
             avlTreeNumbers.clear();
             count++;
         }
-//        resultTests(results, REMOVE_TIME, SORTED_NUM, AVL_TREE);
+        return results;
     }
 
-    private static void resultTests(List<Long> resAvl, List<Long> resMap, String operation, String type) {
+    private static List<Long> testDeleteFromTreeMapSortedNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : sortedNumbers)
+                treeMapNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : sortedShuffleNumbers)
+                treeMapNumbers.remove(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            treeMapNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static void testDeleteFromAvlTreeAndTreeMapTreeRandomNum() {
+        List<Long> resultAvl = testDeleteFromAvlTreeRandomNum();
+        List<Long> resultMap = testDeleteFromTreeMapRandomNum();
+        resultTests(resultAvl, resultMap, "delRand");
+    }
+
+    private static List<Long> testDeleteFromAvlTreeRandomNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : randomNumbers)
+                avlTreeNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : randomShuffleNumbers) {
+                if (avlTreeNumbers.containsKey(num))
+                    avlTreeNumbers.delete(num);
+            }
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            avlTreeNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static List<Long> testDeleteFromTreeMapRandomNum() {
+        List<Long> results = new ArrayList<>();
+        int count = 0;
+        while (count < 5) {
+            for (int num : randomNumbers)
+                treeMapNumbers.put(num, num);
+            long start = System.currentTimeMillis();
+            for (int num : randomShuffleNumbers)
+                treeMapNumbers.remove(num);
+            long end = System.currentTimeMillis();
+            results.add(end - start);
+            treeMapNumbers.clear();
+            count++;
+        }
+        return results;
+    }
+
+    private static void resultTests(List<Long> resAvl, List<Long> resMap, String operation) {
         Collections.sort(resAvl);
         Collections.sort(resMap);
-        System.out.printf("%-16s %-16s %-16s %-16s %n", operation, type, "AVL Tree", "TreeMap");
-        System.out.printf("%-38s %-16d %d %n", MINIMUM_TIME, resAvl.get(0), resMap.get(0));
-        System.out.printf("%-38s %-16.1f %.1f %n", AVERAGE_TIME, calculateAverageTestsTime(resAvl), calculateAverageTestsTime(resMap));
-        System.out.printf("%-38s %-16d %d %n%n", MAXIMUM_TIME, resAvl.get(resAvl.size() - 1), resAvl.get(resMap.size() - 1));
+
+        String str = null;
+        if (operation.contains("addSort"))
+            str = "Время добавления сортированных чисел в";
+        else if (operation.contains("addRand"))
+            str = "Время добавления рандомных чисел в";
+        else if (operation.contains("addWords"))
+            str = "Время добавления слов в";
+        else if (operation.contains("delSort"))
+            str = "Время удаления сортированных чисел из";
+        else if (operation.contains("delRand"))
+            str = "Время удаления рандомных чисел из";
+
+
+        System.out.printf("%-39s %-12s %-12s %n", str, "AVL Tree", "TreeMap");
+        System.out.printf("%-41s %-12d %d %n", "Минимальное время теста: ", resAvl.get(0), resMap.get(0));
+        System.out.printf("%-41s %-12.1f %.1f %n", "Среднее арифметическое время теста: ", calculateAverageTestsTime(resAvl), calculateAverageTestsTime(resMap));
+        System.out.printf("%-41s %-12d %d %n%n", "Максимальное время теста: ", resAvl.get(resAvl.size() - 1), resMap.get(resMap.size() - 1));
     }
 
     private static double calculateAverageTestsTime(List<Long> results) {
