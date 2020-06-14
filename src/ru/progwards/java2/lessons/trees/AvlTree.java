@@ -248,6 +248,11 @@ public class AvlTree<K extends Comparable<K>, V> {
             root.process(consumer);
     }
 
+    public void clear(){
+        root = null;
+        size = 0;
+    }
+
 
     public static void main(String[] args) {
         AvlTree<Integer, String> test = new AvlTree<>();
@@ -302,5 +307,8 @@ public class AvlTree<K extends Comparable<K>, V> {
         boolean result = test.containsKey(2);
         System.out.println(result);
         test.process(System.out::println);
+
+        test.clear();
+        System.out.println(test.size);
     }
 }
