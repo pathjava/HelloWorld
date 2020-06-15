@@ -6,17 +6,23 @@ package ru.progwards.java2.lessons.calculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Calculator {
 
-    private static final List<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
-    public static int calculate(String expression) {
+    public int calculate(String expression) {
+        if (expression.isEmpty())
+            throw new NoSuchElementException();
+        readString(expression);
+        if (checkBrackets())
+            operationsInBrackets();
 
         return 0;
     }
 
-    private static void readString(String str) {
+    private void readString(String str) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
@@ -34,29 +40,60 @@ public class Calculator {
         }
     }
 
-    private static int add(int a, int b) {
+    private boolean checkBrackets() {
+        int count = 0;
+        while (count < list.size()) {
+            if (list.get(count).equals("("))
+                return true;
+            count++;
+        }
+        return false;
+    }
+
+    private void operationsInBrackets() {
+        List<String> tempList = new ArrayList<>();
+        boolean lock = false;
+        int start;
+        int end;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals("(")) {
+                lock = true;
+                start = i;
+            }
+            if (lock)
+                tempList.add(list.get(i));
+            if (list.get(i).equals(")")) {
+                end = i;
+                break;
+            }
+        }
+    }
+
+    private int add(int a, int b) {
         return a + b;
     }
 
-    private static int diff(int a, int b) {
+    private int diff(int a, int b) {
         return a - b;
     }
 
-    private static int mult(int a, int b) {
+    private int mult(int a, int b) {
         return a * b;
     }
 
-    private static int div(int a, int b) {
+    private int div(int a, int b) {
         return a / b;
     }
 
 
     public static void main(String[] args) {
-//        calculate("5+(25+3)*12/2-3");
+        Calculator calc = new Calculator();
+        calc.calculate("5+(25+3*2)*12/2-3");
 
-        readString("5+(25+3)*12/2-3");
-        for (String s : list) {
+        for (String s : calc.list) {
             System.out.print(s + " ");
         }
+
+
     }
 }
