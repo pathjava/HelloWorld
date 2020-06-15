@@ -25,16 +25,16 @@ public class AVLTreeAndTreeMapTest {
 
     public static void testing(String tokensFile) {
         fillingData(tokensFile);
-        testAddToAvlAndTreeMapTreeSortedNum();
-        testAddToAvlAndTreeMapTreeRandomNum();
-        testAddToAvlAndTreeMapTreeString();
-        testDeleteFromAvlTreeAndTreeMapTreeSortedNum();
-        testDeleteFromAvlTreeAndTreeMapTreeRandomNum();
-        testFindValueInAvlTreeAndTreeMapTreeRandomNum();
-        testFindValueInAvlTreeAndTreeMapTreeSortedNum();
+        testAddToAvlTreeAndTreeMapSortedNum();
+        testAddToAvlTreeAndTreeMapRandomNum();
+        testAddToAvlTreeAndTreeMapString();
+        testDeleteFromAvlTreeAndTreeMapSortedNum();
+        testDeleteFromAvlTreeAndTreeMapRandomNum();
+        testFindValueInAvlTreeAndTreeMapRandomNum();
+        testFindValueInAvlTreeAndTreeMapSortedNum();
     }
 
-    private static void testAddToAvlAndTreeMapTreeSortedNum() {
+    private static void testAddToAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testAddToAvlTreeSortedNum();
         List<Long> resultMap = testAddToTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "addSort");
@@ -70,7 +70,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testAddToAvlAndTreeMapTreeRandomNum() {
+    private static void testAddToAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testAddToAvlTreeRandomNum();
         List<Long> resultMap = testAddToTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "addRand");
@@ -106,7 +106,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testAddToAvlAndTreeMapTreeString() {
+    private static void testAddToAvlTreeAndTreeMapString() {
         List<Long> resultAvl = testAddToAvlTreeString();
         List<Long> resultMap = testAddToTreeMapString();
         resultTests(resultAvl, resultMap, "addWords");
@@ -148,7 +148,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testDeleteFromAvlTreeAndTreeMapTreeSortedNum() {
+    private static void testDeleteFromAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testDeleteFromAvlTreeSortedNum();
         List<Long> resultMap = testDeleteFromTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "delSort");
@@ -188,7 +188,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testDeleteFromAvlTreeAndTreeMapTreeRandomNum() {
+    private static void testDeleteFromAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testDeleteFromAvlTreeRandomNum();
         List<Long> resultMap = testDeleteFromTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "delRand");
@@ -229,7 +229,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testFindValueInAvlTreeAndTreeMapTreeRandomNum() {
+    private static void testFindValueInAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testFindValueInAvlTreeRandomNum();
         List<Long> resultMap = testFindValueInTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "findRand");
@@ -269,7 +269,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testFindValueInAvlTreeAndTreeMapTreeSortedNum() {
+    private static void testFindValueInAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testFindValueInAvlTreeSortedNum();
         List<Long> resultMap = testFindValueInTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "findSort");
