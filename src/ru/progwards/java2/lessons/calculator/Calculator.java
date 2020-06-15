@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.calculator;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -53,8 +54,8 @@ public class Calculator {
     private void operationsInBrackets() {
         List<String> tempList = new ArrayList<>();
         boolean lock = false;
-        int start;
-        int end;
+        int start = 0;
+        int end = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals("(")) {
                 lock = true;
@@ -67,6 +68,35 @@ public class Calculator {
                 break;
             }
         }
+        checkMulOrDiv(tempList);
+    }
+
+    private List<String> checkMulOrDiv(List<String> list) {
+        List<String> tempList = new ArrayList<>();
+        String result;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals("*") || list.get(i).equals("/"))
+                if (i - 1 >= 0 && i + 1 <= list.size()) {
+                    result = mult(list.get(i - 1), list.get(i + 1));
+                    list.set(i-1, result);
+                    tempList.addAll(delete(list, i, 2));
+                    break;
+                }
+        }
+        for (String s : tempList) {
+            System.out.print(s+" ");
+        }
+        return tempList;
+    }
+
+    private List<String> delete(List<String> list, int start, int count){
+        List<String> tempList = new ArrayList<>(list);
+        int i = 0;
+        while (i < count) {
+            tempList.remove(start);
+            i++;
+        }
+        return tempList;
     }
 
     private int add(int a, int b) {
@@ -77,8 +107,8 @@ public class Calculator {
         return a - b;
     }
 
-    private int mult(int a, int b) {
-        return a * b;
+    private String mult(String a, String b) {
+        return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
     }
 
     private int div(int a, int b) {
@@ -88,11 +118,11 @@ public class Calculator {
 
     public static void main(String[] args) {
         Calculator calc = new Calculator();
-        calc.calculate("5+(25+3*2)*12/2-3");
+        calc.calculate("5+(25+3*2/2)*12/2-3");
 
-        for (String s : calc.list) {
-            System.out.print(s + " ");
-        }
+//        for (String s : calc.list) {
+//            System.out.print(s + " ");
+//        }
 
 
     }
