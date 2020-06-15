@@ -41,62 +41,40 @@ public class Calculator {
     }
 
     private void operationsInBrackets() {
-        List<String> tempOneList = new ArrayList<>();
         int start = 0;
         int end = 0;
-        boolean lock = false;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("(")) {
-                lock = true;
+            if (list.get(i).equals("("))
                 start = i;
-            }
-            if (lock)
-                tempOneList.add(list.get(i));
             if (list.get(i).equals(")")) {
                 end = i;
                 break;
             }
         }
-        List<String> tempTwoList = new ArrayList<>(mulOrDiv(tempOneList));
-        tempOneList.clear();
-        tempOneList.addAll(tempTwoList);
-        tempTwoList.clear();
+        mulOrDiv(start, end);
     }
 
-    private List<String> mulOrDiv(List<String> list) {
-        List<String> tempList = new ArrayList<>();
-        String result = null;
-        while (checkMulOrDiv(list)) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).equals("*") || list.get(i).equals("/"))
-                    if (i - 1 >= 0 && i + 1 <= list.size()) {
-                        if (list.get(i).equals("*"))
-                            result = mult(list.get(i - 1), list.get(i + 1));
-                        else if (list.get(i).equals("/"))
-                            result = div(list.get(i - 1), list.get(i + 1));
-                        list.set(i - 1, result);
-                        tempList.addAll(delete(list, i, 2));
-                        list.clear();
-                        list.addAll(tempList);
-                        tempList.clear();
-                        break;
-                    }
-            }
+    private void mulOrDiv(int start, int end) {
+        for (int i = start; i <= end; i++) {
+            if (list.get(i).equals("*"))
+                if (i - 1 >= 0 && i + 1 <= list.size()) {
+                    String result = mult(list.get(i - 1), list.get(i + 1));
+                    list.set(i - 1, result);
+                    delete(i, 2);
+                    break;
+                }
         }
         for (String s : list) {
             System.out.print(s + " ");
         }
-        return list;
     }
 
-    private List<String> delete(List<String> list, int start, int count) {
-        List<String> tempList = new ArrayList<>(list);
+    private void delete(int start, int count) {
         int i = 0;
         while (i < count) {
-            tempList.remove(start);
+            list.remove(start);
             i++;
         }
-        return tempList;
     }
 
     private boolean checkBrackets() {
