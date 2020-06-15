@@ -72,7 +72,7 @@ public class Calculator {
                     if (i - 1 >= 0 && i + 1 <= list.size()) {
                         if (list.get(i).equals("*"))
                             result = mult(list.get(i - 1), list.get(i + 1));
-                        else
+                        else if (list.get(i).equals("/"))
                             result = div(list.get(i - 1), list.get(i + 1));
                         list.set(i - 1, result);
                         tempList.addAll(delete(list, i, 2));
@@ -86,7 +86,7 @@ public class Calculator {
         for (String s : list) {
             System.out.print(s + " ");
         }
-        return tempList;
+        return list;
     }
 
     private List<String> delete(List<String> list, int start, int count) {
