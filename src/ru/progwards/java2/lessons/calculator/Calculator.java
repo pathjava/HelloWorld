@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.calculator;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,6 +40,65 @@ public class Calculator {
         }
     }
 
+    private void operationsInBrackets() {
+        List<String> tempOneList = new ArrayList<>();
+        int start = 0;
+        int end = 0;
+        boolean lock = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals("(")) {
+                lock = true;
+                start = i;
+            }
+            if (lock)
+                tempOneList.add(list.get(i));
+            if (list.get(i).equals(")")) {
+                end = i;
+                break;
+            }
+        }
+        List<String> tempTwoList = new ArrayList<>(mulOrDiv(tempOneList));
+        tempOneList.clear();
+        tempOneList.addAll(tempTwoList);
+        tempTwoList.clear();
+    }
+
+    private List<String> mulOrDiv(List<String> list) {
+        List<String> tempList = new ArrayList<>();
+        String result = null;
+        while (checkMulOrDiv(list)) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).equals("*") || list.get(i).equals("/"))
+                    if (i - 1 >= 0 && i + 1 <= list.size()) {
+                        if (list.get(i).equals("*"))
+                            result = mult(list.get(i - 1), list.get(i + 1));
+                        else
+                            result = div(list.get(i - 1), list.get(i + 1));
+                        list.set(i - 1, result);
+                        tempList.addAll(delete(list, i, 2));
+                        list.clear();
+                        list.addAll(tempList);
+                        tempList.clear();
+                        break;
+                    }
+            }
+        }
+        for (String s : list) {
+            System.out.print(s + " ");
+        }
+        return tempList;
+    }
+
+    private List<String> delete(List<String> list, int start, int count) {
+        List<String> tempList = new ArrayList<>(list);
+        int i = 0;
+        while (i < count) {
+            tempList.remove(start);
+            i++;
+        }
+        return tempList;
+    }
+
     private boolean checkBrackets() {
         int count = 0;
         while (count < list.size()) {
@@ -51,52 +109,14 @@ public class Calculator {
         return false;
     }
 
-    private void operationsInBrackets() {
-        List<String> tempList = new ArrayList<>();
-        boolean lock = false;
-        int start = 0;
-        int end = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("(")) {
-                lock = true;
-                start = i;
-            }
-            if (lock)
-                tempList.add(list.get(i));
-            if (list.get(i).equals(")")) {
-                end = i;
-                break;
-            }
+    private boolean checkMulOrDiv(List<String> list) {
+        int count = 0;
+        while (count < list.size()) {
+            if (list.get(count).equals("*") || list.get(count).equals("/"))
+                return true;
+            count++;
         }
-        checkMulOrDiv(tempList);
-    }
-
-    private List<String> checkMulOrDiv(List<String> list) {
-        List<String> tempList = new ArrayList<>();
-        String result;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("*") || list.get(i).equals("/"))
-                if (i - 1 >= 0 && i + 1 <= list.size()) {
-                    result = mult(list.get(i - 1), list.get(i + 1));
-                    list.set(i-1, result);
-                    tempList.addAll(delete(list, i, 2));
-                    break;
-                }
-        }
-        for (String s : tempList) {
-            System.out.print(s+" ");
-        }
-        return tempList;
-    }
-
-    private List<String> delete(List<String> list, int start, int count){
-        List<String> tempList = new ArrayList<>(list);
-        int i = 0;
-        while (i < count) {
-            tempList.remove(start);
-            i++;
-        }
-        return tempList;
+        return false;
     }
 
     private int add(int a, int b) {
@@ -111,10 +131,9 @@ public class Calculator {
         return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
     }
 
-    private int div(int a, int b) {
-        return a / b;
+    private String div(String a, String b) {
+        return String.valueOf(Integer.parseInt(a) / Integer.parseInt(b));
     }
-
 
     public static void main(String[] args) {
         Calculator calc = new Calculator();
