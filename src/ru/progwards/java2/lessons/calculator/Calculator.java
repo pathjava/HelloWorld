@@ -4,13 +4,12 @@
 package ru.progwards.java2.lessons.calculator;
 
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Calculator {
 
-    private static final Map<Integer, String> map = new TreeMap<>();
-
+    private static final List<String> list = new ArrayList<>();
 
     public static int calculate(String expression) {
 
@@ -19,23 +18,36 @@ public class Calculator {
 
     private static void readString(String str) {
         StringBuilder builder = new StringBuilder();
-        int count = 1;
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
             if (Character.isDigit(ch)) {
                 builder.append(ch);
-                if (i == str.length()-1)
-                    map.put(count, builder.toString());
+                if (i == str.length() - 1)
+                    list.add(builder.toString());
             } else {
                 if (!builder.toString().equals("")) {
-                    map.put(count, builder.toString());
-                    count++;
+                    list.add(builder.toString());
                 }
-                map.put(count, String.valueOf(ch));
+                list.add(String.valueOf(ch));
                 builder = new StringBuilder();
-                count++;
             }
         }
+    }
+
+    private static int add(int a, int b) {
+        return a + b;
+    }
+
+    private static int diff(int a, int b) {
+        return a - b;
+    }
+
+    private static int mult(int a, int b) {
+        return a * b;
+    }
+
+    private static int div(int a, int b) {
+        return a / b;
     }
 
 
@@ -43,8 +55,8 @@ public class Calculator {
 //        calculate("5+(25+3)*12/2-3");
 
         readString("5+(25+3)*12/2-3");
-        for (Map.Entry<Integer, String> entry : map.entrySet()) {
-            System.out.print(entry.getValue() + " ");
+        for (String s : list) {
+            System.out.print(s + " ");
         }
     }
 }
