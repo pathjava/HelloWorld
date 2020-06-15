@@ -24,7 +24,7 @@ public class AVLTreeAndTreeMapTest {
     private static final int COUNT_LOOP = 5;
 
     public static void testing(String tokensFile) {
-        fillingSortedData(tokensFile);
+        fillingData(tokensFile);
         testAddToAvlAndTreeMapTreeSortedNum();
         testAddToAvlAndTreeMapTreeRandomNum();
         testAddToAvlAndTreeMapTreeString();
@@ -345,7 +345,7 @@ public class AVLTreeAndTreeMapTest {
         return sum / results.size();
     }
 
-    public static void fillingSortedData(String tokensFile) {
+    public static void fillingData(String tokensFile) {
         IntStream.range(0, 1000000).forEachOrdered(sortedNumbers::add);
         IntStream.range(0, 1000000).map(i -> ThreadLocalRandom.current()
                 .nextInt(10, 500000 + 1)).forEachOrdered(randomNumbers::add);
