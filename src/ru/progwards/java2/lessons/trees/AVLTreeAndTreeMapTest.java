@@ -330,6 +330,7 @@ public class AVLTreeAndTreeMapTest {
         else if (operation.contains("findSort"))
             str = "Время поиска по сортированным ключам в";
 
+        System.out.println("Количество тестовых циклов: " + COUNT_LOOP + "\n");
         System.out.printf("%-39s %-12s %-12s %n", str, "AVL Tree", "TreeMap");
         System.out.printf("%-41s %-12d %d %n", "Минимальное время теста: ", resAvl.get(0), resMap.get(0));
         System.out.printf("%-41s %-12.1f %.1f %n", "Среднее арифметическое время теста: ",
