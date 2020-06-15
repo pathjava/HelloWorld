@@ -173,10 +173,9 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new IllegalArgumentException(KEY_NULL);
         if (root == null)
             throw new NoSuchElementException(IS_EMPTY);
-        if (!containsKey(key))
-            throw new NoSuchElementException(NOT_EXIST);
-        Node<K, V> tempNode = searchValueFromFind(root, key);
-        return tempNode.value;
+//        if (!containsKey(key))
+//            throw new NoSuchElementException(NOT_EXIST);
+        return searchValueFromFind(root, key).value;
     }
 
     private Node<K, V> searchValueFromFind(Node<K, V> node, K key) {
