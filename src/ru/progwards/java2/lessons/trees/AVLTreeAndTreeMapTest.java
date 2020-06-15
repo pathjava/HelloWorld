@@ -30,8 +30,8 @@ public class AVLTreeAndTreeMapTest {
         testAddToAvlTreeAndTreeMapString();
         testDeleteFromAvlTreeAndTreeMapSortedNum();
         testDeleteFromAvlTreeAndTreeMapRandomNum();
-        testFindValueInAvlTreeAndTreeMapRandomNum();
         testFindValueInAvlTreeAndTreeMapSortedNum();
+        testFindValueInAvlTreeAndTreeMapRandomNum();
     }
 
     private static void testAddToAvlTreeAndTreeMapSortedNum() {
