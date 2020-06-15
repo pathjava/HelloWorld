@@ -175,7 +175,7 @@ public class AvlTree<K extends Comparable<K>, V> {
             throw new NoSuchElementException(IS_EMPTY);
 //        if (!containsKey(key))
 //            throw new NoSuchElementException(NOT_EXIST);
-        return searchValueFromFind(root, key).value;
+        return searchValueFromFind(root, key).value; // TODO - если ключ не существует, сделать возврат null
     }
 
     private Node<K, V> searchValueFromFind(Node<K, V> node, K key) {
