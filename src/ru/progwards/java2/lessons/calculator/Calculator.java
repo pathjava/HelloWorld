@@ -44,17 +44,23 @@ public class Calculator {
         int start = 0;
         int end = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("("))
+            if (list.get(i).equals("(")) {
                 start = i;
+            }
             if (list.get(i).equals(")")) {
                 end = i;
                 break;
             }
         }
-        mulOrDiv(start, end);
+        if (checkMul(start, end)) {
+            multiplication(start, end);
+        }
+        if (checkDiv(start, end)) {
+            division(start, end);
+        }
     }
 
-    private void mulOrDiv(int start, int end) {
+    private void multiplication(int start, int end) {
         for (int i = start; i <= end; i++) {
             if (list.get(i).equals("*"))
                 if (i - 1 >= 0 && i + 1 <= list.size()) {
@@ -64,8 +70,17 @@ public class Calculator {
                     break;
                 }
         }
-        for (String s : list) {
-            System.out.print(s + " ");
+    }
+
+    private void division(int start, int end) {
+        for (int i = start; i <= end; i++) {
+            if (list.get(i).equals("/"))
+                if (i - 1 >= 0 && i + 1 <= list.size()) {
+                    String result = div(list.get(i - 1), list.get(i + 1));
+                    list.set(i - 1, result);
+                    delete(i, 2);
+                    break;
+                }
         }
     }
 
@@ -87,12 +102,20 @@ public class Calculator {
         return false;
     }
 
-    private boolean checkMulOrDiv(List<String> list) {
+    private boolean checkMul(int start, int end) {
         int count = 0;
-        while (count < list.size()) {
-            if (list.get(count).equals("*") || list.get(count).equals("/"))
+        for (int i = start; i <= end; i++) {
+            if (list.get(i).equals("*"))
                 return true;
-            count++;
+        }
+        return false;
+    }
+
+    private boolean checkDiv(int start, int end) {
+        int count = 0;
+        for (int i = start; i <= end; i++) {
+            if (list.get(i).equals("/"))
+                return true;
         }
         return false;
     }
@@ -117,9 +140,9 @@ public class Calculator {
         Calculator calc = new Calculator();
         calc.calculate("5+(25+3*2/2)*12/2-3");
 
-//        for (String s : calc.list) {
-//            System.out.print(s + " ");
-//        }
+        for (String s : calc.list) {
+            System.out.print(s + " ");
+        }
 
 
     }
