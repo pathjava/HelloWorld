@@ -57,11 +57,12 @@ public class Calculator {
                 }
             for (int i = start; i <= end; i++)
                 tempList.add(list.get(i));
-            operationsInBrackets();
+            list.set(start, operationsInBrackets());
+            delete(list, start + 1, end - start);
         }
     }
 
-    private void operationsInBrackets() {
+    private String operationsInBrackets() {
         boolean lock = true;
         while (lock) {
             if (checkMul(tempList))
@@ -71,36 +72,66 @@ public class Calculator {
             else
                 lock = false;
         }
+        lock = true;
+        while (lock) {
+            if (checkPlus(tempList))
+                additional();
+            if (checkMinus(tempList))
+                subtraction();
+            else
+                lock = false;
+        }
+        return tempList.get(1);
     }
 
     private void multiplication() {
-        for (int i = 0; i < tempList.size(); i++) {
+        for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("*"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
                     String result = mult(tempList.get(i - 1), tempList.get(i + 1));
                     tempList.set(i - 1, result);
-                    delete(i, 2);
+                    delete(tempList, i, 2);
                     break;
                 }
-        }
     }
 
     private void division() {
-        for (int i = 0; i < tempList.size(); i++) {
+        for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("/"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
                     String result = div(tempList.get(i - 1), tempList.get(i + 1));
                     tempList.set(i - 1, result);
-                    delete(i, 2);
+                    delete(tempList, i, 2);
                     break;
                 }
-        }
     }
 
-    private void delete(int start, int count) {
+    private void additional() {
+        for (int i = 0; i < tempList.size(); i++)
+            if (tempList.get(i).equals("+"))
+                if (i - 1 >= 0 && i + 1 <= tempList.size()) {
+                    String result = add(tempList.get(i - 1), tempList.get(i + 1));
+                    tempList.set(i - 1, result);
+                    delete(tempList, i, 2);
+                    break;
+                }
+    }
+
+    private void subtraction() {
+        for (int i = 0; i < tempList.size(); i++)
+            if (tempList.get(i).equals("-"))
+                if (i - 1 >= 0 && i + 1 <= tempList.size()) {
+                    String result = diff(tempList.get(i - 1), tempList.get(i + 1));
+                    tempList.set(i - 1, result);
+                    delete(tempList, i, 2);
+                    break;
+                }
+    }
+
+    private void delete(List<String> list, int start, int count) {
         int i = 0;
         while (i < count) {
-            tempList.remove(start);
+            list.remove(start);
             i++;
         }
     }
@@ -131,12 +162,28 @@ public class Calculator {
         return false;
     }
 
-    private int add(int a, int b) {
-        return a + b;
+    private boolean checkPlus(List<String> list) {
+        for (String s : list) {
+            if (s.equals("+"))
+                return true;
+        }
+        return false;
     }
 
-    private int diff(int a, int b) {
-        return a - b;
+    private boolean checkMinus(List<String> list) {
+        for (String s : list) {
+            if (s.equals("-"))
+                return true;
+        }
+        return false;
+    }
+
+    private String add(String a, String b) {
+        return String.valueOf(Integer.parseInt(a) + Integer.parseInt(b));
+    }
+
+    private String diff(String a, String b) {
+        return String.valueOf(Integer.parseInt(a) - Integer.parseInt(b));
     }
 
     private String mult(String a, String b) {
@@ -149,7 +196,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         Calculator calc = new Calculator();
-        calc.calculate("5+(25+3*2/2)*12/2-3");
+        calc.calculate("5+((25+3)*2/2)*12/2-3");
 
         for (String s : calc.list) {
             System.out.print(s + " ");
