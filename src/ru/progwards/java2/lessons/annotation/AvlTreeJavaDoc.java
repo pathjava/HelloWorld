@@ -1,11 +1,24 @@
 // Oleg Kiselev
 // 16.06.2020, 17:32
 
+/**
+ * Пакет для исследования JavaDoc
+ */
 package ru.progwards.java2.lessons.annotation;
-
+/**
+ * Подключение библиотек
+ */
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
+/**
+ * Класс AvlTreeJavaDoc, реализующий АВЛ дерево
+ * @version 1.0
+ * @see ru.progwards.java2.lessons.trees.AvlTree АВЛ дерево
+ * @see ru.progwards.java2.lessons.trees.AVLTreeAndTreeMapTest Тест, сравнивающий АВЛ дерево и TreeMap
+ * @param <K> ключ АВЛ дерева, обязательно реализующий интерфейм Comparable
+ * @param <V> значение узла
+ */
 public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     private Node<K, V> root;
@@ -14,13 +27,23 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     private static final String IS_EMPTY = "AVL Tree is empty!";
     private static final String KEY_NULL = "The key cannot be null!";
 
-    public static class Node<K extends Comparable<K>, V> { /* узел АВЛ дерева */
+    /**
+     * Класс Node, реализующий узел АВЛ дерева
+     * @param <K> ключ АВЛ дерева, обязательно реализующий интерфейм Comparable
+     * @param <V> значение узла
+     */
+    public static class Node<K extends Comparable<K>, V> {
         private int height;
         private final K key;
         private V value;
         private Node<K, V> left;
         private Node<K, V> right;
 
+        /**
+         * Конструктора класса Node
+         * @param key инициализация ключа
+         * @param value инициализация значения
+         */
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
@@ -29,6 +52,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
             this.right = null;
         }
 
+        /**
+         * Метод, переопределяющий toString
+         * @return возвращает ключ и значение в удобочитаемом виде
+         */
         @Override
         public String toString() {
             return "key=" + key + ", value=" + value;
