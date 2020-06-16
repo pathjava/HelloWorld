@@ -62,7 +62,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
         }
 
         /**
-         * Метод для обхода по всему дереву, основанный на функциональном интерфейсе Consumer {@link Consumer}
+         * Метод для обхода по всему дереву, основанный на функциональном интерфейсе {@link Consumer}
          * Consumer декларирует абстрактный метод accept, который принимает объект и выполняет над ним требуемые действия.
          * @param consumer
          */
@@ -89,7 +89,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Метод addFromPut принимает узел из метода {@link #put(Comparable, Object)} и размещает его в {@link AvlTreeJavaDoc}
-     * @param node {@link AvlTreeJavaDoc#root} узел, полученный из метода {@link #put(Comparable, Object)}, указывающий на начало {@link AvlTreeJavaDoc}
+     * @param node {@link AvlTreeJavaDoc#root} узел, полученный из метода {@link #put(Comparable, Object)},
+     *                                        указывающий на начало {@link AvlTreeJavaDoc}
      * @param key {@link Node#key}
      * @param value {@link Node#value}
      * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
@@ -110,7 +111,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     *
+     * Метод, инициализирующий удаление узла {@link Node} по ключу {@link Node#key} из {@link AvlTreeJavaDoc}
      * @param key {@link Node#key}
      */
     public void delete(K key) { /* удаление узла из дерева */
@@ -125,10 +126,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     *
+     * Метод, ищущий, удаляющий узел {@link Node} по ключу {@link Node#key}
      * @param node {@link Node}
      * @param key {@link Node#key}
-     * @return
+     * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
     private Node<K, V> searchDeleteNode(Node<K, V> node, K key) {
         if (key.compareTo(node.key) < 0) /* если ключ меньше node, ищем удаляемый узел в левом поддереве */
@@ -154,7 +155,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     /**
      *
      * @param node {@link Node}
-     * @return
+     * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
     private Node<K, V> deleteMin(Node<K, V> node) {
         if (node.left == null) /* если левый узел null */
