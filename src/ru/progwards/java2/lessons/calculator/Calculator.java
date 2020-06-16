@@ -154,35 +154,19 @@ public class Calculator {
     }
 
     private boolean checkMul(List<String> list) {
-        for (String s : list) {
-            if (s.equals("*"))
-                return true;
-        }
-        return false;
+        return list.stream().anyMatch(s -> s.equals("*"));
     }
 
     private boolean checkDiv(List<String> list) {
-        for (String s : list) {
-            if (s.equals("/"))
-                return true;
-        }
-        return false;
+        return list.stream().anyMatch(s -> s.equals("/"));
     }
 
     private boolean checkPlus(List<String> list) {
-        for (String s : list) {
-            if (s.equals("+"))
-                return true;
-        }
-        return false;
+        return list.stream().anyMatch(s -> s.equals("+"));
     }
 
     private boolean checkMinus(List<String> list) {
-        for (String s : list) {
-            if (s.equals("-"))
-                return true;
-        }
-        return false;
+        return list.stream().anyMatch(s -> s.equals("-"));
     }
 
     private String add(String a, String b) {
