@@ -16,11 +16,25 @@ import java.util.function.Consumer;
  * @see ru.progwards.java2.lessons.trees.AVLTreeAndTreeMapTest Тест, сравнивающий АВЛ дерево и {@link java.util.TreeMap}
  */
 public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
-
+    /**
+     * root - корневой узел {@link AvlTreeJavaDoc}
+     */
     private Node<K, V> root;
+    /**
+     * size - размер {@link AvlTreeJavaDoc}
+     */
     private int size = 0;
+    /**
+     * NOT_EXIST - сообщение исключения {@link NoSuchElementException}, если ключа нет в {@link AvlTreeJavaDoc}
+     */
     private static final String NOT_EXIST = "The key does not exist!";
+    /**
+     * IS_EMPTY - сообщение исключения {@link NoSuchElementException}, если дерево {@link AvlTreeJavaDoc} пустое
+     */
     private static final String IS_EMPTY = "AVL Tree is empty!";
+    /**
+     * KEY_NULL - сообщение исключения {@link IllegalArgumentException}, если {@link Node#key} null
+     */
     private static final String KEY_NULL = "The key cannot be null!";
 
     /**
