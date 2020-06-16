@@ -1,13 +1,7 @@
 // Oleg Kiselev
 // 16.06.2020, 17:32
 
-/**
- * Пакет для исследования JavaDoc
- */
 package ru.progwards.java2.lessons.annotation;
-/**
- * Подключение библиотек
- */
 
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -83,6 +77,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Метод put инициализирует размещение пары ключ/значение в {@link AvlTreeJavaDoc}
+     * Изначально метод проверяет {@link Node#key} на null и если true,
+     * выбрасывает исключение {@link IllegalArgumentException} с сообщением {@link #KEY_NULL}
      *
      * @param key   {@link Node#key}
      * @param value {@link Node#value}
@@ -120,6 +116,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Метод, инициализирующий удаление узла {@link Node} по ключу {@link Node#key} из {@link AvlTreeJavaDoc}
+     * Изначально метод проверяет {@link Node#key} на null и если true,
+     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
      * @param key {@link Node#key}
      */
@@ -276,6 +276,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Изначально метод проверяет {@link Node#key} на null и если true,
+     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY}
+     *
      * @param key {@link Node#key}
      * @return
      */
@@ -304,6 +308,11 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Изначально метод проверяет {@link Node#key} на null и если true,
+     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
+     *
      * @param oldKey {@link Node#key} //TODO
      * @param newKey
      */
@@ -320,6 +329,11 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Изначально метод проверяет {@link Node#key} на null и если true,
+     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
+     *
      * @param key      {@link Node#key}
      * @param newValue
      */
