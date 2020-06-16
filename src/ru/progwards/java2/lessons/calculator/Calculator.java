@@ -236,7 +236,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         Calculator calc = new Calculator();
-        calc.calculate("5+(((15+3))*2/2)*12/2-3*2+(5*7)");
+        calc.calculate("5+((((15+3)))*2/2)*12/2-3*2+(5*7)");
 
         for (String s : calc.list) {
             System.out.print(s + " ");
