@@ -212,11 +212,10 @@ public class AvlTree<K extends Comparable<K>, V> {
     private void replacementValueFromUpdateValue(Node<K, V> node, K key, V newValue) {
         if (key.compareTo(node.key) == 0) /* есл искомый ключ и ключ узла равны, обновляем значение */
             node.value = newValue;
-        if (key.compareTo(node.key) < 0) { /* в противном случае определяем в какое поддерево идти */
+        if (key.compareTo(node.key) < 0)  /* в противном случае определяем в какое поддерево идти */
             replacementValueFromUpdateValue(node.left, key, newValue); /* рекурсивно вызываем следующий узел */
-        } else if (key.compareTo(node.key) > 0) {
+        else if (key.compareTo(node.key) > 0)
             replacementValueFromUpdateValue(node.right, key, newValue);
-        }
     }
 
     public boolean containsKey(K key) { /* проверяем, есть ли такой ключ */
@@ -228,11 +227,11 @@ public class AvlTree<K extends Comparable<K>, V> {
     private boolean checkContainsKey(Node<K, V> node, K key) {
         if (node == null)
             return false;
-        if (key.compareTo(node.key) < 0) { /* определяем в какое поддерево идти */
+        if (key.compareTo(node.key) < 0)  /* определяем в какое поддерево идти */
             return checkContainsKey(node.left, key); /* рекурсивно вызываем следующий узел */
-        } else if (key.compareTo(node.key) > 0) {
+        else if (key.compareTo(node.key) > 0)
             return checkContainsKey(node.right, key);
-        } else
+        else
             return true;
     }
 
@@ -246,7 +245,7 @@ public class AvlTree<K extends Comparable<K>, V> {
         size = 0;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
