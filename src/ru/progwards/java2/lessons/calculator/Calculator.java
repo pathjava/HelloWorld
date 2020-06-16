@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 public class Calculator {
 
     private final List<String> list = new ArrayList<>();
+    private final List<String> tempList = new ArrayList<>();
 
     public int calculate(String expression) {
         if (expression.isEmpty())
@@ -44,45 +45,52 @@ public class Calculator {
         while (checkBrackets()) {
             int start = 0;
             int end = 0;
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++)
                 if (list.get(i).equals("(")) {
                     start = i;
                     break;
                 }
-            }
-            for (int i = start; i < list.size(); i++) {
+            for (int i = start; i < list.size(); i++)
                 if (list.get(i).equals(")")) {
                     end = i;
                     break;
                 }
-            }
-            operationsInBrackets(start, end);
+            for (int i = start; i <= end; i++)
+                tempList.add(list.get(i));
+            operationsInBrackets();
         }
     }
 
-    private void operationsInBrackets(int start, int end) {
-        multiplication(start, end);
-        searchBrackets();
+    private void operationsInBrackets() {
+        boolean lock = true;
+        while (lock) {
+            if (checkMul(tempList))
+                multiplication();
+            if (checkDiv(tempList))
+                division();
+            else
+                lock = false;
+        }
     }
 
-    private void multiplication(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            if (list.get(i).equals("*"))
-                if (i - 1 >= 0 && i + 1 <= list.size()) {
-                    String result = mult(list.get(i - 1), list.get(i + 1));
-                    list.set(i - 1, result);
+    private void multiplication() {
+        for (int i = 0; i < tempList.size(); i++) {
+            if (tempList.get(i).equals("*"))
+                if (i - 1 >= 0 && i + 1 <= tempList.size()) {
+                    String result = mult(tempList.get(i - 1), tempList.get(i + 1));
+                    tempList.set(i - 1, result);
                     delete(i, 2);
                     break;
                 }
         }
     }
 
-    private void division(int start, int end) {
-        for (int i = start; i <= end; i++) {
-            if (list.get(i).equals("/"))
-                if (i - 1 >= 0 && i + 1 <= list.size()) {
-                    String result = div(list.get(i - 1), list.get(i + 1));
-                    list.set(i - 1, result);
+    private void division() {
+        for (int i = 0; i < tempList.size(); i++) {
+            if (tempList.get(i).equals("/"))
+                if (i - 1 >= 0 && i + 1 <= tempList.size()) {
+                    String result = div(tempList.get(i - 1), tempList.get(i + 1));
+                    tempList.set(i - 1, result);
                     delete(i, 2);
                     break;
                 }
@@ -92,7 +100,7 @@ public class Calculator {
     private void delete(int start, int count) {
         int i = 0;
         while (i < count) {
-            list.remove(start);
+            tempList.remove(start);
             i++;
         }
     }
@@ -107,19 +115,17 @@ public class Calculator {
         return false;
     }
 
-    private boolean checkMul(int start, int end) {
-        int count = 0;
-        for (int i = start; i <= end; i++) {
-            if (list.get(i).equals("*"))
+    private boolean checkMul(List<String> list) {
+        for (String s : list) {
+            if (s.equals("*"))
                 return true;
         }
         return false;
     }
 
-    private boolean checkDiv(int start, int end) {
-        int count = 0;
-        for (int i = start; i <= end; i++) {
-            if (list.get(i).equals("/"))
+    private boolean checkDiv(List<String> list) {
+        for (String s : list) {
+            if (s.equals("/"))
                 return true;
         }
         return false;
