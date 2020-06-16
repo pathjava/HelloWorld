@@ -7,6 +7,7 @@ package ru.progwards.java2.lessons.calculator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
 
 public class Calculator {
 
@@ -54,14 +55,19 @@ public class Calculator {
                     break;
                 }
             }
-            for (int i = start; i <= end; i++)
-                tempList.add(list.get(i));
+            IntStream.rangeClosed(start, end).mapToObj(list::get).forEach(tempList::add);
             list.set(start, operationsInBrackets());
             delete(list, start + 1, end - start);
         }
     }
 
     private String operationsInBrackets() {
+        multiplicationAndDivision();
+        additionalAndSubtraction();
+        return tempList.get(1);
+    }
+
+    private void multiplicationAndDivision() {
         boolean lock = true;
         while (lock) {
             if (checkMul(tempList))
@@ -71,7 +77,10 @@ public class Calculator {
             else
                 lock = false;
         }
-        lock = true;
+    }
+
+    private void additionalAndSubtraction() {
+        boolean lock = true;
         while (lock) {
             if (checkPlus(tempList))
                 additional();
@@ -80,7 +89,6 @@ public class Calculator {
             else
                 lock = false;
         }
-        return tempList.get(1);
     }
 
     private void multiplication() {
