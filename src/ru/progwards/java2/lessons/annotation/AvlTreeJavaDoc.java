@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * Класс AvlTreeJavaDoc, реализующий АВЛ дерево
  *
- * @param <K> ключ АВЛ дерева, обязательно реализующий интерфейм {@link Comparable}
+ * @param <K> ключ АВЛ дерева, обязательно реализующий интерфейс {@link Comparable}
  * @param <V> значение узла
  * @version 1.0
  * @see ru.progwards.java2.lessons.trees.AvlTree АВЛ дерево
@@ -17,11 +17,11 @@ import java.util.function.Consumer;
  */
 public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     /**
-     * root - корневой узел {@link AvlTreeJavaDoc}
+     * root - корневой узел дерева {@link AvlTreeJavaDoc}
      */
     private Node<K, V> root;
     /**
-     * size - размер {@link AvlTreeJavaDoc}
+     * size - размер дерева {@link AvlTreeJavaDoc}
      */
     private int size = 0;
     /**
@@ -38,16 +38,31 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     private static final String KEY_NULL = "The key cannot be null!";
 
     /**
-     * Класс Node, реализующий узел АВЛ дерева
+     * Класс Node, реализующий узел {@link AvlTreeJavaDoc}
      *
      * @param <K> ключ, обязательно реализующий интерфейм {@link Comparable}
      * @param <V> значение узла
      */
     public static class Node<K extends Comparable<K>, V> {
+        /**
+         * height - высота {@link AvlTreeJavaDoc}, рассчитываемая методом {@link #recalculateHeight(Node)}
+         */
         private int height;
+        /**
+         * key -  ключ {@link AvlTreeJavaDoc}, обязательно реализующий интерфейс {@link Comparable}
+         */
         private final K key;
+        /**
+         * value - значение узла {@link Node} в {@link AvlTreeJavaDoc}
+         */
         private V value;
+        /**
+         * left - ссылка на левый узел {@link Node} потомка
+         */
         private Node<K, V> left;
+        /**
+         * right - ссылка на правый узел {@link Node} потомка
+         */
         private Node<K, V> right;
 
         /**
@@ -65,7 +80,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
         }
 
         /**
-         * Метод, переопределяющий toString {@link #toString()}
+         * Метод, переопределяющий toString {@link Object#toString()}
          *
          * @return возвращает ключ и значение в удобочитаемом виде
          */
@@ -131,9 +146,9 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     /**
      * Метод, инициализирующий удаление узла {@link Node} по ключу {@link Node#key} из {@link AvlTreeJavaDoc}
      * Изначально метод проверяет {@link Node#key} на null и если true,
-     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
-     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
-     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
+     * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
      * @param key {@link Node#key}
      */
@@ -291,8 +306,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Изначально метод проверяет {@link Node#key} на null и если true,
-     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
-     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY}
+     * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY}
      *
      * @param key {@link Node#key}
      * @return
@@ -323,9 +338,9 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Изначально метод проверяет {@link Node#key} на null и если true,
-     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
-     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
-     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
+     * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
      * @param oldKey {@link Node#key} //TODO
      * @param newKey
@@ -344,9 +359,9 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Изначально метод проверяет {@link Node#key} на null и если true,
-     *      выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
-     *      {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
-     *      {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
+     * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
+     * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
+     * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
      * @param key      {@link Node#key}
      * @param newValue
