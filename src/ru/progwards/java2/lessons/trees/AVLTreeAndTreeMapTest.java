@@ -10,20 +10,20 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 public class AVLTreeAndTreeMapTest {
-    private static final AvlTree<Integer, Integer> avlTreeNumbers = new AvlTree<>();
-    private static final Map<Integer, Integer> treeMapNumbers = new TreeMap<>();
+    private final AvlTree<Integer, Integer> avlTreeNumbers = new AvlTree<>();
+    private final Map<Integer, Integer> treeMapNumbers = new TreeMap<>();
 
-    private static final AvlTree<Integer, String> avlTreeWords = new AvlTree<>();
-    private static final Map<Integer, String> treeMapWords = new TreeMap<>();
+    private final AvlTree<Integer, String> avlTreeWords = new AvlTree<>();
+    private final Map<Integer, String> treeMapWords = new TreeMap<>();
 
-    private static final List<Integer> sortedNumbers = new ArrayList<>();
-    private static final List<Integer> sortedShuffleNumbers = new ArrayList<>();
-    private static final List<Integer> randomNumbers = new ArrayList<>();
-    private static final List<Integer> randomShuffleNumbers = new ArrayList<>();
-    private static final List<String> tokensList = new ArrayList<>();
-    private static final int COUNT_LOOP = 5;
+    private final List<Integer> sortedNumbers = new ArrayList<>();
+    private final List<Integer> sortedShuffleNumbers = new ArrayList<>();
+    private final List<Integer> randomNumbers = new ArrayList<>();
+    private final List<Integer> randomShuffleNumbers = new ArrayList<>();
+    private final List<String> tokensList = new ArrayList<>();
+    private final int COUNT_LOOP = 5;
 
-    public static void testing(String tokensFile) {
+    public void testing(String tokensFile) {
         fillingData(tokensFile);
         testAddToAvlTreeAndTreeMapSortedNum();
         testAddToAvlTreeAndTreeMapRandomNum();
@@ -34,13 +34,13 @@ public class AVLTreeAndTreeMapTest {
         testFindValueInAvlTreeAndTreeMapRandomNum();
     }
 
-    private static void testAddToAvlTreeAndTreeMapSortedNum() {
+    private void testAddToAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testAddToAvlTreeSortedNum();
         List<Long> resultMap = testAddToTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "addSort");
     }
 
-    private static List<Long> testAddToAvlTreeSortedNum() {
+    private List<Long> testAddToAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -55,7 +55,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testAddToTreeMapSortedNum() {
+    private List<Long> testAddToTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -70,13 +70,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testAddToAvlTreeAndTreeMapRandomNum() {
+    private void testAddToAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testAddToAvlTreeRandomNum();
         List<Long> resultMap = testAddToTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "addRand");
     }
 
-    private static List<Long> testAddToAvlTreeRandomNum() {
+    private List<Long> testAddToAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -91,7 +91,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testAddToTreeMapRandomNum() {
+    private List<Long> testAddToTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -106,13 +106,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testAddToAvlTreeAndTreeMapString() {
+    private void testAddToAvlTreeAndTreeMapString() {
         List<Long> resultAvl = testAddToAvlTreeString();
         List<Long> resultMap = testAddToTreeMapString();
         resultTests(resultAvl, resultMap, "addWords");
     }
 
-    private static List<Long> testAddToAvlTreeString() {
+    private List<Long> testAddToAvlTreeString() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -130,7 +130,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testAddToTreeMapString() {
+    private List<Long> testAddToTreeMapString() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -148,13 +148,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testDeleteFromAvlTreeAndTreeMapSortedNum() {
+    private void testDeleteFromAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testDeleteFromAvlTreeSortedNum();
         List<Long> resultMap = testDeleteFromTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "delSort");
     }
 
-    private static List<Long> testDeleteFromAvlTreeSortedNum() {
+    private List<Long> testDeleteFromAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -171,7 +171,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testDeleteFromTreeMapSortedNum() {
+    private List<Long> testDeleteFromTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -188,13 +188,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testDeleteFromAvlTreeAndTreeMapRandomNum() {
+    private void testDeleteFromAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testDeleteFromAvlTreeRandomNum();
         List<Long> resultMap = testDeleteFromTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "delRand");
     }
 
-    private static List<Long> testDeleteFromAvlTreeRandomNum() {
+    private List<Long> testDeleteFromAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -212,7 +212,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testDeleteFromTreeMapRandomNum() {
+    private List<Long> testDeleteFromTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -229,13 +229,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testFindValueInAvlTreeAndTreeMapRandomNum() {
+    private void testFindValueInAvlTreeAndTreeMapRandomNum() {
         List<Long> resultAvl = testFindValueInAvlTreeRandomNum();
         List<Long> resultMap = testFindValueInTreeMapRandomNum();
         resultTests(resultAvl, resultMap, "findRand");
     }
 
-    private static List<Long> testFindValueInAvlTreeRandomNum() {
+    private List<Long> testFindValueInAvlTreeRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -252,7 +252,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testFindValueInTreeMapRandomNum() {
+    private List<Long> testFindValueInTreeMapRandomNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -269,13 +269,13 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void testFindValueInAvlTreeAndTreeMapSortedNum() {
+    private void testFindValueInAvlTreeAndTreeMapSortedNum() {
         List<Long> resultAvl = testFindValueInAvlTreeSortedNum();
         List<Long> resultMap = testFindValueInTreeMapSortedNum();
         resultTests(resultAvl, resultMap, "findSort");
     }
 
-    private static List<Long> testFindValueInAvlTreeSortedNum() {
+    private List<Long> testFindValueInAvlTreeSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -292,7 +292,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static List<Long> testFindValueInTreeMapSortedNum() {
+    private List<Long> testFindValueInTreeMapSortedNum() {
         List<Long> results = new ArrayList<>();
         int count = 0;
         while (count < COUNT_LOOP) {
@@ -309,7 +309,7 @@ public class AVLTreeAndTreeMapTest {
         return results;
     }
 
-    private static void resultTests(List<Long> resAvl, List<Long> resMap, String operation) {
+    private void resultTests(List<Long> resAvl, List<Long> resMap, String operation) {
         Collections.sort(resAvl);
         Collections.sort(resMap);
 
@@ -338,14 +338,14 @@ public class AVLTreeAndTreeMapTest {
                 resAvl.get(resAvl.size() - 1), resMap.get(resMap.size() - 1));
     }
 
-    private static double calculateAverageTestsTime(List<Long> results) {
+    private double calculateAverageTestsTime(List<Long> results) {
         Double sum = 0.0;
         for (Long result : results)
             sum += result;
         return sum / results.size();
     }
 
-    public static void fillingData(String tokensFile) {
+    public void fillingData(String tokensFile) {
         IntStream.range(0, 1000000).forEachOrdered(sortedNumbers::add);
         IntStream.range(0, 1000000).map(i -> ThreadLocalRandom.current()
                 .nextInt(10, 500000 + 1)).forEachOrdered(randomNumbers::add);
@@ -356,7 +356,7 @@ public class AVLTreeAndTreeMapTest {
         Collections.shuffle(randomShuffleNumbers);
     }
 
-    private static void readFile(String file) {
+    private void readFile(String file) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(file)),
                 StandardCharsets.UTF_8))) {
             String line;
@@ -372,6 +372,7 @@ public class AVLTreeAndTreeMapTest {
 
 
     public static void main(String[] args) {
-        testing("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\trees\\wiki.train.tokens");
+        AVLTreeAndTreeMapTest test = new AVLTreeAndTreeMapTest();
+        test.testing("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\trees\\wiki.train.tokens");
     }
 }
