@@ -4,9 +4,7 @@
 package ru.progwards.java2.lessons.calculator;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Calculator {
@@ -20,8 +18,8 @@ public class Calculator {
         readString(expression);
         if (checkBrackets())
             searchBrackets();
-
-        return 0;
+        searchArithmeticSigns();
+        return Integer.parseInt(list.get(0));
     }
 
     private void readString(String str) {
@@ -33,15 +31,15 @@ public class Calculator {
                 if (i == str.length() - 1)
                     list.add(builder.toString());
             } else {
-                if (!builder.toString().equals("")) {
+                if (!builder.toString().equals(""))
                     list.add(builder.toString());
-                }
                 list.add(String.valueOf(ch));
                 builder = new StringBuilder();
             }
         }
     }
 
+    /* если в выражение есть скобки, начинаем обрабатывать их в первую очередь */
     private void searchBrackets() {
         while (checkBrackets()) {
             tempList.clear();
@@ -59,6 +57,7 @@ public class Calculator {
             list.set(start, operationsInBrackets());
             delete(list, start + 1, end - start);
         }
+        tempList.clear();
     }
 
     private String operationsInBrackets() {
@@ -71,9 +70,9 @@ public class Calculator {
         boolean lock = true;
         while (lock) {
             if (checkMul(tempList))
-                multiplication();
+                multiplicationInBrackets();
             if (checkDiv(tempList))
-                division();
+                divisionInBrackets();
             else
                 lock = false;
         }
@@ -83,15 +82,15 @@ public class Calculator {
         boolean lock = true;
         while (lock) {
             if (checkPlus(tempList))
-                additional();
+                additionalInBrackets();
             if (checkMinus(tempList))
-                subtraction();
+                subtractionInBrackets();
             else
                 lock = false;
         }
     }
 
-    private void multiplication() {
+    private void multiplicationInBrackets() {
         for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("*"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
@@ -102,7 +101,7 @@ public class Calculator {
                 }
     }
 
-    private void division() {
+    private void divisionInBrackets() {
         for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("/"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
@@ -113,7 +112,7 @@ public class Calculator {
                 }
     }
 
-    private void additional() {
+    private void additionalInBrackets() {
         for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("+"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
@@ -124,7 +123,7 @@ public class Calculator {
                 }
     }
 
-    private void subtraction() {
+    private void subtractionInBrackets() {
         for (int i = 0; i < tempList.size(); i++)
             if (tempList.get(i).equals("-"))
                 if (i - 1 >= 0 && i + 1 <= tempList.size()) {
@@ -133,6 +132,62 @@ public class Calculator {
                     delete(tempList, i, 2);
                     break;
                 }
+    }
+
+    /* если скобок нет в выражение, выполняем операции согласно приоритета */
+    private void searchArithmeticSigns() {
+        multiplication();
+        division();
+        additional();
+        subtraction();
+    }
+
+    private void multiplication() {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).equals("*")) {
+                for (int j = i - 1; j <= i + 1; j++)
+                    tempList.add(list.get(j));
+                multiplicationInBrackets();
+                list.set(i - 1, tempList.get(0));
+                delete(list, i, 2);
+                tempList.clear();
+            }
+    }
+
+    private void division() {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).equals("/")) {
+                for (int j = i - 1; j <= i + 1; j++)
+                    tempList.add(list.get(j));
+                divisionInBrackets();
+                list.set(i - 1, tempList.get(0));
+                delete(list, i, 2);
+                tempList.clear();
+            }
+    }
+
+    private void additional() {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).equals("+")) {
+                for (int j = i - 1; j <= i + 1; j++)
+                    tempList.add(list.get(j));
+                additionalInBrackets();
+                list.set(i - 1, tempList.get(0));
+                delete(list, i, 2);
+                tempList.clear();
+            }
+    }
+
+    private void subtraction() {
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).equals("-")) {
+                for (int j = i - 1; j <= i + 1; j++)
+                    tempList.add(list.get(j));
+                subtractionInBrackets();
+                list.set(i - 1, tempList.get(0));
+                delete(list, i, 2);
+                tempList.clear();
+            }
     }
 
     private void delete(List<String> list, int start, int count) {
@@ -144,13 +199,7 @@ public class Calculator {
     }
 
     private boolean checkBrackets() {
-        int count = 0;
-        while (count < list.size()) {
-            if (list.get(count).equals("("))
-                return true;
-            count++;
-        }
-        return false;
+        return list.stream().anyMatch(s -> s.equals("("));
     }
 
     private boolean checkMul(List<String> list) {
@@ -187,7 +236,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         Calculator calc = new Calculator();
-        calc.calculate("5+((25+3)*2/2)*12/2-3");
+        calc.calculate("5+(((15+3))*2/2)*12/2-3*2+(5*7)");
 
         for (String s : calc.list) {
             System.out.print(s + " ");
