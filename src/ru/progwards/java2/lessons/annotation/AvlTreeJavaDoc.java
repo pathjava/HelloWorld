@@ -19,23 +19,23 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     /**
      * root - корневой узел дерева {@link AvlTreeJavaDoc}
      */
-    private Node<K, V> root;
+    public Node<K, V> root;
     /**
      * size - размер дерева {@link AvlTreeJavaDoc}
      */
-    private int size = 0;
+    public int size = 0;
     /**
-     * NOT_EXIST - сообщение исключения {@link NoSuchElementException}, если ключа нет в {@link AvlTreeJavaDoc}
+     * NOT_EXIST - сообщение "The key does not exist!" исключения {@link NoSuchElementException}, если ключа нет в {@link AvlTreeJavaDoc}
      */
-    private static final String NOT_EXIST = "The key does not exist!";
+    public static final String NOT_EXIST = "The key does not exist!";
     /**
-     * IS_EMPTY - сообщение исключения {@link NoSuchElementException}, если дерево {@link AvlTreeJavaDoc} пустое
+     * IS_EMPTY - сообщение "AVL Tree is empty!" исключения {@link NoSuchElementException}, если дерево {@link AvlTreeJavaDoc} пустое
      */
-    private static final String IS_EMPTY = "AVL Tree is empty!";
+    public static final String IS_EMPTY = "AVL Tree is empty!";
     /**
-     * KEY_NULL - сообщение исключения {@link IllegalArgumentException}, если {@link Node#key} null
+     * KEY_NULL - сообщение "The key cannot be null!" исключения {@link IllegalArgumentException}, если {@link AvlTreeJavaDoc.Node#key} null
      */
-    private static final String KEY_NULL = "The key cannot be null!";
+    public static final String KEY_NULL = "The key cannot be null!";
 
     /**
      * Класс Node, реализующий узел {@link AvlTreeJavaDoc}
@@ -47,26 +47,26 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
         /**
          * height - высота {@link AvlTreeJavaDoc}, рассчитываемая методом {@link #recalculateHeight(Node)}
          */
-        private int height;
+        public int height;
         /**
          * key -  ключ {@link AvlTreeJavaDoc}, обязательно реализующий интерфейс {@link Comparable}
          */
-        private final K key;
+        public final K key;
         /**
-         * value - значение узла {@link Node} в {@link AvlTreeJavaDoc}
+         * value - значение узла {@link AvlTreeJavaDoc.Node} в {@link AvlTreeJavaDoc}
          */
-        private V value;
+        public V value;
         /**
-         * left - ссылка на левый узел {@link Node} потомка
+         * left - ссылка на левый узел {@link AvlTreeJavaDoc.Node} потомка
          */
-        private Node<K, V> left;
+        public Node<K, V> left;
         /**
-         * right - ссылка на правый узел {@link Node} потомка
+         * right - ссылка на правый узел {@link AvlTreeJavaDoc.Node} потомка
          */
-        private Node<K, V> right;
+        public Node<K, V> right;
 
         /**
-         * Конструктора класса {@link Node}
+         * Конструктора класса {@link AvlTreeJavaDoc.Node}
          *
          * @param key   инициализация ключа
          * @param value инициализация значения
@@ -106,11 +106,11 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * Метод put инициализирует размещение пары ключ/значение в {@link AvlTreeJavaDoc}
-     * Изначально метод проверяет {@link Node#key} на null и если true,
-     * выбрасывает исключение {@link IllegalArgumentException} с сообщением {@link #KEY_NULL}
      *
-     * @param key   {@link Node#key}
-     * @param value {@link Node#value}
+     * @exception IllegalArgumentException Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
+     *      * выбрасывает исключение с сообщением {@link AvlTreeJavaDoc#KEY_NULL}
+     * @param key   {@link AvlTreeJavaDoc.Node#key}
+     * @param value {@link AvlTreeJavaDoc.Node#value}
      */
     public void put(K key, V value) {
         if (key == null)
@@ -124,8 +124,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
      *
      * @param node  {@link AvlTreeJavaDoc#root} узел, полученный из метода {@link #put(Comparable, Object)},
      *              указывающий на начало {@link AvlTreeJavaDoc}
-     * @param key   {@link Node#key}
-     * @param value {@link Node#value}
+     * @param key   {@link AvlTreeJavaDoc.Node#key}
+     * @param value {@link AvlTreeJavaDoc.Node#value}
      * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
     private Node<K, V> addFromPut(Node<K, V> node, K key, V value) {
@@ -144,13 +144,13 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Метод, инициализирующий удаление узла {@link Node} по ключу {@link Node#key} из {@link AvlTreeJavaDoc}
-     * Изначально метод проверяет {@link Node#key} на null и если true,
+     * Метод, инициализирующий удаление узла {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key} из {@link AvlTreeJavaDoc}
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
      * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
      * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
      * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
-     * @param key {@link Node#key}
+     * @param key {@link AvlTreeJavaDoc.Node#key}
      */
     public void delete(K key) { /* удаление узла из дерева */
         if (key == null)
@@ -164,10 +164,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Метод, ищущий, удаляющий узел {@link Node} по ключу {@link Node#key}
+     * Метод, ищущий, удаляющий узел {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key}
      *
-     * @param node {@link Node}
-     * @param key  {@link Node#key}
+     * @param node {@link AvlTreeJavaDoc.Node}
+     * @param key  {@link AvlTreeJavaDoc.Node#key}
      * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
     private Node<K, V> searchDeleteNode(Node<K, V> node, K key) {
@@ -192,7 +192,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
     private Node<K, V> deleteMin(Node<K, V> node) {
@@ -213,7 +213,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private Node<K, V> searchMaxKey(Node<K, V> node) { /* если справа null, возвращаем узел как крайний, либо рекурсивно проверяем следующий */
@@ -230,7 +230,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private Node<K, V> searchMinKey(Node<K, V> node) { /* тоже, что и searchMaxKey, только ищем минимальный кей */
@@ -238,7 +238,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private Node<K, V> rebuildBalanceTree(Node<K, V> node) {
@@ -255,7 +255,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private int height(Node<K, V> node) { /* значение высоты узла - если null, то -1, в противном случае возвращаем имеющуюся */
@@ -263,7 +263,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private int recalculateHeight(Node<K, V> node) { /* пересчитываем высоту узла по значениям правого и левого поддеревьев */
@@ -271,7 +271,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private int getBalance(Node<K, V> node) { /* считаем баланс узла */
@@ -279,7 +279,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private Node<K, V> leftSmallRotate(Node<K, V> node) { /* левое малое вращение */
@@ -292,7 +292,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
+     * @param node {@link AvlTreeJavaDoc.Node}
      * @return
      */
     private Node<K, V> rightSmallRotate(Node<K, V> node) { /* правое малое вращение */
@@ -305,11 +305,11 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Изначально метод проверяет {@link Node#key} на null и если true,
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
      * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
      * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY}
      *
-     * @param key {@link Node#key}
+     * @param key {@link AvlTreeJavaDoc.Node#key}
      * @return
      */
     public V find(K key) { /* поиск значения по ключу */
@@ -323,8 +323,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
-     * @param key  {@link Node#key}
+     * @param node {@link AvlTreeJavaDoc.Node}
+     * @param key  {@link AvlTreeJavaDoc.Node#key}
      * @return
      */
     private Node<K, V> searchValueFromFind(Node<K, V> node, K key) {
@@ -337,12 +337,12 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Изначально метод проверяет {@link Node#key} на null и если true,
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
      * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
      * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
      * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
-     * @param oldKey {@link Node#key} //TODO
+     * @param oldKey {@link AvlTreeJavaDoc.Node#key} //TODO
      * @param newKey
      */
     public void change(K oldKey, K newKey) { /* меняем старый ключ на новый */
@@ -358,12 +358,12 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Изначально метод проверяет {@link Node#key} на null и если true,
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
      * выбрасывает исключения {@link IllegalArgumentException} с сообщением {@link #KEY_NULL},
      * {@link NoSuchElementException} с сообщением {@link #IS_EMPTY},
      * {@link NoSuchElementException} с сообщением {@link #NOT_EXIST}
      *
-     * @param key      {@link Node#key}
+     * @param key      {@link AvlTreeJavaDoc.Node#key}
      * @param newValue
      */
     public void updateValue(K key, V newValue) { /* обновляем значение по ключу */
@@ -377,8 +377,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node     {@link Node}
-     * @param key      {@link Node#key}
+     * @param node     {@link AvlTreeJavaDoc.Node}
+     * @param key      {@link AvlTreeJavaDoc.Node#key}
      * @param newValue
      */
     private void replacementValueFromUpdateValue(Node<K, V> node, K key, V newValue) {
@@ -391,7 +391,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param key {@link Node#key}
+     * @param key {@link AvlTreeJavaDoc.Node#key}
      * @return
      */
     public boolean containsKey(K key) { /* проверяем, есть ли такой ключ */
@@ -401,8 +401,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @param node {@link Node}
-     * @param key  {@link Node#key}
+     * @param node {@link AvlTreeJavaDoc.Node}
+     * @param key  {@link AvlTreeJavaDoc.Node#key}
      * @return
      */
     private boolean checkContainsKey(Node<K, V> node, K key) {
