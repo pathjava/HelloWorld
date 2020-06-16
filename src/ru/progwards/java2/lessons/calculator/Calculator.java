@@ -17,7 +17,7 @@ public class Calculator {
             throw new NoSuchElementException();
         readString(expression);
         if (checkBrackets())
-            operationsInBrackets();
+            searchBrackets();
 
         return 0;
     }
@@ -40,24 +40,29 @@ public class Calculator {
         }
     }
 
-    private void operationsInBrackets() {
-        int start = 0;
-        int end = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("(")) {
-                start = i;
+    private void searchBrackets() {
+        while (checkBrackets()) {
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).equals("(")) {
+                    start = i;
+                    break;
+                }
             }
-            if (list.get(i).equals(")")) {
-                end = i;
-                break;
+            for (int i = start; i < list.size(); i++) {
+                if (list.get(i).equals(")")) {
+                    end = i;
+                    break;
+                }
             }
+            operationsInBrackets(start, end);
         }
-        if (checkMul(start, end)) {
-            multiplication(start, end);
-        }
-        if (checkDiv(start, end)) {
-            division(start, end);
-        }
+    }
+
+    private void operationsInBrackets(int start, int end) {
+        multiplication(start, end);
+        searchBrackets();
     }
 
     private void multiplication(int start, int end) {
@@ -143,7 +148,5 @@ public class Calculator {
         for (String s : calc.list) {
             System.out.print(s + " ");
         }
-
-
     }
 }
