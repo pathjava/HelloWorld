@@ -43,18 +43,17 @@ public class Calculator {
 
     private void searchBrackets() {
         while (checkBrackets()) {
+            tempList.clear();
             int start = 0;
             int end = 0;
-            for (int i = 0; i < list.size(); i++)
-                if (list.get(i).equals("(")) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).equals("("))
                     start = i;
-                    break;
-                }
-            for (int i = start; i < list.size(); i++)
                 if (list.get(i).equals(")")) {
                     end = i;
                     break;
                 }
+            }
             for (int i = start; i <= end; i++)
                 tempList.add(list.get(i));
             list.set(start, operationsInBrackets());
