@@ -262,32 +262,40 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Метод возвращает высоту текущего узла
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return возвращает высоту текущего узла {@link AvlTreeJavaDoc.Node}
+     * @return возвращает высоту текущего узла
      */
     public int height(Node<K, V> node) { /* значение высоты узла - если null, то -1, в противном случае возвращаем имеющуюся */
         return node == null ? -1 : node.height;
     }
 
     /**
+     * Метод пересчитывает высоту после разворота {@link #rebuildBalanceTree(Node)} узла
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return возвращает пересчитанную высоту после разворота {@link #rebuildBalanceTree(Node)} узла {@link AvlTreeJavaDoc.Node}
+     * @return возвращает пересчитанную высоту
      */
     public int recalculateHeight(Node<K, V> node) { /* пересчитываем высоту узла по значениям правого и левого поддеревьев */
         return Math.max(height(node.left), height(node.right)) + 1;
     }
 
     /**
+     * Метод рассчитывает высоту узла по высоте его потомков
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает высоту узла
      */
     public int getBalance(Node<K, V> node) { /* считаем баланс узла */
         return node == null ? 0 : height(node.left) - height(node.right);
     }
 
     /**
+     * Метод делает левый малый поворот
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает сбалансированный узел
      */
     public Node<K, V> leftSmallRotate(Node<K, V> node) { /* левое малое вращение */
         Node<K, V> tempNode = node.right;
@@ -299,8 +307,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Метод делает правый малый поворот
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает сбалансированный узел
      */
     public Node<K, V> rightSmallRotate(Node<K, V> node) { /* правое малое вращение */
         Node<K, V> tempNode = node.left;
@@ -312,11 +322,11 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
-     * выбрасывает исключения:
+     * Метод инициализирует поиск значения по ключу и передает поиск в метод {@link #searchValueFromFind(Node, Comparable)}
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true, выбрасывает исключения
      *
      * @param key {@link AvlTreeJavaDoc.Node#key}
-     * @return
+     * @return возвращает значение узла {@link AvlTreeJavaDoc.Node#value} по ключу
      * @throws IllegalArgumentException с сообщением {@link #KEY_NULL}
      * @throws NoSuchElementException   с сообщением {@link #IS_EMPTY}
      */
@@ -333,7 +343,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     /**
      * @param node {@link AvlTreeJavaDoc.Node}
      * @param key  {@link AvlTreeJavaDoc.Node#key}
-     * @return
+     * @return возвращает значение найденного узла в метод {@link #find(Comparable)}
      */
     public Node<K, V> searchValueFromFind(Node<K, V> node, K key) {
         if (key.compareTo(node.key) == 0) /* если искомый ключ и ключ узла равны, возвращаем узел */
