@@ -93,7 +93,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
          * Метод для обхода по всему дереву, основанный на функциональном интерфейсе {@link Consumer}
          * Consumer декларирует абстрактный метод accept, который принимает объект и выполняет над ним требуемые действия.
          *
-         * @param consumer
+         * @param consumer принимает в качестве параметра System.out::println
          */
         public void process(Consumer<AvlTreeJavaDoc.Node<K, V>> consumer) {
             if (left != null)
@@ -208,7 +208,9 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @return метод возвращает максимальный ключ в {@link AvlTreeJavaDoc}
+     * Метод инициализирует поиск максимального ключа в методе {@link #searchMaxKey(Node)}
+     *
+     * @return возвращает максимальный ключ в {@link AvlTreeJavaDoc}
      */
     public K maxKey() {
         if (root == null)
@@ -217,15 +219,19 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Метод ищет максимальный ключ в {@link AvlTreeJavaDoc}
+     *
      * @param node узел {@link AvlTreeJavaDoc.Node}
-     * @return метод ищет максимальный ключ в {@link AvlTreeJavaDoc}
+     * @return возвращает максимальный ключ в метод {@link #maxKey()}
      */
     public Node<K, V> searchMaxKey(Node<K, V> node) {
         return node.right == null ? node : searchMaxKey(node.right);
     }
 
     /**
-     * @return метод возвращает минимальный ключ в {@link AvlTreeJavaDoc}
+     * Метод инициализирует поиск минимального ключа в методе {@link #searchMinKey(Node)}
+     *
+     * @return возвращает минимальный ключ в {@link AvlTreeJavaDoc}
      */
     public K minKey() {
         if (root == null)
@@ -234,8 +240,10 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Метод ищет минимальный ключ в {@link AvlTreeJavaDoc}
+     *
      * @param node узел {@link AvlTreeJavaDoc.Node}
-     * @return метод ищет минимальный ключ в {@link AvlTreeJavaDoc}
+     * @return возвращает минимальный ключ в метод {@link #minKey()}
      */
     public Node<K, V> searchMinKey(Node<K, V> node) {
         return node.left == null ? node : searchMinKey(node.left);
