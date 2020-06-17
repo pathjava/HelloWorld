@@ -80,7 +80,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
         }
 
         /**
-         * Метод, переопределяющий toString {@link Object#toString()}
+         * Метод переопределяет toString {@link Object#toString()}
          *
          * @return возвращает ключ и значение в удобочитаемом виде
          */
@@ -105,8 +105,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Метод put инициализирует размещение пары ключ/значение в {@link AvlTreeJavaDoc},
-     * передающий размещение в метод {@link #addFromPut(Node, Comparable, Object)}
+     * Метод инициализирует размещение пары ключ/значение в {@link AvlTreeJavaDoc},
+     * и передаёт размещение в метод {@link #addFromPut(Node, Comparable, Object)}
      *
      * @param key   {@link AvlTreeJavaDoc.Node#key}
      * @param value {@link AvlTreeJavaDoc.Node#value}
@@ -145,9 +145,9 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Метод, инициализирующий удаление узла {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key} из {@link AvlTreeJavaDoc}
-     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true,
-     * выбрасывает исключения:
+     * Метод инициализирует удаление узла {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key} из {@link AvlTreeJavaDoc}
+     * и передаёт удаление узла в метод {@link #searchDeleteNode(Node, Comparable)}
+     * Изначально метод проверяет {@link AvlTreeJavaDoc.Node#key} на null и если true, выбрасывает исключения
      *
      * @param key {@link AvlTreeJavaDoc.Node#key}
      * @throws IllegalArgumentException с сообщением {@link #KEY_NULL}
@@ -166,7 +166,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * Метод, ищущий, удаляющий узел {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key}
+     * Метод ищет и удаляет узел {@link AvlTreeJavaDoc.Node} по ключу {@link AvlTreeJavaDoc.Node#key}
      *
      * @param node {@link AvlTreeJavaDoc.Node}
      * @param key  {@link AvlTreeJavaDoc.Node#key}
@@ -194,6 +194,8 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
+     * Метод вызывается из {@link #searchDeleteNode(Node, Comparable)} и удает минимальный узел, ранее присвоенный удаляемому
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
      * @return возвращает сбалансированное дерево {@link #rebuildBalanceTree(Node)}
      */
@@ -206,7 +208,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
     }
 
     /**
-     * @return
+     * @return метод возвращает максимальный ключ в {@link AvlTreeJavaDoc}
      */
     public K maxKey() { /* так как были написаны методы поиска макс/мин ключа удаляемого узла, добавил метод поиска макс/мин ключей дерева */
         if (root == null)
@@ -216,14 +218,14 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return метод ищет максимальный ключ в {@link AvlTreeJavaDoc}
      */
     public Node<K, V> searchMaxKey(Node<K, V> node) { /* если справа null, возвращаем узел как крайний, либо рекурсивно проверяем следующий */
         return node.right == null ? node : searchMaxKey(node.right);
     }
 
     /**
-     * @return
+     * @return метод возвращает минимальный ключ в {@link AvlTreeJavaDoc}
      */
     public K minKey() {
         if (root == null)
@@ -233,15 +235,18 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return метод ищет минимальный ключ в {@link AvlTreeJavaDoc}
      */
     public Node<K, V> searchMinKey(Node<K, V> node) { /* тоже, что и searchMaxKey, только ищем минимальный кей */
         return node.left == null ? node : searchMinKey(node.left);
     }
 
     /**
+     * Метод перестраивает баланс {@link AvlTreeJavaDoc} при условии высоты >= 2,
+     * вызывая малый правый поворот {@link #rightSmallRotate(Node)} или малый левый поворот {@link #leftSmallRotate(Node)}
+     *
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает сбалансированный узел {@link AvlTreeJavaDoc.Node}
      */
     public Node<K, V> rebuildBalanceTree(Node<K, V> node) {
         if (getBalance(node) < -1) { /* если баланс < -1, а значит == 2 */
@@ -258,7 +263,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает высоту текущего узла {@link AvlTreeJavaDoc.Node}
      */
     public int height(Node<K, V> node) { /* значение высоты узла - если null, то -1, в противном случае возвращаем имеющуюся */
         return node == null ? -1 : node.height;
@@ -266,7 +271,7 @@ public class AvlTreeJavaDoc<K extends Comparable<K>, V> {
 
     /**
      * @param node {@link AvlTreeJavaDoc.Node}
-     * @return
+     * @return возвращает пересчитанную высоту после разворота {@link #rebuildBalanceTree(Node)} узла {@link AvlTreeJavaDoc.Node}
      */
     public int recalculateHeight(Node<K, V> node) { /* пересчитываем высоту узла по значениям правого и левого поддеревьев */
         return Math.max(height(node.left), height(node.right)) + 1;
