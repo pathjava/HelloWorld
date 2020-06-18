@@ -85,6 +85,10 @@ public class CalcTest {
 
     @Test
     public void deleteTest() {
+        List<String> list = new ArrayList<>(List.of("str1", "str2", "str3"));
+        assertEquals(3, list.size());
+        calc.delete(list, 0, 3);
+        assertEquals(0, list.size());
     }
 
     @Test
