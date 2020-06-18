@@ -218,19 +218,37 @@ public class Calculator {
         return list.stream().anyMatch(s -> s.equals("-"));
     }
 
-    private String add(String a, String b) {
+    private boolean checkMaxOrMin(long result) {
+        return result > Integer.MAX_VALUE || result < Integer.MIN_VALUE;
+    }
+
+    public String add(String a, String b) {
+        long result = (long) Integer.parseInt(a) + Integer.parseInt(b);
+        if (checkMaxOrMin(result))
+            throw new ArithmeticException();
         return String.valueOf(Integer.parseInt(a) + Integer.parseInt(b));
     }
 
-    private String diff(String a, String b) {
+    public String diff(String a, String b) {
+        long result = (long) Integer.parseInt(a) - Integer.parseInt(b);
+        if (checkMaxOrMin(result))
+            throw new ArithmeticException();
         return String.valueOf(Integer.parseInt(a) - Integer.parseInt(b));
     }
 
-    private String mult(String a, String b) {
+    public String mult(String a, String b) {
+        long result = (long) Integer.parseInt(a) * Integer.parseInt(b);
+        if (checkMaxOrMin(result))
+            throw new ArithmeticException();
         return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
     }
 
-    private String div(String a, String b) {
+    public String div(String a, String b) {
+        if (Integer.parseInt(b) == 0)
+            throw new ArithmeticException();
+        long result = (long) Integer.parseInt(a) / Integer.parseInt(b);
+        if (checkMaxOrMin(result))
+            throw new ArithmeticException();
         return String.valueOf(Integer.parseInt(a) / Integer.parseInt(b));
     }
 
