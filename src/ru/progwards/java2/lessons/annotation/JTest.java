@@ -11,7 +11,8 @@ public class JTest {
     private void run(String name) throws Exception {
         Class<?> testingClass = Class.forName(name);
         Method[] methods = testingClass.getDeclaredMethods();
-            //...
+        if (methods.length == 0)
+            return;
         TreeMap<Integer, Method> testMethods = new TreeMap<>();
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) {
