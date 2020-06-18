@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.annotation;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class JTest {
@@ -13,24 +14,36 @@ public class JTest {
         Method[] methods = testingClass.getDeclaredMethods();
         if (methods.length == 0)
             return;
-        TreeMap<Integer, Method> testMethods = new TreeMap<>();
+        Method beforeMethod = null;
+        Method afterMethod = null;
+        Map<Integer, Method> testMethods = new TreeMap<>();
+        int countBefore = 0;
+        int countAfter = 0;
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) {
-                //...
+                if (countBefore > 1)
+                    throw new RuntimeException();
+                countBefore++;
+                beforeMethod = m;
             } else if (m.isAnnotationPresent(Test.class)) {
                 int priority = m.getAnnotation(Test.class).priority();
                 //...
                 testMethods.put(priority, m);
             } else if (m.isAnnotationPresent(After.class)) {
-                //...
+                if (countAfter > 1)
+                    throw new RuntimeException();
+                countAfter++;
+                afterMethod = m;
             }
         }
         Object object = testingClass.getConstructor().newInstance();
-//        beforeMethod.invoke(object);
+        assert beforeMethod != null;
+        beforeMethod.invoke(object);
         for (Method m : testMethods.values()) {
             m.invoke(object);
         }
-//        afterMethod.invoke(object);
+        assert afterMethod != null;
+        afterMethod.invoke(object);
     }
 
 

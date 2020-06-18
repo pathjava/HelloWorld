@@ -48,7 +48,7 @@ public class CalcTest {
         calc.calculate(str);
     }
 
-    @Test
+    @Test(priority = 3)
     public void calculateTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
@@ -58,7 +58,7 @@ public class CalcTest {
         assertEquals(String.valueOf(6), calc.list.get(0));
     }
 
-    @Test
+    @Test(priority = 4)
     public void readStringTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
@@ -67,7 +67,7 @@ public class CalcTest {
         assertEquals(11, calc.list.size());
     }
 
-    @Test
+    @Test(priority = 5)
     public void searchBracketsTest() {
         calc.list = new ArrayList<>(List.of("3", "*", "(", "6", "+", "2", ")", "/", "3", "-", "2"));
         calc.tempList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class CalcTest {
         assertEquals(String.valueOf(8), calc.list.get(2));
     }
 
-    @Test
+    @Test(priority = 6)
     public void operationsInBracketsTest() {
         calc.tempList = new ArrayList<>(List.of("(", "6", "*", "2", ")"));
         String str = calc.operationsInBrackets();
