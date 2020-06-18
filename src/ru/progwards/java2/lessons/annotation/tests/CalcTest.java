@@ -3,16 +3,11 @@
 
 package ru.progwards.java2.lessons.annotation.tests;
 
-import ru.progwards.java2.lessons.annotation.After;
-import ru.progwards.java2.lessons.annotation.Before;
-import ru.progwards.java2.lessons.annotation.Test;
+import ru.progwards.java2.lessons.annotation.*;
 import ru.progwards.java2.lessons.annotation.Calc;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.lang.reflect.*;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 
