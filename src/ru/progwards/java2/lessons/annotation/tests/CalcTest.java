@@ -23,7 +23,7 @@ public class CalcTest {
     public Calc calc;
 
     @Before
-    public void setUpTest() {
+    public void setUp() {
         calc = new Calc();
     }
 
@@ -42,7 +42,7 @@ public class CalcTest {
         assertThat(stringClass, instanceOf(Object.class));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(priority = 2, expected = NoSuchElementException.class)
     public void calculateTestException() {
         String str = "";
         calc.calculate(str);
@@ -280,7 +280,7 @@ public class CalcTest {
     }
 
     @After
-    public void tearDownTest() {
+    public void tearDown() {
         calc = null;
     }
 }
