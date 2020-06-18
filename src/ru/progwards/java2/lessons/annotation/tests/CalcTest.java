@@ -120,7 +120,7 @@ public class CalcTest {
     @Test
     public void checkMinusTest() {
         List<String> list = Collections.singletonList("-");
-        assertTrue( calc.checkMinus(list));
+        assertTrue(calc.checkMinus(list));
     }
 
     @Test
