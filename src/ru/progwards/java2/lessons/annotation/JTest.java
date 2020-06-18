@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class JTest {
-    Map<Integer, Method> testMethods = new TreeMap<>();
+    private final Map<Integer, Method> testMethods = new TreeMap<>();
 
-    private void run(String name) {
+    public void run(String name) {
         if (name.equals(""))
             throw new IllegalArgumentException();
         Class<?> testingClass = null;
@@ -29,7 +29,6 @@ public class JTest {
             return;
         Method beforeMethod = null;
         Method afterMethod = null;
-
         int countBefore = 0;
         int countAfter = 0;
         for (Method m : methods) {
