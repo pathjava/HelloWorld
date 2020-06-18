@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 public class Calc {
 
     public List<String> list = new ArrayList<>();
-    public final List<String> tempList = new ArrayList<>();
+    public List<String> tempList = new ArrayList<>();
 
     public int calculate(String expression) {
         if (expression.isEmpty())

@@ -69,18 +69,46 @@ public class CalcTest {
 
     @Test
     public void multiplicationTest() {
+        calc.list = new ArrayList<>(List.of("(", "28", "/", "4", "*", "2",")"));
+        calc.tempList = new ArrayList<>();
+        assertEquals(7, calc.list.size());
+        calc.multiplication();
+        assertEquals(0, calc.tempList.size());
+        assertEquals(5, calc.list.size());
+        assertEquals(String.valueOf(8), calc.list.get(3));
     }
 
     @Test
     public void divisionTest() {
+        calc.list = new ArrayList<>(List.of("(", "18", "+", "6", "/", "2",")"));
+        calc.tempList = new ArrayList<>();
+        assertEquals(7, calc.list.size());
+        calc.division();
+        assertEquals(0, calc.tempList.size());
+        assertEquals(5, calc.list.size());
+        assertEquals(String.valueOf(3), calc.list.get(3));
     }
 
     @Test
     public void additionalTest() {
+        calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "+", "2",")"));
+        calc.tempList = new ArrayList<>();
+        assertEquals(7, calc.list.size());
+        calc.additional();
+        assertEquals(0, calc.tempList.size());
+        assertEquals(5, calc.list.size());
+        assertEquals(String.valueOf(6), calc.list.get(3));
     }
 
     @Test
     public void subtractionTest() {
+        calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "-", "2",")"));
+        calc.tempList = new ArrayList<>();
+        assertEquals(7, calc.list.size());
+        calc.subtraction();
+        assertEquals(0, calc.tempList.size());
+        assertEquals(5, calc.list.size());
+        assertEquals(String.valueOf(2), calc.list.get(3));
     }
 
     @Test
