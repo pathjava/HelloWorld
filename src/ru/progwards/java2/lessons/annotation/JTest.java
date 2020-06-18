@@ -3,20 +3,33 @@
 
 package ru.progwards.java2.lessons.annotation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class JTest {
+    Map<Integer, Method> testMethods = new TreeMap<>();
 
-    private void run(String name) throws Exception {
-        Class<?> testingClass = Class.forName(name);
+    private void run(String name) {
+        if (name.equals(""))
+            throw new IllegalArgumentException();
+        Class<?> testingClass = null;
+        try {
+            testingClass = Class.forName(name);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert testingClass != null;
+        dataHandler(testingClass);
+    }
+
+    private void dataHandler(Class<?> testingClass) {
         Method[] methods = testingClass.getDeclaredMethods();
         if (methods.length == 0)
             return;
         Method beforeMethod = null;
         Method afterMethod = null;
-        Map<Integer, Method> testMethods = new TreeMap<>();
+
         int countBefore = 0;
         int countAfter = 0;
         for (Method m : methods) {
@@ -36,14 +49,36 @@ public class JTest {
                 afterMethod = m;
             }
         }
-        Object object = testingClass.getConstructor().newInstance();
         assert beforeMethod != null;
-        beforeMethod.invoke(object);
-        for (Method m : testMethods.values()) {
-            m.invoke(object);
+        tester(testingClass, beforeMethod, afterMethod);
+    }
+
+    private void tester(Class<?> testingClass, Method before, Method after) {
+        Object object = null;
+        try {
+            object = testingClass.getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
-        assert afterMethod != null;
-        afterMethod.invoke(object);
+        assert before != null;
+        try {
+            before.invoke(object);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        for (Method m : testMethods.values()) {
+            try {
+                m.invoke(object);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        assert after != null;
+        try {
+            after.invoke(object);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 
