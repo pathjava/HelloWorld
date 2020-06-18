@@ -9,8 +9,8 @@ import org.junit.Test;
 import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
@@ -23,16 +23,39 @@ public class CalcTest {
         calc = new Calc();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void calculateTestException() {
+        String str = "";
+        calc.calculate(str);
+    }
+
     @Test
     public void calculateTest() {
+        calc.list = new ArrayList<>();
+        String str = "3*(6+2)/3-2";
+        assertEquals(0, calc.list.size());
+        calc.calculate(str);
+        assertEquals(1, calc.list.size());
+        assertEquals(String.valueOf(6), calc.list.get(0));
     }
 
     @Test
     public void readStringTest() {
+        calc.list = new ArrayList<>();
+        String str = "3*(6+2)/3-2";
+        assertEquals(0, calc.list.size());
+        calc.readString(str);
+        assertEquals(11, calc.list.size());
     }
 
     @Test
     public void searchBracketsTest() {
+        calc.list = new ArrayList<>(List.of("3", "*", "(", "6", "+", "2", ")", "/", "3", "-", "2"));
+        calc.tempList = new ArrayList<>();
+        assertEquals(11, calc.list.size());
+        calc.searchBrackets();
+        assertEquals(7, calc.list.size());
+        assertEquals(String.valueOf(8), calc.list.get(2));
     }
 
     @Test
