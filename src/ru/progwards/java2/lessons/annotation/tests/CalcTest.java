@@ -49,27 +49,52 @@ public class CalcTest {
 
     @Test
     public void multiplicationInBracketsTest() {
+        calc.tempList = new ArrayList<>(List.of("(", "6", "*", "2", ")"));
+        assertEquals(5, calc.tempList.size());
+        calc.multiplicationInBrackets();
+        assertEquals(3, calc.tempList.size());
+        assertEquals(String.valueOf(12), calc.tempList.get(1));
     }
 
     @Test
     public void divisionInBracketsTest() {
+        calc.tempList = new ArrayList<>(List.of("(", "6", "/", "2", ")"));
+        assertEquals(5, calc.tempList.size());
+        calc.divisionInBrackets();
+        assertEquals(3, calc.tempList.size());
+        assertEquals(String.valueOf(3), calc.tempList.get(1));
     }
 
     @Test
     public void additionalInBracketsTest() {
+        calc.tempList = new ArrayList<>(List.of("(", "6", "+", "2", ")"));
+        assertEquals(5, calc.tempList.size());
+        calc.additionalInBrackets();
+        assertEquals(3, calc.tempList.size());
+        assertEquals(String.valueOf(8), calc.tempList.get(1));
     }
 
     @Test
     public void subtractionInBracketsTest() {
+        calc.tempList = new ArrayList<>(List.of("(", "6", "-", "2", ")"));
+        assertEquals(5, calc.tempList.size());
+        calc.subtractionInBrackets();
+        assertEquals(3, calc.tempList.size());
+        assertEquals(String.valueOf(4), calc.tempList.get(1));
     }
 
     @Test
     public void searchArithmeticSignsTest() {
+        calc.list = new ArrayList<>(List.of("5", "*", "16", "/", "4", "+", "5", "-", "3"));
+        assertEquals(9, calc.list.size());
+        calc.searchArithmeticSigns();
+        assertEquals(1, calc.list.size());
+        assertEquals(String.valueOf(22), calc.list.get(0));
     }
 
     @Test
     public void multiplicationTest() {
-        calc.list = new ArrayList<>(List.of("(", "28", "/", "4", "*", "2",")"));
+        calc.list = new ArrayList<>(List.of("(", "28", "/", "4", "*", "2", ")"));
         calc.tempList = new ArrayList<>();
         assertEquals(7, calc.list.size());
         calc.multiplication();
@@ -80,7 +105,7 @@ public class CalcTest {
 
     @Test
     public void divisionTest() {
-        calc.list = new ArrayList<>(List.of("(", "18", "+", "6", "/", "2",")"));
+        calc.list = new ArrayList<>(List.of("(", "18", "+", "6", "/", "2", ")"));
         calc.tempList = new ArrayList<>();
         assertEquals(7, calc.list.size());
         calc.division();
@@ -91,7 +116,7 @@ public class CalcTest {
 
     @Test
     public void additionalTest() {
-        calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "+", "2",")"));
+        calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "+", "2", ")"));
         calc.tempList = new ArrayList<>();
         assertEquals(7, calc.list.size());
         calc.additional();
@@ -102,13 +127,13 @@ public class CalcTest {
 
     @Test
     public void subtractionTest() {
-        calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "-", "2",")"));
+        calc.list = new ArrayList<>(List.of("(", "38", "/", "6", "-", "2", ")"));
         calc.tempList = new ArrayList<>();
         assertEquals(7, calc.list.size());
         calc.subtraction();
         assertEquals(0, calc.tempList.size());
         assertEquals(5, calc.list.size());
-        assertEquals(String.valueOf(2), calc.list.get(3));
+        assertEquals(String.valueOf(4), calc.list.get(3));
     }
 
     @Test
