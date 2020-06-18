@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 public @interface Test {
     int priority() default 0;
 
-    Class<? extends Exception> expected() default Exception.class;
+    Class<? extends Throwable> expected() default Exception.class;
 }

@@ -9,8 +9,8 @@ import java.util.TreeMap;
 public class JTest {
 
     private void run(String name) throws Exception {
-        Class<?> testClass = Class.forName(name);
-        Method[] methods = testClass.getDeclaredMethods();
+        Class<?> testingClass = Class.forName(name);
+        Method[] methods = testingClass.getDeclaredMethods();
             //...
         TreeMap<Integer, Method> testMethods = new TreeMap<>();
         for (Method m : methods) {
@@ -24,7 +24,7 @@ public class JTest {
                 //...
             }
         }
-        Object object = testClass.getConstructor().newInstance();
+        Object object = testingClass.getConstructor().newInstance();
 //        beforeMethod.invoke(object);
         for (Method m : testMethods.values()) {
             m.invoke(object);
