@@ -10,20 +10,16 @@ import java.util.*;
 public class JTest {
     private final Map<Integer, Method> testMethods = new TreeMap<>();
 
-    public void run(String name) {
+    public void run(String name) throws ClassNotFoundException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (name.equals(""))
             throw new IllegalArgumentException();
-        Class<?> testingClass = null;
-        try {
-            testingClass = Class.forName(name);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        assert testingClass != null;
+        Class<?> testingClass = Class.forName(name);
         dataHandler(testingClass);
     }
 
-    private void dataHandler(Class<?> testingClass) {
+    private void dataHandler(Class<?> testingClass) throws NoSuchMethodException,
+            InstantiationException, IllegalAccessException, InvocationTargetException {
         Method[] methods = testingClass.getDeclaredMethods();
         if (methods.length == 0)
             return;
@@ -52,32 +48,18 @@ public class JTest {
         tester(testingClass, beforeMethod, afterMethod);
     }
 
-    private void tester(Class<?> testingClass, Method before, Method after) {
-        Object object = null;
-        try {
-            object = testingClass.getConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+    private void tester(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException, InstantiationException {
+        Object object = testingClass.getConstructor().newInstance();
         assert before != null;
-        try {
-            before.invoke(object);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        before.invoke(object);
         for (Method m : testMethods.values()) {
-            try {
-                m.invoke(object);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            before.invoke(object);
+            m.invoke(object);
+            after.invoke(object);
         }
         assert after != null;
-        try {
-            after.invoke(object);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        after.invoke(object);
     }
 
 
