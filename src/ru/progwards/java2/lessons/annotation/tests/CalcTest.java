@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.progwards.java2.lessons.annotation.Calc;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 import static org.junit.Assert.*;
 
@@ -21,6 +25,21 @@ public class CalcTest {
     @Before
     public void setUpTest() {
         calc = new Calc();
+    }
+
+    @Test
+    public void checkTypeList() {
+        Field field = null;
+        try {
+            field = Calc.class.getDeclaredField("list");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        assert field != null;
+        ParameterizedType param = (ParameterizedType) field.getGenericType();
+        Class<?> stringClass = (Class<?>) param.getActualTypeArguments()[0];
+        System.out.println(stringClass);
+        assertThat(stringClass, instanceOf(Object.class));
     }
 
     @Test(expected = NoSuchElementException.class)
