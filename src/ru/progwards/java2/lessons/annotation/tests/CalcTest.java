@@ -60,6 +60,10 @@ public class CalcTest {
 
     @Test
     public void operationsInBracketsTest() {
+        calc.tempList = new ArrayList<>(List.of("(", "6", "*", "2", ")"));
+        String str = calc.operationsInBrackets();
+        assertNotNull(str);
+        assertEquals("12", str);
     }
 
     @Test
