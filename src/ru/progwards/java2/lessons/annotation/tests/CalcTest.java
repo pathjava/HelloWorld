@@ -3,9 +3,9 @@
 
 package ru.progwards.java2.lessons.annotation.tests;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import ru.progwards.java2.lessons.annotation.After;
+import ru.progwards.java2.lessons.annotation.Before;
+import ru.progwards.java2.lessons.annotation.Test;
 import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.lang.reflect.Field;
@@ -27,7 +27,7 @@ public class CalcTest {
         calc = new Calc();
     }
 
-    @Test
+    @Test(priority = 1)
     public void checkTypeList() {
         Field field = null;
         try {
