@@ -27,8 +27,8 @@ public class JTest {
                 beforeMethod = m;
             } else if (m.isAnnotationPresent(Test.class)) {
                 int priority = m.getAnnotation(Test.class).priority();
-                //...
-                testMethods.put(priority, m);
+                if (priority != 0)
+                    testMethods.put(priority, m);
             } else if (m.isAnnotationPresent(After.class)) {
                 if (countAfter > 1)
                     throw new RuntimeException();
