@@ -100,27 +100,51 @@ public class CalcTest {
     }
 
     @Test
-    public void checkMulTest() {
+    public void checkMulTestTrue() {
         List<String> list = Collections.singletonList("*");
         assertTrue(calc.checkMul(list));
     }
 
     @Test
-    public void checkDivTest() {
+    public void checkMulTestFalse() {
+        List<String> list = Collections.singletonList("/");
+        assertFalse(calc.checkMul(list));
+    }
+
+    @Test
+    public void checkDivTestTrue() {
         List<String> list = Collections.singletonList("/");
         assertTrue(calc.checkDiv(list));
     }
 
     @Test
-    public void checkPlusTest() {
+    public void checkDivTestFalse() {
+        List<String> list = Collections.singletonList("*");
+        assertFalse(calc.checkDiv(list));
+    }
+
+    @Test
+    public void checkPlusTestTrue() {
         List<String> list = Collections.singletonList("+");
         assertTrue(calc.checkPlus(list));
     }
 
     @Test
-    public void checkMinusTest() {
+    public void checkPlusTestFalse() {
+        List<String> list = Collections.singletonList("-");
+        assertFalse(calc.checkPlus(list));
+    }
+
+    @Test
+    public void checkMinusTesttrue() {
         List<String> list = Collections.singletonList("-");
         assertTrue(calc.checkMinus(list));
+    }
+
+    @Test
+    public void checkMinusTestFalse() {
+        List<String> list = Collections.singletonList("*");
+        assertFalse(calc.checkMinus(list));
     }
 
     @Test
