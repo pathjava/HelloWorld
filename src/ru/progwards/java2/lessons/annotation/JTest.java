@@ -15,7 +15,7 @@ public class JTest {
         if (name.equals("")) /* проверяем, не является ли строка с путем к классу пустой */
             throw new IllegalArgumentException("Путь к файлу не указан!");
         Class<?> testingClass = Class.forName(name); /* получаем класс */
-        dataHandler(testingClass); /* передаем полученный класс дальше */
+        dataHandler(testingClass); /* передаем полученный класс на обработку */
     }
 
     private void dataHandler(Class<?> testingClass) throws NoSuchMethodException,
@@ -29,19 +29,19 @@ public class JTest {
         int countAfter = 0;
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) { /* если метод содержит аннотацию Before */
-                if (countBefore > 0)
+                if (countBefore > 0) /* проверяем счетчик */
                     throw new RuntimeException();
                 countBefore++;
-                beforeMethod = m;
+                beforeMethod = m; /* присваиваем метод с аннотацией Before в переменную */
             } else if (m.isAnnotationPresent(Test.class)) { /* если метод содержит аннотацию Test */
                 int priority = m.getAnnotation(Test.class).priority(); /* получаем значение приоритета */
                 if (priority != 0) /* если приоритет не 0, добавляем метод в TreeMap */
                     testMethods.put(priority, m);
             } else if (m.isAnnotationPresent(After.class)) { /* если метод содержит аннотацию After */
-                if (countAfter > 0)
+                if (countAfter > 0) /* проверяем счетчик */
                     throw new RuntimeException();
                 countAfter++;
-                afterMethod = m;
+                afterMethod = m; /* присваиваем метод с аннотацией After в переменную */
             }
         }
         assert beforeMethod != null;
