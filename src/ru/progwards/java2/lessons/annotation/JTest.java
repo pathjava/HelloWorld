@@ -8,12 +8,13 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class JTest {
+
     private final Map<Integer, Method> testMethods = new TreeMap<>();
 
     public void run(String name) throws ClassNotFoundException, InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (name.equals(""))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Путь к файлу не указан!");
         Class<?> testingClass = Class.forName(name);
         dataHandler(testingClass);
     }
@@ -51,9 +52,9 @@ public class JTest {
     private void testRunner(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
             InvocationTargetException, IllegalAccessException, InstantiationException {
         Object object = testingClass.getConstructor().newInstance();
-        for (Method m : testMethods.values()) {
+        for (Method method : testMethods.values()) {
             before.invoke(object);
-            m.invoke(object);
+            method.invoke(object);
             after.invoke(object);
         }
     }

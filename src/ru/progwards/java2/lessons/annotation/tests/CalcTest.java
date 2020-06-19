@@ -8,6 +8,7 @@ import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -36,6 +37,21 @@ public class CalcTest {
         ParameterizedType param = (ParameterizedType) field.getGenericType();
         Class<?> stringClass = (Class<?>) param.getActualTypeArguments()[0];
         assertThat(stringClass, instanceOf(Object.class));
+    }
+
+    @Test(priority = 31)
+    public void checkTypeListName() {
+        Field field = null;
+        try {
+            field = Calc.class.getDeclaredField("list");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        assert field != null;
+        ParameterizedType param = (ParameterizedType) field.getGenericType();
+        Class<?> stringClass = (Class<?>) param.getActualTypeArguments()[0];
+        String str = stringClass.getSimpleName();
+        assertEquals("String", str);
     }
 
 //    @Test(priority = 2, expected = NoSuchElementException.class)
