@@ -42,6 +42,9 @@ public class JTest {
                     throw new RuntimeException();
                 countAfter++;
                 afterMethod = m; /* присваиваем метод с аннотацией After в переменную */
+            } else {
+                System.out.println("Нет методов с аннотациями: Before, Test, After");
+                return;
             }
         }
         assert beforeMethod != null;
