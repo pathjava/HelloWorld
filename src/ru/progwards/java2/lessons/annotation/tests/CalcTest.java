@@ -35,17 +35,16 @@ public class CalcTest {
         assert field != null;
         ParameterizedType param = (ParameterizedType) field.getGenericType();
         Class<?> stringClass = (Class<?>) param.getActualTypeArguments()[0];
-        System.out.println(stringClass);
         assertThat(stringClass, instanceOf(Object.class));
     }
 
-    @Test(priority = 2, expected = NoSuchElementException.class)
-    public void calculateTestException() {
-        String str = "";
-        calc.calculate(str);
-    }
+//    @Test(priority = 2, expected = NoSuchElementException.class)
+//    public void calculateTestException() {
+//        String str = "";
+//        calc.calculate(str);
+//    }
 
-    @Test(priority = 2)
+    @Test(priority = 3)
     public void calculateTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
@@ -55,7 +54,7 @@ public class CalcTest {
         assertEquals(String.valueOf(6), calc.list.get(0));
     }
 
-    @Test(priority = 1)
+    @Test(priority = 4)
     public void readStringTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
@@ -82,15 +81,7 @@ public class CalcTest {
         assertEquals("12", str);
     }
 
-    @Test
-    public void multiplicationAndDivisionTest() {
-    }
-
-    @Test
-    public void additionalAndSubtractionTest() {
-    }
-
-    @Test
+    @Test(priority = 7)
     public void multiplicationInBracketsTest() {
         calc.tempList = new ArrayList<>(List.of("(", "6", "*", "2", ")"));
         assertEquals(5, calc.tempList.size());
@@ -99,7 +90,7 @@ public class CalcTest {
         assertEquals(String.valueOf(12), calc.tempList.get(1));
     }
 
-    @Test
+    @Test(priority = 8)
     public void divisionInBracketsTest() {
         calc.tempList = new ArrayList<>(List.of("(", "6", "/", "2", ")"));
         assertEquals(5, calc.tempList.size());
@@ -108,7 +99,7 @@ public class CalcTest {
         assertEquals(String.valueOf(3), calc.tempList.get(1));
     }
 
-    @Test
+    @Test(priority = 9)
     public void additionalInBracketsTest() {
         calc.tempList = new ArrayList<>(List.of("(", "6", "+", "2", ")"));
         assertEquals(5, calc.tempList.size());
@@ -117,7 +108,7 @@ public class CalcTest {
         assertEquals(String.valueOf(8), calc.tempList.get(1));
     }
 
-    @Test
+    @Test(priority = 10)
     public void subtractionInBracketsTest() {
         calc.tempList = new ArrayList<>(List.of("(", "6", "-", "2", ")"));
         assertEquals(5, calc.tempList.size());
@@ -126,7 +117,7 @@ public class CalcTest {
         assertEquals(String.valueOf(4), calc.tempList.get(1));
     }
 
-    @Test
+    @Test(priority = 11)
     public void searchArithmeticSignsTest() {
         calc.list = new ArrayList<>(List.of("5", "*", "16", "/", "4", "+", "5", "-", "3"));
         assertEquals(9, calc.list.size());
@@ -135,7 +126,7 @@ public class CalcTest {
         assertEquals(String.valueOf(22), calc.list.get(0));
     }
 
-    @Test
+    @Test(priority = 12)
     public void multiplicationTest() {
         calc.list = new ArrayList<>(List.of("(", "28", "/", "4", "*", "2", ")"));
         calc.tempList = new ArrayList<>();
@@ -146,7 +137,7 @@ public class CalcTest {
         assertEquals(String.valueOf(8), calc.list.get(3));
     }
 
-    @Test
+    @Test(priority = 13)
     public void divisionTest() {
         calc.list = new ArrayList<>(List.of("(", "18", "+", "6", "/", "2", ")"));
         calc.tempList = new ArrayList<>();
@@ -157,7 +148,7 @@ public class CalcTest {
         assertEquals(String.valueOf(3), calc.list.get(3));
     }
 
-    @Test
+    @Test(priority = 14)
     public void additionalTest() {
         calc.list = new ArrayList<>(List.of("(", "8", "/", "4", "+", "2", ")"));
         calc.tempList = new ArrayList<>();
@@ -168,7 +159,7 @@ public class CalcTest {
         assertEquals(String.valueOf(6), calc.list.get(3));
     }
 
-    @Test
+    @Test(priority = 15)
     public void subtractionTest() {
         calc.list = new ArrayList<>(List.of("(", "38", "/", "6", "-", "2", ")"));
         calc.tempList = new ArrayList<>();
@@ -179,7 +170,7 @@ public class CalcTest {
         assertEquals(String.valueOf(4), calc.list.get(3));
     }
 
-    @Test
+    @Test(priority = 16)
     public void deleteTest() {
         List<String> list = new ArrayList<>(List.of("str1", "str2", "str3"));
         assertEquals(3, list.size());
@@ -187,87 +178,87 @@ public class CalcTest {
         assertEquals(0, list.size());
     }
 
-    @Test
+    @Test(priority = 17)
     public void checkBracketsTestTrue() {
         calc.list = new ArrayList<>(List.of("(", "1", "/"));
         assertTrue(calc.checkBrackets());
     }
 
-    @Test
+    @Test(priority = 18)
     public void checkBracketsTestFalse() {
         calc.list = new ArrayList<>(List.of("*", "1", "/"));
         assertFalse(calc.checkBrackets());
     }
 
-    @Test
+    @Test(priority = 19)
     public void checkMulTestTrue() {
         List<String> list = new ArrayList<>(List.of("*", "1", "/"));
         assertTrue(calc.checkMul(list));
     }
 
-    @Test
+    @Test(priority = 20)
     public void checkMulTestFalse() {
         List<String> list = new ArrayList<>(List.of("+", "1", "/"));
         assertFalse(calc.checkMul(list));
     }
 
-    @Test
+    @Test(priority = 21)
     public void checkDivTestTrue() {
         List<String> list = new ArrayList<>(List.of("*", "1", "/"));
         assertTrue(calc.checkDiv(list));
     }
 
-    @Test
+    @Test(priority = 22)
     public void checkDivTestFalse() {
         List<String> list = new ArrayList<>(List.of("*", "1", "7"));
         assertFalse(calc.checkDiv(list));
     }
 
-    @Test
+    @Test(priority = 23)
     public void checkPlusTestTrue() {
         List<String> list = new ArrayList<>(List.of("*", "+", "/"));
         assertTrue(calc.checkPlus(list));
     }
 
-    @Test
+    @Test(priority = 24)
     public void checkPlusTestFalse() {
         List<String> list = new ArrayList<>(List.of("*", "1", "/"));
         assertFalse(calc.checkPlus(list));
     }
 
-    @Test
+    @Test(priority = 25)
     public void checkMinusTestTrue() {
         List<String> list = new ArrayList<>(List.of("*", "1", "-"));
         assertTrue(calc.checkMinus(list));
     }
 
-    @Test
+    @Test(priority = 26)
     public void checkMinusTestFalse() {
         List<String> list = new ArrayList<>(List.of("*", "1", "/"));
         assertFalse(calc.checkMinus(list));
     }
 
-    @Test
+    @Test(priority = 27)
     public void addTest() {
         assertEquals("8", calc.add("6", "2"));
     }
 
-    @Test
+    @Test(priority = 28)
     public void diffTest() {
         assertEquals("4", calc.diff("6", "2"));
     }
 
-    @Test
+    @Test(priority = 29)
     public void multTest() {
         assertEquals("12", calc.mult("6", "2"));
     }
 
-    @Test
+    @Test(priority = 30)
     public void divTest() {
         assertEquals("3", calc.div("6", "2"));
     }
 
-    @Test(expected = ArithmeticException.class)
+    @Test(priority = 31, expected = ArithmeticException.class)
     public void divByZeroTest() {
         assertEquals("3", calc.div("6", "0"));
     }
