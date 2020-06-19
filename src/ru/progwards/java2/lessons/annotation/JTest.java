@@ -45,21 +45,21 @@ public class JTest {
             }
         }
         assert beforeMethod != null;
-        tester(testingClass, beforeMethod, afterMethod);
+        testRunner(testingClass, beforeMethod, afterMethod);
     }
 
-    private void tester(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
+    private void testRunner(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
             InvocationTargetException, IllegalAccessException, InstantiationException {
         Object object = testingClass.getConstructor().newInstance();
-        assert before != null;
-        before.invoke(object);
+//        assert before != null;
+//        before.invoke(object);
         for (Method m : testMethods.values()) {
             before.invoke(object);
             m.invoke(object);
             after.invoke(object);
         }
-        assert after != null;
-        after.invoke(object);
+//        assert after != null;
+//        after.invoke(object);
     }
 
 

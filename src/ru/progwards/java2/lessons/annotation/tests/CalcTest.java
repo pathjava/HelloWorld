@@ -7,7 +7,9 @@ import ru.progwards.java2.lessons.annotation.*;
 import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.lang.reflect.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 
@@ -43,7 +45,7 @@ public class CalcTest {
         calc.calculate(str);
     }
 
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void calculateTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
@@ -53,7 +55,7 @@ public class CalcTest {
         assertEquals(String.valueOf(6), calc.list.get(0));
     }
 
-    @Test(priority = 4)
+    @Test(priority = 1)
     public void readStringTest() {
         calc.list = new ArrayList<>();
         String str = "3*(6+2)/3-2";
