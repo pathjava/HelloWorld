@@ -3,8 +3,7 @@
 
 package ru.progwards.java2.lessons.annotation;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.util.*;
 
 public class JTest {
@@ -13,32 +12,32 @@ public class JTest {
 
     public void run(String name) throws ClassNotFoundException, InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
-        if (name.equals(""))
+        if (name.equals("")) /* проверяем, не является ли строка с путем к классу пустой */
             throw new IllegalArgumentException("Путь к файлу не указан!");
-        Class<?> testingClass = Class.forName(name);
-        dataHandler(testingClass);
+        Class<?> testingClass = Class.forName(name); /* получаем класс */
+        dataHandler(testingClass); /* передаем полученный класс дальше */
     }
 
     private void dataHandler(Class<?> testingClass) throws NoSuchMethodException,
             InstantiationException, IllegalAccessException, InvocationTargetException {
-        Method[] methods = testingClass.getDeclaredMethods();
-        if (methods.length == 0)
+        Method[] methods = testingClass.getDeclaredMethods(); /* получаем массив методов */
+        if (methods.length == 0) /* если массив имеет размер 0, прерываем метод */
             return;
-        Method beforeMethod = null;
+        Method beforeMethod = null; /* заводим переменные для методов Before и After */
         Method afterMethod = null;
-        int countBefore = 0;
+        int countBefore = 0; /* счетчик Before и After, так как они не могут встречаться в классе более 1 раза */
         int countAfter = 0;
         for (Method m : methods) {
-            if (m.isAnnotationPresent(Before.class)) {
+            if (m.isAnnotationPresent(Before.class)) { /* если метод содержит аннотацию Before */
                 if (countBefore > 0)
                     throw new RuntimeException();
                 countBefore++;
                 beforeMethod = m;
-            } else if (m.isAnnotationPresent(Test.class)) {
-                int priority = m.getAnnotation(Test.class).priority();
-                if (priority != 0)
+            } else if (m.isAnnotationPresent(Test.class)) { /* если метод содержит аннотацию Test */
+                int priority = m.getAnnotation(Test.class).priority(); /* получаем значение приоритета */
+                if (priority != 0) /* если приоритет не 0, добавляем метод в TreeMap */
                     testMethods.put(priority, m);
-            } else if (m.isAnnotationPresent(After.class)) {
+            } else if (m.isAnnotationPresent(After.class)) { /* если метод содержит аннотацию After */
                 if (countAfter > 0)
                     throw new RuntimeException();
                 countAfter++;
@@ -53,9 +52,9 @@ public class JTest {
             InvocationTargetException, IllegalAccessException, InstantiationException {
         Object object = testingClass.getConstructor().newInstance();
         for (Method method : testMethods.values()) {
-            before.invoke(object);
-            method.invoke(object);
-            after.invoke(object);
+            before.invoke(object); /* создаем объект */
+            method.invoke(object); /* запускаем тестовый метод */
+            after.invoke(object); /* удаляем объект */
         }
     }
 
