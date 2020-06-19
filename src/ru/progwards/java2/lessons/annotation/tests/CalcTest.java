@@ -4,7 +4,6 @@
 package ru.progwards.java2.lessons.annotation.tests;
 
 import ru.progwards.java2.lessons.annotation.*;
-import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.lang.reflect.*;
 import java.util.*;
