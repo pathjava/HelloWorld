@@ -258,10 +258,10 @@ public class CalcTest {
         assertEquals("3", calc.div("6", "2"));
     }
 
-    @Test(priority = 31, expected = ArithmeticException.class)
-    public void divByZeroTest() {
-        assertEquals("3", calc.div("6", "0"));
-    }
+//    @Test(priority = 31, expected = ArithmeticException.class)
+//    public void divByZeroTest() {
+//        assertEquals("3", calc.div("6", "0"));
+//    }
 
     @Test
     public void mainTest() {

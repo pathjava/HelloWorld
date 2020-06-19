@@ -29,7 +29,7 @@ public class JTest {
         int countAfter = 0;
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) {
-                if (countBefore > 1)
+                if (countBefore > 0)
                     throw new RuntimeException();
                 countBefore++;
                 beforeMethod = m;
@@ -38,7 +38,7 @@ public class JTest {
                 if (priority != 0)
                     testMethods.put(priority, m);
             } else if (m.isAnnotationPresent(After.class)) {
-                if (countAfter > 1)
+                if (countAfter > 0)
                     throw new RuntimeException();
                 countAfter++;
                 afterMethod = m;
