@@ -8,7 +8,6 @@ import ru.progwards.java2.lessons.annotation.Calc;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -54,11 +53,15 @@ public class CalcTest {
         assertEquals("String", str);
     }
 
-//    @Test(priority = 2, expected = NoSuchElementException.class)
-//    public void calculateTestException() {
-//        String str = "";
-//        calc.calculate(str);
-//    }
+    @Test(priority = 2)
+    public void calculateTestException() {
+        try {
+            String str = "";
+            calc.calculate(str);
+            fail("Expected NoSuchElementException");
+        } catch (NoSuchElementException ignored) {
+        }
+    }
 
     @Test(priority = 3)
     public void calculateTest() {
@@ -274,10 +277,14 @@ public class CalcTest {
         assertEquals("3", calc.div("6", "2"));
     }
 
-//    @Test(priority = 31, expected = ArithmeticException.class)
-//    public void divByZeroTest() {
-//        assertEquals("3", calc.div("6", "0"));
-//    }
+    @Test(priority = 31)
+    public void divByZeroTest() {
+        try {
+            assertEquals("3", calc.div("6", "0"));
+            fail("Expected ArithmeticException");
+        } catch (NoSuchElementException ignored) {
+        }
+    }
 
     @Test
     public void mainTest() {
