@@ -53,7 +53,7 @@ public class JTest {
 
     private void testRunner(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
             InvocationTargetException, IllegalAccessException, InstantiationException {
-        Object object = testingClass.getConstructor().newInstance();
+        Object object = testingClass.getConstructor().newInstance(); /* создаем объект, на котором будет вызываться метод invoke */
         for (Method method : testMethods.values()) {
             before.invoke(object); /* создаем объект */
             method.invoke(object); /* запускаем тестовый метод */
