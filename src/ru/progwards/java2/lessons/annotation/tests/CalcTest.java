@@ -35,7 +35,7 @@ public class CalcTest {
         assertThat(stringClass, instanceOf(Object.class));
     }
 
-    @Test(priority = 31)
+    @Test
     public void checkTypeListName() {
         Field field = null;
         try {
@@ -281,10 +281,6 @@ public class CalcTest {
             fail("Expected exception ArithmeticException");
         } catch (ArithmeticException ignored) {
         }
-    }
-
-    @Test
-    public void mainTest() {
     }
 
     @After

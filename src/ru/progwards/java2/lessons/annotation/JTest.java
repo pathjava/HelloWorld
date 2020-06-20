@@ -9,6 +9,7 @@ import java.util.*;
 public class JTest {
 
     private final Map<Integer, Method> testMethods = new TreeMap<>();
+    private final List<Method> tempMethod = new ArrayList<>();
 
     public void run(String name) throws ClassNotFoundException, InvocationTargetException,
             NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -37,6 +38,8 @@ public class JTest {
                 int priority = m.getAnnotation(Test.class).priority(); /* получаем значение приоритета */
                 if (priority != 0) /* если приоритет не 0, добавляем метод в TreeMap */
                     testMethods.put(priority, m);
+                else /* если приоритет не выставлен, добавляем метод в tempMethod */
+                    tempMethod.add(m);
             } else if (m.isAnnotationPresent(After.class)) { /* если метод содержит аннотацию After */
                 if (countAfter > 0) /* проверяем счетчик */
                     throw new RuntimeException();
@@ -47,8 +50,18 @@ public class JTest {
                 return;
             }
         }
+        if (tempMethod.size() != 0) /* если в tempMethod есть методы, вызываем метод addMethodWithoutPriority() */
+            addMethodWithoutPriority();
         assert beforeMethod != null;
         testRunner(testingClass, beforeMethod, afterMethod);
+    }
+
+    private void addMethodWithoutPriority() {
+        int priority = testMethods.size() + 1; /* ставим начальный приоритет равный размеру testMethods + 1 */
+        for (Method method : tempMethod) { /* добавляем методы без приоритета в конец testMethods */
+            testMethods.put(priority, method);
+            priority++;
+        }
     }
 
     private void testRunner(Class<?> testingClass, Method before, Method after) throws NoSuchMethodException,
