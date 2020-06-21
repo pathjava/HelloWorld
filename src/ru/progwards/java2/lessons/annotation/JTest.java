@@ -57,10 +57,10 @@ public class JTest {
     }
 
     private void addMethodWithoutPriority() {
-        int priority = testMethods.size() + 1; /* ставим начальный приоритет равный размеру testMethods + 1 */
+        int key = testMethods.size() + 1; /* ставим начальный ключ равный размеру testMethods + 1 */
         for (Method method : tempMethod) { /* добавляем методы без приоритета в конец testMethods */
-            testMethods.put(priority, method);
-            priority++;
+            testMethods.put(key, method);
+            key++;
         }
     }
 
