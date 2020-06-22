@@ -8,7 +8,7 @@ import java.util.*;
 
 public class JTest {
 
-    private final Map<Integer, Method> testMethods = new TreeMap<>();
+    private final TreeMap<Integer, Method> testMethods = new TreeMap<>();
     private final List<Method> tempMethod = new ArrayList<>();
 
     public void run(String name) throws ClassNotFoundException, InvocationTargetException,
@@ -57,7 +57,7 @@ public class JTest {
     }
 
     private void addMethodWithoutPriority() {
-        int key = testMethods.size() + 1; /* ставим начальный ключ равный размеру testMethods + 1 */
+        int key = testMethods.lastKey() + 1; /* ставим начальный ключ равный последнему ключу в testMethods + 1 */
         for (Method method : tempMethod) { /* добавляем методы без приоритета в конец testMethods */
             testMethods.put(key, method);
             key++;
