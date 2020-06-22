@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AgentSmart">
+    <output-path>$PROJECT_DIR$/out/artifacts/AgentSmart</output-path>
+    <root id="archive" name="AgentSmart.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/sever/testprogwards2/test_10/smartagent/TextAgent.class" />
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/sever/testprogwards2/test_10/smartagent/TextTransformer.class" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/ru/progwards/sever/testprogwards2/test_10/smartagent/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

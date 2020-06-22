@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Premain-Class: ru.progwards.sever.testprogwards2.test_10.simpleagent.Interceptor
