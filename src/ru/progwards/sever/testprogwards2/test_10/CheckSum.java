@@ -21,9 +21,8 @@ public class CheckSum implements Task {
         if (data.length == 0)
             return "Нет данных";
         byte checkSum = 0;
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.length; i++)
             checkSum += data[i];
-        }
         return "Контрольная сумма: " + checkSum;
     }
 }
