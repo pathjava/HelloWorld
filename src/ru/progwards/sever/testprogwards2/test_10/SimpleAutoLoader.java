@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SimpleAutoLoader extends ClassLoader {
-    final static String PATH_OF_TASKS = "C:/data/";
+    final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/sever/testprogwards2/test_10/data/";
     final static String DOT_CLASS = ".class";
     private static SimpleAutoLoader loader = new SimpleAutoLoader(PATH_OF_TASKS);
     private final String basePath;
