@@ -21,8 +21,7 @@ public class MathExpectation implements Task {
         if (data.length == 0)
             return "Нет данных";
         long sum = 0;
-        for (int i = 0; i < data.length; i++)
-            sum += data[i];
+        for (byte datum : data) sum += datum;
         double mathExpectation = (double) sum / data.length;
         return "Мат ожидание: " + mathExpectation;
     }

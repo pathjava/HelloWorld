@@ -22,13 +22,12 @@ public class Dispersion implements Task {
             return "Нет данных";
         // мат ожидание
         long sum = 0;
-        for (int i = 0; i < data.length; i++)
-            sum += data[i];
+        for (byte datum : data) sum += datum;
         double mathExpectation = (double) sum / data.length;
         // дисперсия
         sum = 0;
-        for (int i = 0; i < data.length; i++) {
-            double diff = mathExpectation - data[i];
+        for (byte datum : data) {
+            double diff = mathExpectation - datum;
             sum += diff * diff;
         }
         double dispersion = (double) sum / data.length;
