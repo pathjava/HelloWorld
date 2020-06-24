@@ -40,9 +40,8 @@ public class Heap {
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
-        for (int i = 0; i < size; i++) { /* заполняем кучу согласно размера пришедшего блока */
+        for (int i = 0; i < size; i++) /* заполняем кучу согласно размера пришедшего блока */
             bytes[index + i] = 1;
-        }
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
         else { /* иначе удаляем свободный блок */
@@ -69,9 +68,9 @@ public class Heap {
                 else
                     emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* иначе только первый из трисет */
             } else {
-                if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) {
+                if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
                     emptyBlocksTM.remove(emptyBlockSuitableSize);
-                } else
+                else
                     emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst();
                 emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
             }
@@ -101,9 +100,8 @@ public class Heap {
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
-            for (int i = ptr; i <= endIndex; i++) {
+            for (int i = ptr; i <= endIndex; i++)
                 bytes[i] = 0; /* заменяем значения на ноли */
-            }
         } else
             throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
@@ -128,17 +126,17 @@ public class Heap {
             }
             countIteration++;
         }
-        if (countIteration == bytes.length) /* если каунт равен размеру кучи, значи свободных ячеек нет - выходим из метода*/
+        if (countIteration == bytes.length) /* если каунт равен размеру кучи, значи свободных ячеек нет - выходим из метода */
             return;
         /* для поиска заполненных блоков отсортированных по индексу, перегоняем из hashmap в treemap */
         NavigableMap<Integer, FilledBlock> tempFilledBlocksTM = new TreeMap<>(filledBlocksHM);
         int filledCellIndex = tempFilledBlocksTM.firstKey();
         boolean checkFilledIndex = false;
         while (!checkFilledIndex) { /* ищем индекс первого заполненного блока, который > индекса свободной ячейки в куче */
-            if (filledCellIndex > emptyCellIndex) { /* если индекс блока больше индекса ячейки, выходим */
+            if (filledCellIndex > emptyCellIndex) /* если индекс блока больше индекса ячейки, выходим */
                 checkFilledIndex = true;
-            } else {
-                tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* иначе удаляем первый элемент трисет и проверяем снова*/
+            else {
+                tempFilledBlocksTM.remove(tempFilledBlocksTM.firstKey()); /* иначе удаляем первый элемент тримэп и проверяем снова */
                 filledCellIndex = tempFilledBlocksTM.firstKey();
             }
         }
