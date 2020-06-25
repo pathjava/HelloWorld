@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PathLoader extends ClassLoader {
-    final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/20200624/";
+    final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/";
     final static String DOT_CLASS = ".class";
     private static PathLoader loader = new PathLoader(PATH_OF_TASKS);
     private final String basePath;
@@ -32,11 +32,12 @@ public class PathLoader extends ClassLoader {
         try {
             String classPath = className.replace(".", "/");
             Path classPathName = Paths.get(basePath + classPath + DOT_CLASS);
+            String classNameWithoutDate = className.substring(9);
             if (Files.exists(classPathName)) {
                 byte[] b = Files.readAllBytes(classPathName);
-                return defineClass(className, b, 0, b.length);
+                return defineClass(classNameWithoutDate, b, 0, b.length);
             } else
-                return findSystemClass(className);
+                return findSystemClass(classNameWithoutDate);
         } catch (IOException ex) {
             throw new ClassNotFoundException(className);
         }
