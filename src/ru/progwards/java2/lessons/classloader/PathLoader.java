@@ -37,7 +37,7 @@ public class PathLoader extends ClassLoader {
                 byte[] b = Files.readAllBytes(classPathName);
                 return defineClass(classNameWithoutDate, b, 0, b.length);
             } else
-                return findSystemClass(classNameWithoutDate);
+                return findSystemClass(className);
         } catch (IOException ex) {
             throw new ClassNotFoundException(className);
         }
