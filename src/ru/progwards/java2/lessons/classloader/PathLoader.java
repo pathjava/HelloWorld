@@ -59,15 +59,17 @@ public class PathLoader extends ClassLoader {
             public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                 if (path.toString().endsWith(DOT_CLASS)) {
                     String className = makeClassName(path);
-                    Task task = tasks.get(className);
-                    if (task == null || task.getModifiedTime() != attrs.lastModifiedTime().toMillis()) {
+                    String classNameWithoutDate = className.substring(9);
+                    Task task = tasks.get(classNameWithoutDate);
+                    if (task == null || task.getModifiedTime() < attrs.lastModifiedTime().toMillis()) {
                         try {
                             if (task != null)
                                 loader = new PathLoader(PATH_OF_TASKS);
                             Class<?> taskClass = loader.loadClass(className, true);
                             Task newTask = (Task) taskClass.getDeclaredConstructor().newInstance();
                             newTask.setModifiedTime(attrs.lastModifiedTime().toMillis());
-                            tasks.put(className, newTask);
+                            tasks.remove(classNameWithoutDate);
+                            tasks.put(classNameWithoutDate, newTask);
                             System.out.println((task == null ? "Добавлен" : "Обновлён") + " класс " + className);
                         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
                                 NoSuchMethodException | InvocationTargetException e) {
