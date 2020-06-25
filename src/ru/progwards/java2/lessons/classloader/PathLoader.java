@@ -13,8 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PathLoader extends ClassLoader {
-    final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/";
-    final static String DOT_CLASS = ".class";
+    private final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/";
+    private final static String DOT_CLASS = ".class";
     private static PathLoader loader = new PathLoader(PATH_OF_TASKS);
     private final String basePath;
 
@@ -96,6 +96,9 @@ public class PathLoader extends ClassLoader {
         return className;
     }
 
+    private static void patchLogger() {
+
+    }
 
     public static void main(String[] args) throws Exception {
         Map<String, Task> tasks = new LinkedHashMap<>();
