@@ -1,18 +1,18 @@
 // Oleg Kiselev
-// 27.05.2020, 12:38
+// 25.06.2020, 12:00
 
 package ru.progwards.java2.lessons.gc;
 
 import java.util.*;
 
-public class Heap {
+public class HeapTwo {
 
     private byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
-    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
+    private final Map<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new HashMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
 
-    public Heap(int maxHeapSize) {
+    public HeapTwo(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
@@ -22,7 +22,7 @@ public class Heap {
     public int malloc(int size) throws OutOfMemoryException {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
-        Integer emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
+        Integer emptyBlockSuitableSize = checkKey(size);
         int index;
         if (emptyBlockSuitableSize != null) { /* если размер свободного блока не найден подходящего размера */
             index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmpty(); /* определяем индекс добавляемого блока */
@@ -30,7 +30,7 @@ public class Heap {
         } else {
 //            defrag();
             compact(); /* тогда запускаем компактизацию кучи */
-            emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
+            emptyBlockSuitableSize = checkKey(size);
             if (emptyBlockSuitableSize == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
             else {
@@ -39,6 +39,15 @@ public class Heap {
             }
         }
         return index;
+    }
+
+    private Integer checkKey(int size) {
+        if (emptyBlocksTM.containsKey(size))
+            return size;
+        else {
+            TreeSet<Integer> tempKey = new TreeSet<>(emptyBlocksTM.keySet());
+            return tempKey.ceiling(size);
+        }
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
@@ -244,7 +253,7 @@ public class Heap {
 
 
     public static void main(String[] args) {
-        Heap test = new Heap(100);
+        HeapTwo test = new HeapTwo(100);
         try {
 //            test.malloc(3);
 //            test.malloc(5);
@@ -316,3 +325,4 @@ public class Heap {
     }
 
 }
+
