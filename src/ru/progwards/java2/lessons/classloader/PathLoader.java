@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.classloader;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.*;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 public class PathLoader extends ClassLoader {
     private final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/";
+    private final static String PATH_OF_LOG = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/patchloader.log";
     private final static String DOT_CLASS = ".class";
     private static PathLoader loader = new PathLoader(PATH_OF_TASKS);
     private final String basePath;
@@ -71,6 +73,7 @@ public class PathLoader extends ClassLoader {
                             tasks.remove(classNameWithoutDate);
                             tasks.put(classNameWithoutDate, newTask);
                             System.out.println((task == null ? "Добавлен" : "Обновлён") + " класс " + className);
+                            patchLogger(className);
                         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
                                 NoSuchMethodException | InvocationTargetException e) {
                             e.printStackTrace();
@@ -96,8 +99,12 @@ public class PathLoader extends ClassLoader {
         return className;
     }
 
-    private static void patchLogger() {
-
+    private static void patchLogger(String className) {
+        try (FileWriter logFile = new FileWriter(PATH_OF_LOG, true)) {
+            logFile.write(className + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws Exception {
