@@ -31,7 +31,7 @@ public class JTest {
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) { /* если метод содержит аннотацию Before */
                 if (countBefore > 0) /* проверяем счетчик */
-                    throw new RuntimeException();
+                    throw new RuntimeException("Недопустимо использование аннотации Before более одного раза!");
                 countBefore++;
                 beforeMethod = m; /* присваиваем метод с аннотацией Before в переменную */
             } else if (m.isAnnotationPresent(Test.class)) { /* если метод содержит аннотацию Test */
@@ -42,7 +42,7 @@ public class JTest {
                     tempMethod.add(m);
             } else if (m.isAnnotationPresent(After.class)) { /* если метод содержит аннотацию After */
                 if (countAfter > 0) /* проверяем счетчик */
-                    throw new RuntimeException();
+                    throw new RuntimeException("Недопустимо использование аннотации After более одного раза!");
                 countAfter++;
                 afterMethod = m; /* присваиваем метод с аннотацией After в переменную */
             } else {
