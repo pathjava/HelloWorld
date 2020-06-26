@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class PathLoader extends ClassLoader {
     private final static String PATH_OF_TASKS = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/";
-    private final static String PATH_OF_LOG = "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/patchloader.log";
     private final static String DOT_CLASS = ".class";
     private static PathLoader loader = new PathLoader(PATH_OF_TASKS);
     private final String basePath;
@@ -100,7 +99,15 @@ public class PathLoader extends ClassLoader {
     }
 
     private static void patchLogger(String className) {
-        try (FileWriter logFile = new FileWriter(PATH_OF_LOG, true)) {
+        String directory = System.getProperty("user.dir");
+        String namePackage = PathLoader.class.getName();
+        int index = namePackage.lastIndexOf(".");
+        if (index > -1)
+            namePackage = namePackage.substring(0, index);
+        namePackage = namePackage.replace(".", "\\");
+        String logFilePath = directory + "\\src\\" + namePackage + "\\" + "patchloader.log";
+
+        try (FileWriter logFile = new FileWriter(logFilePath, true)) {
             logFile.write(className + "\n");
         } catch (IOException e) {
             e.printStackTrace();
