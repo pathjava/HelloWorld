@@ -99,19 +99,21 @@ public class PathLoader extends ClassLoader {
     }
 
     private static void patchLogger(String className) {
+        try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
+            logFile.write(className + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getPathLogFile() {
         String directory = System.getProperty("user.dir");
         String namePackage = PathLoader.class.getName();
         int index = namePackage.lastIndexOf(".");
         if (index > -1)
             namePackage = namePackage.substring(0, index);
         namePackage = namePackage.replace(".", "\\");
-        String logFilePath = directory + "\\src\\" + namePackage + "\\" + "patchloader.log";
-
-        try (FileWriter logFile = new FileWriter(logFilePath, true)) {
-            logFile.write(className + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return directory + "\\src\\" + namePackage + "\\" + "patchloader.log";
     }
 
     public static void main(String[] args) throws Exception {
