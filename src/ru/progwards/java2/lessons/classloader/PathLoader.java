@@ -75,7 +75,8 @@ public class PathLoader extends ClassLoader {
                             tasks.put(classNameWithoutDate, newTask);
                             System.out.println((task == null ? "Добавлен" : "Обновлён") + " класс " + className);
                             patchLoadedSuccessfully(className);
-                        } catch (Exception e) {
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
+                                NoSuchMethodException | InvocationTargetException e) {
                             e.printStackTrace();
                         }
                     }
@@ -113,10 +114,6 @@ public class PathLoader extends ClassLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void test(PathLoader pathLoader){
-        System.out.println("111");
     }
 
     private static String getDateTimeLoadFile() {
