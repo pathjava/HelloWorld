@@ -9,6 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -72,9 +74,8 @@ public class PathLoader extends ClassLoader {
                             tasks.remove(classNameWithoutDate);
                             tasks.put(classNameWithoutDate, newTask);
                             System.out.println((task == null ? "Добавлен" : "Обновлён") + " класс " + className);
-                            patchLogger(className);
-                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
-                                NoSuchMethodException | InvocationTargetException e) {
+                            patchLoadedSuccessfully(className);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -98,12 +99,26 @@ public class PathLoader extends ClassLoader {
         return className;
     }
 
-    private static void patchLogger(String className) {
+    private static void patchLoadedSuccessfully(String className) {
         try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
-            logFile.write(className + "\n");
+            logFile.write(getDateTimeLoadFile() + " " + className + " загружен из " + PATH_OF_TASKS + " успешно\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void patchNotLoaded(String className, Exception eOne) {
+        try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
+            logFile.write(getDateTimeLoadFile() + " " + className + " ошибка загрузки " + eOne + " \n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getDateTimeLoadFile() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        return now.format(formatter);
     }
 
     private static String getPathLogFile() {
