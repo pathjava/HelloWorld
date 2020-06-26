@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class PathLoader extends ClassLoader {
     private final static String DOT_CLASS = ".class";
-    private static PathLoader loader;
+    private PathLoader loader;
     private final String basePath;
 
     public PathLoader(String basePath) {
