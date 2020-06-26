@@ -4,7 +4,7 @@
 // Oleg Kiselev
 // 24.06.2020, 17:56
 
-package ru.progwards.java2.lessons.classloader.pathloader;
+package ru.progwards.java2.lessons.classloader.loader;
 
 public class MathExpectation implements Task {
     private long modifiedTime;

@@ -4,7 +4,7 @@
 // Oleg Kiselev
 // 25.06.2020, 12:43
 
-package ru.progwards.java2.lessons.classloader.pathloader;
+package ru.progwards.java2.lessons.classloader.loader;
 
 import java.io.File;
 import java.text.ParseException;
@@ -45,6 +45,6 @@ public class ChangeClassFileLastModified {
     }
 
     public static void main(String[] args) {
-        changeLastModifiedTime("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\classloader\\pathloader\\MathExpectation.class");
+        changeLastModifiedTime("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\classloader\\loader\\MathExpectation.class");
     }
 }

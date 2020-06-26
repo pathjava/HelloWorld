@@ -4,7 +4,7 @@
 // Oleg Kiselev
 // 24.06.2020, 17:55
 
-package ru.progwards.java2.lessons.classloader.pathloader;
+package ru.progwards.java2.lessons.classloader.loader;
 
 public class CheckSum implements Task {
     private long modifiedTime;

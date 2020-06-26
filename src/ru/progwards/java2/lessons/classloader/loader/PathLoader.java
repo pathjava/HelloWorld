@@ -4,7 +4,7 @@
 // Oleg Kiselev
 // 20.06.2020, 18:59
 
-package ru.progwards.java2.lessons.classloader.pathloader;
+package ru.progwards.java2.lessons.classloader.loader;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -143,7 +143,7 @@ public class PathLoader extends ClassLoader {
     }
 
     public static void main(String[] args) throws Exception {
-        PathLoader pathLoader = new PathLoader("C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/pathloader/root/");
+        PathLoader pathLoader = new PathLoader("C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/");
         Map<String, Task> tasks = new LinkedHashMap<>();
         while (true) {
             System.out.println("Проверка классов и запуск задач: " +
