@@ -115,6 +115,10 @@ public class PathLoader extends ClassLoader {
         }
     }
 
+    private void test(PathLoader pathLoader){
+        System.out.println("111");
+    }
+
     private static String getDateTimeLoadFile() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
