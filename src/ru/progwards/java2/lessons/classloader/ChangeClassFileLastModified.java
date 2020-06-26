@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ChangeFileLastModified {
+public class ChangeClassFileLastModified {
 
     public static void changeLastModifiedTime(String pathName) {
         if (pathName.isEmpty()) {
