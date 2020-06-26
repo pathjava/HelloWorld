@@ -1,7 +1,10 @@
 // Oleg Kiselev
+// 26.06.2020, 19:20
+
+// Oleg Kiselev
 // 24.06.2020, 17:56
 
-package ru.progwards.java2.lessons.classloader;
+package ru.progwards.java2.lessons.classloader.pathloader;
 
 public class Dispersion implements Task {
     private long modifiedTime;

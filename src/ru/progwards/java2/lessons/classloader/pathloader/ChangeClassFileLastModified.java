@@ -1,7 +1,10 @@
 // Oleg Kiselev
+// 26.06.2020, 19:20
+
+// Oleg Kiselev
 // 25.06.2020, 12:43
 
-package ru.progwards.java2.lessons.classloader;
+package ru.progwards.java2.lessons.classloader.pathloader;
 
 import java.io.File;
 import java.text.ParseException;
