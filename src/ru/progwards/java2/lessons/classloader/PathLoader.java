@@ -37,7 +37,14 @@ public class PathLoader extends ClassLoader {
             String classNameWithoutDate = className.substring(9);
             if (Files.exists(classPathName)) {
                 byte[] b = Files.readAllBytes(classPathName);
-                return defineClass(classNameWithoutDate, b, 0, b.length);
+                Class<?> tempClass = null;
+                try {
+                    tempClass = defineClass(classNameWithoutDate, b, 0, b.length);
+                } catch (ClassFormatError classFormatError) {
+                    patchNotLoaded(className, classFormatError);
+                    classFormatError.printStackTrace();
+                }
+                return tempClass;
             } else
                 return findSystemClass(className);
         } catch (IOException ex) {
@@ -108,9 +115,9 @@ public class PathLoader extends ClassLoader {
         }
     }
 
-    private void patchNotLoaded(String className, Exception eOne) {
+    private void patchNotLoaded(String className, ClassFormatError error) {
         try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
-            logFile.write(getDateTimeLoadFile() + " " + className + " ошибка загрузки " + eOne + " \n");
+            logFile.write(getDateTimeLoadFile() + " " + className + " ошибка загрузки " + error + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
