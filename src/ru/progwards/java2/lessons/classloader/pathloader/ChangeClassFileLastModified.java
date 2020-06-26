@@ -24,26 +24,27 @@ public class ChangeClassFileLastModified {
             return;
         }
         if (file.getName().endsWith(".class")) {
-            // вывод оригинальной даты последнего изменения
+            /* выводим оригинальную дату последнего изменения согласно шаблона SimpleDateFormat */
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss");
             System.out.println("Original Last Modified Date : " + sdf.format(file.lastModified()));
-            // установить эту дату
+            /* устанавливаем новую дату и время */
             String newLastModified = "05/16/2020/01/35/20";
-            // необходимо преобразовать указанную дату в миллисекунды в длинное значение
+            /* преобразовываем дату и время в миллисекунды */
             Date newDate = null;
             try {
                 newDate = sdf.parse(newLastModified);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            /* устанавливаем в файл новую дату и время */
             assert newDate != null;
             file.setLastModified(newDate.getTime());
-            // распечатать последнюю дату последнего изменения
+            /* выводим измененную дату и время */
             System.out.println("Latest Last Modified Date : " + sdf.format(file.lastModified()));
         }
     }
 
     public static void main(String[] args) {
-        changeLastModifiedTime("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\classloader\\MathExpectation.class");
+        changeLastModifiedTime("C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\classloader\\pathloader\\MathExpectation.class");
     }
 }
