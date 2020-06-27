@@ -2,3 +2,6 @@
 26-06-2020 19:09:27 20200624.ru.progwards.java2.lessons.classloader.CheckSum загружен из C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/ успешно
 26-06-2020 19:09:27 20200624.ru.progwards.java2.lessons.classloader.Dispersion загружен из C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/root/ успешно
 26-06-2020 19:09:32 20200625.ru.progwards.java2.lessons.classloader.CheckSum ошибка загрузки java.lang.ClassFormatError: Unknown constant tag 116 in class file ru/progwards/java2/lessons/classloader/CheckSum 
+27-06-2020 20:21:19 20200625.ru.progwards.java2.lessons.classloader.loader.CheckSum загружен из C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/ успешно
+27-06-2020 20:21:19 20200625.ru.progwards.java2.lessons.classloader.loader.Dispersion загружен из C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/ успешно
+27-06-2020 20:21:19 20200625.ru.progwards.java2.lessons.classloader.loader.MathExpectation загружен из C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/ успешно

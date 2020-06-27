@@ -14,6 +14,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class PathLoader extends ClassLoader {
                 try {
                     tempClass = defineClass(classNameWithoutDate, b, 0, b.length);
                 } catch (ClassFormatError classFormatError) {
-                    patchNotLoaded(className, classFormatError);
+                    patchLoadFormatError(className, classFormatError);
                     classFormatError.printStackTrace();
                 }
                 return tempClass;
@@ -87,6 +88,7 @@ public class PathLoader extends ClassLoader {
                             patchLoadedSuccessfully(className);
                         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
                                 NoSuchMethodException | InvocationTargetException e) {
+                            patchNotLoaded(className, e);
                             e.printStackTrace();
                         }
                     }
@@ -111,16 +113,24 @@ public class PathLoader extends ClassLoader {
     }
 
     private void patchLoadedSuccessfully(String className) {
-        try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
-            logFile.write(getDateTimeLoadFile() + " " + className + " загружен из " + basePath + " успешно\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String logString = getDateTimeLoadFile() + " " + className + " загружен из " + basePath + " успешно\n";
+        logWriter(logString);
     }
 
-    private void patchNotLoaded(String className, ClassFormatError error) {
+    private void patchLoadFormatError(String className, ClassFormatError error) {
+        String logString = getDateTimeLoadFile() + " " + className + " ошибка загрузки " + error + "\n";
+        logWriter(logString);
+    }
+
+    private void patchNotLoaded(String className, Exception... exception) {
+        String logString = getDateTimeLoadFile() + " " + className +
+                " ошибка загрузки " + Arrays.toString(exception) + "\n";
+        logWriter(logString);
+    }
+
+    private void logWriter(String logString) {
         try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
-            logFile.write(getDateTimeLoadFile() + " " + className + " ошибка загрузки " + error + "\n");
+            logFile.write(logString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,7 +153,8 @@ public class PathLoader extends ClassLoader {
     }
 
     public static void main(String[] args) throws Exception {
-        PathLoader pathLoader = new PathLoader("C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/");
+        PathLoader pathLoader = new PathLoader(
+                "C:/Intellij Idea/programming/HelloWorld/src/ru/progwards/java2/lessons/classloader/loader/root/");
         Map<String, Task> tasks = new LinkedHashMap<>();
         while (true) {
             System.out.println("Проверка классов и запуск задач: " +
