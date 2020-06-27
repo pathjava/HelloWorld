@@ -22,7 +22,7 @@ public class TestSpeed {
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
                 }
-//        Arrays.stream(arr).forEach(System.out::println);
+        Arrays.stream(arr).forEach(System.out::println);
     }
 
     public void selectionSort() {
