@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 public class TestSpeed {
 
-    private void bubbleSort() {
+    public void bubbleSort() {
         SecureRandom random = new SecureRandom();
-        int[] arr = new int[1000];
+        int[] arr = new int[10];
         Arrays.setAll(arr, i -> random.nextInt());
         int n = arr.length;
         for (int i = 0; i < n - 1; i++)

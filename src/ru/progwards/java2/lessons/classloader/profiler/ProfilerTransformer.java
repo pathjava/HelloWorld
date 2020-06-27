@@ -5,10 +5,8 @@ package ru.progwards.java2.lessons.classloader.profiler;
 
 import javassist.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 public class ProfilerTransformer implements ClassFileTransformer {
@@ -17,24 +15,17 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             String className,
                             Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain,
-                            byte[] classfileBuffer) throws IllegalClassFormatException {
+                            byte[] classfileBuffer) {
         ClassPool cp = ClassPool.getDefault();
-        cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
-
-        if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
-            return null;
-
         try {
-            CtClass ct = cp.makeClass(new ByteArrayInputStream(classfileBuffer));
+            CtClass ct = cp.get("ru.progwards.java2.lessons.classloader.profiler.TestSpeed");
 
-            CtMethod[] ctMethods = ct.getDeclaredMethods();
-            for (CtMethod ctMethod : ctMethods) {
-                ctMethod.addLocalVariable("start", CtClass.longType);
-                ctMethod.insertBefore("start = System.currentTimeMillis();");
-                ctMethod.insertAfter("System.out.println(\"время выполнения\" + (System.currentTimeMillis() - start));");
-            }
-            return ct.toBytecode();
-        } catch (IOException | CannotCompileException e) {
+            CtMethod ctMethod = ct.getDeclaredMethod("bubbleSort");
+            ctMethod.addLocalVariable("start", CtClass.longType);
+            ctMethod.insertBefore("start = System.currentTimeMillis();");
+            ctMethod.insertAfter("System.out.println(\"время выполнения\" + (System.currentTimeMillis() - start));");
+            ct.toBytecode();
+        } catch (IOException | CannotCompileException | NotFoundException e) {
             e.printStackTrace();
         }
         return classfileBuffer;
