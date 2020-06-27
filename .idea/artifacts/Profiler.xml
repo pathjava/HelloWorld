@@ -2,11 +2,11 @@
   <artifact type="jar" name="Profiler">
     <output-path>$PROJECT_DIR$/out/artifacts/Profiler</output-path>
     <root id="archive" name="Profiler.jar">
-      <element id="file-copy" path="$PROJECT_DIR$/src/ru/progwards/java2/lessons/classloader/profiler/SystemProfiler.java" />
-      <element id="file-copy" path="$PROJECT_DIR$/src/ru/progwards/java2/lessons/classloader/profiler/ProfilerTransformer.java" />
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/src/ru/progwards/java2/lessons/classloader/profiler/META-INF/MANIFEST.MF" />
       </element>
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/java2/lessons/classloader/profiler/SystemProfiler.class" />
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/java2/lessons/classloader/profiler/ProfilerTransformer.class" />
     </root>
   </artifact>
 </component>
