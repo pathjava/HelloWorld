@@ -16,16 +16,19 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) {
-        ClassPool cp = ClassPool.getDefault();
         if (className.endsWith("TestSpeed")) {
             try {
-                CtClass ct = cp.get(className);
+                ClassPool cp = ClassPool.getDefault();
+                cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
+                System.out.println("name class " + className); /* for testing */
+                CtClass ct = cp.get(className.replace("/","."));
                 CtMethod ctMethod = ct.getDeclaredMethod("bubbleSort");
+                System.out.println("method name " + ctMethod); /* for testing */
                 ctMethod.addLocalVariable("start", CtClass.longType);
                 ctMethod.insertBefore("start = System.currentTimeMillis();");
-                ctMethod.insertAfter("System.out.println(\"время выполнения\" " +
-                        "+ (System.currentTimeMillis() - start));");
-                ct.toBytecode();
+                ctMethod.insertAfter("System.out.println(\"время выполнения \" " +
+                        " + (System.currentTimeMillis() - start));");
+                classfileBuffer = ct.toBytecode();
             } catch (IOException | CannotCompileException | NotFoundException e) {
                 e.printStackTrace();
             }
