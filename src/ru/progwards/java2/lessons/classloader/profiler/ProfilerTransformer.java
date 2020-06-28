@@ -19,7 +19,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
         if (className.endsWith("TestSpeed")) {
             try {
                 final ClassPool cp = ClassPool.getDefault();
-                cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
+                cp.importPackage("ru.progwards.java1.lessons.datetime");
                 System.out.println("name class " + className); /* for testing */
                 final CtClass ct = cp.get(className.replace("/", "."));
 
@@ -27,10 +27,13 @@ public class ProfilerTransformer implements ClassFileTransformer {
                 for (CtMethod ctMethod : ctMethods) {
                     if (!ctMethod.getName().contains("fillArray")) {
                         System.out.println("method name start " + ctMethod.getName()); /* for testing */
-                        ctMethod.addLocalVariable("start", CtClass.longType);
-                        ctMethod.insertBefore("start = System.currentTimeMillis();");
-                        ctMethod.insertAfter("System.out.println(\"время выполнения \" " +
-                                " + (System.currentTimeMillis() - start));");
+
+                        String methodLongName = ctMethod.getLongName();
+                        String nameEnterSection = "Profiler.enterSection(\"" + methodLongName + "\");";
+                        String nameExitSection = "Profiler.exitSection(\"" + methodLongName + "\");";
+                        ctMethod.insertBefore(nameEnterSection);
+                        ctMethod.insertAfter(nameExitSection);
+
                         System.out.println("method name end " + ctMethod.getName()); /* for testing */
                     }
                 }
