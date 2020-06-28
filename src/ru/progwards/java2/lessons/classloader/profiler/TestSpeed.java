@@ -8,11 +8,15 @@ import java.util.Arrays;
 
 public class TestSpeed {
 
-    private final SecureRandom random = new SecureRandom();
-    private static final int SIZE_ARRAY = 10;
-    private final int[] tempArray = new int[SIZE_ARRAY];
+    private int sizeTestingArrays;
+    private final int[] tempArray = new int[sizeTestingArrays];
 
-    private void fillArray(){
+    public TestSpeed(int sizeTestingArrays) {
+        this.sizeTestingArrays = sizeTestingArrays;
+    }
+
+    private void fillArray() {
+        SecureRandom random = new SecureRandom();
         Arrays.setAll(tempArray, i -> random.nextInt());
     }
 
@@ -55,7 +59,7 @@ public class TestSpeed {
     }
 
     public static void main(String[] args) {
-        TestSpeed test = new TestSpeed();
+        TestSpeed test = new TestSpeed(10);
         test.fillArray();
 
         test.bubbleSort();
