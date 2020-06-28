@@ -63,7 +63,7 @@ public class TestSpeed {
     }
 
     public static void main(String[] args) {
-        TestSpeed test = new TestSpeed(10, true);
+        TestSpeed test = new TestSpeed(1000, false);
         test.fillArray();
 
         test.bubbleSort();

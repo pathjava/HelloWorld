@@ -22,12 +22,18 @@ public class ProfilerTransformer implements ClassFileTransformer {
                 cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
                 System.out.println("name class " + className); /* for testing */
                 CtClass ct = cp.get(className.replaceAll("[\\/\\\\]", "."));
-                CtMethod ctMethod = ct.getDeclaredMethod("bubbleSort");
-                System.out.println("method name " + ctMethod); /* for testing */
-                ctMethod.addLocalVariable("start", CtClass.longType);
-                ctMethod.insertBefore("start = System.currentTimeMillis();");
-                ctMethod.insertAfter("System.out.println(\"время выполнения \" " +
-                        " + (System.currentTimeMillis() - start));");
+
+                CtMethod[] ctMethods = ct.getDeclaredMethods();
+                for (CtMethod ctMethod : ctMethods) {
+                    if (!ctMethod.getName().contains("fillArray")) {
+                        System.out.println("method name start " + ctMethod.getName()); /* for testing */
+                        ctMethod.addLocalVariable("start", CtClass.longType);
+                        ctMethod.insertBefore("start = System.currentTimeMillis();");
+                        ctMethod.insertAfter("System.out.println(\"время выполнения \" " +
+                                " + (System.currentTimeMillis() - start));");
+                        System.out.println("method name end " + ctMethod.getName()); /* for testing */
+                    }
+                }
                 classfileBuffer = ct.toBytecode();
             } catch (IOException | CannotCompileException | NotFoundException e) {
                 e.printStackTrace();
