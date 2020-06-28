@@ -28,10 +28,9 @@ public class ProfilerTransformer implements ClassFileTransformer {
                     if (!ctMethod.getName().contains("fillArray")) {
                         System.out.println("method name start " + ctMethod.getName()); /* for testing */
 
-                        String methodLongName = ctMethod.getLongName();
-                        String nameEnterSection = "Profiler.enterSection(\"" + methodLongName + "\");";
-                        String nameExitSection = "Profiler.exitSection(\"" + methodLongName + "\");";
+                        String nameEnterSection = "Profiler.enterSection(\"" + ctMethod.getLongName() + "\");";
                         ctMethod.insertBefore(nameEnterSection);
+                        String nameExitSection = "Profiler.exitSection(\"" + ctMethod.getLongName() + "\");";
                         ctMethod.insertAfter(nameExitSection);
 
                         System.out.println("method name end " + ctMethod.getName()); /* for testing */
