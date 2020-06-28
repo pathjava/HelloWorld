@@ -18,12 +18,12 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             byte[] classfileBuffer) {
         if (className.endsWith("TestSpeed")) {
             try {
-                ClassPool cp = ClassPool.getDefault();
+                final ClassPool cp = ClassPool.getDefault();
                 cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
                 System.out.println("name class " + className); /* for testing */
-                CtClass ct = cp.get(className.replaceAll("[\\/\\\\]", "."));
+                final CtClass ct = cp.get(className.replace("/", "."));
 
-                CtMethod[] ctMethods = ct.getDeclaredMethods();
+                final CtMethod[] ctMethods = ct.getDeclaredMethods();
                 for (CtMethod ctMethod : ctMethods) {
                     if (!ctMethod.getName().contains("fillArray")) {
                         System.out.println("method name start " + ctMethod.getName()); /* for testing */
@@ -35,6 +35,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
                     }
                 }
                 classfileBuffer = ct.toBytecode();
+//                ct.detach();
             } catch (IOException | CannotCompileException | NotFoundException e) {
                 e.printStackTrace();
             }
