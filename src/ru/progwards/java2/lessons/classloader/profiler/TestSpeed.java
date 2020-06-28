@@ -8,11 +8,12 @@ import java.util.Arrays;
 
 public class TestSpeed {
 
-    private int sizeTestingArrays;
-    private final int[] tempArray = new int[sizeTestingArrays];
+    private final boolean showResultSort;
+    private final int[] tempArray;
 
-    public TestSpeed(int sizeTestingArrays) {
-        this.sizeTestingArrays = sizeTestingArrays;
+    public TestSpeed(int sizeTestingArrays, boolean showResultSort) {
+        tempArray = new int[sizeTestingArrays];
+        this.showResultSort = showResultSort;
     }
 
     private void fillArray() {
@@ -29,7 +30,8 @@ public class TestSpeed {
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
                 }
-        Arrays.stream(arr).forEach(System.out::println);
+        if (showResultSort)
+            Arrays.stream(arr).forEach(System.out::println);
     }
 
     public void selectionSort() {
@@ -41,7 +43,8 @@ public class TestSpeed {
                     arr[i] = arr[j];
                     arr[j] = temp;
                 }
-        Arrays.stream(arr).forEach(System.out::println);
+        if (showResultSort)
+            Arrays.stream(arr).forEach(System.out::println);
     }
 
     public void insertionSort() {
@@ -55,11 +58,12 @@ public class TestSpeed {
             }
             arr[j + 1] = current;
         }
-        Arrays.stream(arr).forEach(System.out::println);
+        if (showResultSort)
+            Arrays.stream(arr).forEach(System.out::println);
     }
 
     public static void main(String[] args) {
-        TestSpeed test = new TestSpeed(10);
+        TestSpeed test = new TestSpeed(10, true);
         test.fillArray();
 
         test.bubbleSort();

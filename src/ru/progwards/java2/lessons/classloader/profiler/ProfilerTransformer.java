@@ -21,7 +21,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
                 ClassPool cp = ClassPool.getDefault();
                 cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
                 System.out.println("name class " + className); /* for testing */
-                CtClass ct = cp.get(className.replace("/", "."));
+                CtClass ct = cp.get(className.replaceAll("[\\/\\\\]", "."));
                 CtMethod ctMethod = ct.getDeclaredMethod("bubbleSort");
                 System.out.println("method name " + ctMethod); /* for testing */
                 ctMethod.addLocalVariable("start", CtClass.longType);

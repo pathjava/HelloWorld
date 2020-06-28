@@ -52,6 +52,7 @@ public class PathLoader extends ClassLoader {
             } else
                 return findSystemClass(className);
         } catch (IOException ex) {
+            patchNotLoaded(className, ex);
             throw new ClassNotFoundException(className);
         }
     }
