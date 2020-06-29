@@ -29,8 +29,9 @@ public class Profiler {
         List<StatisticInfo> list = new ArrayList<>();
         /* перегоняем отсортированные данные из метода sortedDate() в массив list = new ArrayList<>() */
         for (Map.Entry<String, StatisticSession> entry : sortedDate().entrySet()) {
-            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration, entry.getValue().sessionCount,
-                    entry.getValue().startDuration, entry.getValue().endDuration, entry.getValue().sessionLevel));
+            list.add(new StatisticInfo(entry.getValue().sessionName, entry.getValue().sessionDuration,
+                    entry.getValue().sessionCount, entry.getValue().startDuration,
+                    entry.getValue().endDuration, entry.getValue().sessionLevel));
         }
         /* заполняем все поля selfTime значениями fullTime - на тот случай, если сессия одноуровневая и временные показатели равны */
         for (StatisticInfo statisticInfo : list) {
@@ -46,11 +47,15 @@ public class Profiler {
 
             /* в условиях по времени проверяем, рассчитываем и устанавливаем чистое время каждой сессии */
             if (list.get(i).getLevel() > 1 && ((checkStart > previousStart && checkStart < previousEnd)
-                    || (checkStart < previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
-                    || (checkStart == previousStart && checkStart < previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
-                    || (checkStart > previousStart && checkStart > previousEnd && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
+                    || (checkStart < previousStart && checkStart < previousEnd
+                    && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart == previousStart && checkStart < previousEnd
+                    && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1)
+                    || (checkStart > previousStart && checkStart > previousEnd
+                    && list.get(i - 1).getLevel() == list.get(i).getLevel() - 1))) {
                 list.get(i - 1).setSelfTime(list.get(i - 1).fullTime - list.get(i).fullTime);
-            } else if (list.get(i).getLevel() > 1 && checkStart > previousStart && checkStart > previousEnd || checkStart == previousEnd) {
+            } else if (list.get(i).getLevel() > 1 && checkStart > previousStart
+                    && checkStart > previousEnd || checkStart == previousEnd) {
                 /* переменная boolean отвечает за остановку цикла когда найден первый удовлетворяющий условия результат */
                 boolean stop = true;
                 for (int j = i - 1; j >= 0 && stop; j--) {
@@ -115,7 +120,8 @@ public class Profiler {
                 startDuration += treeList.get(sessionName).startDuration;
                 endDuration += treeList.get(sessionName).endDuration;
             }
-            treeList.put(sessionName, new StatisticSession(sessionName, sessionCount, startDuration, endDuration, sessionLevel));
+            treeList.put(sessionName, new StatisticSession(sessionName,
+                    sessionCount, startDuration, endDuration, sessionLevel));
         }
 
         /* отнимая от времени полного окончания сессии полное время начала сессии получаем полное время сессии и устанавливаем его */
@@ -338,36 +344,36 @@ public class Profiler {
 //            Profiler.exitSection("Process1");
 //        }
 
-        Profiler.enterSection("Process-1");
-        Thread.sleep(100);
-        Profiler.exitSection("Process-1");
+//        Profiler.enterSection("Process-1");
+//        Thread.sleep(100);
+//        Profiler.exitSection("Process-1");
+//
+//        Thread.sleep(100);
+//
+//        Profiler.enterSection("Process-1");
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//        }
+//
+//        for (int n = 0; n < 4; n++) {
+//            Profiler.enterSection("Process-2");
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//            }
+//            Profiler.enterSection("Process-3");
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//            }
+//            Profiler.exitSection("Process-3");
+//            Profiler.exitSection("Process-2");
+//        }
+//        Profiler.exitSection("Process-1");
 
-        Thread.sleep(100);
 
-        Profiler.enterSection("Process-1");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-        }
-
-        for (int n = 0; n < 4; n++) {
-            Profiler.enterSection("Process-2");
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-            }
-            Profiler.enterSection("Process-3");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-            }
-            Profiler.exitSection("Process-3");
-            Profiler.exitSection("Process-2");
-        }
-        Profiler.exitSection("Process-1");
-
-
-        findLevel();
+//        findLevel();
 
         for (StatisticInfo statisticInfo : listStatistic) {
             System.out.println(statisticInfo);

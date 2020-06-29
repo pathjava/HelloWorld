@@ -5,8 +5,8 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/src/ru/progwards/java2/lessons/classloader/profiler/META-INF/MANIFEST.MF" />
       </element>
-      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/java2/lessons/classloader/profiler/SystemProfiler.class" />
       <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/java2/lessons/classloader/profiler/ProfilerTransformer.class" />
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/HelloWorld/ru/progwards/java2/lessons/classloader/profiler/SystemProfiler.class" />
     </root>
   </artifact>
 </component>
