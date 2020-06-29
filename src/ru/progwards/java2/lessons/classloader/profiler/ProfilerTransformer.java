@@ -18,32 +18,32 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) {
-            try {
-                ClassPool cp = ClassPool.getDefault();
-                cp.importPackage("ru.progwards.java1.lessons.datetime");
-                cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
-                if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
-                    return classfileBuffer;
-                if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
-                    return classfileBuffer;
-                CtClass ct = cp.get(className.replace("/", "."));
-                CtMethod[] ctMethods = ct.getDeclaredMethods();
-                for (CtMethod ctMethod : ctMethods) {
-                    if (!excludedMethods(ctMethod)) {
-                        String nameEnterSection = "Profiler.enterSection(\"" + ctMethod.getLongName() + "\");";
-                        ctMethod.insertBefore(nameEnterSection);
-                        String nameExitSection = "Profiler.exitSection(\"" + ctMethod.getLongName() + "\");";
-                        ctMethod.insertAfter(nameExitSection);
-                    } else if (ctMethod.getName().contains("main")) {
+        try {
+            ClassPool cp = ClassPool.getDefault();
+            cp.importPackage("ru.progwards.java1.lessons.datetime");
+            cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
+            if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
+                return classfileBuffer;
+            if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
+                return classfileBuffer;
+            CtClass ct = cp.get(className.replace("/", "."));
+            CtMethod[] ctMethods = ct.getDeclaredMethods();
+            for (CtMethod ctMethod : ctMethods) {
+                if (!excludedMethods(ctMethod)) {
+                    String nameEnterSection = "Profiler.enterSection(\"" + ctMethod.getLongName() + "\");";
+                    ctMethod.insertBefore(nameEnterSection);
+                    String nameExitSection = "Profiler.exitSection(\"" + ctMethod.getLongName() + "\");";
+                    ctMethod.insertAfter(nameExitSection);
+                } else if (ctMethod.getName().contains("main")) {
 //                        ctMethod.insertAfter("System.out.println(\"print something\");");
-                        ctMethod.insertAfter("ProfilerTransformer.printStatisticInfo();");
-                    }
+                    ctMethod.insertAfter("ProfilerTransformer.printStatisticInfo();");
                 }
-                classfileBuffer = ct.toBytecode();
-//                ct.detach();
-            } catch (IOException | CannotCompileException | NotFoundException e) {
-                e.printStackTrace();
             }
+            classfileBuffer = ct.toBytecode();
+//                ct.detach();
+        } catch (IOException | CannotCompileException | NotFoundException e) {
+            e.printStackTrace();
+        }
         return classfileBuffer;
     }
 
