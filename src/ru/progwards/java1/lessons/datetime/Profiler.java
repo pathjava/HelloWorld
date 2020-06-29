@@ -372,8 +372,7 @@ public class Profiler {
 //        }
 //        Profiler.exitSection("Process-1");
 
-
-//        findLevel();
+        findLevel();
 
         for (StatisticInfo statisticInfo : listStatistic) {
             System.out.println(statisticInfo);
@@ -384,7 +383,6 @@ public class Profiler {
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
         System.out.println();
-
 
         for (StatisticInfo info : getStatisticInfo()) {
             System.out.println(info);
