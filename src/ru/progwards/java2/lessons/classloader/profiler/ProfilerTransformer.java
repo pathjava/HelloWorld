@@ -24,9 +24,11 @@ public class ProfilerTransformer implements ClassFileTransformer {
                 return classfileBuffer;
             if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
                 return classfileBuffer;
+            CtClass ct = cp.get(className.replace("/", "."));
+            if (excludedClasses(ct))
+                return classfileBuffer;
             cp.importPackage("ru.progwards.java1.lessons.datetime");
             cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
-            CtClass ct = cp.get(className.replace("/", "."));
             CtMethod[] ctMethods = ct.getDeclaredMethods();
             for (CtMethod ctMethod : ctMethods) {
                 if (!excludedMethods(ctMethod)) {
@@ -45,6 +47,14 @@ public class ProfilerTransformer implements ClassFileTransformer {
             e.printStackTrace();
         }
         return classfileBuffer;
+    }
+
+    private boolean excludedClasses(CtClass ct) {
+        List<String> exClasses = new ArrayList<>(List.of("TestExcludedClass"));
+        for (String exClass : exClasses)
+            if (exClass.equals(ct.getSimpleName()))
+                return true;
+        return false;
     }
 
     private boolean excludedMethods(CtMethod ctMethod) {
