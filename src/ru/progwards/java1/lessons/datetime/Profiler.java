@@ -1,6 +1,8 @@
 package ru.progwards.java1.lessons.datetime;
 
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Profiler {
@@ -134,12 +136,28 @@ public class Profiler {
         return treeList;
     }
 
+    @SuppressWarnings("unused")
     public static void printStatisticInfo(String fileName) {
-        for (StatisticInfo info : getStatisticInfo()) {
+        for (StatisticInfo info : getStatisticInfo())
             System.out.println(info);
+
+        try (FileWriter profilerFile = new FileWriter(getPathLogFile(fileName), true)) {
+            for (StatisticInfo info : getStatisticInfo())
+                profilerFile.write(info + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    private static String getPathLogFile(String fileName) {
+        String directory = System.getProperty("user.dir");
+        String namePackage = Profiler.class.getName();
+        int index = namePackage.lastIndexOf(".");
+        if (index > -1)
+            namePackage = namePackage.substring(0, index);
+        namePackage = namePackage.replace(".", "\\");
+        return directory + "\\src\\" + namePackage + "\\" + fileName;
+    }
 
     public static void main(String[] args) throws InterruptedException {
 //        int timer = 10;
