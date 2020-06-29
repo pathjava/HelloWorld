@@ -1,9 +1,7 @@
 // Oleg Kiselev
 // 27.06.2020, 12:00
 
-package ru.progwards.java2.lessons.classloader.profiler;
-
-import ru.progwards.java1.lessons.datetime.Profiler;
+package ru.progwards.java2.lessons.classloader.test;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -25,7 +23,7 @@ public class TestSpeed {
     }
 
     public void bubbleSort() {
-//        Profiler.enterSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
+//        Profiler.enterSection("ru.progwards.java2.lessons.classloader.test.TestSpeed.bubbleSort()");
         int[] arr = Arrays.copyOf(tempArray, tempArray.length);
         for (int i = 0; i < arr.length - 1; i++)
             for (int j = 0; j < arr.length - i - 1; j++)
@@ -36,7 +34,7 @@ public class TestSpeed {
                 }
         if (showResultSort)
             Arrays.stream(arr).forEach(System.out::println);
-//        Profiler.exitSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
+//        Profiler.exitSection("ru.progwards.java2.lessons.classloader.test.TestSpeed.bubbleSort()");
     }
 
     public void selectionSort() {

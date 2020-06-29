@@ -18,12 +18,19 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             Class<?> classBeingRedefined,
                             ProtectionDomain protectionDomain,
                             byte[] classfileBuffer) {
-        if (className.endsWith("TestSpeed")) {
+//        if (className.endsWith("TestSpeed")) {
             try {
                 ClassPool cp = ClassPool.getDefault();
                 cp.importPackage("ru.progwards.java1.lessons.datetime");
                 cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
 //                System.out.println("name class " + className); /* for testing */
+
+                if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
+                    return classfileBuffer;
+
+                if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
+                    return classfileBuffer;
+
                 CtClass ct = cp.get(className.replace("/", "."));
 
                 CtMethod[] ctMethods = ct.getDeclaredMethods();
@@ -47,7 +54,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
             } catch (IOException | CannotCompileException | NotFoundException e) {
                 e.printStackTrace();
             }
-        }
+//        }
         return classfileBuffer;
     }
 
