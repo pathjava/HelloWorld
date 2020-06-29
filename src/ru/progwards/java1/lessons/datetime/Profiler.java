@@ -1,5 +1,6 @@
 package ru.progwards.java1.lessons.datetime;
 
+
 import java.util.*;
 
 public class Profiler {
@@ -131,6 +132,12 @@ public class Profiler {
             statisticSession.setSessionDuration(fullDuration);
         }
         return treeList;
+    }
+
+    public static void printStatisticInfo(String fileName) {
+        for (StatisticInfo info : getStatisticInfo()) {
+            System.out.println(info);
+        }
     }
 
 
