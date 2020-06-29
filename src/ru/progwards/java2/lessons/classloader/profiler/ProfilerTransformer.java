@@ -59,6 +59,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
         return false;
     }
 
+    @SuppressWarnings("unused")
     public static void printStatisticInfo() {
         System.out.println("print something");
     }
