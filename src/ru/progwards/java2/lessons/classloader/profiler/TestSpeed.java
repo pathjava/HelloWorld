@@ -25,7 +25,7 @@ public class TestSpeed {
     }
 
     public void bubbleSort() {
-        Profiler.enterSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
+//        Profiler.enterSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
         int[] arr = Arrays.copyOf(tempArray, tempArray.length);
         for (int i = 0; i < arr.length - 1; i++)
             for (int j = 0; j < arr.length - i - 1; j++)
@@ -36,7 +36,7 @@ public class TestSpeed {
                 }
         if (showResultSort)
             Arrays.stream(arr).forEach(System.out::println);
-        Profiler.exitSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
+//        Profiler.exitSection("ru.progwards.java2.lessons.classloader.profiler.TestSpeed.bubbleSort()");
     }
 
     public void selectionSort() {
@@ -74,5 +74,7 @@ public class TestSpeed {
         test.bubbleSort();
         test.selectionSort();
         test.insertionSort();
+
+//        ProfilerTransformer.printStatisticInfo(); /* for testing */
     }
 }

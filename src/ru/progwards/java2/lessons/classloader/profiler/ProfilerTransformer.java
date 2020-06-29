@@ -23,20 +23,20 @@ public class ProfilerTransformer implements ClassFileTransformer {
                 ClassPool cp = ClassPool.getDefault();
                 cp.importPackage("ru.progwards.java1.lessons.datetime");
                 cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
-                System.out.println("name class " + className); /* for testing */
+//                System.out.println("name class " + className); /* for testing */
                 CtClass ct = cp.get(className.replace("/", "."));
 
                 CtMethod[] ctMethods = ct.getDeclaredMethods();
                 for (CtMethod ctMethod : ctMethods) {
                     if (!excludedMethods(ctMethod)) {
-                        System.out.println("method name start " + ctMethod.getName()); /* for testing */
+//                        System.out.println("method name start " + ctMethod.getName()); /* for testing */
 
                         String nameEnterSection = "Profiler.enterSection(\"" + ctMethod.getLongName() + "\");";
                         ctMethod.insertBefore(nameEnterSection);
                         String nameExitSection = "Profiler.exitSection(\"" + ctMethod.getLongName() + "\");";
                         ctMethod.insertAfter(nameExitSection);
 
-                        System.out.println("method name end " + ctMethod.getName()); /* for testing */
+//                        System.out.println("method name end " + ctMethod.getName()); /* for testing */
                     } else if (ctMethod.getName().contains("main")) {
 //                        ctMethod.insertAfter("System.out.println(\"print something\");");
                         ctMethod.insertAfter("ProfilerTransformer.printStatisticInfo();");
