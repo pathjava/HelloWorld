@@ -35,8 +35,8 @@ public class ProfilerTransformer implements ClassFileTransformer {
                     String nameExitSection = "Profiler.exitSection(\"" + ctMethod.getLongName() + "\");";
                     ctMethod.insertAfter(nameExitSection);
                 } else if (ctMethod.getName().contains("main")) {
-//                        ctMethod.insertAfter("System.out.println(\"print something\");");
-                    ctMethod.insertAfter("ProfilerTransformer.printStatisticInfo();");
+                        ctMethod.insertAfter("System.out.println(\"print something\");");
+//                    ctMethod.insertAfter("ProfilerTransformer.printStatisticInfo();");
                 }
             }
             classfileBuffer = ct.toBytecode();
