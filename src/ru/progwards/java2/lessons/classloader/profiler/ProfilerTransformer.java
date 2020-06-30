@@ -20,36 +20,44 @@ public class ProfilerTransformer implements ClassFileTransformer {
                             byte[] classfileBuffer) {
         try {
             ClassPool cp = ClassPool.getDefault();
-            if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
-                return classfileBuffer;
+            /* можно исключить из профилировки определенный пакет */
+//            if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
+//                return classfileBuffer;
+            /* допуск к профилировки классов, имя которых начинается на заданный пакет */
             if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
                 return classfileBuffer;
             CtClass ct = cp.get(className.replace("/", "."));
+            /* исключаем из профилировки ненужные классы */
             if (excludedClasses(ct))
                 return classfileBuffer;
+            /* испортируем в тестируемую программу ссылку на пакет профилировщика */
             cp.importPackage("ru.progwards.java1.lessons.datetime");
-//            cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
+            /* получаем все методы класса */
             CtMethod[] ctMethods = ct.getDeclaredMethods();
             for (CtMethod ctMethod : ctMethods) {
-                if (!excludedMethods(ctMethod)) {
+                if (!excludedMethods(ctMethod)) { /* допускаем к обработке только не исключенные методы */
+                    /* формируем строку вызова метода профилировщика */
                     String nameEnterSection = "{ Profiler.enterSection(\"" + ctMethod.getLongName() + "\"); }";
+                    /* вставляем вызов метода прфилировщика в начало тела тестируемого метода */
                     ctMethod.insertBefore(nameEnterSection);
                     String nameExitSection = "{ Profiler.exitSection(\"" + ctMethod.getLongName() + "\"); }";
                     ctMethod.insertAfter(nameExitSection);
-                } else if (ctMethod.getName().contains("main")) {
+                } else if (ctMethod.getName().contains("main")) { /* добавляем метод вывода статистики профилировки */
                     String nameTestingClass = "{ Profiler.printStatisticInfo(\"" + ct.getSimpleName() + ".stat\"); }";
                     ctMethod.insertAfter(nameTestingClass);
                 }
             }
-            classfileBuffer = ct.toBytecode();
-//                ct.detach();
+            classfileBuffer = ct.toBytecode(); /* присваиваем измененный байт-код */
         } catch (IOException | CannotCompileException | NotFoundException e) {
             e.printStackTrace();
         }
-        return classfileBuffer;
+        return classfileBuffer; /* возвращаем измененный байт-код */
     }
 
-    private boolean excludedClasses(CtClass ct) {
+    /* профилировщик находится по ссылке:
+     * https://github.com/pathjava/java1/blob/master/src/ru/progwards/java1/lessons/datetime/Profiler.java */
+
+    private boolean excludedClasses(CtClass ct) { /* исключаем классы из профилировки */
         List<String> exClasses = new ArrayList<>(List.of("TestExcludedClass"));
         for (String exClass : exClasses)
             if (exClass.equals(ct.getSimpleName()))
@@ -57,8 +65,9 @@ public class ProfilerTransformer implements ClassFileTransformer {
         return false;
     }
 
-    private boolean excludedMethods(CtMethod ctMethod) {
-        List<String> methods = new ArrayList<>(List.of("fillArray", "main"));
+    private boolean excludedMethods(CtMethod ctMethod) { /* исключаем методы из профилировки */
+        List<String> methods = new ArrayList<>(List.of("fillArray", "main", "mergeSorting",
+                "merge", "heapify", "quickSortRealisation", "lambda$fillArray$0"));
         for (String method : methods)
             if (method.equals(ctMethod.getName()))
                 return true;
