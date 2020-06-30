@@ -28,7 +28,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
             if (excludedClasses(ct))
                 return classfileBuffer;
             cp.importPackage("ru.progwards.java1.lessons.datetime");
-            cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
+//            cp.importPackage("ru.progwards.java2.lessons.classloader.profiler");
             CtMethod[] ctMethods = ct.getDeclaredMethods();
             for (CtMethod ctMethod : ctMethods) {
                 if (!excludedMethods(ctMethod)) {

@@ -7,8 +7,8 @@ import java.lang.instrument.Instrumentation;
 
 public class SystemProfiler {
     public static void premain(String agentArgument, Instrumentation instrumentation) {
-        System.out.println("SystemProfiler: premain стартовал");
+//        System.out.println("SystemProfiler: premain стартовал");
         instrumentation.addTransformer(new ProfilerTransformer());
-        System.out.println("SystemProfiler: premain завершён");
+//        System.out.println("SystemProfiler: premain завершён");
     }
 }
