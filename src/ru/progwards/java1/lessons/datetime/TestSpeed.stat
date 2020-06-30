@@ -1,5 +1,7 @@
-//--- Дата и время запуска профайлера TestSpeed: 30-06-2020 09:54:54 ---//
-StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.bubbleSort(), fullTime=16368, selfTime=16368, count=1, startTime=1593500063848, endTime=1593500080216, level=1}
-StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.insertionSort(), fullTime=926, selfTime=926, count=1, startTime=1593500093893, endTime=1593500094819, level=1}
-StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.lambda$fillArray$0(java.security.SecureRandom,int), fullTime=486, selfTime=486, count=100000, startTime=159350006374540831, endTime=159350006374541317, level=1}
-StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.selectionSort(), fullTime=13677, selfTime=13677, count=1, startTime=1593500080216, endTime=1593500093893, level=1}
+//--- Дата и время запуска профайлера TestSpeed: 30-06-2020 12:48:39 ---//
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.bubbleSort(), fullTime=17140, selfTime=17140, count=1, startTime=1593510486255, endTime=1593510503395, level=1}
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.heapSort(), fullTime=20, selfTime=10, count=1, startTime=1593510518958, endTime=1593510518978, level=1}
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.insertionSort(), fullTime=951, selfTime=951, count=1, startTime=1593510517997, endTime=1593510518948, level=1}
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.mergeSort(), fullTime=10, selfTime=10, count=1, startTime=1593510518948, endTime=1593510518958, level=1}
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.quickSort(), fullTime=18, selfTime=18, count=1, startTime=1593510518978, endTime=1593510518996, level=1}
+StatisticInfo{sectionName=ru.progwards.java2.lessons.classloader.test.TestSpeed.selectionSort(), fullTime=14602, selfTime=14602, count=1, startTime=1593510503395, endTime=1593510517997, level=1}

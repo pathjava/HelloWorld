@@ -138,32 +138,35 @@ public class Profiler {
         return treeList;
     }
 
+    /* метод вывода статистики профилировки */
     @SuppressWarnings("unused")
     public static void printStatisticInfo(String fileName) {
-        System.out.print(profilerDateTimeStart(fileName));
-        for (StatisticInfo info : getStatisticInfo())
+        System.out.print(profilerDateTimeStart(fileName)); /* дата и время профилировки */
+        for (StatisticInfo info : getStatisticInfo()) /* вывод статистики в консоль */
             System.out.println(info);
-
+        /* если прописать true, то профилировочная статистика будет записываться в дополнение к ранней */
         try (FileWriter profilerFile = new FileWriter(getPathLogFile(fileName), false)) {
-            profilerFile.write(profilerDateTimeStart(fileName));
-            for (StatisticInfo info : getStatisticInfo())
+            profilerFile.write(profilerDateTimeStart(fileName));  /* дата и время профилировки */
+            for (StatisticInfo info : getStatisticInfo()) /* запись статистики в файл */
                 profilerFile.write(info + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /* дата и время запуска профилировки */
     private static String profilerDateTimeStart(String fileName) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String dateTime = now.format(formatter);
-        String testingClassName = fileName.substring(0, fileName.length() - 5);
+        String testingClassName = fileName.substring(0, fileName.length() - 5); /* имя тестируемого класса */
         return "//--- Дата и время запуска профайлера " + testingClassName + ": " + dateTime + " ---//\n";
     }
 
+    /* формируем путь к файлу профилировки */
     private static String getPathLogFile(String fileName) {
         String directory = System.getProperty("user.dir");
-        String namePackage = Profiler.class.getName();
+        String namePackage = Profiler.class.getName(); /* заменив имя Profiler на другое, можно указать другой путь сохранения */
         int index = namePackage.lastIndexOf(".");
         if (index > -1)
             namePackage = namePackage.substring(0, index);
