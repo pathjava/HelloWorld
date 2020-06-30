@@ -3,6 +3,8 @@ package ru.progwards.java1.lessons.datetime;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Profiler {
@@ -138,15 +140,25 @@ public class Profiler {
 
     @SuppressWarnings("unused")
     public static void printStatisticInfo(String fileName) {
+        System.out.print(profilerDateTimeStart(fileName));
         for (StatisticInfo info : getStatisticInfo())
             System.out.println(info);
 
-        try (FileWriter profilerFile = new FileWriter(getPathLogFile(fileName), true)) {
+        try (FileWriter profilerFile = new FileWriter(getPathLogFile(fileName), false)) {
+            profilerFile.write(profilerDateTimeStart(fileName));
             for (StatisticInfo info : getStatisticInfo())
                 profilerFile.write(info + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String profilerDateTimeStart(String fileName) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String dateTime = now.format(formatter);
+        String testingClassName = fileName.substring(0, fileName.length() - 5);
+        return "//--- Дата и время запуска профайлера " + testingClassName + ": " + dateTime + " ---//\n";
     }
 
     private static String getPathLogFile(String fileName) {
