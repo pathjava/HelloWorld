@@ -66,6 +66,7 @@ public class PathLoader extends ClassLoader {
         return c;
     }
 
+    /* поиск классов, при нахождение проверка был ли ранее загружен такой класс, сравнение даты изменения класса */
     private void updateTaskList(Map<String, Task> tasks, PathLoader pathLoader)
             throws IOException {
         loader = pathLoader;
@@ -73,23 +74,24 @@ public class PathLoader extends ClassLoader {
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
                 if (path.toString().endsWith(DOT_CLASS)) {
-                    String className = makeClassName(path);
-                    String classNameWithoutDate = className.substring(9);
-                    Task task = tasks.get(classNameWithoutDate);
+                    String className = makeClassName(path); /* формирование имени класса */
+                    String classNameWithoutDate = className.substring(9); /* формирование имени без директории с датой */
+                    Task task = tasks.get(classNameWithoutDate); /* загрузка класса из списка задач по имени класса */
+                    /* проверка, был ли загружен класс или сравнение даты изменения существующего класса с новым */
                     if (task == null || task.getModifiedTime() < attrs.lastModifiedTime().toMillis()) {
                         try {
-                            if (task != null)
+                            if (task != null) /* если класс уже был в списке задач, создаем новый загрузчик */
                                 loader = new PathLoader(basePath);
-                            Class<?> taskClass = loader.loadClass(className, true);
+                            Class<?> taskClass = loader.loadClass(className, true); /* загружаем класс */
                             Task newTask = (Task) taskClass.getDeclaredConstructor().newInstance();
                             newTask.setModifiedTime(attrs.lastModifiedTime().toMillis());
-                            tasks.remove(classNameWithoutDate);
-                            tasks.put(classNameWithoutDate, newTask);
+                            tasks.remove(classNameWithoutDate); /* удаляем старый класс из списка задач */
+                            tasks.put(classNameWithoutDate, newTask); /* добавляем новый класс в список задач */
                             System.out.println((task == null ? "Добавлен" : "Обновлён") + " класс " + className);
-                            patchLoadedSuccessfully(className);
+                            patchLoadedSuccessfully(className); /* записываем лог об успешной загрузке патча (класса) */
                         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException |
                                 NoSuchMethodException | InvocationTargetException e) {
-                            patchNotLoaded(className, e);
+                            patchNotLoaded(className, e); /* записываем лог о неудачной загрузке патча (класса) */
                             e.printStackTrace();
                         }
                     }
@@ -104,6 +106,7 @@ public class PathLoader extends ClassLoader {
         });
     }
 
+    /* формирование имени класса */
     private String makeClassName(Path path) throws IOException {
         path = path.toAbsolutePath().toRealPath();
         Path relPath = Paths.get(basePath).relativize(path);
@@ -113,22 +116,26 @@ public class PathLoader extends ClassLoader {
         return className;
     }
 
+    /* формирование лога об успешной загрузке патча */
     private void patchLoadedSuccessfully(String className) {
         String logString = getDateTimeLoadFile() + " " + className + " загружен из " + basePath + " успешно\n";
         logWriter(logString);
     }
 
+    /* формирование лога при ошибочном формате патча */
     private void patchLoadFormatError(String className, ClassFormatError error) {
         String logString = getDateTimeLoadFile() + " " + className + " ошибка загрузки " + error + "\n";
         logWriter(logString);
     }
 
+    /* формирование лога об ошибке загрузки патча */
     private void patchNotLoaded(String className, Exception... exception) {
         String logString = getDateTimeLoadFile() + " " + className +
                 " ошибка загрузки " + Arrays.toString(exception) + "\n";
         logWriter(logString);
     }
 
+    /* запись лог-файла */
     private void logWriter(String logString) {
         try (FileWriter logFile = new FileWriter(getPathLogFile(), true)) {
             logFile.write(logString);
@@ -137,12 +144,14 @@ public class PathLoader extends ClassLoader {
         }
     }
 
+    /* формирование даты и времени события при записи в лог-файл */
     private String getDateTimeLoadFile() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return now.format(formatter);
     }
 
+    /* формирование пути к лог-файлу */
     private String getPathLogFile() {
         String directory = System.getProperty("user.dir");
         String namePackage = PathLoader.class.getName();
