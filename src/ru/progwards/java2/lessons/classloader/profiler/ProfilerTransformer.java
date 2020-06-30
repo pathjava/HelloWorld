@@ -23,7 +23,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
             /* можно исключить из профилировки определенный пакет */
 //            if (className.startsWith("ru/progwards/java2/lessons/classloader/profiler"))
 //                return classfileBuffer;
-            /* допуск к профилировки классов, имя которых начинается на заданный пакет */
+            /* допуск к профилировке классов, имя которых начинается на заданный пакет */
             if (!className.startsWith("ru/progwards/java2/lessons/classloader/test"))
                 return classfileBuffer;
             CtClass ct = cp.get(className.replace("/", "."));
