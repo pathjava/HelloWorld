@@ -43,7 +43,7 @@ public class PrintScan {
 
 
     public static void main(String[] args) {
-        List<String> nameCities = new ArrayList<>(List.of("Москва", "Санкт-Петербург",
+        List<String> cityNames = new ArrayList<>(List.of("Москва", "Санкт-Петербург",
                 "Новосибирск", "Екатеринбург", "Казань", "Нижний Новгород", "Челябинск",
                 "Самара", "Омск", "Ростов-на-Дону"));
 
@@ -51,7 +51,7 @@ public class PrintScan {
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++)
-                    print(nameCities.get(i), i + 1);
+                    print(cityNames.get(i), i + 1);
             }
         });
 
@@ -59,7 +59,7 @@ public class PrintScan {
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++)
-                    scan(nameCities.get(i), i + 1);
+                    scan(cityNames.get(i), i + 1);
             }
         });
 
