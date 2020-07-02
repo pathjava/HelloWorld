@@ -4,19 +4,20 @@
 package ru.progwards.java2.lessons.threads;
 
 import java.math.BigInteger;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Summator {
 
     private final int count;
     private BigInteger counter;
+    private final Map<BigInteger, BigInteger> startAndStop = new TreeMap<>();
 
     public Summator(int count) {
         this.count = count;
         counter = BigInteger.ZERO;
     }
 
-    // 100 / 3 == 1~33, 34~66, 67~100
-    // 98 / 3 == 1~32, 33~64, 65~98
     public BigInteger sum(BigInteger number) {
         BigInteger tempStart = BigInteger.ONE;
         BigInteger tempEnd = null;
@@ -35,15 +36,15 @@ public class Summator {
                 }
                 if (i == 0) {
                     tempEnd = partOfTheNumber;
-                    creatorThreads(BigInteger.ONE, partOfTheNumber);
+                    startAndStop.put(tempStart, tempEnd);
                 } else if (i < count - 1) {
                     tempStart = tempEnd.add(BigInteger.ONE);
                     tempEnd = tempStart.add(partOfTheNumber.subtract(BigInteger.ONE));
-                    creatorThreads(partOfTheNumber.add(BigInteger.ONE), partOfTheNumber.add(partOfTheNumber));
+                    startAndStop.put(tempStart, tempEnd);
                 } else {
                     tempStart = tempEnd.add(BigInteger.ONE);
                     tempEnd = tempStart.add(partLastOfTheNumber);
-                    creatorThreads(partOfTheNumber.add(BigInteger.ONE), partOfTheNumber.add(partLastOfTheNumber));
+                    startAndStop.put(tempStart, tempEnd);
                 }
             }
         }
