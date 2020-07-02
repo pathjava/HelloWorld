@@ -5,21 +5,28 @@ package ru.progwards.java2.lessons.threads;
 
 public class PrintScan {
 
-    private static synchronized void print(String name, int pages) {
-        try {
-            Thread.sleep(50);
-            System.out.println("print " + name + pages);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private static final Object lockPrint = new Object();
+    private static final Object lockScan = new Object();
+
+    private static void print(String name, int pages) {
+        synchronized (lockPrint) {
+            try {
+                Thread.sleep(50);
+                System.out.println("print " + name + pages);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private static synchronized void scan(String name, int pages) {
-        try {
-            Thread.sleep(70);
-            System.out.println("scan " + name + pages);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        synchronized (lockScan) {
+            try {
+                Thread.sleep(70);
+                System.out.println("scan " + name + pages);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -48,7 +55,7 @@ public class PrintScan {
             printThread.join();
             scanThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         System.out.println("Tasks completed successfully!");
