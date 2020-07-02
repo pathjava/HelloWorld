@@ -9,6 +9,10 @@ public class PrintScan {
     private static final Object lockScan = new Object();
 
     private static void print(String name, int pages) {
+        if (pages < 1)
+            throw new IllegalArgumentException("Количество страниц не может быть меньше 1!");
+        if (name.isEmpty())
+            throw new NullPointerException("Имя файла не может быть пустым!");
         synchronized (lockPrint) {
             try {
                 Thread.sleep(50);
@@ -19,7 +23,11 @@ public class PrintScan {
         }
     }
 
-    private static synchronized void scan(String name, int pages) {
+    private static void scan(String name, int pages) {
+        if (pages < 1)
+            throw new IllegalArgumentException("Количество страниц не может быть меньше 1!");
+        if (name.isEmpty())
+            throw new NullPointerException("Имя файла не может быть пустым!");
         synchronized (lockScan) {
             try {
                 Thread.sleep(70);
@@ -55,7 +63,7 @@ public class PrintScan {
             printThread.join();
             scanThread.join();
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         System.out.println("All tasks completed successfully!");
