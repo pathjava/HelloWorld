@@ -20,7 +20,6 @@ public class Summator {
 
     public Summator(int count) {
         this.count = count;
-        counter = BigInteger.ONE;
     }
 
     public BigInteger sum(BigInteger number) {
