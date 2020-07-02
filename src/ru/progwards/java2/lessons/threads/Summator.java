@@ -4,24 +4,28 @@
 package ru.progwards.java2.lessons.threads;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Summator {
 
     private final int count;
     private BigInteger counter;
     private final Map<BigInteger, BigInteger> startAndStop = new HashMap<>();
+    private final List<BigInteger> tempResults = new ArrayList<>();
 
     public Summator(int count) {
         this.count = count;
-        counter = BigInteger.ZERO;
+        counter = BigInteger.ONE;
     }
 
     public BigInteger sum(BigInteger number) {
         creatorParts(number);
         creatorThreads();
+        for (BigInteger result : tempResults)
+            counter = counter.add(result);
         return counter;
     }
 
@@ -63,16 +67,18 @@ public class Summator {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Map.Entry<BigInteger,BigInteger> entry = startAndStop.entrySet().iterator().next();
+                    Map.Entry<BigInteger, BigInteger> entry = startAndStop.entrySet().iterator().next();
                     BigInteger startNumber = entry.getKey();
                     BigInteger stopNumber = entry.getValue();
+                    BigInteger result = startNumber;
                     for (BigInteger i = startNumber; i.compareTo(stopNumber) <= 0; i = i.add(BigInteger.ONE)) {
-                        counter = counter.add(i);
+                        result = result.add(i);
                         startAndStop.remove(startNumber);
                     }
-                    System.out.println(counter);
+                    tempResults.add(result);
                 }
             });
+            threads[i].start();
         }
 
         for (Thread thread : threads) {
