@@ -12,16 +12,19 @@ public class Summator {
 
     public Summator(int count) {
         this.count = count;
-        counter = BigInteger.ONE;
+        counter = BigInteger.ZERO;
     }
 
     public BigInteger sum(BigInteger number){
-
+        for (BigInteger i = BigInteger.ZERO; i.compareTo(number) < 0; i = i.add(BigInteger.ONE)) {
+            counter = counter.add(BigInteger.ONE);
+        }
         return counter;
     }
 
 
     public static void main(String[] args) {
-
+        Summator summator = new Summator(10);
+        System.out.println(summator.sum(BigInteger.valueOf(10)));
     }
 }
