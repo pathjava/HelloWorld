@@ -19,6 +19,11 @@ public class Summator {
     }
 
     public BigInteger sum(BigInteger number) {
+        creatorParts(number);
+        return counter;
+    }
+
+    private void creatorParts(BigInteger number) {
         BigInteger tempStart = BigInteger.ONE;
         BigInteger tempEnd = null;
         if (count > 1) {
@@ -48,7 +53,6 @@ public class Summator {
                 }
             }
         }
-        return counter;
     }
 
     private void creatorThreads(BigInteger startNumber, BigInteger stopNumber) {
