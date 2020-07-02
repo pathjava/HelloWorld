@@ -15,7 +15,8 @@ public class Summator {
         counter = BigInteger.ZERO;
     }
 
-    // 100 / 3 == 0~33, 34~66, 67~100
+    // 100 / 3 == 1~33, 34~66, 67~100
+    // 98 / 3 == 1~32, 33~64, 65~98
     public BigInteger sum(BigInteger number) {
         BigInteger tempStart = BigInteger.ONE;
         BigInteger tempEnd = null;
@@ -23,6 +24,15 @@ public class Summator {
             BigInteger remainder = number.mod(BigInteger.valueOf(count));
             for (int i = 0; i < count; i++) {
                 BigInteger partOfTheNumber = number.divide(BigInteger.valueOf(count));
+                BigInteger partLastOfTheNumber = null;
+                if (i == count - 1) {
+                    if (remainder.compareTo(BigInteger.TWO) == 0)
+                        partLastOfTheNumber = partOfTheNumber.add(BigInteger.ONE);
+                    else if (remainder.compareTo(BigInteger.ZERO) == 0)
+                        partLastOfTheNumber = partOfTheNumber.subtract(BigInteger.ONE);
+                    else
+                        partLastOfTheNumber = partOfTheNumber;
+                }
                 if (i == 0) {
                     tempEnd = partOfTheNumber;
                     creatorThreads(BigInteger.ONE, partOfTheNumber);
@@ -32,8 +42,8 @@ public class Summator {
                     creatorThreads(partOfTheNumber.add(BigInteger.ONE), partOfTheNumber.add(partOfTheNumber));
                 } else {
                     tempStart = tempEnd.add(BigInteger.ONE);
-                    tempEnd = tempStart.add(partOfTheNumber);
-                    creatorThreads(partOfTheNumber.add(BigInteger.ONE), partOfTheNumber.add(partOfTheNumber));
+                    tempEnd = tempStart.add(partLastOfTheNumber);
+                    creatorThreads(partOfTheNumber.add(BigInteger.ONE), partOfTheNumber.add(partLastOfTheNumber));
                 }
             }
         }
@@ -64,6 +74,6 @@ public class Summator {
 
     public static void main(String[] args) {
         Summator summator = new Summator(3);
-        System.out.println(summator.sum(BigInteger.valueOf(100)));
+        System.out.println(summator.sum(BigInteger.valueOf(97)));
     }
 }
