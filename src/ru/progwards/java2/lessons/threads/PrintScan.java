@@ -3,6 +3,9 @@
 
 package ru.progwards.java2.lessons.threads;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrintScan {
 
     private static final Object lockPrint = new Object();
@@ -16,7 +19,7 @@ public class PrintScan {
         synchronized (lockPrint) {
             try {
                 Thread.sleep(50);
-                System.out.println("print " + name + pages);
+                System.out.println("print " + name + " " + pages);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -31,7 +34,7 @@ public class PrintScan {
         synchronized (lockScan) {
             try {
                 Thread.sleep(70);
-                System.out.println("scan " + name + pages);
+                System.out.println("scan " + name + " " + pages);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -40,19 +43,23 @@ public class PrintScan {
 
 
     public static void main(String[] args) {
+        List<String> nameCities = new ArrayList<>(List.of("Москва", "Санкт-Петербург",
+                "Новосибирск", "Екатеринбург", "Казань", "Нижний Новгород", "Челябинск",
+                "Самара", "Омск", "Ростов-на-Дону"));
+
         Thread printThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 1; i <= 10; i++)
-                    print("doc: ", i);
+                for (int i = 0; i < 10; i++)
+                    print(nameCities.get(i), i + 1);
             }
         });
 
         Thread scanThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 1; i <= 10; i++)
-                    scan("doc: ", i);
+                for (int i = 0; i < 10; i++)
+                    scan(nameCities.get(i), i + 1);
             }
         });
 
