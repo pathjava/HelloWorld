@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.threads;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,7 +12,7 @@ public class Summator {
 
     private final int count;
     private BigInteger counter;
-    private final Map<BigInteger, BigInteger> startAndStop = new TreeMap<>();
+    private final Map<BigInteger, BigInteger> startAndStop = new HashMap<>();
 
     public Summator(int count) {
         this.count = count;
@@ -20,6 +21,7 @@ public class Summator {
 
     public BigInteger sum(BigInteger number) {
         creatorParts(number);
+        creatorThreads();
         return counter;
     }
 
@@ -55,14 +57,20 @@ public class Summator {
         }
     }
 
-    private void creatorThreads(BigInteger startNumber, BigInteger stopNumber) {
+    private void creatorThreads() {
         Thread[] threads = new Thread[count];
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (BigInteger i = startNumber; i.compareTo(stopNumber) <= 0; i = i.add(BigInteger.ONE))
+                    Map.Entry<BigInteger,BigInteger> entry = startAndStop.entrySet().iterator().next();
+                    BigInteger startNumber = entry.getKey();
+                    BigInteger stopNumber = entry.getValue();
+                    for (BigInteger i = startNumber; i.compareTo(stopNumber) <= 0; i = i.add(BigInteger.ONE)) {
                         counter = counter.add(i);
+                        startAndStop.remove(startNumber);
+                    }
+                    System.out.println(counter);
                 }
             });
         }
