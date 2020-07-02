@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Summator {
 
@@ -62,20 +64,26 @@ public class Summator {
     }
 
     private void creatorThreads() {
+        Lock lock = new ReentrantLock();
         Thread[] threads = new Thread[count];
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Map.Entry<BigInteger, BigInteger> entry = startAndStop.entrySet().iterator().next();
-                    BigInteger startNumber = entry.getKey();
-                    BigInteger stopNumber = entry.getValue();
-                    BigInteger result = startNumber;
-                    for (BigInteger i = startNumber; i.compareTo(stopNumber) <= 0; i = i.add(BigInteger.ONE)) {
-                        result = result.add(i);
-                        startAndStop.remove(startNumber);
+                    lock.lock();
+                    try {
+                        Map.Entry<BigInteger, BigInteger> entry = startAndStop.entrySet().iterator().next();
+                        BigInteger startNumber = entry.getKey();
+                        BigInteger stopNumber = entry.getValue();
+                        BigInteger result = startNumber;
+                        for (BigInteger i = startNumber; i.compareTo(stopNumber) <= 0; i = i.add(BigInteger.ONE)) {
+                            result = result.add(i);
+                            startAndStop.remove(startNumber);
+                        }
+                        tempResults.add(result);
+                    } finally {
+                        lock.unlock();
                     }
-                    tempResults.add(result);
                 }
             });
             threads[i].start();
