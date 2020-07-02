@@ -58,6 +58,6 @@ public class PrintScan {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("Tasks completed successfully!");
+        System.out.println("All tasks completed successfully!");
     }
 }
