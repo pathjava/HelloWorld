@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Summator {
 
     private final int count;
-    private BigInteger counter;
+    private BigInteger counter = BigInteger.ONE;
     private final Map<BigInteger, BigInteger> startAndStop = new HashMap<>();
     private final List<BigInteger> tempResults = new ArrayList<>();
 
@@ -39,12 +39,10 @@ public class Summator {
                 BigInteger partOfTheNumber = number.divide(BigInteger.valueOf(count));
                 BigInteger partLastOfTheNumber = null;
                 if (i == count - 1) {
-                    if (remainder.compareTo(BigInteger.TWO) == 0)
-                        partLastOfTheNumber = partOfTheNumber.add(BigInteger.ONE);
-                    else if (remainder.compareTo(BigInteger.ZERO) == 0)
-                        partLastOfTheNumber = partOfTheNumber.subtract(BigInteger.ONE);
-                    else
+                    if (remainder.compareTo(BigInteger.ZERO) == 0)
                         partLastOfTheNumber = partOfTheNumber;
+                    else
+                        partLastOfTheNumber = partOfTheNumber.add(remainder);
                 }
                 if (i == 0) {
                     tempEnd = partOfTheNumber;
@@ -55,11 +53,13 @@ public class Summator {
                     startAndStop.put(tempStart, tempEnd);
                 } else {
                     tempStart = tempEnd.add(BigInteger.ONE);
-                    tempEnd = tempStart.add(partLastOfTheNumber);
+                    assert partLastOfTheNumber != null;
+                    tempEnd = tempStart.add(partLastOfTheNumber.subtract(BigInteger.ONE));
                     startAndStop.put(tempStart, tempEnd);
                 }
             }
-        }
+        } else
+            startAndStop.put(tempStart, number);
     }
 
     private void creatorThreads() {
