@@ -3,7 +3,7 @@
 
 package ru.progwards.java2.lessons.gc;
 
-import com.google.inject.internal.cglib.core.$CollectionUtils;
+//import com.google.inject.internal.cglib.core.$CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;

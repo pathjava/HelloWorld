@@ -3,7 +3,7 @@
 
 package ru.progwards.sever.testprogwards;
 
-import org.glassfish.grizzly.utils.Pair;
+//import org.glassfish.grizzly.utils.Pair;
 
 public class EqualsDescription {
 //    String first;
