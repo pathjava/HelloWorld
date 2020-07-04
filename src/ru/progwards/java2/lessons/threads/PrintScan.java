@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
 public class PrintScan {
 
     //-------------Synchronized
-
     private static final Object lockPrint = new Object();
     private static final Object lockScan = new Object();
 
