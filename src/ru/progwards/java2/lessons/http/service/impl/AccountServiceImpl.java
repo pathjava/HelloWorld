@@ -1,19 +1,20 @@
-package app.service.impl;
 
-import app.model.Account;
-import app.service.AccountService;
-import app.service.StoreService;
+
+package ru.progwards.java2.lessons.http.service.impl;
+
+import ru.progwards.java2.lessons.http.model.Account;
+import ru.progwards.java2.lessons.http.service.AccountService;
+import ru.progwards.java2.lessons.http.service.StoreService;
 
 public class AccountServiceImpl implements AccountService {
 
-
     private StoreService service;
 
-    public AccountServiceImpl(){
+    public AccountServiceImpl() {
 
     }
 
-    public AccountServiceImpl(StoreService service){
+    public AccountServiceImpl(StoreService service) {
         this.service = service;
     }
 
@@ -33,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
     public void withdraw(Account account, double amount) {
 
         double sum = account.getAmount() - amount;
-        if(sum < 0){
+        if (sum < 0) {
             throw new RuntimeException("Not enough money");
         }
         account.setAmount(sum);
@@ -45,14 +46,12 @@ public class AccountServiceImpl implements AccountService {
 
         double fromSum = from.getAmount() - amount;
         double toSum = to.getAmount() + amount;
-        if(fromSum < 0 ){
+        if (fromSum < 0) {
             throw new RuntimeException("Not enough money");
         }
         from.setAmount(fromSum);
         service.update(from);
         to.setAmount(toSum);
         service.update(to);
-
     }
-
 }
