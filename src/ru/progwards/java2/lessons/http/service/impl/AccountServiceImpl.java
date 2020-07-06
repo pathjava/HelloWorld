@@ -12,7 +12,6 @@ public class AccountServiceImpl implements AccountService {
     private StoreService service;
 
     public AccountServiceImpl() {
-
     }
 
     public AccountServiceImpl(StoreService service) {
@@ -33,7 +32,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void withdraw(Account account, double amount) {
-
         double sum = account.getAmount() - amount;
         if (sum < 0) {
             throw new RuntimeException("Not enough money");
@@ -44,7 +42,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void transfer(Account from, Account to, double amount) {
-
         double fromSum = from.getAmount() - amount;
         double toSum = to.getAmount() + amount;
         if (fromSum < 0) {
