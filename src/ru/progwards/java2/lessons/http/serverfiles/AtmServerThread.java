@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class AtmServerThread implements Runnable {
 
     private final Socket socket;
+    private Account account;
     private String methodName;
     private final List<AtmServerMethodParameters> methodParameter = new ArrayList<>();
 
@@ -88,6 +89,6 @@ public class AtmServerThread implements Runnable {
 
     private void getAccount() {
         StoreServiceImpl ssi = new StoreServiceImpl();
-        Account account = ssi.get(methodParameter.get(0).getValue());
+        account = ssi.get(methodParameter.get(0).getValue());
     }
 }

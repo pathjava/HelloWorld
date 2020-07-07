@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Date;
 import java.util.Scanner;
 
 public class AtmClient implements AccountService {
@@ -64,12 +63,12 @@ public class AtmClient implements AccountService {
 
     }
 
-    private void clientCreation(){ //TODO - for testing
+    private void clientCreation() { //TODO - for testing
         StoreServiceImpl service = new StoreServiceImpl();
         Account account = new Account();
         service.insert(account);
         AccountServiceImpl asi = new AccountServiceImpl(service);
-        asi.deposit(account,300);
+        asi.deposit(account, 300);
     }
 
 
