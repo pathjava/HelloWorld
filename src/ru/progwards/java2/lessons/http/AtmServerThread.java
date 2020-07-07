@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class AtmServerThread implements Runnable {
 
-    Socket socket;
+    private final Socket socket;
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -33,7 +33,6 @@ public class AtmServerThread implements Runnable {
                 if (str.equalsIgnoreCase("quit"))
                     break;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

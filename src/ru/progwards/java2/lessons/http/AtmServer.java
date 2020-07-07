@@ -17,7 +17,6 @@ public class AtmServer {
                 Socket socket = serverSocket.accept();
                 new Thread(new AtmServerThread(socket)).start();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -25,6 +24,7 @@ public class AtmServer {
 
 
     public static void main(String[] args) {
-
+        AtmServer atmServer = new AtmServer();
+        atmServer.server();
     }
 }

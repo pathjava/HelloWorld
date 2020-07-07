@@ -61,6 +61,7 @@ public class AtmClient implements AccountService {
 
 
     public static void main(String[] args) {
-
+        AtmClient atmClient = new AtmClient();
+        atmClient.client();
     }
 }
