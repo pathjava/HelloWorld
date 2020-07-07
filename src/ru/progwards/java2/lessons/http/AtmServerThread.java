@@ -8,11 +8,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class AtmServerThread implements Runnable {
 
     private final Socket socket;
+    private String methodName;
+    private final Map<String, Integer> methodParameter = new TreeMap<>();
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -40,8 +44,25 @@ public class AtmServerThread implements Runnable {
 
     // "GET /resource?param1=value1&param2=value2 HTTP/1.1"
     private void getParameters(Scanner scanner) {
-        String firstLine = scanner.nextLine();
-        String str = firstLine.substring(5, firstLine.length() - 9);
+        String parameterString = getParameterString(scanner.nextLine());
+        methodName = getMethodName(parameterString);
+        getMethodParameter(parameterString);
+    }
 
+    private String getParameterString(String str) {
+        int indexStart = str.indexOf("/");
+        int indexEnd = str.lastIndexOf(" H");
+        return str.substring(indexStart + 1, indexEnd);
+    }
+
+    private String getMethodName(String str) {
+        int indexEnd = str.indexOf("?");
+        return str.substring(0, indexEnd);
+    }
+
+    private void getMethodParameter(String str) {
+        int indexStart = str.indexOf("?");
+        String strParam = str.substring(indexStart + 1);
+        String[] arrParam = strParam.split("=");
     }
 }
