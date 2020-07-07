@@ -3,6 +3,9 @@
 
 package ru.progwards.java2.lessons.http;
 
+import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
+import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,11 +45,11 @@ public class AtmServerThread implements Runnable {
         }
     }
 
-    // "GET /resource?param1=value1&param2=value2 HTTP/1.1"
-    private void getParameters(Scanner scanner) {
+    // "GET /balance?account=123&amount=678 HTTP/1.1"
+    private void getParameters(Scanner scanner) { //TODO проверить корректность входящих данных - GET и HTTP
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
-        getMethodParameter(parameterString);
+        getMethodParameters(parameterString);
     }
 
     private String getParameterString(String str) {
@@ -60,15 +63,28 @@ public class AtmServerThread implements Runnable {
         return str.substring(0, indexEnd);
     }
 
-    private void getMethodParameter(String str) {
+    private void getMethodParameters(String str) {
         int indexStart = str.indexOf("?");
         String strParam = str.substring(indexStart + 1);
-        String[] arrParam = strParam.split("&");
-        for (String s : arrParam) {
-            int index = s.indexOf("=");
-            String param = s.substring(0, index);
-            String value = s.substring(index + 1);
-            methodParameter.put(param, value);
-        }
+        if (strParam.contains("&")) {
+            String[] arrParam = strParam.split("&");
+            for (String s : arrParam)
+                addMethodParameter(s);
+        } else
+            addMethodParameter(strParam);
     }
+
+    private void addMethodParameter(String str) {
+        int index = str.indexOf("=");
+        String param = str.substring(0, index);
+        String value = str.substring(index + 1);
+        methodParameter.put(param, value);
+    }
+
+    private void getResult() {
+        StoreServiceImpl ssi = new StoreServiceImpl();
+//        ssi.get(id);
+    }
+
+
 }

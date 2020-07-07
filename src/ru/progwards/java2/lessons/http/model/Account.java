@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.http.model;
 
 import java.util.Date;
 
-//POJO
 public class Account {
 
     private String id;
