@@ -67,11 +67,6 @@ public class AtmClient implements AccountService {
     private void clientCreation(){ //TODO - for testing
         StoreServiceImpl service = new StoreServiceImpl();
         Account account = new Account();
-        account.setAmount(500);
-        account.setDate(new Date());
-        account.setHolder("Ivan");
-        account.setId("5");
-        account.setPin(15);
         service.insert(account);
         AccountServiceImpl asi = new AccountServiceImpl(service);
         asi.deposit(account,300);
@@ -80,8 +75,6 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-//        ClientTest clientTest = new ClientTest();
-//        clientTest.clientCreation();
         atmClient.clientCreation(); //TODO - for testing
         atmClient.client();
     }

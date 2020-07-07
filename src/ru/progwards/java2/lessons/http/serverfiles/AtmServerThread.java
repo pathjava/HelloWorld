@@ -53,7 +53,7 @@ public class AtmServerThread implements Runnable {
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
         getMethodParameters(parameterString);
-        getResult(); // TODO - temp for testing
+        getAccount(); // TODO - temp for testing
     }
 
     private String getParameterString(String str) {
@@ -86,7 +86,7 @@ public class AtmServerThread implements Runnable {
         methodParameter.add(parameters);
     }
 
-    private void getResult() {
+    private void getAccount() {
         StoreServiceImpl ssi = new StoreServiceImpl();
         Account account = ssi.get(methodParameter.get(0).getValue());
     }
