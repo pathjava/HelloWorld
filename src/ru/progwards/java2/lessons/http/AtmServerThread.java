@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.http;
 
+import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class AtmServerThread implements Runnable {
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
         getMethodParameters(parameterString);
+        getResult(); // TODO - temp for testing
     }
 
     private String getParameterString(String str) {
@@ -86,6 +88,6 @@ public class AtmServerThread implements Runnable {
 
     private void getResult() {
         StoreServiceImpl ssi = new StoreServiceImpl();
-        ssi.get(methodParameter.get(0).getParam());
+        Account account = ssi.get(methodParameter.get(0).getValue());
     }
 }

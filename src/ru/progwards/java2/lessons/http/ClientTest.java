@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class ClientTest {
 
-    private void clientCreation(){
+    void clientCreation(){
         StoreServiceImpl service = new StoreServiceImpl();
         Account account = new Account();
         account.setAmount(500);
