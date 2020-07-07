@@ -45,7 +45,7 @@ public class AtmServerThread implements Runnable {
     }
 
     // "GET /balance?account=12 HTTP/1.1"
-    // "GET /deposit?account=12&amount=6.78 HTTP/1.1"
+    // "GET /deposit?account=5&amount=300 HTTP/1.1"
     // "GET /withdraw?account=12&amount=6.78 HTTP/1.1"
     // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
     private void getParameters(Scanner scanner) { //TODO проверить корректность входящих данных - GET и HTTP

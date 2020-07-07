@@ -26,7 +26,7 @@ public class AtmClient implements AccountService {
             OutputStream ops = socket.getOutputStream();
 
             PrintWriter pw = new PrintWriter(ops, true);
-            pw.println("GET /resource?param1=value1&param2=value2 HTTP/1.1");
+            pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
             pw.println("host: localhost");
             pw.println("");
 
@@ -64,6 +64,8 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
+        ClientTest clientTest = new ClientTest();
+        clientTest.clientCreation();
         atmClient.client();
     }
 }
