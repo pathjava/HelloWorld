@@ -1,7 +1,7 @@
 // Oleg Kiselev
 // 06.07.2020, 20:52
 
-package ru.progwards.java2.lessons.http;
+package ru.progwards.java2.lessons.http.serverfiles;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;

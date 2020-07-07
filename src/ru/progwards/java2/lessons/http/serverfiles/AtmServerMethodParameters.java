@@ -1,7 +1,7 @@
 // Oleg Kiselev
 // 07.07.2020, 18:24
 
-package ru.progwards.java2.lessons.http;
+package ru.progwards.java2.lessons.http.serverfiles;
 
 public class AtmServerMethodParameters {
     private String param;

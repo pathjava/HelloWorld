@@ -5,12 +5,15 @@ package ru.progwards.java2.lessons.http;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.AccountService;
+import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
+import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Scanner;
 
 public class AtmClient implements AccountService {
@@ -61,11 +64,25 @@ public class AtmClient implements AccountService {
 
     }
 
+    private void clientCreation(){ //TODO - for testing
+        StoreServiceImpl service = new StoreServiceImpl();
+        Account account = new Account();
+        account.setAmount(500);
+        account.setDate(new Date());
+        account.setHolder("Ivan");
+        account.setId("5");
+        account.setPin(15);
+        service.insert(account);
+        AccountServiceImpl asi = new AccountServiceImpl(service);
+        asi.deposit(account,300);
+    }
+
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-        ClientTest clientTest = new ClientTest();
-        clientTest.clientCreation();
+//        ClientTest clientTest = new ClientTest();
+//        clientTest.clientCreation();
+        atmClient.clientCreation(); //TODO - for testing
         atmClient.client();
     }
 }
