@@ -3,7 +3,6 @@
 
 package ru.progwards.java2.lessons.http;
 
-import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
@@ -11,15 +10,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class AtmServerThread implements Runnable {
 
     private final Socket socket;
     private String methodName;
-    private final Map<String, String> methodParameter = new TreeMap<>();
+    private final List<AtmServerMethodParameters> methodParameter = new ArrayList<>();
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -45,7 +44,10 @@ public class AtmServerThread implements Runnable {
         }
     }
 
-    // "GET /balance?account=123&amount=678 HTTP/1.1"
+    // "GET /balance?account=12 HTTP/1.1"
+    // "GET /deposit?account=12&amount=6.78 HTTP/1.1"
+    // "GET /withdraw?account=12&amount=6.78 HTTP/1.1"
+    // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
     private void getParameters(Scanner scanner) { //TODO проверить корректность входящих данных - GET и HTTP
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
@@ -75,16 +77,15 @@ public class AtmServerThread implements Runnable {
     }
 
     private void addMethodParameter(String str) {
+        AtmServerMethodParameters parameters = new AtmServerMethodParameters();
         int index = str.indexOf("=");
-        String param = str.substring(0, index);
-        String value = str.substring(index + 1);
-        methodParameter.put(param, value);
+        parameters.setParam(str.substring(0, index));
+        parameters.setValue(str.substring(index + 1));
+        methodParameter.add(parameters);
     }
 
     private void getResult() {
         StoreServiceImpl ssi = new StoreServiceImpl();
-//        ssi.get(id);
+        ssi.get(methodParameter.get(0).getParam());
     }
-
-
 }
