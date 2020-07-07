@@ -26,11 +26,13 @@ public class AtmClient implements AccountService {
             OutputStream ops = socket.getOutputStream();
 
             PrintWriter pw = new PrintWriter(ops, true);
-            pw.println(request);
+            pw.println("GET /resource?param1=value1&param2=value2 HTTP/1.1");
+            pw.println("host: localhost");
+            pw.println("");
 
             Scanner scanner = new Scanner(ips);
             while (scanner.hasNextLine()) {
-                scanner.nextLine();
+                System.out.println(scanner.nextLine());
             }
 
         } catch (IOException e) {

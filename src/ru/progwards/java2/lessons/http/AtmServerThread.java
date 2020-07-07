@@ -20,14 +20,14 @@ public class AtmServerThread implements Runnable {
 
     @Override
     public void run() {
-        try (InputStream ips = socket.getInputStream();
-             OutputStream ops = socket.getOutputStream()) {
-
+        try (InputStream ips = socket.getInputStream(); OutputStream ops = socket.getOutputStream()) {
             Scanner scanner = new Scanner(ips);
+            getParameters(scanner);
+
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 PrintWriter pw = new PrintWriter(ops, true);
-                pw.println(""); //TODO temp
+                pw.println(str); //TODO temp
                 //TODO - think about - shutdownOutput();
 
                 if (str.equalsIgnoreCase("quit"))
@@ -36,5 +36,12 @@ public class AtmServerThread implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // "GET /resource?param1=value1&param2=value2 HTTP/1.1"
+    private void getParameters(Scanner scanner) {
+        String firstLine = scanner.nextLine();
+        String str = firstLine.substring(5, firstLine.length() - 9);
+
     }
 }
