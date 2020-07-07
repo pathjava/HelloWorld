@@ -16,7 +16,7 @@ public class AtmServerThread implements Runnable {
 
     private final Socket socket;
     private String methodName;
-    private final Map<String, Integer> methodParameter = new TreeMap<>();
+    private final Map<String, String> methodParameter = new TreeMap<>();
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -63,6 +63,12 @@ public class AtmServerThread implements Runnable {
     private void getMethodParameter(String str) {
         int indexStart = str.indexOf("?");
         String strParam = str.substring(indexStart + 1);
-        String[] arrParam = strParam.split("=");
+        String[] arrParam = strParam.split("&");
+        for (String s : arrParam) {
+            int index = s.indexOf("=");
+            String param = s.substring(0, index);
+            String value = s.substring(index + 1);
+            methodParameter.put(param, value);
+        }
     }
 }
