@@ -31,6 +31,8 @@ public class AtmClient implements AccountService {
                 pw.println("host: " + HOST_NAME);
                 pw.println("");
 
+                socket.shutdownOutput();
+
                 Scanner scanner = new Scanner(ips);
                 while (scanner.hasNextLine()) {
                     System.out.println(scanner.nextLine());
@@ -69,14 +71,6 @@ public class AtmClient implements AccountService {
         client();
     }
 
-    private void clientCreation() { //TODO - for testing
-        StoreServiceImpl service = new StoreServiceImpl();
-        Account account = new Account();
-        service.insert(account);
-        AccountServiceImpl asi = new AccountServiceImpl(service);
-        asi.deposit(account, 300);
-    }
-
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
@@ -84,5 +78,7 @@ public class AtmClient implements AccountService {
         account.setId("1");
         account.setPin(15);
         atmClient.balance(account);
+        atmClient.deposit(account, 300);
+        atmClient.withdraw(account, 150);
     }
 }

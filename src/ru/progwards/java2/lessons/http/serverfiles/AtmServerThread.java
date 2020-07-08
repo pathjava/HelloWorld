@@ -49,8 +49,6 @@ public class AtmServerThread implements Runnable {
                 }
                 if (str.equalsIgnoreCase("quit"))
                     break;
-
-                socket.shutdownOutput();
             }
         } catch (IOException e) {
             e.printStackTrace();
