@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class AtmServerThread implements Runnable {
 
     private final Socket socket;
-    private Account account;
     private String methodName;
     private final List<AtmServerMethodParameters> methodParameter = new ArrayList<>();
 
@@ -54,7 +53,7 @@ public class AtmServerThread implements Runnable {
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
         getMethodParameters(parameterString);
-        getAccount(); // TODO - temp for testing
+//        getAccount(); // TODO - temp for testing
     }
 
     private String getParameterString(String str) {
@@ -87,8 +86,48 @@ public class AtmServerThread implements Runnable {
         methodParameter.add(parameters);
     }
 
-    private void getAccount() {
+    private Account getAccount(String id) {
         StoreServiceImpl ssi = new StoreServiceImpl();
-        account = ssi.get(methodParameter.get(0).getValue());
+        return ssi.get(id);
+    }
+
+    private void accountOperations() {
+        Account accountOne;
+        Account accountTwo;
+        switch (methodName) {
+            case "balance":
+                accountOne = getAccount(methodParameter.get(0).getValue());
+                operationBalance(accountOne);
+                break;
+            case "deposit":
+                accountOne = getAccount(methodParameter.get(0).getValue());
+                operationDeposit(accountOne, methodParameter.get(1).getValue());
+                break;
+            case "withdraw":
+                accountOne = getAccount(methodParameter.get(0).getValue());
+                operationWithdraw(accountOne, methodParameter.get(1).getValue());
+                break;
+            case "transfer":
+                accountOne = getAccount(methodParameter.get(0).getValue());
+                accountTwo = getAccount(methodParameter.get(1).getValue());
+                operationTransfer(accountOne, accountTwo, methodParameter.get(2).getValue());
+                break;
+        }
+    }
+
+    private void operationTransfer(Account accountOne, Account accountTwo, String value) {
+
+    }
+
+    private void operationWithdraw(Account accountOne, String value) {
+
+    }
+
+    private void operationDeposit(Account accountOne, String value) {
+
+    }
+
+    private void operationBalance(Account accountOne) {
+
     }
 }
