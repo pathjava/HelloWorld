@@ -28,10 +28,6 @@ public class AtmClient implements AccountService {
 
                 PrintWriter pw = new PrintWriter(ops, true);
                 pw.println(getRequest);
-//                pw.println("GET /balance?account=5 HTTP/1.1");
-//                pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
-//                pw.println("GET /withdraw?account=5&amount=300 HTTP/1.1");
-//                pw.println("GET /transfer?from=5&to=3&amount=300 HTTP/1.1");
                 pw.println("host: " + HOST_NAME);
                 pw.println("");
 
@@ -46,28 +42,28 @@ public class AtmClient implements AccountService {
     }
 
     @Override
-    public double balance(Account account) {
+    public double balance(Account account) { /* GET /balance?account=5 HTTP/1.1 */
         getRequest = "GET /balance?account=" + account.getId() + " HTTP/1.1";
         client();
         return 0;
     }
 
     @Override
-    public void deposit(Account account, double amount) {
+    public void deposit(Account account, double amount) { /* GET /deposit?account=5&amount=300 HTTP/1.1 */
         getRequest = "GET /deposit?account=" + account.getId() +
                 "&amount=" + amount + " HTTP/1.1";
         client();
     }
 
     @Override
-    public void withdraw(Account account, double amount) {
+    public void withdraw(Account account, double amount) { /* GET /withdraw?account=5&amount=300 HTTP/1.1 */
         getRequest = "GET /withdraw?account=" + account.getId() +
                 "&amount=" + amount + " HTTP/1.1";
         client();
     }
 
     @Override
-    public void transfer(Account from, Account to, double amount) {
+    public void transfer(Account from, Account to, double amount) { /* GET /transfer?from=5&to=3&amount=300 HTTP/1.1 */
         getRequest = "GET /transfer?from=" + from.getId() +
                 "&to=" + to.getId() + "&amount=" + amount + " HTTP/1.1";
         client();
@@ -84,10 +80,9 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-        StoreServiceImpl service = new StoreServiceImpl();
         Account account = new Account();
-        Store.getStore().put(account.getId(), account);
-        service.insert(account);
+        account.setId("1");
+        account.setPin(15);
         atmClient.balance(account);
     }
 }
