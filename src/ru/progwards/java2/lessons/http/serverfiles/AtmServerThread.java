@@ -32,11 +32,12 @@ public class AtmServerThread implements Runnable {
         try (InputStream ips = socket.getInputStream(); OutputStream ops = socket.getOutputStream()) {
             Scanner scanner = new Scanner(ips);
             getParameters(scanner);
+            accountOperations();
 
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 PrintWriter pw = new PrintWriter(ops, true);
-                pw.println(str); //TODO temp
+                pw.println(answer); //TODO temp
                 //TODO - think about - shutdownOutput();
 
                 if (str.equalsIgnoreCase("quit"))
@@ -90,6 +91,7 @@ public class AtmServerThread implements Runnable {
 
     private void accountOperations() {
         AccountServiceImpl asi = new AccountServiceImpl();
+        StoreServiceImpl service = new StoreServiceImpl();
         Account accountOne;
         Account accountTwo;
         switch (methodName) {
@@ -101,6 +103,7 @@ public class AtmServerThread implements Runnable {
             case "deposit":
                 accountOne = getAccount(methodParam.get(0).getValue());
                 double sum = Double.parseDouble(methodParam.get(1).getValue());
+                service.insert(accountOne);
                 asi.deposit(accountOne, sum);
                 answer = "Баланс аккаунта " + accountOne.getId() +
                         " пополнен на сумму " + sum + " и составляет " + accountOne.getAmount();
