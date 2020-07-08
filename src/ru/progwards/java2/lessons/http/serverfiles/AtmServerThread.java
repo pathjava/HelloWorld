@@ -90,42 +90,58 @@ public class AtmServerThread implements Runnable {
     }
 
     private void accountOperations() {
-        AccountServiceImpl asi = new AccountServiceImpl();
-        StoreServiceImpl service = new StoreServiceImpl();
-        Account accountOne;
-        Account accountTwo;
         switch (methodName) {
             case "balance":
-                accountOne = getAccount(methodParam.get(0).getValue());
-                double amount = asi.balance(accountOne);
-                answer = "Баланс аккаунта " + accountOne.getId() + " составляет " + amount;
+                operationBalance();
                 break;
             case "deposit":
-                accountOne = getAccount(methodParam.get(0).getValue());
-                double sum = Double.parseDouble(methodParam.get(1).getValue());
-                service.insert(accountOne);
-                asi.deposit(accountOne, sum);
-                answer = "Баланс аккаунта " + accountOne.getId() +
-                        " пополнен на сумму " + sum + " и составляет " + accountOne.getAmount();
+                operationDeposit();
                 break;
             case "withdraw":
-                accountOne = getAccount(methodParam.get(0).getValue());
-                sum = Double.parseDouble(methodParam.get(1).getValue());
-                asi.withdraw(accountOne, sum);
-                answer = "С аккаунта " + accountOne.getId() +
-                        " списана сумма " + sum + ", остаток на счёте " + accountOne.getAmount();
+                operationWithdraw();
                 break;
             case "transfer":
-                accountOne = getAccount(methodParam.get(0).getValue());
-                accountTwo = getAccount(methodParam.get(1).getValue());
-                sum = Double.parseDouble(methodParam.get(2).getValue());
-                asi.transfer(accountOne, accountTwo, sum);
-                answer = "С аккаунта " + accountOne.getId() +
-                        " переведена сумма " + sum + " на аккаунт " + accountTwo.getId() + "\n" +
-                        "Баланс аккаунта " + accountOne.getId() + " составляет " + accountOne.getAmount() + "\n" +
-                        "Баланс аккаунта " + accountTwo.getId() + " составляет " + accountTwo.getAmount();
+                operationTransfer();
                 break;
         }
+    }
+
+    private void operationBalance() {
+        AccountServiceImpl asi = new AccountServiceImpl();
+        Account account = getAccount(methodParam.get(0).getValue());
+        double amount = asi.balance(account);
+        answer = "Баланс аккаунта " + account.getId() + " составляет " + amount;
+    }
+
+    private void operationDeposit() {
+        AccountServiceImpl asi = new AccountServiceImpl();
+        Account account = getAccount(methodParam.get(0).getValue());
+        double sum = Double.parseDouble(methodParam.get(1).getValue());
+//        service.insert(accountOne);
+        asi.deposit(account, sum);
+        answer = "Баланс аккаунта " + account.getId() +
+                " пополнен на сумму " + sum + " и составляет " + account.getAmount();
+    }
+
+    private void operationWithdraw() {
+        AccountServiceImpl asi = new AccountServiceImpl();
+        Account account = getAccount(methodParam.get(0).getValue());
+        double sum = Double.parseDouble(methodParam.get(1).getValue());
+        asi.withdraw(account, sum);
+        answer = "С аккаунта " + account.getId() +
+                " списана сумма " + sum + ", остаток на счёте " + account.getAmount();
+    }
+
+    private void operationTransfer() {
+        AccountServiceImpl asi = new AccountServiceImpl();
+        Account accountOne = getAccount(methodParam.get(0).getValue());
+        Account accountTwo = getAccount(methodParam.get(1).getValue());
+        double sum = Double.parseDouble(methodParam.get(2).getValue());
+        asi.transfer(accountOne, accountTwo, sum);
+        answer = "С аккаунта " + accountOne.getId() +
+                " переведена сумма " + sum + " на аккаунт " + accountTwo.getId() + "\n" +
+                "Баланс аккаунта " + accountOne.getId() + " составляет " + accountOne.getAmount() + "\n" +
+                "Баланс аккаунта " + accountTwo.getId() + " составляет " + accountTwo.getAmount();
     }
 
     private Account getAccount(String id) {
