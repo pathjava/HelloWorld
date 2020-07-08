@@ -19,6 +19,7 @@ public class AtmClient implements AccountService {
 
     private static final int PORT_ID = 45000;
     private static final String HOST_NAME = "localhost";
+    private String getRequest;
 
     private void client() {
         try (Socket socket = new Socket(HOST_NAME, PORT_ID)) {
@@ -26,10 +27,12 @@ public class AtmClient implements AccountService {
                  OutputStream ops = socket.getOutputStream()) {
 
                 PrintWriter pw = new PrintWriter(ops, true);
-//            pw.println("GET /balance?account=5 HTTP/1.1");
-                pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
-//            pw.println("GET /withdraw?account=5&amount=300 HTTP/1.1");
-                pw.println("host: localhost");
+                pw.println(getRequest);
+//                pw.println("GET /balance?account=5 HTTP/1.1");
+//                pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
+//                pw.println("GET /withdraw?account=5&amount=300 HTTP/1.1");
+//                pw.println("GET /transfer?from=5&to=3&amount=300 HTTP/1.1");
+                pw.println("host: " + HOST_NAME);
                 pw.println("");
 
                 Scanner scanner = new Scanner(ips);
@@ -42,25 +45,32 @@ public class AtmClient implements AccountService {
         }
     }
 
-
     @Override
     public double balance(Account account) {
+        getRequest = "GET /balance?account=" + account.getId() + " HTTP/1.1";
+        client();
         return 0;
     }
 
     @Override
     public void deposit(Account account, double amount) {
-
+        getRequest = "GET /deposit?account=" + account.getId() +
+                "&amount=" + amount + " HTTP/1.1";
+        client();
     }
 
     @Override
     public void withdraw(Account account, double amount) {
-
+        getRequest = "GET /withdraw?account=" + account.getId() +
+                "&amount=" + amount + " HTTP/1.1";
+        client();
     }
 
     @Override
     public void transfer(Account from, Account to, double amount) {
-
+        getRequest = "GET /transfer?from=" + from.getId() +
+                "&to=" + to.getId() + "&amount=" + amount + " HTTP/1.1";
+        client();
     }
 
     private void clientCreation() { //TODO - for testing
@@ -74,7 +84,10 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-        atmClient.clientCreation(); //TODO - for testing
-        atmClient.client();
+        StoreServiceImpl service = new StoreServiceImpl();
+        Account account = new Account();
+        Store.getStore().put(account.getId(), account);
+        service.insert(account);
+        atmClient.balance(account);
     }
 }

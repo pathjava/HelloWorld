@@ -152,7 +152,6 @@ public class AtmServerThread implements Runnable {
     }
 
     private Account getAccount(String id) {
-        StoreServiceImpl ssi = new StoreServiceImpl();
-        return ssi.get(id);
+        return service.get(id);
     }
 }
