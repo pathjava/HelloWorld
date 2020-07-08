@@ -61,7 +61,7 @@ public class AtmServerThread implements Runnable {
     // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
     private void getParameters(Scanner scanner) {
         String parameterString = getParameterString(scanner.nextLine());
-        methodName = getMethodName(parameterString);
+        getMethodName(parameterString);
         getMethodParameters(parameterString);
     }
 
@@ -71,9 +71,9 @@ public class AtmServerThread implements Runnable {
         return str.substring(indexStart + 1, indexEnd);
     }
 
-    private String getMethodName(String str) {
+    private void getMethodName(String str) {
         int indexEnd = str.indexOf("?");
-        return str.substring(0, indexEnd);
+        methodName = str.substring(0, indexEnd);
     }
 
     private void getMethodParameters(String str) {
