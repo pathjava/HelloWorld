@@ -22,23 +22,21 @@ public class AtmClient implements AccountService {
 
     private void client() {
         try (Socket socket = new Socket(HOST_NAME, PORT_ID)) {
-            String request = ""; //TODO temp
+            try (InputStream ips = socket.getInputStream();
+                 OutputStream ops = socket.getOutputStream()) {
 
-            InputStream ips = socket.getInputStream();
-            OutputStream ops = socket.getOutputStream();
-
-            PrintWriter pw = new PrintWriter(ops, true);
-            pw.println("GET /balance?account=5 HTTP/1.1");
-//            pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
+                PrintWriter pw = new PrintWriter(ops, true);
+//            pw.println("GET /balance?account=5 HTTP/1.1");
+                pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
 //            pw.println("GET /withdraw?account=5&amount=300 HTTP/1.1");
-            pw.println("host: localhost");
-            pw.println("");
+                pw.println("host: localhost");
+                pw.println("");
 
-            Scanner scanner = new Scanner(ips);
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
+                Scanner scanner = new Scanner(ips);
+                while (scanner.hasNextLine()) {
+                    System.out.println(scanner.nextLine());
+                }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

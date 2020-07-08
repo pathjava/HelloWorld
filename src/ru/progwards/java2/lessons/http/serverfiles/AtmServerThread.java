@@ -33,18 +33,20 @@ public class AtmServerThread implements Runnable {
     public void run() {
         try (InputStream ips = socket.getInputStream(); OutputStream ops = socket.getOutputStream()) {
             Scanner scanner = new Scanner(ips);
-            getParameters(scanner);
-            accountOperations();
 
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
-                PrintWriter pw = new PrintWriter(ops, true);
-                pw.println("HTTP/1.1 200 OK");
-                pw.println("Content-Type: text/html; charset=utf-8");
-                pw.println("Content-Length: " + answer.length());
-                pw.println("");
-                pw.println(answer);
+                if (str.contains("GET")) {
+                    getParameters(str);
+                    accountOperations();
 
+                    PrintWriter pw = new PrintWriter(ops, true);
+                    pw.println("HTTP/1.1 200 OK");
+                    pw.println("Content-Type: text/html; charset=utf-8");
+                    pw.println("Content-Length: " + answer.length());
+                    pw.println("");
+                    pw.println(answer);
+                }
                 if (str.equalsIgnoreCase("quit"))
                     break;
 
@@ -59,8 +61,8 @@ public class AtmServerThread implements Runnable {
     // "GET /deposit?account=5&amount=300 HTTP/1.1"
     // "GET /withdraw?account=12&amount=6.78 HTTP/1.1"
     // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
-    private void getParameters(Scanner scanner) {
-        String parameterString = getParameterString(scanner.nextLine());
+    private void getParameters(String scannerStr) {
+        String parameterString = getParameterString(scannerStr);
         getMethodName(parameterString);
         getMethodParameters(parameterString);
     }
