@@ -43,6 +43,7 @@ public class AtmClient implements AccountService {
 
     @Override
     public double balance(Account account) { /* GET /balance?account=5 HTTP/1.1 */
+        checkingAccountNull(account);
         getRequest = "GET /balance?account=" + account.getId() + " HTTP/1.1";
         client();
         return 0;
@@ -50,6 +51,8 @@ public class AtmClient implements AccountService {
 
     @Override
     public void deposit(Account account, double amount) { /* GET /deposit?account=5&amount=300 HTTP/1.1 */
+        checkingAccountNull(account);
+        checkingAmount(amount);
         getRequest = "GET /deposit?account=" + account.getId() +
                 "&amount=" + amount + " HTTP/1.1";
         client();
@@ -57,6 +60,8 @@ public class AtmClient implements AccountService {
 
     @Override
     public void withdraw(Account account, double amount) { /* GET /withdraw?account=5&amount=300 HTTP/1.1 */
+        checkingAccountNull(account);
+        checkingAmount(amount);
         getRequest = "GET /withdraw?account=" + account.getId() +
                 "&amount=" + amount + " HTTP/1.1";
         client();
@@ -64,9 +69,23 @@ public class AtmClient implements AccountService {
 
     @Override
     public void transfer(Account from, Account to, double amount) { /* GET /transfer?from=5&to=3&amount=300 HTTP/1.1 */
+        checkingAccountNull(from, to);
+        checkingAmount(amount);
         getRequest = "GET /transfer?from=" + from.getId() +
                 "&to=" + to.getId() + "&amount=" + amount + " HTTP/1.1";
         client();
+    }
+
+    private void checkingAccountNull(Account... account) {
+        if (account == null)
+            throw new IllegalArgumentException("Account не может быть null!");
+    }
+
+    private void checkingAmount(double amount) {
+        if (amount > Double.MAX_VALUE)
+            throw new IllegalArgumentException("Значение amount больше допустимого значения!");
+        if (amount < 0.0)
+            throw new IllegalArgumentException("Значение amount не может быть меньше 0.0!");
     }
 
 
