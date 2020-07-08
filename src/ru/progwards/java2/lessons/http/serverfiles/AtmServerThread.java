@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.http.serverfiles;
 
 import ru.progwards.java2.lessons.http.model.Account;
+import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
@@ -19,7 +20,8 @@ public class AtmServerThread implements Runnable {
 
     private final Socket socket;
     private String methodName;
-    private final List<AtmServerMethodParameters> methodParameter = new ArrayList<>();
+    private String answer;
+    private final List<AtmServerMethodParameters> methodParam = new ArrayList<>();
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -83,51 +85,48 @@ public class AtmServerThread implements Runnable {
         int index = str.indexOf("=");
         parameters.setParam(str.substring(0, index));
         parameters.setValue(str.substring(index + 1));
-        methodParameter.add(parameters);
+        methodParam.add(parameters);
+    }
+
+    private void accountOperations() {
+        AccountServiceImpl asi = new AccountServiceImpl();
+        Account accountOne;
+        Account accountTwo;
+        switch (methodName) {
+            case "balance":
+                accountOne = getAccount(methodParam.get(0).getValue());
+                double amount = asi.balance(accountOne);
+                answer = "Баланс аккаунта " + accountOne.getId() + " составляет " + amount;
+                break;
+            case "deposit":
+                accountOne = getAccount(methodParam.get(0).getValue());
+                double sum = Double.parseDouble(methodParam.get(1).getValue());
+                asi.deposit(accountOne, sum);
+                answer = "Баланс аккаунта " + accountOne.getId() +
+                        " пополнен на сумму " + sum + " и составляет " + accountOne.getAmount();
+                break;
+            case "withdraw":
+                accountOne = getAccount(methodParam.get(0).getValue());
+                sum = Double.parseDouble(methodParam.get(1).getValue());
+                asi.withdraw(accountOne, sum);
+                answer = "С аккаунта " + accountOne.getId() +
+                        " списана сумма " + sum + ", остаток на счёте " + accountOne.getAmount();
+                break;
+            case "transfer":
+                accountOne = getAccount(methodParam.get(0).getValue());
+                accountTwo = getAccount(methodParam.get(1).getValue());
+                sum = Double.parseDouble(methodParam.get(2).getValue());
+                asi.transfer(accountOne, accountTwo, sum);
+                answer = "С аккаунта " + accountOne.getId() +
+                        " переведена сумма " + sum + " на аккаунт " + accountTwo.getId() + "\n" +
+                        "Баланс аккаунта " + accountOne.getId() + " составляет " + accountOne.getAmount() + "\n" +
+                        "Баланс аккаунта " + accountTwo.getId() + " составляет " + accountTwo.getAmount();
+                break;
+        }
     }
 
     private Account getAccount(String id) {
         StoreServiceImpl ssi = new StoreServiceImpl();
         return ssi.get(id);
-    }
-
-    private void accountOperations() {
-        Account accountOne;
-        Account accountTwo;
-        switch (methodName) {
-            case "balance":
-                accountOne = getAccount(methodParameter.get(0).getValue());
-                operationBalance(accountOne);
-                break;
-            case "deposit":
-                accountOne = getAccount(methodParameter.get(0).getValue());
-                operationDeposit(accountOne, methodParameter.get(1).getValue());
-                break;
-            case "withdraw":
-                accountOne = getAccount(methodParameter.get(0).getValue());
-                operationWithdraw(accountOne, methodParameter.get(1).getValue());
-                break;
-            case "transfer":
-                accountOne = getAccount(methodParameter.get(0).getValue());
-                accountTwo = getAccount(methodParameter.get(1).getValue());
-                operationTransfer(accountOne, accountTwo, methodParameter.get(2).getValue());
-                break;
-        }
-    }
-
-    private void operationTransfer(Account accountOne, Account accountTwo, String value) {
-
-    }
-
-    private void operationWithdraw(Account accountOne, String value) {
-
-    }
-
-    private void operationDeposit(Account accountOne, String value) {
-
-    }
-
-    private void operationBalance(Account accountOne) {
-
     }
 }
