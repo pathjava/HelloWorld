@@ -21,6 +21,8 @@ public class AtmServerThread implements Runnable {
     private final Socket socket;
     private String methodName;
     private String answer;
+    private final StoreServiceImpl service = new StoreServiceImpl();
+    private final AccountServiceImpl asi = new AccountServiceImpl(service);
     private final List<AtmServerMethodParameters> methodParam = new ArrayList<>();
 
     public AtmServerThread(Socket socket) {
@@ -114,10 +116,11 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationDeposit() {
-        AccountServiceImpl asi = new AccountServiceImpl();
+//        StoreServiceImpl service = new StoreServiceImpl();
         Account account = getAccount(methodParam.get(0).getValue());
         double sum = Double.parseDouble(methodParam.get(1).getValue());
-//        service.insert(accountOne);
+        service.insert(account);
+//        AccountServiceImpl asi = new AccountServiceImpl(service);
         asi.deposit(account, sum);
         answer = "Баланс аккаунта id" + account.getId() +
                 " пополнен на сумму " + sum + " и составляет " + account.getAmount();
