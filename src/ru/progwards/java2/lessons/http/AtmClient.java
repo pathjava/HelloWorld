@@ -5,8 +5,6 @@ package ru.progwards.java2.lessons.http;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.AccountService;
-import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
-import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,9 +74,14 @@ public class AtmClient implements AccountService {
         AtmClient atmClient = new AtmClient();
         Account account = new Account();
         account.setId("1");
-        account.setPin(15);
         atmClient.balance(account);
+        System.out.println();
         atmClient.deposit(account, 300);
+        System.out.println();
         atmClient.withdraw(account, 150);
+//        System.out.println();
+//        Account accountTwo = new Account();
+//        accountTwo.setId("2");
+//        atmClient.transfer(account, accountTwo, 50);
     }
 }
