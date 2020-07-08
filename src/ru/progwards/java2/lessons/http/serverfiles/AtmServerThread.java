@@ -39,11 +39,16 @@ public class AtmServerThread implements Runnable {
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
                 PrintWriter pw = new PrintWriter(ops, true);
-                pw.println(answer); //TODO temp
-                //TODO - think about - shutdownOutput();
+                pw.println("HTTP/1.1 200 OK");
+                pw.println("Content-Type: text/html; charset=utf-8");
+                pw.println("Content-Length: " + answer.length());
+                pw.println("");
+                pw.println(answer);
 
                 if (str.equalsIgnoreCase("quit"))
                     break;
+
+                socket.shutdownOutput();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,11 +59,10 @@ public class AtmServerThread implements Runnable {
     // "GET /deposit?account=5&amount=300 HTTP/1.1"
     // "GET /withdraw?account=12&amount=6.78 HTTP/1.1"
     // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
-    private void getParameters(Scanner scanner) { //TODO проверить корректность входящих данных - GET и HTTP
+    private void getParameters(Scanner scanner) {
         String parameterString = getParameterString(scanner.nextLine());
         methodName = getMethodName(parameterString);
         getMethodParameters(parameterString);
-//        getAccount(); // TODO - temp for testing
     }
 
     private String getParameterString(String str) {
@@ -109,37 +113,35 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationBalance() {
-        AccountServiceImpl asi = new AccountServiceImpl();
         Account account = getAccount(methodParam.get(0).getValue());
         double amount = asi.balance(account);
         answer = "Баланс аккаунта id" + account.getId() + " составляет " + amount;
     }
 
     private void operationDeposit() {
-//        StoreServiceImpl service = new StoreServiceImpl();
         Account account = getAccount(methodParam.get(0).getValue());
         double sum = Double.parseDouble(methodParam.get(1).getValue());
         service.insert(account);
-//        AccountServiceImpl asi = new AccountServiceImpl(service);
         asi.deposit(account, sum);
         answer = "Баланс аккаунта id" + account.getId() +
                 " пополнен на сумму " + sum + " и составляет " + account.getAmount();
     }
 
     private void operationWithdraw() {
-        AccountServiceImpl asi = new AccountServiceImpl();
         Account account = getAccount(methodParam.get(0).getValue());
         double sum = Double.parseDouble(methodParam.get(1).getValue());
+        service.insert(account);
         asi.withdraw(account, sum);
         answer = "С аккаунта id" + account.getId() +
                 " списана сумма " + sum + ", остаток на счёте " + account.getAmount();
     }
 
     private void operationTransfer() {
-        AccountServiceImpl asi = new AccountServiceImpl();
         Account accountOne = getAccount(methodParam.get(0).getValue());
         Account accountTwo = getAccount(methodParam.get(1).getValue());
         double sum = Double.parseDouble(methodParam.get(2).getValue());
+        service.insert(accountOne);
+        service.insert(accountTwo);
         asi.transfer(accountOne, accountTwo, sum);
         answer = "С аккаунта id" + accountOne.getId() +
                 " переведена сумма " + sum + " на аккаунт id" + accountTwo.getId() + "\n" +

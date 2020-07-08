@@ -28,8 +28,9 @@ public class AtmClient implements AccountService {
             OutputStream ops = socket.getOutputStream();
 
             PrintWriter pw = new PrintWriter(ops, true);
-//            pw.println("GET /balance?account=5 HTTP/1.1");
-            pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
+            pw.println("GET /balance?account=5 HTTP/1.1");
+//            pw.println("GET /deposit?account=5&amount=300 HTTP/1.1");
+//            pw.println("GET /withdraw?account=5&amount=300 HTTP/1.1");
             pw.println("host: localhost");
             pw.println("");
 
