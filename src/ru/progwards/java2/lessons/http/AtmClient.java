@@ -104,6 +104,11 @@ public class AtmClient implements AccountService {
             atmClient.deposit(account, 300);
             System.out.println();
             atmClient.withdraw(account, 150);
+            System.out.println();
         }
+        Account from = new StoreServiceImpl().get("3");
+        Account to = new StoreServiceImpl().get("5");
+        atmClient.transfer(from, to, 300);
+        System.out.println();
     }
 }

@@ -108,13 +108,13 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationBalance() {
-        Account account = new StoreServiceImpl().get(methodParamValue.get(0));
+        Account account = service.get(methodParamValue.get(0));
         double amount = asi.balance(account);
         answer = "Баланс аккаунта id" + account.getId() + " составляет " + amount;
     }
 
     private void operationDeposit() {
-        Account account = new StoreServiceImpl().get(methodParamValue.get(0));
+        Account account = service.get(methodParamValue.get(0));
         double sum = Double.parseDouble(methodParamValue.get(1));
         asi.deposit(account, sum);
         answer = "Баланс аккаунта id" + account.getId() +
@@ -122,7 +122,7 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationWithdraw() {
-        Account account = new StoreServiceImpl().get(methodParamValue.get(0));
+        Account account = service.get(methodParamValue.get(0));
         double sum = Double.parseDouble(methodParamValue.get(1));
         asi.withdraw(account, sum);
         answer = "С аккаунта id" + account.getId() +
@@ -130,8 +130,8 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationTransfer() {
-        Account accountFrom = new StoreServiceImpl().get(methodParamValue.get(0));
-        Account accountTo = new StoreServiceImpl().get(methodParamValue.get(1));
+        Account accountFrom = service.get(methodParamValue.get(0));
+        Account accountTo = service.get(methodParamValue.get(1));
         double sum = Double.parseDouble(methodParamValue.get(2));
         asi.transfer(accountFrom, accountTo, sum);
         answer = "С аккаунта id" + accountFrom.getId() +
