@@ -32,15 +32,15 @@ public class AtmServerThread implements Runnable {
     @Override
     public void run() {
         try (InputStream ips = socket.getInputStream(); OutputStream ops = socket.getOutputStream()) {
-            Scanner scanner = new Scanner(ips);
+            Scanner scanner = new Scanner(ips); /* передаем полученные данные из InputStream в сканер */
 
             while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                if (str.contains("GET")) {
-                    getParameters(str);
-                    accountOperations();
+                String str = scanner.nextLine(); /* получаем строку из сканера */
+                if (str.contains("GET")) { /* если строка содержит GET */
+                    getParameters(str); /* запускам обработку строки */
+                    accountOperations(); /* выполняем операции с балансом аккаунта */
 
-                    PrintWriter pw = new PrintWriter(ops, true);
+                    PrintWriter pw = new PrintWriter(ops, true); /* возвращаем результат клиенту */
                     pw.println("HTTP/1.1 200 OK");
                     pw.println("Content-Type: text/html; charset=utf-8");
                     pw.println("Content-Length: " + answer.length());
@@ -57,40 +57,40 @@ public class AtmServerThread implements Runnable {
     // "GET /deposit?account=5&amount=300 HTTP/1.1"
     // "GET /withdraw?account=12&amount=6.78 HTTP/1.1"
     // "GET /transfer?account=12&account=15&amount=6.78 HTTP/1.1"
-    private void getParameters(String scannerStr) {
+    private void getParameters(String scannerStr) { /* парсим строку, полученную из сканера */
         String parameterString = getParameterString(scannerStr);
         getMethodName(parameterString);
         getMethodParameters(parameterString);
     }
 
-    private String getParameterString(String str) {
+    private String getParameterString(String str) { /* получаем часть строки с именем метода и параметрами */
         int indexStart = str.indexOf("/");
         int indexEnd = str.lastIndexOf(" H");
         return str.substring(indexStart + 1, indexEnd);
     }
 
-    private void getMethodName(String str) {
+    private void getMethodName(String str) { /* получаем имя метода из строки */
         int indexEnd = str.indexOf("?");
         methodName = str.substring(0, indexEnd);
     }
 
-    private void getMethodParameters(String str) {
+    private void getMethodParameters(String str) { /* получаем значения методов из строки */
         int indexStart = str.indexOf("?");
         String strParam = str.substring(indexStart + 1);
-        if (strParam.contains("&")) {
+        if (strParam.contains("&")) { /* если значений несколько */
             String[] arrParam = strParam.split("&");
             for (String s : arrParam)
                 addMethodParameter(s);
-        } else
+        } else /* если значение одно (так как одним может быть только аккаунт, то данное действие необязательное) */
             addMethodParameter(strParam);
     }
 
-    private void addMethodParameter(String str) {
+    private void addMethodParameter(String str) { /* получаем значения параметров метода */
         int index = str.indexOf("=");
         methodParamValue.add(str.substring(index + 1));
     }
 
-    private void accountOperations() {
+    private void accountOperations() { /* в зависимости от имени метода вызываем соответствующий метод */
         switch (methodName) {
             case "balance":
                 operationBalance();
@@ -107,32 +107,32 @@ public class AtmServerThread implements Runnable {
         }
     }
 
-    private void operationBalance() {
-        Account account = service.get(methodParamValue.get(0));
-        double amount = asi.balance(account);
-        answer = "Баланс аккаунта id" + account.getId() + " составляет " + amount;
+    private void operationBalance() { /* получаем баланс аккаунта */
+        Account account = service.get(methodParamValue.get(0)); /* получаем аккаунт по id */
+        double amount = asi.balance(account); /* запрашиваем баланс */
+        answer = "Баланс аккаунта id" + account.getId() + " составляет " + amount; /* формируем тело ответа клиенту */
     }
 
-    private void operationDeposit() {
+    private void operationDeposit() { /* пополняем счёт */
         Account account = service.get(methodParamValue.get(0));
-        double sum = Double.parseDouble(methodParamValue.get(1));
+        double sum = Double.parseDouble(methodParamValue.get(1)); /* сумма пополнения */
         asi.deposit(account, sum);
         answer = "Баланс аккаунта id" + account.getId() +
                 " пополнен на сумму " + sum + " и составляет " + account.getAmount();
     }
 
-    private void operationWithdraw() {
+    private void operationWithdraw() { /* списываем со счета */
         Account account = service.get(methodParamValue.get(0));
-        double sum = Double.parseDouble(methodParamValue.get(1));
+        double sum = Double.parseDouble(methodParamValue.get(1)); /* сумма списания */
         asi.withdraw(account, sum);
         answer = "С аккаунта id" + account.getId() +
                 " списана сумма " + sum + ", остаток на счёте " + account.getAmount();
     }
 
-    private void operationTransfer() {
-        Account accountFrom = service.get(methodParamValue.get(0));
-        Account accountTo = service.get(methodParamValue.get(1));
-        double sum = Double.parseDouble(methodParamValue.get(2));
+    private void operationTransfer() { /* переводим с одного счета на другой */
+        Account accountFrom = service.get(methodParamValue.get(0)); /* от кого переводим */
+        Account accountTo = service.get(methodParamValue.get(1)); /* кому переводим */
+        double sum = Double.parseDouble(methodParamValue.get(2)); /* сумма перевода */
         asi.transfer(accountFrom, accountTo, sum);
         answer = "С аккаунта id" + accountFrom.getId() +
                 " переведена сумма " + sum + " на аккаунт id" + accountTo.getId() + "\n" +

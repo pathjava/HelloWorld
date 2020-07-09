@@ -15,7 +15,7 @@ public class Store {
         for (int i = 0; i < 10; i++) {
             Account acc = new Account();
             Random random = new Random();
-            String id = "" + i; //TODO - for testing
+            String id = "" + i; //TODO - генерируем id от 0 до 9 для тестирования
 //            String id = UUID.randomUUID().toString();
             acc.setId(id);
             acc.setPin(1000 + i);

@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class CreatorAccounts {
 
+    /* данный класс и метод созданы только для тестирования функционала */
     void creator() {
         Account account;
         for (int i = 0; i < 10; i++) {
@@ -18,7 +19,7 @@ public class CreatorAccounts {
             account.setHolder("Account_" + i);
             account.setPin(i);
             account.setId("" + i);
-            account.setAmount(30 * i);
+            account.setAmount(150 * i);
             new StoreServiceImpl().insert(account);
         }
     }

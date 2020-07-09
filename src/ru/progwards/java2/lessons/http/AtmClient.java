@@ -24,18 +24,17 @@ public class AtmClient implements AccountService {
 
     private void client() {
         try (Socket socket = new Socket(HOST_NAME, PORT_ID)) {
-            try (InputStream ips = socket.getInputStream();
-                 OutputStream ops = socket.getOutputStream()) {
+            try (InputStream ips = socket.getInputStream(); OutputStream ops = socket.getOutputStream()) {
 
                 PrintWriter pw = new PrintWriter(ops, true);
-                pw.println(getRequest);
+                pw.println(getRequest); /* отправляем сформированную строку с GET запросом */
                 pw.println("host: " + HOST_NAME);
                 pw.println("");
 
-                socket.shutdownOutput();
+                socket.shutdownOutput(); /* полузакрытие сокета */
 
                 Scanner scanner = new Scanner(ips);
-                while (scanner.hasNextLine()) {
+                while (scanner.hasNextLine()) { /* выводим на консоль ответ от сервера */
                     System.out.println(scanner.nextLine());
                 }
             }
@@ -47,8 +46,8 @@ public class AtmClient implements AccountService {
     @Override
     public double balance(Account account) { /* GET /balance?account=5 HTTP/1.1 */
         checkingAccountNull(account);
-        getRequest = GET + "balance?account=" + account.getId() + HTTP_1_1;
-        client();
+        getRequest = GET + "balance?account=" + account.getId() + HTTP_1_1; /* формируем строку с GET запросом */
+        client(); /* запускаем метод для взаимодействия с сервером */
         return 0;
     }
 
@@ -94,10 +93,8 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-        CreatorAccounts creator = new CreatorAccounts();
-        creator.creator();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) { /* выполняем операции с балансом аккаунтов */
             Account account = new StoreServiceImpl().get("" + i);
             atmClient.balance(account);
             System.out.println();
@@ -108,7 +105,7 @@ public class AtmClient implements AccountService {
         }
         Account from = new StoreServiceImpl().get("3");
         Account to = new StoreServiceImpl().get("5");
-        atmClient.transfer(from, to, 300);
+        atmClient.transfer(from, to, 100);
         System.out.println();
     }
 }

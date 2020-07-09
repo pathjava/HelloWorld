@@ -15,7 +15,7 @@ public class AtmServer {
 
     private void server() {
         try (ServerSocket serverSocket = new ServerSocket(PORT_ID)) {
-            while (true) {
+            while (true) { /* в бесконечном цикле получаем клиентский сокет и передаем его в новый поток */
                 Socket socket = serverSocket.accept();
                 new Thread(new AtmServerThread(socket)).start();
             }
@@ -27,6 +27,9 @@ public class AtmServer {
 
     public static void main(String[] args) {
         AtmServer atmServer = new AtmServer();
-        atmServer.server();
+        CreatorAccounts creator = new CreatorAccounts(); /* создаем тестовые аккаунты - */
+        creator.creator();
+
+        atmServer.server(); /* запускаем сервер */
     }
 }
