@@ -17,6 +17,8 @@ public class AtmClient implements AccountService {
 
     private static final int PORT_ID = 45000;
     private static final String HOST_NAME = "localhost";
+    private static final String GET = "GET /";
+    private static final String HTTP_1_1 = " HTTP/1.1";
     private String getRequest;
 
     private void client() {
@@ -44,7 +46,7 @@ public class AtmClient implements AccountService {
     @Override
     public double balance(Account account) { /* GET /balance?account=5 HTTP/1.1 */
         checkingAccountNull(account);
-        getRequest = "GET /balance?account=" + account.getId() + " HTTP/1.1";
+        getRequest = GET + "balance?account=" + account.getId() + HTTP_1_1;
         client();
         return 0;
     }
@@ -53,8 +55,8 @@ public class AtmClient implements AccountService {
     public void deposit(Account account, double amount) { /* GET /deposit?account=5&amount=300 HTTP/1.1 */
         checkingAccountNull(account);
         checkingAmount(amount);
-        getRequest = "GET /deposit?account=" + account.getId() +
-                "&amount=" + amount + " HTTP/1.1";
+        getRequest = GET + "deposit?account=" + account.getId() +
+                "&amount=" + amount + HTTP_1_1;
         client();
     }
 
@@ -62,8 +64,8 @@ public class AtmClient implements AccountService {
     public void withdraw(Account account, double amount) { /* GET /withdraw?account=5&amount=300 HTTP/1.1 */
         checkingAccountNull(account);
         checkingAmount(amount);
-        getRequest = "GET /withdraw?account=" + account.getId() +
-                "&amount=" + amount + " HTTP/1.1";
+        getRequest = GET + "withdraw?account=" + account.getId() +
+                "&amount=" + amount + HTTP_1_1;
         client();
     }
 
@@ -71,8 +73,8 @@ public class AtmClient implements AccountService {
     public void transfer(Account from, Account to, double amount) { /* GET /transfer?from=5&to=3&amount=300 HTTP/1.1 */
         checkingAccountNull(from, to);
         checkingAmount(amount);
-        getRequest = "GET /transfer?from=" + from.getId() +
-                "&to=" + to.getId() + "&amount=" + amount + " HTTP/1.1";
+        getRequest = GET + "transfer?from=" + from.getId() +
+                "&to=" + to.getId() + "&amount=" + amount + HTTP_1_1;
         client();
     }
 
@@ -83,9 +85,9 @@ public class AtmClient implements AccountService {
 
     private void checkingAmount(double amount) {
         if (amount > Double.MAX_VALUE)
-            throw new IllegalArgumentException("Значение amount больше допустимого значения!");
+            throw new IllegalArgumentException("Значение amount (" + amount + ") больше допустимого значения!");
         if (amount < 0.0)
-            throw new IllegalArgumentException("Значение amount не может быть меньше 0.0!");
+            throw new IllegalArgumentException("Значение amount (" + amount + ") не может быть меньше 0.0!");
     }
 
 
