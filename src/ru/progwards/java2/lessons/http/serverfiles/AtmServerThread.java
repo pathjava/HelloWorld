@@ -23,7 +23,7 @@ public class AtmServerThread implements Runnable {
     private String answer;
     private final StoreServiceImpl service = new StoreServiceImpl();
     private final AccountServiceImpl asi = new AccountServiceImpl(service);
-    private final List<AtmServerMethodParameters> methodParam = new ArrayList<>();
+    private final List<String> methodParamValue = new ArrayList<>();
 
     public AtmServerThread(Socket socket) {
         this.socket = socket;
@@ -86,11 +86,8 @@ public class AtmServerThread implements Runnable {
     }
 
     private void addMethodParameter(String str) {
-        AtmServerMethodParameters parameters = new AtmServerMethodParameters();
         int index = str.indexOf("=");
-        parameters.setParam(str.substring(0, index));
-        parameters.setValue(str.substring(index + 1));
-        methodParam.add(parameters);
+        methodParamValue.add(str.substring(index + 1));
     }
 
     private void accountOperations() {
@@ -111,14 +108,14 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationBalance() {
-        Account account = getAccount(methodParam.get(0).getValue());
+        Account account = getAccount(methodParamValue.get(0));
         double amount = asi.balance(account);
         answer = "Баланс аккаунта id" + account.getId() + " составляет " + amount;
     }
 
     private void operationDeposit() {
-        Account account = getAccount(methodParam.get(0).getValue());
-        double sum = Double.parseDouble(methodParam.get(1).getValue());
+        Account account = getAccount(methodParamValue.get(0));
+        double sum = Double.parseDouble(methodParamValue.get(1));
         service.insert(account);
         asi.deposit(account, sum);
         answer = "Баланс аккаунта id" + account.getId() +
@@ -126,8 +123,8 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationWithdraw() {
-        Account account = getAccount(methodParam.get(0).getValue());
-        double sum = Double.parseDouble(methodParam.get(1).getValue());
+        Account account = getAccount(methodParamValue.get(0));
+        double sum = Double.parseDouble(methodParamValue.get(1));
         service.insert(account);
         asi.withdraw(account, sum);
         answer = "С аккаунта id" + account.getId() +
@@ -135,9 +132,9 @@ public class AtmServerThread implements Runnable {
     }
 
     private void operationTransfer() {
-        Account accountOne = getAccount(methodParam.get(0).getValue());
-        Account accountTwo = getAccount(methodParam.get(1).getValue());
-        double sum = Double.parseDouble(methodParam.get(2).getValue());
+        Account accountOne = getAccount(methodParamValue.get(0));
+        Account accountTwo = getAccount(methodParamValue.get(1));
+        double sum = Double.parseDouble(methodParamValue.get(2));
         service.insert(accountOne);
         service.insert(accountTwo);
         asi.transfer(accountOne, accountTwo, sum);
