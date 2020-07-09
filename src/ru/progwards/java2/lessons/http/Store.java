@@ -5,10 +5,7 @@ package ru.progwards.java2.lessons.http;
 
 import ru.progwards.java2.lessons.http.model.Account;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Store {
 
@@ -17,7 +14,9 @@ public class Store {
     static {
         for (int i = 0; i < 10; i++) {
             Account acc = new Account();
-            String id = "1"; //TODO - for testing
+            Random random = new Random();
+//            String id = "1"; //TODO - for testing
+            String id = String.valueOf(random.nextInt(9 + 1)); //TODO - for testing
 //            String id = UUID.randomUUID().toString();
             acc.setId(id);
             acc.setPin(1000 + i);

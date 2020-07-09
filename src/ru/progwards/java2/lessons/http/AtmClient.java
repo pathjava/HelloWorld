@@ -94,16 +94,16 @@ public class AtmClient implements AccountService {
 
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
-        Account account = new StoreServiceImpl().get("1");
+        CreatorAccounts creator = new CreatorAccounts();
+        creator.creator();
 
-        atmClient.balance(account);
-        System.out.println();
-        atmClient.deposit(account, 300);
-        System.out.println();
-        atmClient.withdraw(account, 150);
-//        System.out.println();
-//        Account accountTwo = new Account();
-//        accountTwo.setId("2");
-//        atmClient.transfer(account, accountTwo, 50);
+        for (int i = 0; i < 10; i++) {
+            Account account = new StoreServiceImpl().get("" + i);
+            atmClient.balance(account);
+            System.out.println();
+            atmClient.deposit(account, 300);
+            System.out.println();
+            atmClient.withdraw(account, 150);
+        }
     }
 }
