@@ -10,14 +10,20 @@ public class Dijkstra {
     private int[][] graph;
     private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
     private final Map<Node, Set<Node>> nodes = new HashMap<>();
-//    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
+    //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
     }
 
     public int[][] find(int n) {
+        int[][] temp = new int[0][];
+        Node node = new Node();
+        node.setCurrentNode(n);
+        nodes.put(node, sortedNodes);
 
+
+        return temp;
     }
 
     static class Node {
@@ -56,6 +62,26 @@ public class Dijkstra {
 
         public void setPathLength(int pathLength) {
             this.pathLength = pathLength;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (o == null)
+                return false;
+            if (getClass() != o.getClass())
+                return false;
+            Node other = (Node) o;
+            return currentNode == other.currentNode;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + currentNode;
+            return result;
         }
     }
 
