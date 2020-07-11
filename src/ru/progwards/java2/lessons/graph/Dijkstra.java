@@ -15,6 +15,45 @@ public class Dijkstra {
 
     }
 
+    static class Node {
+        private boolean visited = false;
+        private int comeFrom = 0;
+        private int currentNode = 0;
+        private int pathLength = 0;
+
+        public boolean isVisited() {
+            return visited;
+        }
+
+        public void setVisited(boolean visited) {
+            this.visited = visited;
+        }
+
+        public int getComeFrom() {
+            return comeFrom;
+        }
+
+        public void setComeFrom(int comeFrom) {
+            this.comeFrom = comeFrom;
+        }
+
+        public int getCurrentNode() {
+            return currentNode;
+        }
+
+        public void setCurrentNode(int currentNode) {
+            this.currentNode = currentNode;
+        }
+
+        public int getPathLength() {
+            return pathLength;
+        }
+
+        public void setPathLength(int pathLength) {
+            this.pathLength = pathLength;
+        }
+    }
+
 
     public static void main(String[] args) {
         int[][] matrix = {{0, 10, 6, 8, 0, 0, 0, 0, 0},
