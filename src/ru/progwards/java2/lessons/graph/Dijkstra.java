@@ -3,12 +3,13 @@
 
 package ru.progwards.java2.lessons.graph;
 
-import java.util.Map;
+import java.util.*;
 
 public class Dijkstra {
 
     private int[][] graph;
-    private Map<>
+    private final Set<Node> nodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
+    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
@@ -20,9 +21,9 @@ public class Dijkstra {
 
     static class Node {
         private boolean visited = false;
-        private int comeFrom = 0;
-        private int currentNode = 0;
-        private int pathLength = 0;
+        private int comeFrom = 1;
+        private int currentNode = 1;
+        private int pathLength = Integer.MAX_VALUE;
 
         public boolean isVisited() {
             return visited;
