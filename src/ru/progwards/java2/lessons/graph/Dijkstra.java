@@ -19,7 +19,7 @@ public class Dijkstra {
     public int[][] find(int n) {
         int[][] temp = new int[0][];
         Node node = new Node();
-        node.setCurrentNode(n);
+        node.setNumberNode(n);
         nodes.put(node, sortedNodes);
 
 
@@ -29,7 +29,7 @@ public class Dijkstra {
     static class Node {
         private boolean visited = false;
         private int comeFrom = 0;
-        private int currentNode = 0;
+        private int numberNode = 0;
         private int pathLength = Integer.MAX_VALUE;
 
         public boolean isVisited() {
@@ -48,12 +48,12 @@ public class Dijkstra {
             this.comeFrom = comeFrom;
         }
 
-        public int getCurrentNode() {
-            return currentNode;
+        public int getNumberNode() {
+            return numberNode;
         }
 
-        public void setCurrentNode(int currentNode) {
-            this.currentNode = currentNode;
+        public void setNumberNode(int numberNode) {
+            this.numberNode = numberNode;
         }
 
         public int getPathLength() {
@@ -73,14 +73,14 @@ public class Dijkstra {
             if (getClass() != o.getClass())
                 return false;
             Node other = (Node) o;
-            return currentNode == other.currentNode;
+            return numberNode == other.numberNode;
         }
 
         @Override
         public int hashCode() {
             final int prime = 31;
             int result = 1;
-            result = prime * result + currentNode;
+            result = prime * result + numberNode;
             return result;
         }
     }
