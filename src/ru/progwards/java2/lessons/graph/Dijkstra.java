@@ -8,8 +8,9 @@ import java.util.*;
 public class Dijkstra {
 
     private int[][] graph;
-    private final Set<Node> nodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
+    private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
+    private final Map<Node, Set<Node>> nodes = new HashMap<>();
+//    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
@@ -21,8 +22,8 @@ public class Dijkstra {
 
     static class Node {
         private boolean visited = false;
-        private int comeFrom = 1;
-        private int currentNode = 1;
+        private int comeFrom = 0;
+        private int currentNode = 0;
         private int pathLength = Integer.MAX_VALUE;
 
         public boolean isVisited() {
@@ -81,5 +82,6 @@ public class Dijkstra {
                 {0, 0, 0, 0, 12, 10, 16, 15, 0}};
 
         Dijkstra dijkstra = new Dijkstra(oriMatrix);
+        dijkstra.find(3);
     }
 }
