@@ -17,13 +17,8 @@ public class Dijkstra {
         this.graph = graph;
     }
 
-    public int[][] find(int n) {
-        int[][] temp = new int[0][];
-        node = new Node();
-        node.setNumberNode(n);
-        node.setPathLength(0);
-        nodes.put(node, sortedNodes);
-
+    public void find(int n) {
+        initializationFirstNode(n);
         int count = 0;
         int key = n;
         while (count < graph.length) {
@@ -42,11 +37,15 @@ public class Dijkstra {
             }
 
 
-
             count++;
         }
+    }
 
-        return temp;
+    private void initializationFirstNode(int n) {
+        node = new Node();
+        node.setNumberNode(n);
+        node.setPathLength(0);
+        nodes.put(node, sortedNodes);
     }
 
     static class Node {
