@@ -26,16 +26,19 @@ public class Dijkstra {
 
         int count = 0;
         int key = n;
-        while (count < graph.length){
-            if (!nodes.get(node).iterator().next().isVisited()){
-                for (int i = 0; i < graph[key].length; i++) {
+        while (count < graph.length) {
+            if (!nodes.entrySet().iterator().next().getKey().isVisited()) {
+                for (int i = 0; i < graph.length; i++) {
                     if (graph[key][i] != 0) {
-                        node = new Node();
-                        node.setPathLength(graph[key][i]);
-                        node.setNumberNode(i);
-                        node.setComeFrom(key);
+                        Node nodeSet = new Node();
+                        nodeSet.setPathLength(graph[key][i]);
+                        nodeSet.setNumberNode(i);
+                        nodeSet.setComeFrom(key);
+                        sortedNodes.add(nodeSet);
+                        nodes.put(node, sortedNodes);
                     }
                 }
+                node.setVisited(true);
             }
             count++;
         }
@@ -44,10 +47,17 @@ public class Dijkstra {
     }
 
     static class Node {
-        private boolean visited = false;
-        private int comeFrom = 0;
-        private int numberNode = 0;
-        private int pathLength = Integer.MAX_VALUE;
+        private boolean visited;
+        private int comeFrom;
+        private int numberNode;
+        private int pathLength;
+
+        public Node() {
+            this.visited = false;
+            this.comeFrom = 0;
+            this.numberNode = 0;
+            this.pathLength = Integer.MAX_VALUE;
+        }
 
         public boolean isVisited() {
             return visited;
