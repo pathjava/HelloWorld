@@ -11,6 +11,7 @@ public class Dijkstra {
     private Set<Node> sortedNodes;
     private final Map<Node, Set<Node>> nodes = new HashMap<>();
     private Node node;
+    private Queue<Integer> queue = new LinkedList<Integer>();
     //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
@@ -20,32 +21,30 @@ public class Dijkstra {
     public void find(int n) {
         initializationFirstNode(n);
         int count = 0;
-        int key = n;
         while (count < graph.length) {
             if (!nodes.entrySet().iterator().next().getKey().isVisited()) {
+                int key = queue.isEmpty() ? n : queue.poll();
                 node = new Node();
-                searchPathsToNodes(key);
+                for (Map.Entry<Node, Set<Node>> entry : nodes.entrySet())
+                    if (entry.getKey().getNumberNode() == key) {
+                        node = entry.getKey();
+                        break;
+                    }
+                searchPathsToNodes(node, key);
                 node.setVisited(true);
             }
 
             for (Node value : nodes.get(node)) {
                 int pathLengthFromNode = nodes.entrySet().iterator().next().getKey().getPathLength();
-                int pathSetLength =  value.getPathLength();
-                int path = pathLengthFromNode + pathSetLength;
+                int path = pathLengthFromNode + value.getPathLength();
                 if (nodes.entrySet().iterator().next().getKey().getNumberNode() == value.getNumberNode()) {
                     if (nodes.entrySet().iterator().next().getKey().getPathLength() > path)
                         nodes.entrySet().iterator().next().getKey().setPathLength(path);
                 } else {
                     sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-//                    node = new Node();
-//                    node.setVisited(value.isVisited());
-//                    node.setPathLength(value.getPathLength());
-//                    node.setComeFrom(value.getComeFrom());
-//                    node.setNumberNode(value.getNumberNode());
                     nodes.put(value, sortedNodes);
                 }
             }
-
             count++;
         }
     }
@@ -56,21 +55,25 @@ public class Dijkstra {
         node.setNumberNode(n);
         node.setPathLength(0);
         nodes.put(node, sortedNodes);
-        searchPathsToNodes(n);
+        searchPathsToNodes(node, n);
         node.setVisited(true);
     }
 
-    private void searchPathsToNodes(int key) {
+    private void searchPathsToNodes(Node node, int key) {
         sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
         for (int i = 0; i < graph.length; i++) {
-            if (graph[key][i] != 0) {
-                Node node = new Node();
-                node.setPathLength(graph[key][i]);
-                node.setNumberNode(i);
-                node.setComeFrom(key);
-                sortedNodes.add(node);
-                nodes.put(this.node, sortedNodes);
-            }
+            if (!node.isVisited())
+                if (graph[key][i] != 0) {
+                    Node nodeSet = new Node();
+                    nodeSet.setPathLength(graph[key][i]);
+                    nodeSet.setNumberNode(i);
+                    nodeSet.setComeFrom(key);
+                    sortedNodes.add(nodeSet);
+                    nodes.put(node, sortedNodes);
+                }
+        }
+        for (Node sortedNode : sortedNodes) {
+            queue.add(sortedNode.getNumberNode());
         }
     }
 
@@ -128,7 +131,7 @@ public class Dijkstra {
             if (getClass() != o.getClass())
                 return false;
             Node other = (Node) o;
-            return numberNode == other.numberNode;
+            return numberNode == other.getNumberNode();
         }
 
         @Override
@@ -157,7 +160,7 @@ public class Dijkstra {
                 {6, 0, 0, 2, 3, 0, 0, 0, 0},
                 {8, 5, 2, 0, 5, 7, 12, 0, 0},
                 {0, 13, 3, 5, 0, 9, 0, 0, 12},
-                {0, 0, 7, 0, 9, 0, 4, 8, 10},
+                {0, 0, 0, 7, 9, 0, 4, 8, 10},
                 {0, 11, 0, 12, 0, 4, 0, 6, 16},
                 {0, 0, 0, 0, 0, 8, 6, 0, 15},
                 {0, 0, 0, 0, 12, 10, 16, 15, 0}};
