@@ -23,19 +23,10 @@ public class Dijkstra {
         int key = n;
         while (count < graph.length) {
             if (!nodes.entrySet().iterator().next().getKey().isVisited()) {
-                for (int i = 0; i < graph.length; i++) {
-                    if (graph[key][i] != 0) {
-                        Node nodeSet = new Node();
-                        nodeSet.setPathLength(graph[key][i]);
-                        nodeSet.setNumberNode(i);
-                        nodeSet.setComeFrom(key);
-                        sortedNodes.add(nodeSet);
-                        nodes.put(node, sortedNodes);
-                    }
-                }
+                node = new Node();
+                searchPathsToNodes(key);
                 node.setVisited(true);
             }
-
 
             count++;
         }
@@ -46,6 +37,21 @@ public class Dijkstra {
         node.setNumberNode(n);
         node.setPathLength(0);
         nodes.put(node, sortedNodes);
+        searchPathsToNodes(n);
+        node.setVisited(true);
+    }
+
+    private void searchPathsToNodes(int key) {
+        for (int i = 0; i < graph.length; i++) {
+            if (graph[key][i] != 0) {
+                Node nodeSet = new Node();
+                nodeSet.setPathLength(graph[key][i]);
+                nodeSet.setNumberNode(i);
+                nodeSet.setComeFrom(key);
+                sortedNodes.add(nodeSet);
+                nodes.put(node, sortedNodes);
+            }
+        }
     }
 
     static class Node {
