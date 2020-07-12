@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Dijkstra {
 
-    private int[][] graph;
+    private final int[][] graph;
     private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
     private final Map<Node, Set<Node>> nodes = new HashMap<>();
     //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
@@ -20,8 +20,15 @@ public class Dijkstra {
         int[][] temp = new int[0][];
         Node node = new Node();
         node.setNumberNode(n);
+        node.setPathLength(0);
         nodes.put(node, sortedNodes);
 
+        int count = 0;
+        int key = n;
+        while (count < graph.length){
+            if (nodes.)
+            count++;
+        }
 
         return temp;
     }
