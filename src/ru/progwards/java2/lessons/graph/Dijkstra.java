@@ -8,7 +8,7 @@ import java.util.*;
 public class Dijkstra {
 
     private final int[][] graph;
-    private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
+    private Set<Node> sortedNodes;
     private final Map<Node, Set<Node>> nodes = new HashMap<>();
     private Node node;
     //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
@@ -28,12 +28,31 @@ public class Dijkstra {
                 node.setVisited(true);
             }
 
+            for (Node value : nodes.get(node)) {
+                int pathLengthFromNode = nodes.entrySet().iterator().next().getKey().getPathLength();
+                int pathSetLength =  value.getPathLength();
+                int path = pathLengthFromNode + pathSetLength;
+                if (nodes.entrySet().iterator().next().getKey().getNumberNode() == value.getNumberNode()) {
+                    if (nodes.entrySet().iterator().next().getKey().getPathLength() > path)
+                        nodes.entrySet().iterator().next().getKey().setPathLength(path);
+                } else {
+                    sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
+//                    node = new Node();
+//                    node.setVisited(value.isVisited());
+//                    node.setPathLength(value.getPathLength());
+//                    node.setComeFrom(value.getComeFrom());
+//                    node.setNumberNode(value.getNumberNode());
+                    nodes.put(value, sortedNodes);
+                }
+            }
+
             count++;
         }
     }
 
     private void initializationFirstNode(int n) {
         node = new Node();
+        sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
         node.setNumberNode(n);
         node.setPathLength(0);
         nodes.put(node, sortedNodes);
@@ -42,14 +61,15 @@ public class Dijkstra {
     }
 
     private void searchPathsToNodes(int key) {
+        sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
         for (int i = 0; i < graph.length; i++) {
             if (graph[key][i] != 0) {
-                Node nodeSet = new Node();
-                nodeSet.setPathLength(graph[key][i]);
-                nodeSet.setNumberNode(i);
-                nodeSet.setComeFrom(key);
-                sortedNodes.add(nodeSet);
-                nodes.put(node, sortedNodes);
+                Node node = new Node();
+                node.setPathLength(graph[key][i]);
+                node.setNumberNode(i);
+                node.setComeFrom(key);
+                sortedNodes.add(node);
+                nodes.put(this.node, sortedNodes);
             }
         }
     }
