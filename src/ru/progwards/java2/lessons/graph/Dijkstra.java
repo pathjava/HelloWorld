@@ -40,6 +40,9 @@ public class Dijkstra {
                 }
                 node.setVisited(true);
             }
+
+
+
             count++;
         }
 
