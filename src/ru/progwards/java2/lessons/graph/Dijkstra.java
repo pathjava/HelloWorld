@@ -9,8 +9,9 @@ public class Dijkstra {
 
     private final int[][] graph;
     private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-    private final Map<Node, Set<Node>> nodeSetTreeMap = new TreeMap<>(Comparator.comparingInt(Node::getNumberNode));
-    private final Map<Integer, TreeMap<Node, Set<Node>>> nodes = new HashMap<>();
+    private final Map<Node, Set<Node>> nodes = new HashMap<>();
+    private Node node;
+    //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
@@ -18,17 +19,23 @@ public class Dijkstra {
 
     public int[][] find(int n) {
         int[][] temp = new int[0][];
-        Node node = new Node();
+        node = new Node();
         node.setNumberNode(n);
         node.setPathLength(0);
-        nodeSetTreeMap.put(node, sortedNodes);
-        nodes.put(n, (TreeMap<Node, Set<Node>>) nodeSetTreeMap);
+        nodes.put(node, sortedNodes);
 
         int count = 0;
         int key = n;
-        while (count < graph.length) {
-            if (nodes.get(key).entrySet().iterator().next().getValue().size() == 0) {
-
+        while (count < graph.length){
+            if (!nodes.get(node).iterator().next().isVisited()){
+                for (int i = 0; i < graph[key].length; i++) {
+                    if (graph[key][i] != 0) {
+                        node = new Node();
+                        node.setPathLength(graph[key][i]);
+                        node.setNumberNode(i);
+                        node.setComeFrom(key);
+                    }
+                }
             }
             count++;
         }
@@ -118,6 +125,6 @@ public class Dijkstra {
                 {0, 0, 0, 0, 12, 10, 16, 15, 0}};
 
         Dijkstra dijkstra = new Dijkstra(oriMatrix);
-        dijkstra.find(3);
+        dijkstra.find(6);
     }
 }
