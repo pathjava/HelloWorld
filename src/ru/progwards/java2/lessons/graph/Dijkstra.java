@@ -9,8 +9,8 @@ public class Dijkstra {
 
     private final int[][] graph;
     private final Set<Node> sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-    private final Map<Node, Set<Node>> nodes = new HashMap<>();
-    //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
+    private final Map<Node, Set<Node>> nodeSetTreeMap = new TreeMap<>(Comparator.comparingInt(Node::getNumberNode));
+    private final Map<Integer, TreeMap<Node, Set<Node>>> nodes = new HashMap<>();
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
@@ -21,12 +21,15 @@ public class Dijkstra {
         Node node = new Node();
         node.setNumberNode(n);
         node.setPathLength(0);
-        nodes.put(node, sortedNodes);
+        nodeSetTreeMap.put(node, sortedNodes);
+        nodes.put(n, (TreeMap<Node, Set<Node>>) nodeSetTreeMap);
 
         int count = 0;
         int key = n;
-        while (count < graph.length){
-            if (nodes.)
+        while (count < graph.length) {
+            if (nodes.get(key).entrySet().iterator().next().getValue().size() == 0) {
+
+            }
             count++;
         }
 
