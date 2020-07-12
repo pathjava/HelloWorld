@@ -35,8 +35,7 @@ public class Dijkstra {
             }
 
             for (Node value : nodes.get(node)) {
-                int pathLengthFromNode = nodes.entrySet().iterator().next().getKey().getPathLength();
-                int path = pathLengthFromNode + value.getPathLength();
+                int path = node.getPathLength() + value.getPathLength();
                 if (nodes.entrySet().iterator().next().getKey().getNumberNode() == value.getNumberNode()) {
                     if (nodes.entrySet().iterator().next().getKey().getPathLength() > path)
                         nodes.entrySet().iterator().next().getKey().setPathLength(path);
@@ -63,7 +62,7 @@ public class Dijkstra {
         sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
         for (int i = 0; i < graph.length; i++) {
             if (!node.isVisited())
-                if (graph[key][i] != 0) {
+                if (graph[key][i] != 0 && i != node.comeFrom) {
                     Node nodeSet = new Node();
                     nodeSet.setPathLength(graph[key][i]);
                     nodeSet.setNumberNode(i);
