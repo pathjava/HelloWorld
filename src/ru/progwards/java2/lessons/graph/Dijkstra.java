@@ -30,8 +30,8 @@ public class Dijkstra {
             }
 
             for (NodeSet sortedNode : nodes.get(key).sortedNodes) {
-                int path = nodes.get(key).pathLength + sortedNode.pathLengthSet;
-                if (nodes.get(key).numberNode == sortedNode.numberNodeSet) {
+                if (nodes.containsKey(sortedNode.numberNodeSet)) {
+                    int path = nodes.get(key).pathLength + sortedNode.pathLengthSet;
                     if (nodes.get(key).pathLength > path) {
                         nodes.get(key).pathLength = path;
                         nodes.get(key).comeFrom = sortedNode.comeFromSet;
