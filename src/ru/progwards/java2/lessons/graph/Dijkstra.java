@@ -12,38 +12,38 @@ public class Dijkstra {
     private Node node;
     private NodeSet nodeSet;
     private Queue<Integer> queue = new LinkedList<>();
-    //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
     }
 
+
     public void find(int n) {
         initializationFirstNode(n);
         int count = 0;
+        int index = 0;
         while (count < graph.length) {
-            int size = nodes.size() - 1;
-            if (!nodes.get(size).visited) {
+            if (!nodes.get(index).visited) {
                 int key = queue.isEmpty() ? n : queue.poll();
-                node = new Node();
-                for (NodeSet sortedNode : nodes.get(size).sortedNodes)
-                    if (sortedNode.numberNodeSet == key) {
-                        node.numberNode = sortedNode.numberNodeSet;
-                        node.comeFrom = sortedNode.comeFromSet;
-                        node.pathLength = sortedNode.pathLengthSet;
-                        node.visited = sortedNode.visitedSet;
-                        break;
-                    }
-                searchPathsToNodes(node, key);
+//                node = new Node();
+//                for (NodeSet sortedNode : nodes.get(index).sortedNodes)
+//                    if (sortedNode.numberNodeSet == key) {
+//                        node.numberNode = sortedNode.numberNodeSet;
+//                        node.comeFrom = sortedNode.comeFromSet;
+//                        node.pathLength = sortedNode.pathLengthSet;
+//                        node.visited = sortedNode.visitedSet;
+//                        break;
+//                    }
+                searchPathsToNodes(nodes.get(index), key);
                 node.visited = true;
             }
 
-            for (NodeSet sortedNode : nodes.get(size).sortedNodes) {
+            for (NodeSet sortedNode : nodes.get(index).sortedNodes) {
                 int path = node.pathLength + sortedNode.pathLengthSet;
-                if (nodes.get(size).numberNode == sortedNode.numberNodeSet) {
-                    if (nodes.get(size).pathLength > path) {
-                        nodes.get(size).pathLength = path;
-                        nodes.get(size).comeFrom = sortedNode.comeFromSet;
+                if (nodes.get(count).numberNode == sortedNode.numberNodeSet) {
+                    if (nodes.get(count).pathLength > path) {
+                        nodes.get(count).pathLength = path;
+                        nodes.get(count).comeFrom = sortedNode.comeFromSet;
                     }
                 } else {
                     node = new Node();
@@ -55,6 +55,7 @@ public class Dijkstra {
                 }
             }
             count++;
+            index++;
         }
     }
 
@@ -63,20 +64,20 @@ public class Dijkstra {
         node.numberNode = n;
         node.pathLength = 0;
         nodes.add(node);
-        searchPathsToNodes(node, n);
-        node.visited = true;
+//        searchPathsToNodes(node, n);
+//        node.visited = true;
     }
 
     private void searchPathsToNodes(Node node, int key) {
         for (int i = 0; i < graph.length; i++) {
-            if (!node.visited) //TODO надо ли?
-                if (graph[key][i] != 0 && i != node.comeFrom) {
-                    nodeSet = new NodeSet();
-                    nodeSet.pathLengthSet = graph[key][i];
-                    nodeSet.numberNodeSet = i;
-                    nodeSet.comeFromSet = key;
-                    node.sortedNodes.add(nodeSet);
-                }
+            if (graph[key][i] != 0 && i != node.comeFrom) {
+//                if (graph[key][i]+node.pathLength < )
+                nodeSet = new NodeSet();
+                nodeSet.pathLengthSet = graph[key][i];
+                nodeSet.numberNodeSet = i;
+                nodeSet.comeFromSet = key;
+                node.sortedNodes.add(nodeSet);
+            }
         }
         for (NodeSet sortedNode : node.sortedNodes)
             queue.add(sortedNode.numberNodeSet);
