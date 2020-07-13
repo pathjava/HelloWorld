@@ -60,8 +60,9 @@ public class Dijkstra {
         for (int i = 0; i < graph.length; i++) {
             if (graph[key][i] != 0 && i != node.comeFrom) {
                 if (nodes.containsKey(i)) {
-                    if (graph[key][i] + node.pathLength < nodes.get(graph[key][i]).pathLength)
-                        nodes.get(graph[key][i]).pathLength = graph[key][i] + node.pathLength;
+                    int path = graph[key][i] + node.pathLength;
+                    if (path < nodes.get(i).pathLength)
+                        nodes.get(i).pathLength = path;
                 } else {
                     nodeSet = new NodeSet();
                     nodeSet.pathLengthSet = graph[key][i];
