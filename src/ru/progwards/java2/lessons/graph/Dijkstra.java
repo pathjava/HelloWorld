@@ -59,12 +59,16 @@ public class Dijkstra {
     private void searchPathsToNodes(Node node, int key) {
         for (int i = 0; i < graph.length; i++) {
             if (graph[key][i] != 0 && i != node.comeFrom) {
-//                if (graph[key][i]+node.pathLength < )
-                nodeSet = new NodeSet();
-                nodeSet.pathLengthSet = graph[key][i];
-                nodeSet.numberNodeSet = i;
-                nodeSet.comeFromSet = key;
-                node.sortedNodes.add(nodeSet);
+                if (nodes.containsKey(i)) {
+                    if (graph[key][i] + node.pathLength < nodes.get(graph[key][i]).pathLength)
+                        nodes.get(graph[key][i]).pathLength = graph[key][i] + node.pathLength;
+                } else {
+                    nodeSet = new NodeSet();
+                    nodeSet.pathLengthSet = graph[key][i];
+                    nodeSet.numberNodeSet = i;
+                    nodeSet.comeFromSet = key;
+                    node.sortedNodes.add(nodeSet);
+                }
             }
         }
         for (NodeSet sortedNode : node.sortedNodes)
