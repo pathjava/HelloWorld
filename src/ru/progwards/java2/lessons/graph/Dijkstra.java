@@ -8,7 +8,7 @@ import java.util.*;
 public class Dijkstra {
 
     private final int[][] graph;
-    private final List<Node> nodes = new ArrayList<>();
+    private final Map<Integer, Node> nodes = new HashMap<>();
     private Node node;
     private NodeSet nodeSet;
     private Queue<Integer> queue = new LinkedList<>();
@@ -21,29 +21,20 @@ public class Dijkstra {
     public void find(int n) {
         initializationFirstNode(n);
         int count = 0;
-        int index = 0;
+        int key = n;
         while (count < graph.length) {
-            if (!nodes.get(index).visited) {
-                int key = queue.isEmpty() ? n : queue.poll();
-//                node = new Node();
-//                for (NodeSet sortedNode : nodes.get(index).sortedNodes)
-//                    if (sortedNode.numberNodeSet == key) {
-//                        node.numberNode = sortedNode.numberNodeSet;
-//                        node.comeFrom = sortedNode.comeFromSet;
-//                        node.pathLength = sortedNode.pathLengthSet;
-//                        node.visited = sortedNode.visitedSet;
-//                        break;
-//                    }
-                searchPathsToNodes(nodes.get(index), key);
+            key = queue.isEmpty() ? n : queue.poll();
+            if (!nodes.get(key).visited) {
+                searchPathsToNodes(nodes.get(key), key);
                 node.visited = true;
             }
 
-            for (NodeSet sortedNode : nodes.get(index).sortedNodes) {
-                int path = node.pathLength + sortedNode.pathLengthSet;
-                if (nodes.get(count).numberNode == sortedNode.numberNodeSet) {
-                    if (nodes.get(count).pathLength > path) {
-                        nodes.get(count).pathLength = path;
-                        nodes.get(count).comeFrom = sortedNode.comeFromSet;
+            for (NodeSet sortedNode : nodes.get(key).sortedNodes) {
+                int path = nodes.get(key).pathLength + sortedNode.pathLengthSet;
+                if (nodes.get(key).numberNode == sortedNode.numberNodeSet) {
+                    if (nodes.get(key).pathLength > path) {
+                        nodes.get(key).pathLength = path;
+                        nodes.get(key).comeFrom = sortedNode.comeFromSet;
                     }
                 } else {
                     node = new Node();
@@ -51,11 +42,10 @@ public class Dijkstra {
                     node.comeFrom = sortedNode.comeFromSet;
                     node.pathLength = sortedNode.pathLengthSet;
                     node.visited = sortedNode.visitedSet;
-                    nodes.add(node);
+                    nodes.put(sortedNode.numberNodeSet, node);
                 }
             }
             count++;
-            index++;
         }
     }
 
@@ -63,9 +53,7 @@ public class Dijkstra {
         node = new Node();
         node.numberNode = n;
         node.pathLength = 0;
-        nodes.add(node);
-//        searchPathsToNodes(node, n);
-//        node.visited = true;
+        nodes.put(n, node);
     }
 
     private void searchPathsToNodes(Node node, int key) {
