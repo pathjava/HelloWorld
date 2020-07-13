@@ -8,30 +8,27 @@ import java.util.*;
 public class Dijkstra {
 
     private final int[][] graph;
-    private final Map<Integer, Node> nodes = new HashMap<>();
+    private final Map<Integer, Node> nodes = new HashMap<>(); /* для хранения узлов с длинами путей и информации о родительских узлах */
     private Node node;
-    private NodeSet nodeSet;
-    private Queue<Integer> queue = new LinkedList<>();
+    private final Queue<Integer> queue = new LinkedList<>(); /* очередь обработки узлов по минимальной длине пути */
 
     public Dijkstra(int[][] graph) {
         this.graph = graph;
     }
 
-
     public void find(int n) {
-        initializationFirstNode(n);
+        initializationFirstNode(n); /* инициализируем стартовый узел N */
         int count = 0;
-        int key = n;
         while (count < graph.length) {
-            key = queue.isEmpty() ? n : queue.poll();
-            if (!nodes.get(key).visited) {
-                searchPathsToNodes(nodes.get(key), key);
-                node.visited = true;
+            int key = queue.isEmpty() ? n : queue.poll(); /* ключ обрабатываемого узла */
+            if (!nodes.get(key).visited) { /* если узел не отмечен как посещенный */
+                searchPathsToNodes(nodes.get(key), key); /* ищем и добавляем в TreeSet в узле информацию о ближайших узлах */
+                nodes.get(key).visited = true; /* отмечаем узел как посещенный */
             }
 
             for (NodeSet sortedNode : nodes.get(key).sortedNodes) {
+                int path = nodes.get(key).pathLength + sortedNode.pathLengthSet;
                 if (nodes.containsKey(sortedNode.numberNodeSet)) {
-                    int path = nodes.get(key).pathLength + sortedNode.pathLengthSet;
                     if (nodes.get(key).pathLength > path) {
                         nodes.get(key).pathLength = path;
                         nodes.get(key).comeFrom = sortedNode.comeFromSet;
@@ -40,12 +37,15 @@ public class Dijkstra {
                     node = new Node();
                     node.numberNode = sortedNode.numberNodeSet;
                     node.comeFrom = sortedNode.comeFromSet;
-                    node.pathLength = sortedNode.pathLengthSet;
+                    node.pathLength = path;
                     node.visited = sortedNode.visitedSet;
                     nodes.put(sortedNode.numberNodeSet, node);
                 }
             }
             count++;
+        }
+        for (Map.Entry<Integer, Node> entry : nodes.entrySet()) {
+            System.out.println(entry);
         }
     }
 
@@ -66,7 +66,7 @@ public class Dijkstra {
                         nodes.get(i).comeFrom = key;
                     }
                 } else {
-                    nodeSet = new NodeSet();
+                    NodeSet nodeSet = new NodeSet();
                     nodeSet.pathLengthSet = graph[key][i];
                     nodeSet.numberNodeSet = i;
                     nodeSet.comeFromSet = key;
@@ -79,36 +79,36 @@ public class Dijkstra {
     }
 
     static class Node {
-        private boolean visited;
-        private int comeFrom;
-        private int numberNode;
-        private int pathLength;
-        private Set<NodeSet> sortedNodes;
+        private boolean visited = false;
+        private int comeFrom = 0;
+        private int numberNode = 0;
+        private int pathLength = Integer.MAX_VALUE;
+        private final Set<NodeSet> sortedNodes;
 
         public Node() {
-            this.visited = false;
-            this.comeFrom = 0;
-            this.numberNode = 0;
-            this.pathLength = Integer.MAX_VALUE;
             this.sortedNodes = new TreeSet<>(Comparator.comparingInt(o -> o.pathLengthSet));
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "visited=" + visited +
+                    ", comeFrom=" + comeFrom +
+                    ", numberNode=" + numberNode +
+                    ", pathLength=" + pathLength +
+                    '}';
         }
     }
 
     static class NodeSet {
-        private boolean visitedSet;
-        private int comeFromSet;
-        private int numberNodeSet;
-        private int pathLengthSet;
-
-        public NodeSet() {
-            this.visitedSet = false;
-            this.comeFromSet = 0;
-            this.numberNodeSet = 0;
-            this.pathLengthSet = Integer.MAX_VALUE;
-        }
+        private final boolean visitedSet = false;
+        private int comeFromSet = 0;
+        private int numberNodeSet = 0;
+        private int pathLengthSet = Integer.MAX_VALUE;
     }
 
     public static void main(String[] args) {
+        /* ориентированный граф */
         int[][] matrix = {{0, 10, 6, 8, 0, 0, 0, 0, 0},
                 {0, 0, 0, 5, 13, 0, 11, 0, 0},
                 {0, 0, 0, 0, 3, 0, 0, 0, 0},
@@ -119,6 +119,7 @@ public class Dijkstra {
                 {0, 0, 0, 0, 0, 0, 0, 0, 15},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
+        /* неориентированный граф */
         int[][] oriMatrix = {{0, 10, 6, 8, 0, 0, 0, 0, 0},
                 {10, 0, 0, 5, 13, 0, 11, 0, 0},
                 {6, 0, 0, 2, 3, 0, 0, 0, 0},
@@ -129,7 +130,7 @@ public class Dijkstra {
                 {0, 0, 0, 0, 0, 8, 6, 0, 15},
                 {0, 0, 0, 0, 12, 10, 16, 15, 0}};
 
-        Dijkstra dijkstra = new Dijkstra(oriMatrix);
-        dijkstra.find(6);
+        Dijkstra dijkstra = new Dijkstra(matrix);
+        dijkstra.find(0);
     }
 }
