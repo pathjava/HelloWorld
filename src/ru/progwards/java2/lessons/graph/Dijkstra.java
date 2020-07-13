@@ -8,9 +8,9 @@ import java.util.*;
 public class Dijkstra {
 
     private final int[][] graph;
-    private Set<Node> sortedNodes;
-    private final Map<Node, Set<Node>> nodes = new HashMap<>();
+    private final List<Node> nodes = new ArrayList<>();
     private Node node;
+    private Node.NodeSet nodeSet;
     private Queue<Integer> queue = new LinkedList<Integer>();
     //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
@@ -50,12 +50,11 @@ public class Dijkstra {
 
     private void initializationFirstNode(int n) {
         node = new Node();
-        sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-        node.setNumberNode(n);
-        node.setPathLength(0);
-        nodes.put(node, sortedNodes);
+        node.numberNode = n;
+        node.pathLength = 0;
+        nodes.add(node);
         searchPathsToNodes(node, n);
-        node.setVisited(true);
+        node.visited = true;
     }
 
     private void searchPathsToNodes(Node node, int key) {
@@ -81,67 +80,30 @@ public class Dijkstra {
         private int comeFrom;
         private int numberNode;
         private int pathLength;
+        private Set<NodeSet> sortedNodes;
 
         public Node() {
             this.visited = false;
             this.comeFrom = 0;
             this.numberNode = 0;
             this.pathLength = Integer.MAX_VALUE;
-        }
-
-        public boolean isVisited() {
-            return visited;
-        }
-
-        public void setVisited(boolean visited) {
-            this.visited = visited;
-        }
-
-        public int getComeFrom() {
-            return comeFrom;
-        }
-
-        public void setComeFrom(int comeFrom) {
-            this.comeFrom = comeFrom;
-        }
-
-        public int getNumberNode() {
-            return numberNode;
-        }
-
-        public void setNumberNode(int numberNode) {
-            this.numberNode = numberNode;
-        }
-
-        public int getPathLength() {
-            return pathLength;
-        }
-
-        public void setPathLength(int pathLength) {
-            this.pathLength = pathLength;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null)
-                return false;
-            if (getClass() != o.getClass())
-                return false;
-            Node other = (Node) o;
-            return numberNode == other.getNumberNode();
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + numberNode;
-            return result;
+            this.sortedNodes = new TreeSet<>(Comparator.comparingInt(o -> o.pathLengthSet));
         }
     }
 
+    static class NodeSet {
+        private boolean visitedSet;
+        private int comeFromSet;
+        private int numberNodeSet;
+        private int pathLengthSet;
+
+        public NodeSet() {
+            this.visitedSet = false;
+            this.comeFromSet = 0;
+            this.numberNodeSet = 0;
+            this.pathLengthSet = Integer.MAX_VALUE;
+        }
+    }
 
     public static void main(String[] args) {
         int[][] matrix = {{0, 10, 6, 8, 0, 0, 0, 0, 0},
