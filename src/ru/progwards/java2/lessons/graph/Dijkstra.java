@@ -10,8 +10,8 @@ public class Dijkstra {
     private final int[][] graph;
     private final List<Node> nodes = new ArrayList<>();
     private Node node;
-    private Node.NodeSet nodeSet;
-    private Queue<Integer> queue = new LinkedList<Integer>();
+    private NodeSet nodeSet;
+    private Queue<Integer> queue = new LinkedList<>();
     //    private final Map<Node, Set<Node>> node = new TreeMap<>(Comparator.comparingInt(Node::getCurrentNode));
 
     public Dijkstra(int[][] graph) {
@@ -21,31 +21,31 @@ public class Dijkstra {
     public void find(int n) {
         initializationFirstNode(n);
         int count = 0;
-        while (count < graph.length) {
-            if (!nodes.entrySet().iterator().next().getKey().isVisited()) {
-                int key = queue.isEmpty() ? n : queue.poll();
-                node = new Node();
-                for (Map.Entry<Node, Set<Node>> entry : nodes.entrySet())
-                    if (entry.getKey().getNumberNode() == key) {
-                        node = entry.getKey();
-                        break;
-                    }
-                searchPathsToNodes(node, key);
-                node.setVisited(true);
-            }
-
-            for (Node value : nodes.get(node)) {
-                int path = node.getPathLength() + value.getPathLength();
-                if (nodes.entrySet().iterator().next().getKey().getNumberNode() == value.getNumberNode()) {
-                    if (nodes.entrySet().iterator().next().getKey().getPathLength() > path)
-                        nodes.entrySet().iterator().next().getKey().setPathLength(path);
-                } else {
-                    sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
-                    nodes.put(value, sortedNodes);
-                }
-            }
-            count++;
-        }
+//        while (count < graph.length) {
+//            if (!nodes.entrySet().iterator().next().getKey().isVisited()) {
+//                int key = queue.isEmpty() ? n : queue.poll();
+//                node = new Node();
+//                for (Map.Entry<Node, Set<Node>> entry : nodes.entrySet())
+//                    if (entry.getKey().getNumberNode() == key) {
+//                        node = entry.getKey();
+//                        break;
+//                    }
+//                searchPathsToNodes(node, key);
+//                node.setVisited(true);
+//            }
+//
+//            for (Node value : nodes.get(node)) {
+//                int path = node.getPathLength() + value.getPathLength();
+//                if (nodes.entrySet().iterator().next().getKey().getNumberNode() == value.getNumberNode()) {
+//                    if (nodes.entrySet().iterator().next().getKey().getPathLength() > path)
+//                        nodes.entrySet().iterator().next().getKey().setPathLength(path);
+//                } else {
+//                    sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
+//                    nodes.put(value, sortedNodes);
+//                }
+//            }
+//            count++;
+//        }
     }
 
     private void initializationFirstNode(int n) {
@@ -58,21 +58,18 @@ public class Dijkstra {
     }
 
     private void searchPathsToNodes(Node node, int key) {
-        sortedNodes = new TreeSet<>(Comparator.comparingInt(Node::getPathLength));
         for (int i = 0; i < graph.length; i++) {
-            if (!node.isVisited())
+            if (!node.visited)
                 if (graph[key][i] != 0 && i != node.comeFrom) {
-                    Node nodeSet = new Node();
-                    nodeSet.setPathLength(graph[key][i]);
-                    nodeSet.setNumberNode(i);
-                    nodeSet.setComeFrom(key);
-                    sortedNodes.add(nodeSet);
-                    nodes.put(node, sortedNodes);
+                    nodeSet = new NodeSet();
+                    nodeSet.pathLengthSet = graph[key][i];
+                    nodeSet.numberNodeSet = i;
+                    nodeSet.comeFromSet = key;
+                    node.sortedNodes.add(nodeSet);
                 }
         }
-        for (Node sortedNode : sortedNodes) {
-            queue.add(sortedNode.getNumberNode());
-        }
+        for (NodeSet sortedNode : node.sortedNodes)
+            queue.add(sortedNode.numberNodeSet);
     }
 
     static class Node {
