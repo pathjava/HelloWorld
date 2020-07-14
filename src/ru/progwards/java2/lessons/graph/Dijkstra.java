@@ -33,12 +33,12 @@ public class Dijkstra {
                 if (nodes.containsKey(sortedNode.numberNodeSet)) { /* если такой узел уже есть в nodes */
                     if (nodes.get(key).pathLength > pathSize) { /* проверяем, является ли новый путь короче старого */
                         nodes.get(key).pathLength = pathSize; /* если да, то обновляем путь */
-                        nodes.get(key).comeFrom = sortedNode.comeFromSet; /* обновляем информацию о узле из которого пришел новый путь */
+                        nodes.get(key).cameFrom = sortedNode.cameFromSet; /* обновляем информацию о узле из которого пришел новый путь */
                     }
                 } else { /* если узла в nodes нет, то создаем его */
                     node = new Node();
                     node.numberNode = sortedNode.numberNodeSet;
-                    node.comeFrom = sortedNode.comeFromSet;
+                    node.cameFrom = sortedNode.cameFromSet;
                     node.pathLength = pathSize;
                     node.visited = sortedNode.visitedSet;
                     nodes.put(sortedNode.numberNodeSet, node);
@@ -62,18 +62,18 @@ public class Dijkstra {
 
     private void searchPathsToNodes(Node node, int key) { /* формирование смежных узлов в sortedNodes внутри узла */
         for (int i = 0; i < graph.length; i++) {
-            if (graph[key][i] != 0 && i != node.comeFrom) { /* если ячейка не 0 и не является узлом-родителем */
+            if (graph[key][i] != 0 && i != node.cameFrom) { /* если ячейка не 0 и не является узлом-родителем */
                 if (nodes.containsKey(i)) { /* если смежный узел уже есть в nodes */
                     int pathSize = graph[key][i] + node.pathLength; /* длина пути от стартового N узла до текущего + до смежного */
                     if (pathSize < nodes.get(i).pathLength) { /* проверяем, является ли новый путь короче старого */
                         nodes.get(i).pathLength = pathSize; /* если да, то обновляем путь */
-                        nodes.get(i).comeFrom = key; /* обновляем информацию о узле из которого пришел новый путь */
+                        nodes.get(i).cameFrom = key; /* обновляем информацию о узле из которого пришел новый путь */
                     }
                 } else { /* если узла в sortedNodes нет, то создаем его */
                     NodeSet nodeSet = new NodeSet();
                     nodeSet.pathLengthSet = graph[key][i];
                     nodeSet.numberNodeSet = i;
-                    nodeSet.comeFromSet = key;
+                    nodeSet.cameFromSet = key;
                     node.sortedNodes.add(nodeSet);
                 }
             }
@@ -84,7 +84,7 @@ public class Dijkstra {
 
     static class Node { /* основной узел из nodes */
         private boolean visited = false;
-        private int comeFrom = 0;
+        private int cameFrom = 0;
         private int numberNode = 0;
         private int pathLength = Integer.MAX_VALUE;
         private final Set<NodeSet> sortedNodes;
@@ -97,7 +97,7 @@ public class Dijkstra {
         public String toString() {
             return "Node{" +
                     "visited=" + visited +
-                    ", comeFrom=" + comeFrom +
+                    ", comeFrom=" + cameFrom +
                     ", numberNode=" + numberNode +
                     ", pathLength=" + pathLength +
                     '}';
@@ -106,7 +106,7 @@ public class Dijkstra {
 
     static class NodeSet { /* вспомогательный узел для хранения смежных узлов в sortedNodes */
         private final boolean visitedSet = false;
-        private int comeFromSet = 0;
+        private int cameFromSet = 0;
         private int numberNodeSet = 0;
         private int pathLengthSet = Integer.MAX_VALUE;
     }

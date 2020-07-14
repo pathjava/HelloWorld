@@ -9,13 +9,18 @@ import java.util.List;
 public class FindUnused {
 
     public static List<CObject> find(List<CObject> roots, List<CObject> objects) {
+        List<CObject> unused = new ArrayList<>();
 
 
+        return unused;
     }
 
     public static class CObject {
         private List<CObject> references;
         private int mark;
+        // 0 - не используется
+        // 1 - посещен
+        // 2 - используется
     }
 
 
