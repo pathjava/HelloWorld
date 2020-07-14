@@ -8,6 +8,8 @@ import java.util.List;
 
 public class FindUnused {
 
+    private enum State {UNUSED, CURRENT, USED}
+
     public static List<CObject> find(List<CObject> roots, List<CObject> objects) {
         List<CObject> unused = new ArrayList<>();
 
@@ -17,10 +19,10 @@ public class FindUnused {
 
     public static class CObject {
         private List<CObject> references;
-        private int mark;
-        // 0 - не используется
-        // 1 - посещен
-        // 2 - используется
+        private final State mark = State.UNUSED;
+        // UNUSED - не используется
+        // CURRENT - используется
+        // USED - посещен
     }
 
 
