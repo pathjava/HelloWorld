@@ -17,6 +17,8 @@ public class Dijkstra {
     }
 
     public void find(int n) {
+        if (n < 0 || n > graph.length - 1)
+            throw new IllegalArgumentException("Значение n не может быть меньше 0 и больше " + (graph.length - 1) + "!");
         initializationFirstNode(n); /* инициализируем стартовый узел N */
         int count = 0;
         while (count < graph.length) {
@@ -45,7 +47,10 @@ public class Dijkstra {
             count++;
         }
         /* вывод информации о кратчайших путях до каждого узла от узла N */
-        nodes.entrySet().forEach(System.out::println);
+        if (nodes.size() == 1)
+            System.out.println("Смежных узлов не найдено!");
+        else
+            nodes.entrySet().forEach(System.out::println);
     }
 
     private void initializationFirstNode(int n) { /* инициализация N узла */
@@ -105,6 +110,7 @@ public class Dijkstra {
         private int numberNodeSet = 0;
         private int pathLengthSet = Integer.MAX_VALUE;
     }
+
 
     public static void main(String[] args) {
         /* ориентированный граф */
