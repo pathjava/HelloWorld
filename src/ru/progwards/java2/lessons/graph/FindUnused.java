@@ -13,34 +13,34 @@ public class FindUnused {
     public static List<CObject> find(List<CObject> roots, List<CObject> objects) {
         if (roots == null || objects == null)
             throw new NullPointerException("Нет объектов для проверки!");
+
         List<CObject> unused = new ArrayList<>(); /* лист для накопления возвращаемых неиспользуемых объектов */
 
-        for (CObject root : roots) { /* проверяем, если корень неиспользованный, запускаем поиск в глубину */
+        for (CObject root : roots)  /* проверяем, если корень неиспользованный, запускаем поиск в глубину */
             if (root.mark == State.UNUSED)
                 deepFirstSearch(root);
-        }
 
-        for (CObject object : objects) { /* собираем недостижимые (неиспользованные) объекты */
+        for (CObject object : objects)  /* собираем недостижимые (неиспользованные) объекты */
             if (object.mark == State.UNUSED)
                 unused.add(object);
-        }
+
         return unused;
     }
 
     private static void deepFirstSearch(CObject node) {
         node.mark = State.IN_PROCESSING; /* присваиваем объекту состояние "в процессе" */
 
-        for (CObject cObject : node.references) { /* обходим все объекты (узлы) */
+        for (CObject cObject : node.references) /* обходим все объекты (узлы) */
             if (cObject.mark == State.UNUSED) { /* если объект помечен как неиспользуемый */
                 cObject.mark = State.IN_PROCESSING; /* присваиваем объекту состояние "в процессе" */
                 deepFirstSearch(cObject); /* вызываем метод рекурсивно с текущим объектом */
             }
-        }
+
         node.mark = State.PROCESSED; /* при обратном ходе рекурсии помечаем все достижимые бъекты как использованные */
     }
 
 
-    public static class CObject {
+    private static class CObject {
         private final List<CObject> references; /* ссылки на другие объекты */
         private String nameNode;
         private State mark = State.UNUSED; /* состояние объекта */
@@ -112,8 +112,8 @@ public class FindUnused {
         roots.get(1).references.add(objects.get(8));
         roots.get(2).references.add(objects.get(16));
 
-        for (CObject cObject : find(roots, objects)) {
+        for (CObject cObject : find(roots, objects))
             System.out.println(cObject);
-        }
+
     }
 }
