@@ -5,7 +5,6 @@ package ru.progwards.java2.lessons.graph;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class FindUnused {
 
@@ -25,45 +24,69 @@ public class FindUnused {
         // UNUSED - не используется
         // CURRENT - используется
         // USED - посещен
-    }
 
-    public static List<CObject> graphCreator() {
-        List<CObject> objects = new ArrayList<>();
-        CObject cObject;
-        int rand = ThreadLocalRandom.current().nextInt(15, 30);
 
-        for (int i = 0; i < rand; i++) {
-            cObject = new CObject();
-            cObject.nameNode = "NodeGraph-" + i;
-            objects.add(cObject);
+        public CObject() {
+            this.references = new ArrayList<>();
         }
-        return objects;
-    }
-
-    public static List<CObject> rootCreator(int n) {
-        List<CObject> roots = new ArrayList<>();
-        CObject cObject;
-
-        for (int i = 0; i < n; i++) {
-            cObject = new CObject();
-            cObject.nameNode = "NodeRoot-" + i;
-            cObject.references = graphCreator();
-            roots.add(cObject);
-        }
-        return roots;
     }
 
 
     public static void main(String[] args) {
-        int rootCount = 5;
-        List<CObject> roots;
-        List<CObject> objects;
+        FindUnused.CObject object;
+        List<CObject> roots = new ArrayList<>();
+        List<CObject> objects = new ArrayList<>();
 
-        while (rootCount > 0) {
-            roots = rootCreator();
-            objects = graphCreator();
-            find(roots, objects);
-            rootCount--;
+        /* graph objects */
+        for (int i = 0; i < 24; i++) {
+            object = new FindUnused.CObject();
+            object.nameNode = "Object-" + i;
+            objects.add(object);
         }
+
+        objects.get(0).references.add(objects.get(1));
+        objects.get(1).references.add(objects.get(2));
+        objects.get(1).references.add(objects.get(3));
+        objects.get(2).references.add(objects.get(3));
+        objects.get(3).references.add(objects.get(4));
+        objects.get(3).references.add(objects.get(5));
+
+        objects.get(6).references.add(objects.get(7));
+        objects.get(7).references.add(objects.get(6));
+
+        objects.get(8).references.add(objects.get(9));
+        objects.get(8).references.add(objects.get(11));
+        objects.get(8).references.add(objects.get(12));
+        objects.get(9).references.add(objects.get(12));
+        objects.get(9).references.add(objects.get(10));
+
+        objects.get(13).references.add(objects.get(14));
+        objects.get(14).references.add(objects.get(15));
+        objects.get(15).references.add(objects.get(13));
+
+        objects.get(16).references.add(objects.get(17));
+        objects.get(16).references.add(objects.get(18));
+        objects.get(18).references.add(objects.get(17));
+        objects.get(17).references.add(objects.get(19));
+
+        objects.get(20).references.add(objects.get(21));
+        objects.get(21).references.add(objects.get(22));
+        objects.get(22).references.add(objects.get(23));
+
+        /* roots */
+        object = new FindUnused.CObject();
+        object.nameNode = "Root-1";
+        object.references.add(objects.get(0));
+        roots.add(object);
+        object = new FindUnused.CObject();
+        object.nameNode = "Root-2";
+        object.references.add(objects.get(8));
+        roots.add(object);
+        object = new FindUnused.CObject();
+        object.nameNode = "Root-3";
+        object.references.add(objects.get(16));
+        roots.add(object);
+
+        find(roots, objects);
     }
 }
