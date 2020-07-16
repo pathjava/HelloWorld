@@ -31,7 +31,6 @@ public class FindUnused {
                 deepFirstSearch(cObject);
             }
         }
-
         node.mark = State.PROCESSED;
     }
 
@@ -61,7 +60,6 @@ public class FindUnused {
             object.nameNode = "Object-" + i;
             objects.add(object);
         }
-
         objects.get(0).references.add(objects.get(1));
         objects.get(1).references.add(objects.get(2));
         objects.get(1).references.add(objects.get(3));
@@ -92,18 +90,14 @@ public class FindUnused {
         objects.get(22).references.add(objects.get(23));
 
         /* roots */
-        object = new FindUnused.CObject();
-        object.nameNode = "Root-1";
-        object.references.add(objects.get(0));
-        roots.add(object);
-        object = new FindUnused.CObject();
-        object.nameNode = "Root-2";
-        object.references.add(objects.get(8));
-        roots.add(object);
-        object = new FindUnused.CObject();
-        object.nameNode = "Root-3";
-        object.references.add(objects.get(16));
-        roots.add(object);
+        for (int i = 0; i < 3; i++) {
+            object = new FindUnused.CObject();
+            object.nameNode = "Root-"+i;
+            roots.add(object);
+        }
+        roots.get(0).references.add(objects.get(0));
+        roots.get(0).references.add(objects.get(8));
+        roots.get(0).references.add(objects.get(16));
 
         find(roots, objects);
     }
