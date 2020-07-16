@@ -25,11 +25,12 @@ public class FindUnused {
     private static void deepFirstSearch(CObject node) {
         node.mark = State.IN_PROCESSING;
 
-        if (!node.references.isEmpty())
-            if (node.references.listIterator().next().mark == State.UNUSED) {
-                node.references.listIterator().next().mark = State.IN_PROCESSING;
-                deepFirstSearch(node.references.listIterator().next());
+        for (CObject cObject : node.references) {
+            if (cObject.mark == State.UNUSED) {
+                cObject.mark = State.IN_PROCESSING;
+                deepFirstSearch(cObject);
             }
+        }
 
         node.mark = State.PROCESSED;
     }
