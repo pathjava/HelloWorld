@@ -4,47 +4,60 @@
 package ru.progwards.java2.lessons.graph;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class FindUnused {
 
-    private enum State {UNUSED, IN_PROCESSING, PROCESSED}
+    private enum State {UNUSED, IN_PROCESSING, PROCESSED} /* состояние корня и объекта в куче */
 
     public static List<CObject> find(List<CObject> roots, List<CObject> objects) {
-        List<CObject> unused = new ArrayList<>();
+        if (roots == null || objects == null)
+            throw new NullPointerException("Нет объектов для проверки!");
+        List<CObject> unused = new ArrayList<>(); /* лист для накопления возвращаемых неиспользуемых объектов */
 
-        for (CObject root : roots) {
+        for (CObject root : roots) { /* проверяем, если корень неиспользованный, запускаем поиск в глубину */
             if (root.mark == State.UNUSED)
                 deepFirstSearch(root);
         }
 
+        for (CObject object : objects) { /* собираем недостижимые (неиспользованные) объекты */
+            if (object.mark == State.UNUSED)
+                unused.add(object);
+        }
         return unused;
     }
 
     private static void deepFirstSearch(CObject node) {
-        node.mark = State.IN_PROCESSING;
+        node.mark = State.IN_PROCESSING; /* присваиваем объекту состояние "в процессе" */
 
-        for (CObject cObject : node.references) {
-            if (cObject.mark == State.UNUSED) {
-                cObject.mark = State.IN_PROCESSING;
-                deepFirstSearch(cObject);
+        for (CObject cObject : node.references) { /* обходим все объекты (узлы) */
+            if (cObject.mark == State.UNUSED) { /* если объект помечен как неиспользуемый */
+                cObject.mark = State.IN_PROCESSING; /* присваиваем объекту состояние "в процессе" */
+                deepFirstSearch(cObject); /* вызываем метод рекурсивно с текущим объектом */
             }
         }
-        node.mark = State.PROCESSED;
+        node.mark = State.PROCESSED; /* при обратном ходе рекурсии помечаем все достижимые бъекты как использованные */
     }
 
 
     public static class CObject {
-        private final List<CObject> references;
+        private final List<CObject> references; /* ссылки на другие объекты */
         private String nameNode;
-        private State mark = State.UNUSED;
+        private State mark = State.UNUSED; /* состояние объекта */
         // UNUSED - не используется
-        // CURRENT - используется
-        // USED - посещен
+        // IN_PROCESSING - используется
+        // PROCESSED - посещен
 
         public CObject() {
             this.references = new ArrayList<>();
+        }
+
+        @Override
+        public String toString() {
+            return "CObject{" +
+                    "nameNode='" + nameNode + '\'' +
+                    ", mark=" + mark +
+                    '}';
         }
     }
 
@@ -92,13 +105,15 @@ public class FindUnused {
         /* roots */
         for (int i = 0; i < 3; i++) {
             object = new FindUnused.CObject();
-            object.nameNode = "Root-"+i;
+            object.nameNode = "Root-" + i;
             roots.add(object);
         }
         roots.get(0).references.add(objects.get(0));
-        roots.get(0).references.add(objects.get(8));
-        roots.get(0).references.add(objects.get(16));
+        roots.get(1).references.add(objects.get(8));
+        roots.get(2).references.add(objects.get(16));
 
-        find(roots, objects);
+        for (CObject cObject : find(roots, objects)) {
+            System.out.println(cObject);
+        }
     }
 }
