@@ -4,27 +4,44 @@
 package ru.progwards.java2.lessons.graph;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FindUnused {
 
-    private enum State {UNUSED, CURRENT, USED}
+    private enum State {UNUSED, IN_PROCESSING, PROCESSED}
 
     public static List<CObject> find(List<CObject> roots, List<CObject> objects) {
         List<CObject> unused = new ArrayList<>();
 
+        for (CObject root : roots) {
+            if (root.mark == State.UNUSED)
+                deepFirstSearch(root);
+        }
 
         return unused;
     }
 
+    private static void deepFirstSearch(CObject node) {
+        node.mark = State.IN_PROCESSING;
+
+        if (!node.references.isEmpty())
+            if (node.references.listIterator().next().mark == State.UNUSED) {
+                node.references.listIterator().next().mark = State.IN_PROCESSING;
+                deepFirstSearch(node.references.listIterator().next());
+            }
+
+        node.mark = State.PROCESSED;
+    }
+
+
     public static class CObject {
-        private List<CObject> references;
+        private final List<CObject> references;
         private String nameNode;
-        private final State mark = State.UNUSED;
+        private State mark = State.UNUSED;
         // UNUSED - не используется
         // CURRENT - используется
         // USED - посещен
-
 
         public CObject() {
             this.references = new ArrayList<>();
