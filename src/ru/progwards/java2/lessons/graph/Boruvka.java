@@ -55,14 +55,27 @@ public class Boruvka<N, E> {
     }
 
     static class Graph<N, E> {
-        List<Node<N, E>> nodes;
-        List<Edge<N, E>> edges;
+        List<Node<N, E>> nodes = new LinkedList<>();
+        List<Edge<N, E>> edges = new ArrayList<>();
     }
 
     public static void main(String[] args) {
         Boruvka<String, Integer> boruvka = new Boruvka<>();
         Graph<String, Integer> graph = new Graph<>();
-        Node<String, Integer> node = new Node<>();
-        Edge<String, Integer> edge = new Edge<>();
+        Node<String, Integer> node;
+        Edge<String, Integer> edge;
+
+        for (int i = 0; i < 12; i++) {
+            node = new Node<>();
+            node.name = "Node-" + i;
+            graph.nodes.add(node);
+        }
+        for (int i = 0; i < 20; i++) {
+            edge = new Edge<>();
+            edge.id = i;
+            graph.edges.add(edge);
+        }
+
+        boruvka.minTree(graph);
     }
 }
