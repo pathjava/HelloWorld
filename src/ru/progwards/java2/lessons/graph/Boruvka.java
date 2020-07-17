@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.graph;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Boruvka<N, E> {
 
@@ -71,8 +72,11 @@ public class Boruvka<N, E> {
             graph.nodes.add(node);
         }
         for (int i = 0; i < 20; i++) {
+            double tempRand = ThreadLocalRandom.current().nextDouble(2.0,20.0);
+            double rand = Double.parseDouble(String.format("%.2f",tempRand).replace(",","."));
             edge = new Edge<>();
             edge.id = i;
+            edge.weight = rand;
             graph.edges.add(edge);
         }
 
