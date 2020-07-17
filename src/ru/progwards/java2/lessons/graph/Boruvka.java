@@ -62,16 +62,16 @@ public class Boruvka<N, E> {
     public static void main(String[] args) {
         Boruvka<String, Integer> boruvka = new Boruvka<>();
         Graph<String, Integer> graph = new Graph<>();
-        Node<String, Integer> node;
-        Edge<String, Integer> edge;
 
+        /* nodes */
         for (int i = 0; i < 12; i++) {
-            node = new Node<>();
+            Node<String, Integer> node = new Node<>();
             node.name = "Node-" + i;
             graph.nodes.add(node);
         }
+        /* edges */
         for (int i = 0; i < 20; i++) {
-            edge = new Edge<>();
+            Edge<String, Integer> edge = new Edge<>();
             edge.id = i;
             edge.weight = i + 1;
             graph.edges.add(edge);
