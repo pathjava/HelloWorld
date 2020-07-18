@@ -25,24 +25,10 @@ public class Boruvka<N, E> {
         N info; // информация об узле
         List<Edge<N, E>> in; // массив входящих ребер
         List<Edge<N, E>> out; // массив исходящих ребер
-        String name; // имя узла
 
         public Node() {
-            in = new ArrayList<>();
-            out = new ArrayList<>();
-            in.sort((o1, o2) -> {
-                if (o1.weight > o2.weight)
-                    return 1;
-                else if (o1.weight < o2.weight)
-                    return -1;
-                else {
-                    if (o1.id > o2.id)
-                        return 1;
-                    else if (o1.id < o2.id)
-                        return -1;
-                }
-                return 0;
-            });
+            in = new LinkedList<>();
+            out = new LinkedList<>();
         }
     }
 
@@ -51,12 +37,11 @@ public class Boruvka<N, E> {
         Node<N, E> out; // вершина, из которой исходит ребро
         Node<N, E> in; // вершина, в которую можно попасть по этому ребру
         double weight; // стоимость перехода
-        int id; // уникальный идентификатор ребра
     }
 
     static class Graph<N, E> {
         List<Node<N, E>> nodes = new LinkedList<>();
-        List<Edge<N, E>> edges = new ArrayList<>();
+        List<Edge<N, E>> edges = new LinkedList<>();
     }
 
     public static void main(String[] args) {
@@ -66,13 +51,13 @@ public class Boruvka<N, E> {
         /* nodes */
         for (int i = 0; i < 12; i++) {
             Node<String, Integer> node = new Node<>();
-            node.name = "Node-" + i;
+            node.info = "Node-" + i;
             graph.nodes.add(node);
         }
         /* edges */
         for (int i = 0; i < 20; i++) {
             Edge<String, Integer> edge = new Edge<>();
-            edge.id = i;
+            edge.info = i;
             edge.weight = i + 1;
             graph.edges.add(edge);
         }
