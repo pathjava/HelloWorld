@@ -49,20 +49,32 @@ public class Boruvka<N, E> {
         Graph<String, Integer> graph = new Graph<>();
 
         /* nodes */
+        char c = 'A';
         for (int i = 0; i < 12; i++) {
             Node<String, Integer> node = new Node<>();
-            node.info = "Node-" + i;
+            node.info = "Node-" + c;
             graph.nodes.add(node);
+            c++;
         }
         /* edges */
         for (int i = 0; i < 20; i++) {
             Edge<String, Integer> edge = new Edge<>();
-            edge.info = i;
+            edge.info = i + 1;
             edge.weight = i + 1;
             graph.edges.add(edge);
         }
+        /* A */
         graph.nodes.get(0).out.add(graph.edges.get(12));
         graph.nodes.get(0).out.add(graph.edges.get(5));
+        graph.nodes.get(0).in.add(graph.edges.get(12));
+        graph.nodes.get(0).in.add(graph.edges.get(5));
+        /* B */
+        graph.nodes.get(1).out.add(graph.edges.get(12));
+        graph.nodes.get(1).out.add(graph.edges.get(0));
+        graph.nodes.get(1).out.add(graph.edges.get(6));
+        graph.nodes.get(1).in.add(graph.edges.get(12));
+        graph.nodes.get(1).in.add(graph.edges.get(0));
+        graph.nodes.get(1).in.add(graph.edges.get(6));
 
         boruvka.minTree(graph);
     }
