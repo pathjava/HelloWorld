@@ -10,6 +10,12 @@ public class Boruvka<N, E> {
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
         List<Edge<N, E>> edgeList = new ArrayList<>();
 
+        while (edgeList.size() < graph.nodes.size() - 1) {
+            for (Node<N, E> node : graph.nodes) {
+
+            }
+        }
+
         return edgeList;
     }
 
