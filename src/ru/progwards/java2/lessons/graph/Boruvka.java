@@ -182,8 +182,6 @@ public class Boruvka<N, E> {
         graph.edges.get(10).in = graph.nodes.get(6);
         graph.edges.get(10).weight = 13;
 
-        /* set weight edges */
-
 
         boruvka.minTree(graph);
     }
