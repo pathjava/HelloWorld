@@ -62,6 +62,7 @@ public class Boruvka<N, E> {
             edge.info = i + 1;
             graph.edges.add(edge);
         }
+        /* Create nodes */
         /* A */
         graph.nodes.get(0).out.add(graph.edges.get(0));
         graph.nodes.get(0).in.add(graph.edges.get(0));
@@ -113,6 +114,63 @@ public class Boruvka<N, E> {
         graph.nodes.get(6).in.add(graph.edges.get(9));
         graph.nodes.get(5).out.add(graph.edges.get(10));
         graph.nodes.get(5).in.add(graph.edges.get(10));
+
+        /* Create edges */
+        /* 7 */
+        graph.edges.get(0).out = graph.nodes.get(0);
+        graph.edges.get(0).in = graph.nodes.get(0);
+        graph.edges.get(0).out = graph.nodes.get(1);
+        graph.edges.get(0).in = graph.nodes.get(1);
+        /* 4 */
+        graph.edges.get(1).out = graph.nodes.get(0);
+        graph.edges.get(1).in = graph.nodes.get(0);
+        graph.edges.get(1).out = graph.nodes.get(3);
+        graph.edges.get(1).in = graph.nodes.get(3);
+        /* 9 */
+        graph.edges.get(2).out = graph.nodes.get(1);
+        graph.edges.get(2).in = graph.nodes.get(1);
+        graph.edges.get(2).out = graph.nodes.get(3);
+        graph.edges.get(2).in = graph.nodes.get(3);
+        /* 11 */
+        graph.edges.get(3).out = graph.nodes.get(1);
+        graph.edges.get(3).in = graph.nodes.get(1);
+        graph.edges.get(3).out = graph.nodes.get(2);
+        graph.edges.get(3).in = graph.nodes.get(2);
+        /* 10 */
+        graph.edges.get(4).out = graph.nodes.get(1);
+        graph.edges.get(4).in = graph.nodes.get(1);
+        graph.edges.get(4).out = graph.nodes.get(4);
+        graph.edges.get(4).in = graph.nodes.get(4);
+        /* 5 */
+        graph.edges.get(5).out = graph.nodes.get(2);
+        graph.edges.get(5).in = graph.nodes.get(2);
+        graph.edges.get(5).out = graph.nodes.get(4);
+        graph.edges.get(5).in = graph.nodes.get(4);
+        /* 15 */
+        graph.edges.get(6).out = graph.nodes.get(3);
+        graph.edges.get(6).in = graph.nodes.get(3);
+        graph.edges.get(6).out = graph.nodes.get(4);
+        graph.edges.get(6).in = graph.nodes.get(4);
+        /* 6 */
+        graph.edges.get(7).out = graph.nodes.get(3);
+        graph.edges.get(7).in = graph.nodes.get(3);
+        graph.edges.get(7).out = graph.nodes.get(5);
+        graph.edges.get(7).in = graph.nodes.get(5);
+        /* 12 */
+        graph.edges.get(8).out = graph.nodes.get(4);
+        graph.edges.get(8).in = graph.nodes.get(4);
+        graph.edges.get(8).out = graph.nodes.get(5);
+        graph.edges.get(8).in = graph.nodes.get(5);
+        /* 8 */
+        graph.edges.get(9).out = graph.nodes.get(4);
+        graph.edges.get(9).in = graph.nodes.get(4);
+        graph.edges.get(9).out = graph.nodes.get(6);
+        graph.edges.get(9).in = graph.nodes.get(6);
+        /* 8 */
+        graph.edges.get(10).out = graph.nodes.get(5);
+        graph.edges.get(10).in = graph.nodes.get(5);
+        graph.edges.get(10).out = graph.nodes.get(6);
+        graph.edges.get(10).in = graph.nodes.get(6);
 
         boruvka.minTree(graph);
     }
