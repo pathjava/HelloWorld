@@ -50,14 +50,14 @@ public class Boruvka<N, E> {
 
         /* nodes */
         char c = 'A';
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 7; i++) {
             Node<String, Integer> node = new Node<>();
             node.info = "Node-" + c;
             graph.nodes.add(node);
             c++;
         }
         /* edges */
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 11; i++) {
             Edge<String, Integer> edge = new Edge<>();
             edge.info = i + 1;
             edge.weight = i + 1;
