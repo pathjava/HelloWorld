@@ -39,7 +39,6 @@ public class FindUnused {
         node.mark = State.PROCESSED; /* при обратном ходе рекурсии помечаем все достижимые бъекты как использованные */
     }
 
-
     private static class CObject {
         private final List<CObject> references; /* ссылки на другие объекты */
         private String nameNode;
