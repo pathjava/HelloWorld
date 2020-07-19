@@ -15,17 +15,27 @@ public class Boruvka<N, E> {
 
         while (edgeList.size() < graph.nodes.size() - 1) {
             for (Node<N, E> node : graph.nodes) {
-                find(node);
+                Edge<N, E> minEdge = find(node);
+                if (!edgeList.contains(minEdge))
+                    edgeList.add(minEdge);
             }
         }
-
+        for (Edge<N, E> edge : edgeList) {
+            System.out.println(edge);
+        }
         return edgeList;
     }
 
-    private void find(Node<N, E> node) {
+    private Edge<N, E> find(Node<N, E> node) {
+        Edge<N, E> minEdge = null;
+        double min = Double.MAX_VALUE;
         for (Edge<N, E> edge : node.in) {
-
+            if (edge.weight < min) {
+                min = edge.weight;
+                minEdge = edge;
+            }
         }
+        return minEdge;
     }
 
     private void merge() {
@@ -48,6 +58,15 @@ public class Boruvka<N, E> {
         Node<N, E> out; // вершина, из которой исходит ребро
         Node<N, E> in; // вершина, в которую можно попасть по этому ребру
         double weight; // стоимость перехода
+
+        @Override
+        public String toString() {
+            return "Edge{" +
+                    "out=" + out +
+                    ", in=" + in +
+                    ", weight=" + weight +
+                    '}';
+        }
     }
 
     static class Graph<N, E> {
