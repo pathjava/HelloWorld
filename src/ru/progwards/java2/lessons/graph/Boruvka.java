@@ -10,10 +10,7 @@ public class Boruvka<N, E> {
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
         List<Edge<N, E>> edgeList = new ArrayList<>();
 
-        if (graph.nodes.get(0).in.get(0).equals(graph.nodes.get(1).out.get(0))) /* for test */
-            System.out.println("11111");
-
-        while (edgeList.size() < graph.nodes.size() - 1) {
+        while (edgeList.size() < graph.nodes.size() - 2) {
             for (Node<N, E> node : graph.nodes) {
                 Edge<N, E> minEdge = find(node);
                 if (!edgeList.contains(minEdge))
@@ -62,8 +59,8 @@ public class Boruvka<N, E> {
         @Override
         public String toString() {
             return "Edge{" +
-                    "out=" + out +
-                    ", in=" + in +
+//                    "out=" + out +
+//                    ", in=" + in +
                     ", weight=" + weight +
                     '}';
         }
