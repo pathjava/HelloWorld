@@ -17,7 +17,7 @@ public class Boruvka<N, E> {
                     edgeList.add(minEdge);
             }
         }
-        for (Edge<N, E> edge : edgeList) {
+        for (Edge<N, E> edge : edgeList) { // for test
             System.out.println(edge);
         }
         return edgeList;
@@ -59,8 +59,8 @@ public class Boruvka<N, E> {
         @Override
         public String toString() {
             return "Edge{" +
-//                    "out=" + out +
-//                    ", in=" + in +
+                    "out=" + out.out.iterator().next().weight +
+                    ", in=" + in.in.iterator().next().weight +
                     ", weight=" + weight +
                     '}';
         }
