@@ -10,11 +10,12 @@ public class Boruvka<N, E> {
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
         List<Edge<N, E>> edgeList = new LinkedList<>();
 
-        while (edgeList.size() < graph.nodes.size() - 2) {
+        while (edgeList.size() < graph.nodes.size() - 1) {
             for (Node<N, E> node : graph.nodes) {
                 Edge<N, E> minEdge = findMinEdge(node);
-                merge(find(minEdge.in), find(node));
-                if (!edgeList.contains(minEdge))
+                Node<N, E> mainRoot = find(node);
+                Node<N, E> tempRoot = find(minEdge.in);
+                if (merge(tempRoot, mainRoot))
                     edgeList.add(minEdge);
             }
         }
@@ -46,9 +47,12 @@ public class Boruvka<N, E> {
         return node;
     }
 
-    private void merge(Node<N, E> u, Node<N, E> v) {
-        if (!u.equals(v))
+    private boolean merge(Node<N, E> u, Node<N, E> v) {
+        if (!u.equals(v)) {
             u.next = v;
+            return true;
+        }
+        return false;
     }
 
     static class Node<N, E> {
