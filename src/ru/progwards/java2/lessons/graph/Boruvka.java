@@ -39,16 +39,16 @@ public class Boruvka<N, E> {
     private Node<N, E> find(Node<N, E> node) {
         if (node.next == null)
             return node;
-        else {
+        else
             while (node.next != null) {
                 node = node.next;
             }
-        }
         return node;
     }
 
     private void merge(Node<N, E> u, Node<N, E> v) {
-
+        if (!u.equals(v))
+            u.next = v;
     }
 
     static class Node<N, E> {
