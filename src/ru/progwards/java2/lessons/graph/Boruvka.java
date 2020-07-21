@@ -13,9 +13,9 @@ public class Boruvka<N, E> {
         while (edgeList.size() < graph.nodes.size() - 1) {
             for (Node<N, E> node : graph.nodes) {
                 Edge<N, E> minEdge = findMinEdge(node);
-                Node<N, E> mainRoot = find(node);
+                Node<N, E> currentRoot = find(node);
                 Node<N, E> tempRoot = find(minEdge.in);
-                if (merge(tempRoot, mainRoot))
+                if (merge(tempRoot, currentRoot))
                     edgeList.add(minEdge);
             }
         }
