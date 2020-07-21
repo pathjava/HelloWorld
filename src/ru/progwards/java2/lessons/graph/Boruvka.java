@@ -20,9 +20,6 @@ public class Boruvka<N, E> {
                     edgeList.add(minEdge);
             }
         }
-        for (Edge<N, E> edge : edgeList) { // for test
-            System.out.println(edge);
-        }
         return edgeList;
     }
 
@@ -207,6 +204,10 @@ public class Boruvka<N, E> {
         graph.edges.get(10).weight = 13;
 
 
-        boruvka.minTree(graph);
+//        boruvka.minTree(graph);
+
+        for (Edge<String, Integer> edge : boruvka.minTree(graph)) {
+            System.out.println(edge);
+        }
     }
 }
