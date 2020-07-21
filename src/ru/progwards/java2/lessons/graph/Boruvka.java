@@ -8,11 +8,12 @@ import java.util.*;
 public class Boruvka<N, E> {
 
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
-        List<Edge<N, E>> edgeList = new ArrayList<>();
+        List<Edge<N, E>> edgeList = new LinkedList<>();
 
         while (edgeList.size() < graph.nodes.size() - 2) {
             for (Node<N, E> node : graph.nodes) {
-                Edge<N, E> minEdge = find(node);
+                Edge<N, E> minEdge = findMinEdge(node);
+                merge(find(minEdge.in), find(node));
                 if (!edgeList.contains(minEdge))
                     edgeList.add(minEdge);
             }
@@ -23,10 +24,10 @@ public class Boruvka<N, E> {
         return edgeList;
     }
 
-    private Edge<N, E> find(Node<N, E> node) {
+    private Edge<N, E> findMinEdge(Node<N, E> node) {
         Edge<N, E> minEdge = null;
         double min = Double.MAX_VALUE;
-        for (Edge<N, E> edge : node.in) {
+        for (Edge<N, E> edge : node.out) {
             if (edge.weight < min) {
                 min = edge.weight;
                 minEdge = edge;
@@ -35,7 +36,18 @@ public class Boruvka<N, E> {
         return minEdge;
     }
 
-    private void merge() {
+    private Node<N, E> find(Node<N, E> node) {
+        if (node.next == null)
+            return node;
+        else {
+            while (node.next != null) {
+                node = node.next;
+            }
+        }
+        return node;
+    }
+
+    private void merge(Node<N, E> u, Node<N, E> v) {
 
     }
 
@@ -43,10 +55,12 @@ public class Boruvka<N, E> {
         N info; // информация об узле
         List<Edge<N, E>> in; // массив входящих ребер
         List<Edge<N, E>> out; // массив исходящих ребер
+        Node<N, E> next;
 
         public Node() {
             in = new LinkedList<>();
             out = new LinkedList<>();
+            next = null;
         }
     }
 
