@@ -49,8 +49,8 @@ public class Boruvka<N, E> {
         for (Edge<N, E> edge : edgeSet) {
             if (!find(edge.in).equals(find(edge.out)))
                 if (edge.weight < min) {
-                    min = edge.weight;
                     minEdge = edge;
+                    break;
                 }
         }
         return minEdge;
