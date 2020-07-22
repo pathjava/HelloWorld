@@ -8,6 +8,8 @@ import java.util.*;
 public class Boruvka<N, E> {
 
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
+        if (graph.nodes == null || graph.edges == null)
+            throw new IllegalArgumentException("Граф не может быть null!");
         List<Edge<N, E>> edgeList = new LinkedList<>();
         TreeSet<Edge<N, E>> edgeSet = new TreeSet<>(Comparator.comparingDouble(o -> o.weight));
         edgeSet.addAll(graph.edges);
