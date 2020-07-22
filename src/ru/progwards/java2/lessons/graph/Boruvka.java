@@ -11,11 +11,9 @@ public class Boruvka<N, E> {
         List<Edge<N, E>> edgeList = new LinkedList<>();
         List<Node<N, E>> nodesTemp = new LinkedList<>(graph.nodes);
 
-        while (nodesTemp.size() > 1) {
+        while (nodesTemp.size() > 0) {
             Edge<N, E> minEdge = findMinEdge(nodesTemp.get(0));
-            Node<N, E> currentRoot = find(nodesTemp.get(0));
-            Node<N, E> tempRoot = find(minEdge.in);
-            if (merge(tempRoot, currentRoot))
+            if (merge(find(minEdge.in), find(minEdge.out)))
                 edgeList.add(minEdge);
             nodesTemp.remove(0);
         }
@@ -75,8 +73,8 @@ public class Boruvka<N, E> {
         @Override
         public String toString() {
             return "Edge{" +
-                    "out=" + out.out.iterator().next().weight +
-                    ", in=" + in.in.iterator().next().weight +
+                    "out=" + out.info +
+                    ", in=" + in.info +
                     ", weight=" + weight +
                     '}';
         }
