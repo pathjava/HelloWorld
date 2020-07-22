@@ -20,6 +20,10 @@ public class Boruvka<N, E> {
             nodesTemp.remove(0);
         }
 
+        while (edgeList.size() < graph.nodes.size() - 1) {
+
+        }
+
         return edgeList;
     }
 
