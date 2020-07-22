@@ -11,15 +11,13 @@ public class Boruvka<N, E> {
         List<Edge<N, E>> edgeList = new LinkedList<>();
         List<Node<N, E>> nodesTemp = new LinkedList<>(graph.nodes);
 
-        int index = 0;
         while (nodesTemp.size() > 1) {
-            Edge<N, E> minEdge = findMinEdge(nodesTemp.get(index));
-            Node<N, E> currentRoot = find(nodesTemp.get(index));
+            Edge<N, E> minEdge = findMinEdge(nodesTemp.get(0));
+            Node<N, E> currentRoot = find(nodesTemp.get(0));
             Node<N, E> tempRoot = find(minEdge.in);
             if (merge(tempRoot, currentRoot))
                 edgeList.add(minEdge);
-            nodesTemp.remove(index);
-            index++;
+            nodesTemp.remove(0);
         }
 
         return edgeList;
