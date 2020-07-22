@@ -57,9 +57,7 @@ public class Boruvka<N, E> {
     }
 
     private Node<N, E> find(Node<N, E> node) {
-        if (node.next == null)
-            return node;
-        else
+        if (node.next != null)
             while (node.next != null) {
                 node = node.next;
             }
@@ -107,6 +105,7 @@ public class Boruvka<N, E> {
         List<Node<N, E>> nodes = new LinkedList<>();
         List<Edge<N, E>> edges = new LinkedList<>();
     }
+
 
     public static void main(String[] args) {
         Boruvka<String, Integer> boruvka = new Boruvka<>();
