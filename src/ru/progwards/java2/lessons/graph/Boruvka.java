@@ -15,7 +15,7 @@ public class Boruvka<N, E> {
             Edge<N, E> minEdge = findMinEdge(nodesTemp.get(0));
             Node<N, E> currentRoot = find(minEdge.out);
             Node<N, E> tempRoot = find(minEdge.in);
-            if (merge(tempRoot, currentRoot))
+            if (merge(tempRoot, currentRoot, minEdge))
                 edgeList.add(minEdge);
             nodesTemp.remove(0);
         }
@@ -49,9 +49,9 @@ public class Boruvka<N, E> {
         return node;
     }
 
-    private boolean merge(Node<N, E> u, Node<N, E> v) {
+    private boolean merge(Node<N, E> u, Node<N, E> v, Edge<N, E> minEdge) {
         if (!u.equals(v)) {
-            u.next = v;
+            u.next = minEdge.out;
             return true;
         }
         return false;
