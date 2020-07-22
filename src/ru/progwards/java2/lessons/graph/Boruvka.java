@@ -10,28 +10,28 @@ public class Boruvka<N, E> {
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
         if (graph.nodes == null || graph.edges == null)
             throw new IllegalArgumentException("Граф не может быть null!");
-        List<Edge<N, E>> edgeList = new LinkedList<>();
-        TreeSet<Edge<N, E>> edgeSet = new TreeSet<>(Comparator.comparingDouble(o -> o.weight));
+        List<Edge<N, E>> edgeList = new LinkedList<>(); /* лист для ребер минимального остовного дерева */
+        TreeSet<Edge<N, E>> edgeSet = new TreeSet<>(Comparator.comparingDouble(o -> o.weight)); /* сет оставшихся ребер для поиска минимального ребра наружу */
         edgeSet.addAll(graph.edges);
 
         int index = 0;
-        while (index < graph.nodes.size()) {
-            Edge<N, E> minEdge = findMinEdgeFromNode(graph.nodes.get(index));
-            if (merge(find(minEdge.in), find(minEdge.out), minEdge)) {
+        while (index < graph.nodes.size()) { /* крутимся в цикле по количеству узлов в графе */
+            Edge<N, E> minEdge = findMinEdgeFromNode(graph.nodes.get(index)); /* для конкретного узла находим минимальное ребро */
+            if (merge(find(minEdge.in), find(minEdge.out), minEdge)) { /* отправляем на склейку узлы и если true, добавляем ребро в MST */
                 edgeList.add(minEdge);
-                edgeSet.remove(minEdge);
+                edgeSet.remove(minEdge); /* удаляем использованное ребро */
             }
             index++;
         }
 
-        while (edgeList.size() < graph.nodes.size() - 1) {
+        while (edgeList.size() < graph.nodes.size() - 1) { /* ищем минимальное ребро между связными компонентами */
             edgeList.add(findMinEdgeFromSet(edgeSet));
         }
 
         return edgeList;
     }
 
-    private Edge<N, E> findMinEdgeFromNode(Node<N, E> node) {
+    private Edge<N, E> findMinEdgeFromNode(Node<N, E> node) { /* поиск минимального по весу ребра в узле */
         Edge<N, E> minEdge = null;
         double min = Double.MAX_VALUE;
         for (Edge<N, E> edge : node.out) {
@@ -43,29 +43,29 @@ public class Boruvka<N, E> {
         return minEdge;
     }
 
-    private Edge<N, E> findMinEdgeFromSet(Set<Edge<N, E>> edgeSet) {
+    private Edge<N, E> findMinEdgeFromSet(Set<Edge<N, E>> edgeSet) { /* поиск минимального по весу ребра в сете оставшихся ребер */
         Edge<N, E> minEdge = null;
         double min = Double.MAX_VALUE;
         for (Edge<N, E> edge : edgeSet) {
-            if (!find(edge.in).equals(find(edge.out)))
+            if (!find(edge.in).equals(find(edge.out))) /* проверяем, чтобы вершины ребра не принадлежали одной компоненте */
                 if (edge.weight < min) {
                     minEdge = edge;
-                    break;
+                    break; /* так как сет сортированный по весу ребер, после первого соответствия прерываем цикл */
                 }
         }
         return minEdge;
     }
 
-    private Node<N, E> find(Node<N, E> node) {
+    private Node<N, E> find(Node<N, E> node) { /* ищем корневой узел компоненты */
         if (node.next != null)
-            while (node.next != null) {
+            while (node.next != null) { /* крутимся в цикле пока next узла не null */
                 node = node.next;
             }
         return node;
     }
 
-    private boolean merge(Node<N, E> u, Node<N, E> v, Edge<N, E> minEdge) {
-        if (!u.equals(v)) {
+    private boolean merge(Node<N, E> u, Node<N, E> v, Edge<N, E> minEdge) { /* склеиваем узлы - присваиваем ссылку next */
+        if (!u.equals(v)) { /* если корневые узлы не равны */
             u.next = minEdge.out;
             return true;
         }
