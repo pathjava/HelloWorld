@@ -9,23 +9,21 @@ public class Boruvka<N, E> {
 
     public List<Edge<N, E>> minTree(Graph<N, E> graph) {
         List<Edge<N, E>> edgeList = new LinkedList<>();
-        List<Node<N, E>> nodesTemp = new LinkedList<>(graph.nodes);
-        Set<Edge<N,E>> edgeSet = new TreeSet<>(Comparator.comparingDouble(o -> o.weight));
+        TreeSet<Edge<N, E>> edgeSet = new TreeSet<>(Comparator.comparingDouble(o -> o.weight));
         edgeSet.addAll(graph.edges);
 
-        while (nodesTemp.size() > 0) {
-            Edge<N, E> minEdge = findMinEdgeFromNode(nodesTemp.get(0));
-            Node<N, E> currentRoot = find(minEdge.out);
-            Node<N, E> tempRoot = find(minEdge.in);
-            if (merge(tempRoot, currentRoot, minEdge)) {
+        int index = 0;
+        while (index < graph.nodes.size()) {
+            Edge<N, E> minEdge = findMinEdgeFromNode(graph.nodes.get(index));
+            if (merge(find(minEdge.in), find(minEdge.out), minEdge)) {
                 edgeList.add(minEdge);
                 edgeSet.remove(minEdge);
             }
-            nodesTemp.remove(0);
+            index++;
         }
 
         while (edgeList.size() < graph.nodes.size() - 1) {
-
+            edgeList.add(findMinEdgeFromSet(edgeSet));
         }
 
         return edgeList;
@@ -39,6 +37,19 @@ public class Boruvka<N, E> {
                 min = edge.weight;
                 minEdge = edge;
             }
+        }
+        return minEdge;
+    }
+
+    private Edge<N, E> findMinEdgeFromSet(Set<Edge<N, E>> edgeSet) {
+        Edge<N, E> minEdge = null;
+        double min = Double.MAX_VALUE;
+        for (Edge<N, E> edge : edgeSet) {
+            if (!find(edge.in).equals(find(edge.out)))
+                if (edge.weight < min) {
+                    min = edge.weight;
+                    minEdge = edge;
+                }
         }
         return minEdge;
     }
