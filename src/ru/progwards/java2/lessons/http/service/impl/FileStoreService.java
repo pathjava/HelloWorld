@@ -3,48 +3,71 @@
 
 package ru.progwards.java2.lessons.http.service.impl;
 
-import ru.progwards.java2.lessons.http.Store;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.type.MapType;
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.StoreService;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class FileStoreService implements StoreService {
+
+    private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final MapType type = mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Account.class);
+    private HashMap<String, Account> accountsMap;
+
+    {
+        try {
+            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public Account get(String id) {
-        Account account = Store.getStore().get(id);
-        if (account == null) {
+        Account account = null;
+        if (accountsMap != null)
+            account = accountsMap.get(id);
+        if (account == null)
             throw new RuntimeException("Account not found by id:" + id);
-        }
         return account;
     }
 
     @Override
     public Collection<Account> get() {
-        if (Store.getStore().size() == 0) {
+        if (accountsMap.size() == 0)
             throw new RuntimeException("Store is empty");
-        }
-        return Store.getStore().values();
+        return accountsMap.values();
     }
 
     @Override
     public void delete(String id) {
-        if (Store.getStore().get(id) == null) {
+        if (accountsMap.get(id) == null)
             throw new RuntimeException("Account not found by id:" + id);
-        }
-        Store.getStore().remove(id);
+        accountsMap.remove(id);
     }
 
     @Override
     public void insert(Account account) {
-        Store.getStore().put(account.getId(), account);
+        accountsMap.put(account.getId(), account);
     }
 
     @Override
     public void update(Account account) {
-        if (Store.getStore().get(account.getId()) == null) {
+        if (accountsMap.get(account.getId()) == null)
             throw new RuntimeException("Account not found by id:" + account.getId());
-        }
         this.insert(account);
+    }
+
+
+    /* for testing */
+    public static void main(String[] args) {
+        FileStoreService fss = new FileStoreService();
+        fss.get("3");
     }
 }
