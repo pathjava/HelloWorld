@@ -1,17 +1,20 @@
 // Oleg Kiselev
+// 24.07.2020, 19:02
+
+// Oleg Kiselev
 // 09.07.2020, 12:40
 
-package ru.progwards.java2.lessons.http;
+package ru.progwards.java2.lessons.http.auxiliaryfiles;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.util.Date;
 
-public class CreatorAccounts {
+public class CreatorServerAccounts {
 
     /* данный класс и метод созданы только для тестирования функционала */
-    void creator() {
+    public void creator() {
         Account account;
         for (int i = 0; i < 10; i++) {
             account = new Account();

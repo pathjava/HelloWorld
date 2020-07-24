@@ -10,5 +10,7 @@
     <orderEntry type="library" name="programming" level="project" />
     <orderEntry type="library" name="junit:junit:4.121" level="project" />
     <orderEntry type="library" name="org.javassist:javassist:3.26.0-GA1" level="project" />
+    <orderEntry type="library" name="org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="org.codehaus.jackson:jackson-mapper-asl:1.9.9" level="project" />
   </component>
 </module>

@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.http;
 
+import ru.progwards.java2.lessons.http.auxiliaryfiles.CreatorServerAccounts;
 import ru.progwards.java2.lessons.http.serverfiles.AtmServerThread;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class AtmServer {
 
     public static void main(String[] args) {
         AtmServer atmServer = new AtmServer();
-        CreatorAccounts creator = new CreatorAccounts(); /* создаем тестовые аккаунты - */
+        CreatorServerAccounts creator = new CreatorServerAccounts(); /* создаем тестовые аккаунты - */
         creator.creator();
 
         atmServer.server(); /* запускаем сервер */
