@@ -1,7 +1,4 @@
 // Oleg Kiselev
-// 24.07.2020, 19:02
-
-// Oleg Kiselev
 // 24.07.2020, 18:05
 
 package ru.progwards.java2.lessons.http.auxiliaryfiles;
@@ -24,7 +21,7 @@ public class CreatorFileAccounts {
 
     void creator() throws IOException {
         Map<String, Account> accountMap = new HashMap<>();
-        Account account = null;
+        Account account;
         for (int i = 1; i <= 10; i++) {
             account = new Account();
             account.setDate(new Date());
@@ -32,16 +29,16 @@ public class CreatorFileAccounts {
             account.setPin(i);
             account.setId("" + i);
             account.setAmount(150 * i);
-            accountMap.put(account.getHolder(), account);
+            accountMap.put(account.getId(), account);
         }
         ObjectMapper mapper = new ObjectMapper();
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         writer.writeValue(Paths.get(PATH_FILE).toFile(), accountMap);
 
-//        for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
-//            String jsonString = mapper.writeValueAsString(entry);
-//            System.out.println(jsonString);
-//        }
+        for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
+            String jsonString = mapper.writeValueAsString(entry.getValue());
+            System.out.println(jsonString);
+        }
     }
 
     public static void main(String[] args) {
