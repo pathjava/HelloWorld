@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CreatorFileAccounts {
 
@@ -21,6 +22,7 @@ public class CreatorFileAccounts {
 
     void creator() throws IOException {
         Map<String, Account> accountMap = new HashMap<>();
+        int rand = ThreadLocalRandom.current().nextInt(300,700);
         Account account;
         for (int i = 1; i <= 10; i++) {
             account = new Account();
@@ -28,12 +30,17 @@ public class CreatorFileAccounts {
             account.setHolder("Account_" + i);
             account.setPin(i);
             account.setId("" + i);
-            account.setAmount(150 * i);
+            account.setAmount(rand * i);
             accountMap.put(account.getId(), account);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(Paths.get(PATH_FILE).toFile(), accountMap);
+        ObjectMapper mapper = null;
+        try {
+            mapper = new ObjectMapper();
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
             String jsonString = mapper.writeValueAsString(entry.getValue());
