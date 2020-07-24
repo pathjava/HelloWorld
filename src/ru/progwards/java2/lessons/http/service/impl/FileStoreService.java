@@ -3,6 +3,7 @@
 
 package ru.progwards.java2.lessons.http.service.impl;
 
+import ru.progwards.java2.lessons.http.Store;
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.StoreService;
 
@@ -11,26 +12,39 @@ import java.util.Collection;
 public class FileStoreService implements StoreService {
     @Override
     public Account get(String id) {
-        return null;
+        Account account = Store.getStore().get(id);
+        if (account == null) {
+            throw new RuntimeException("Account not found by id:" + id);
+        }
+        return account;
     }
 
     @Override
     public Collection<Account> get() {
-        return null;
+        if (Store.getStore().size() == 0) {
+            throw new RuntimeException("Store is empty");
+        }
+        return Store.getStore().values();
     }
 
     @Override
     public void delete(String id) {
-
+        if (Store.getStore().get(id) == null) {
+            throw new RuntimeException("Account not found by id:" + id);
+        }
+        Store.getStore().remove(id);
     }
 
     @Override
     public void insert(Account account) {
-
+        Store.getStore().put(account.getId(), account);
     }
 
     @Override
     public void update(Account account) {
-
+        if (Store.getStore().get(account.getId()) == null) {
+            throw new RuntimeException("Account not found by id:" + account.getId());
+        }
+        this.insert(account);
     }
 }

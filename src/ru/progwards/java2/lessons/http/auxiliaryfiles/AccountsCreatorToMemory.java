@@ -11,9 +11,10 @@ import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.util.Date;
 
-public class CreatorServerAccounts {
+public class AccountsCreatorToMemory implements AccountsCreator {
 
     /* данный класс и метод созданы только для тестирования функционала */
+    @Override
     public void creator() {
         Account account;
         for (int i = 0; i < 10; i++) {

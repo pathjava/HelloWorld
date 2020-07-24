@@ -16,11 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CreatorFileAccounts {
+public class AccountsCreatorToFile implements AccountsCreator {
 
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
 
-    void creator() throws IOException {
+    @Override
+    public void creator() throws IOException {
         Map<String, Account> accountMap = new HashMap<>();
         int rand = ThreadLocalRandom.current().nextInt(300,700);
         Account account;
@@ -49,7 +50,7 @@ public class CreatorFileAccounts {
     }
 
     public static void main(String[] args) {
-        CreatorFileAccounts cfa = new CreatorFileAccounts();
+        AccountsCreatorToFile cfa = new AccountsCreatorToFile();
         try {
             cfa.creator();
         } catch (IOException e) {
