@@ -102,22 +102,30 @@ public class Summator {
     }
 
     /* для сравнения правильности операции сложения в многопоточности */
-//    public BigInteger sumTest(BigInteger number) {
-//        BigInteger count = BigInteger.ZERO;
-//        for (BigInteger i = BigInteger.ONE; i.compareTo(number) <= 0; i = i.add(BigInteger.ONE)) {
-//            count = count.add(i);
-//        }
-//        return count;
-//    }
+    public BigInteger sumTest(BigInteger number) {
+        BigInteger count = BigInteger.ZERO;
+        for (BigInteger i = BigInteger.ONE; i.compareTo(number) <= 0; i = i.add(BigInteger.ONE)) {
+            count = count.add(i);
+        }
+        return count;
+    }
 
 
     public static void main(String[] args) {
-        Summator summator = new Summator(27);
+        Summator summator = new Summator(120);
+        int n = 22852700;
 
-        System.out.println(summator.sum(BigInteger.valueOf(1125)));
+        long start = System.currentTimeMillis();
+        System.out.println("Threads: " + summator.sum(BigInteger.valueOf(n)));
+        long finish = System.currentTimeMillis();
+        System.out.println(finish - start);
 
-//        System.out.println();
-//        System.out.println(summator.sumTest(BigInteger.valueOf(1125)));
+        System.out.println("-------------");
+
+        start = System.currentTimeMillis();
+        System.out.println("Single: " + summator.sumTest(BigInteger.valueOf(n)));
+        finish = System.currentTimeMillis();
+        System.out.println(finish - start);
 
     }
 }
