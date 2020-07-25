@@ -27,7 +27,7 @@ public class FileStore {
     public static HashMap<String, Account> readStore() {
         rwl.readLock().lock();
         try {
-            reader();
+            readerFromJson();
             return accountsMap;
         } finally {
             rwl.readLock().unlock();
@@ -38,7 +38,7 @@ public class FileStore {
         rwl.writeLock().lock();
         try {
             accountsMap.put(id, account);
-            writer();
+            writerToJson();
         } finally {
             rwl.writeLock().unlock();
         }
@@ -48,13 +48,13 @@ public class FileStore {
         rwl.writeLock().lock();
         try {
             accountsMap.remove(id);
-            writer();
+            writerToJson();
         } finally {
             rwl.writeLock().unlock();
         }
     }
 
-    public static void reader() {
+    public static void readerFromJson() {
         try {
             accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
         } catch (IOException e) {
@@ -62,7 +62,7 @@ public class FileStore {
         }
     }
 
-    public static void writer() {
+    public static void writerToJson() {
         try {
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
             writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);

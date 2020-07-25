@@ -45,11 +45,10 @@ public class FileStoreServiceImpl implements StoreService {
         this.insert(account);
     }
 
-
     /* for testing */
-    public static void main(String[] args) {
-        FileStoreServiceImpl fss = new FileStoreServiceImpl();
-        fss.get("3");
-        fss.delete("5");
-    }
+//    public static void main(String[] args) {
+//        FileStoreServiceImpl fss = new FileStoreServiceImpl();
+//        fss.get("3");
+//        fss.delete("5");
+//    }
 }
