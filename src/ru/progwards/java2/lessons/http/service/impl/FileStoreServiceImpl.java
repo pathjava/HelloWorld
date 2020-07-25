@@ -33,19 +33,29 @@ public class FileStoreServiceImpl implements StoreService {
 
     @Override
     public Account get(String id) {
-        Account account = null;
-        if (accountsMap != null)
-            account = accountsMap.get(id);
-        if (account == null)
-            throw new RuntimeException("Account not found by id:" + id);
-        return account;
+        rwl.readLock().lock();
+        try {
+            Account account = null;
+            if (accountsMap != null)
+                account = accountsMap.get(id);
+            if (account == null)
+                throw new RuntimeException("Account not found by id:" + id);
+            return account;
+        } finally {
+            rwl.readLock().unlock();
+        }
     }
 
     @Override
     public Collection<Account> get() {
-        if (accountsMap.size() == 0)
-            throw new RuntimeException("FileStore is empty");
-        return accountsMap.values();
+        rwl.readLock().lock();
+        try {
+            if (accountsMap.size() == 0)
+                throw new RuntimeException("FileStore is empty");
+            return accountsMap.values();
+        } finally {
+            rwl.readLock().unlock();
+        }
     }
 
     @Override
@@ -67,10 +77,21 @@ public class FileStoreServiceImpl implements StoreService {
         this.insert(account);
     }
 
+    private void readJson(){
+
+    }
+
+    private void writeJson(){
+
+    }
+
 
     /* for testing */
     public static void main(String[] args) {
         FileStoreServiceImpl fss = new FileStoreServiceImpl();
         fss.get("3");
+        System.out.println(fss.accountsMap.size());
+        fss.delete("3");
+        System.out.println(fss.accountsMap.size());
     }
 }
