@@ -41,7 +41,7 @@ public class FileStoreServiceImpl implements StoreService {
     @Override
     public Collection<Account> get() {
         if (accountsMap.size() == 0)
-            throw new RuntimeException("Store is empty");
+            throw new RuntimeException("FileStore is empty");
         return accountsMap.values();
     }
 
