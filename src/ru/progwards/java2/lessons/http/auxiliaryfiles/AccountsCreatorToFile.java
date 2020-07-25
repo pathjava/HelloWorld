@@ -20,10 +20,10 @@ public class AccountsCreatorToFile implements AccountsCreator {
 
     /* данный класс и метод созданы только для тестирования функционала */
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
-    private final Map<String, Account> accountsMap = new HashMap<>();
+    private final Map<String, Account> accountsMap = new HashMap<>(); /* хешмап с объектами/аккаунтами */
 
     @Override
-    public void creator() {
+    public void creator() { /* создаем в цикле аккаунты */
         int rand = ThreadLocalRandom.current().nextInt(300, 700);
         Account account;
         for (int i = 1; i <= 10; i++) {
@@ -35,15 +35,15 @@ public class AccountsCreatorToFile implements AccountsCreator {
             account.setAmount(rand * i);
             accountsMap.put(account.getId(), account);
             try {
-                Thread.sleep(3);
+                Thread.sleep(3); /* пауза, чтобы время у аккаунтов отличалось немного */
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        writerToJson();
+        writerToJson(); /* записываем аккаунты в файл Json */
     }
 
-    private void writerToJson() {
+    private void writerToJson() { /* записываем аккаунты в файл Json */
         try {
             ObjectMapper mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());

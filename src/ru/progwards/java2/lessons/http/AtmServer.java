@@ -29,10 +29,10 @@ public class AtmServer {
 
     public static void main(String[] args) {
         AtmServer atmServer = new AtmServer();
-//        AccountsCreatorToMemory creator = new AccountsCreatorToMemory(); /* создаем тестовые аккаунты - */
+//        AccountsCreatorToMemory creator = new AccountsCreatorToMemory(); /* создаем тестовые аккаунты */
 //        creator.creator();
 
-        AccountsCreatorToFile creator = new AccountsCreatorToFile(); /* создаем тестовые аккаунты - */
+        AccountsCreatorToFile creator = new AccountsCreatorToFile(); /* создаем тестовые аккаунты */
         creator.creator();
 
         atmServer.server(); /* запускаем сервер */

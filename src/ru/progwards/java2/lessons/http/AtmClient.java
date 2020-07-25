@@ -96,8 +96,8 @@ public class AtmClient implements AccountService {
         AtmClient atmClient = new AtmClient();
 
         for (int i = 1; i <= 10; i++) { /* выполняем операции с балансом аккаунтов */
-//            Account account = new StoreServiceImpl().get("" + i);
-            Account account = new FileStoreServiceImpl().get("" + i);
+//            Account account = new StoreServiceImpl().get("" + i); /* получаем аккаунт из памяти */
+            Account account = new FileStoreServiceImpl().get("" + i); /* получаем аккаунт из файла Json */
             atmClient.balance(account);
             System.out.println();
             atmClient.deposit(account, 300);
