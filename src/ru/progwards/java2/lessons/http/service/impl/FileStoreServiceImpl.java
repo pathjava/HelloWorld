@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class FileStoreServiceImpl implements StoreService {
 
@@ -19,6 +21,7 @@ public class FileStoreServiceImpl implements StoreService {
     private final ObjectMapper mapper = new ObjectMapper();
     private final MapType type = mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Account.class);
     private HashMap<String, Account> accountsMap;
+    private final ReadWriteLock rwl = new ReentrantReadWriteLock();
 
     {
         try {
