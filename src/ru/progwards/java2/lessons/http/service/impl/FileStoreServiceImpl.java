@@ -31,6 +31,10 @@ public class FileStoreServiceImpl implements StoreService {
         }
     }
 
+    public FileStoreServiceImpl(){
+        readJson();
+    }
+
     @Override
     public Account get(String id) {
         rwl.readLock().lock();
