@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.http;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.AccountService;
+import ru.progwards.java2.lessons.http.service.impl.FileStoreServiceImpl;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
@@ -94,8 +95,9 @@ public class AtmClient implements AccountService {
     public static void main(String[] args) {
         AtmClient atmClient = new AtmClient();
 
-        for (int i = 0; i < 10; i++) { /* выполняем операции с балансом аккаунтов */
-            Account account = new StoreServiceImpl().get("" + i);
+        for (int i = 1; i <= 10; i++) { /* выполняем операции с балансом аккаунтов */
+//            Account account = new StoreServiceImpl().get("" + i);
+            Account account = new FileStoreServiceImpl().get("" + i);
             atmClient.balance(account);
             System.out.println();
             atmClient.deposit(account, 300);
@@ -103,8 +105,10 @@ public class AtmClient implements AccountService {
             atmClient.withdraw(account, 150);
             System.out.println();
         }
-        Account from = new StoreServiceImpl().get("3");
-        Account to = new StoreServiceImpl().get("5");
+//        Account from = new StoreServiceImpl().get("3");
+//        Account to = new StoreServiceImpl().get("5");
+        Account from = new FileStoreServiceImpl().get("3");
+        Account to = new FileStoreServiceImpl().get("5");
         atmClient.transfer(from, to, 100);
         System.out.println();
     }

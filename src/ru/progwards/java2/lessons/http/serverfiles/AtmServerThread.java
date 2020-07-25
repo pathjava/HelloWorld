@@ -5,6 +5,7 @@ package ru.progwards.java2.lessons.http.serverfiles;
 
 import ru.progwards.java2.lessons.http.model.Account;
 import ru.progwards.java2.lessons.http.service.impl.AccountServiceImpl;
+import ru.progwards.java2.lessons.http.service.impl.FileStoreServiceImpl;
 import ru.progwards.java2.lessons.http.service.impl.StoreServiceImpl;
 
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class AtmServerThread implements Runnable {
     private final Socket socket;
     private String methodName;
     private String answer;
-    private final StoreServiceImpl service = new StoreServiceImpl();
+//    private final StoreServiceImpl service = new StoreServiceImpl();
+    private final FileStoreServiceImpl service = new FileStoreServiceImpl();
     private final AccountServiceImpl asi = new AccountServiceImpl(service);
     private final List<String> methodParamValue = new ArrayList<>();
 

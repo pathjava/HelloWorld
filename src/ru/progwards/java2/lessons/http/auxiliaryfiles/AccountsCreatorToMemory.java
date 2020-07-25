@@ -17,7 +17,7 @@ public class AccountsCreatorToMemory implements AccountsCreator {
     @Override
     public void creator() {
         Account account;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             account = new Account();
             account.setDate(new Date());
             account.setHolder("Account_" + i);
