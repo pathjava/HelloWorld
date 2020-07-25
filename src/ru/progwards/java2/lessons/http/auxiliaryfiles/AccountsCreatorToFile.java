@@ -50,15 +50,15 @@ public class AccountsCreatorToFile implements AccountsCreator {
         }
 
         /* for testing */
-        for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
-            String jsonString = null;
-            try {
-                jsonString = mapper.writeValueAsString(entry.getValue());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(jsonString);
-        }
+//        for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
+//            String jsonString = null;
+//            try {
+//                jsonString = mapper.writeValueAsString(entry.getValue());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println(jsonString);
+//        }
     }
 
     /* for testing */
