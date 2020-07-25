@@ -18,35 +18,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class FileStore {
 
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
-    private static ObjectMapper mapper = new ObjectMapper();
-    private static final MapType type = mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Account.class);
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final MapType type = mapper.getTypeFactory()
+            .constructMapType(HashMap.class, String.class, Account.class);
     private static HashMap<String, Account> accountsMap;
     private static final ReadWriteLock rwl = new ReentrantReadWriteLock();
-
-    //        static {
-//        try {
-//            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    public static void reader() {
-        try {
-            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void writer() {
-        try {
-            mapper = new ObjectMapper();
-            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static HashMap<String, Account> readStore() {
         rwl.readLock().lock();
@@ -58,14 +34,40 @@ public class FileStore {
         }
     }
 
-    public static HashMap<String, Account> writeStore() {
+    public static void putOrUpdateAccount(String id, Account account) {
         rwl.writeLock().lock();
         try {
+            accountsMap.put(id, account);
             writer();
-            return accountsMap;
         } finally {
             rwl.writeLock().unlock();
         }
     }
 
+    public static void delAccount(String id) {
+        rwl.writeLock().lock();
+        try {
+            accountsMap.remove(id);
+            writer();
+        } finally {
+            rwl.writeLock().unlock();
+        }
+    }
+
+    public static void reader() {
+        try {
+            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writer() {
+        try {
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

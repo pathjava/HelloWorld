@@ -20,10 +20,10 @@ public class AccountsCreatorToFile implements AccountsCreator {
 
     /* данный класс и метод созданы только для тестирования функционала */
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
+    private final Map<String, Account> accountsMap = new HashMap<>();
 
     @Override
     public void creator() {
-        Map<String, Account> accountsMap = new HashMap<>();
         int rand = ThreadLocalRandom.current().nextInt(300, 700);
         Account account;
         for (int i = 1; i <= 10; i++) {
@@ -40,17 +40,23 @@ public class AccountsCreatorToFile implements AccountsCreator {
                 e.printStackTrace();
             }
         }
-        ObjectMapper mapper = null;
+        writerToJson();
+    }
+
+    private void writerToJson() {
         try {
-            mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
             writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        /* for testing */
-//        for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
+    /* for testing */
+//    private void showJson() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        for (Map.Entry<String, Account> entry : accountsMap.entrySet()) {
 //            String jsonString = null;
 //            try {
 //                jsonString = mapper.writeValueAsString(entry.getValue());
@@ -59,12 +65,12 @@ public class AccountsCreatorToFile implements AccountsCreator {
 //            }
 //            System.out.println(jsonString);
 //        }
-    }
+//    }
 
     /* for testing */
-    public static void main(String[] args) {
-        AccountsCreatorToFile cfa = new AccountsCreatorToFile();
-        cfa.creator();
-    }
-
+//    public static void main(String[] args) {
+//        AccountsCreatorToFile cfa = new AccountsCreatorToFile();
+//        cfa.creator();
+//        cfa.showJson();
+//    }
 }
