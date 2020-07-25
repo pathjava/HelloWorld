@@ -21,24 +21,28 @@ public class FileStore {
     private static HashMap<String, Account> accountsMap;
     private static final ReadWriteLock rwl = new ReentrantReadWriteLock();
 
-    //    {
-//
-//    }
-    private static void reader() {
+    static {
         try {
             accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+//    private static void reader() {
+//        try {
+//            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    private static void writer(){
+    private static void writer() {
 
     }
 
     public static HashMap<String, Account> readStore() {
         rwl.readLock().lock();
-        reader();
+//        reader();
         try {
             return accountsMap;
         } finally {
