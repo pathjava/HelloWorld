@@ -23,7 +23,7 @@ public class AccountsCreatorToFile implements AccountsCreator {
 
     @Override
     public void creator() {
-        Map<String, Account> accountMap = new HashMap<>();
+        Map<String, Account> accountsMap = new HashMap<>();
         int rand = ThreadLocalRandom.current().nextInt(300, 700);
         Account account;
         for (int i = 1; i <= 10; i++) {
@@ -33,7 +33,7 @@ public class AccountsCreatorToFile implements AccountsCreator {
             account.setPin(i);
             account.setId("" + i);
             account.setAmount(rand * i);
-            accountMap.put(account.getId(), account);
+            accountsMap.put(account.getId(), account);
             try {
                 Thread.sleep(3);
             } catch (InterruptedException e) {
@@ -44,7 +44,7 @@ public class AccountsCreatorToFile implements AccountsCreator {
         try {
             mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountMap);
+            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,9 @@
 package ru.progwards.java2.lessons.http;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.map.type.MapType;
+import org.codehaus.jackson.util.DefaultPrettyPrinter;
 import ru.progwards.java2.lessons.http.model.Account;
 
 import java.io.IOException;
@@ -21,29 +23,34 @@ public class FileStore {
     private static HashMap<String, Account> accountsMap;
     private static final ReadWriteLock rwl = new ReentrantReadWriteLock();
 
-    static {
-        try {
-            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-//    private static void reader() {
+    //    static {
 //        try {
 //            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //    }
+    private static void reader() {
+        try {
+            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static void writer() {
-
+        try {
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+            writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static HashMap<String, Account> readStore() {
         rwl.readLock().lock();
-//        reader();
         try {
+            reader();
             return accountsMap;
         } finally {
             rwl.readLock().unlock();
@@ -55,6 +62,7 @@ public class FileStore {
         try {
             return accountsMap;
         } finally {
+            writer();
             rwl.writeLock().unlock();
         }
     }
