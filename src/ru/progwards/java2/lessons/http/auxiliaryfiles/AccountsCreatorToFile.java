@@ -18,12 +18,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AccountsCreatorToFile implements AccountsCreator {
 
+    /* данный класс и метод созданы только для тестирования функционала */
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
 
     @Override
-    public void creator() throws IOException {
+    public void creator() {
         Map<String, Account> accountMap = new HashMap<>();
-        int rand = ThreadLocalRandom.current().nextInt(300,700);
+        int rand = ThreadLocalRandom.current().nextInt(300, 700);
         Account account;
         for (int i = 1; i <= 10; i++) {
             account = new Account();
@@ -33,6 +34,11 @@ public class AccountsCreatorToFile implements AccountsCreator {
             account.setId("" + i);
             account.setAmount(rand * i);
             accountMap.put(account.getId(), account);
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         ObjectMapper mapper = null;
         try {
@@ -43,19 +49,22 @@ public class AccountsCreatorToFile implements AccountsCreator {
             e.printStackTrace();
         }
 
+        /* for testing */
         for (Map.Entry<String, Account> entry : accountMap.entrySet()) {
-            String jsonString = mapper.writeValueAsString(entry.getValue());
+            String jsonString = null;
+            try {
+                jsonString = mapper.writeValueAsString(entry.getValue());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println(jsonString);
         }
     }
 
+    /* for testing */
     public static void main(String[] args) {
         AccountsCreatorToFile cfa = new AccountsCreatorToFile();
-        try {
-            cfa.creator();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cfa.creator();
     }
 
 }

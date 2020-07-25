@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class FileStoreService implements StoreService {
+public class FileStoreServiceImpl implements StoreService {
 
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
     private final ObjectMapper mapper = new ObjectMapper();
@@ -67,7 +67,7 @@ public class FileStoreService implements StoreService {
 
     /* for testing */
     public static void main(String[] args) {
-        FileStoreService fss = new FileStoreService();
+        FileStoreServiceImpl fss = new FileStoreServiceImpl();
         fss.get("3");
     }
 }
