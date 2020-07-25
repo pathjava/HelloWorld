@@ -31,6 +31,7 @@ public class FileStoreServiceImpl implements StoreService {
         if (FileStore.readStore().get(id) == null)
             throw new RuntimeException("Account not found by id:" + id);
         FileStore.writeStore().remove(id);
+        FileStore.writer();
     }
 
     @Override

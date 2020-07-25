@@ -18,19 +18,19 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class FileStore {
 
     private static final String PATH_FILE = "C:\\Intellij Idea\\programming\\HelloWorld\\src\\ru\\progwards\\java2\\lessons\\http\\model\\accounts.json";
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static ObjectMapper mapper = new ObjectMapper();
     private static final MapType type = mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Account.class);
     private static HashMap<String, Account> accountsMap;
     private static final ReadWriteLock rwl = new ReentrantReadWriteLock();
 
-    //    static {
+    //        static {
 //        try {
 //            accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //    }
-    private static void reader() {
+    public static void reader() {
         try {
             accountsMap = mapper.readValue(Paths.get(PATH_FILE).toFile(), type);
         } catch (IOException e) {
@@ -38,8 +38,9 @@ public class FileStore {
         }
     }
 
-    private static void writer() {
+    public static void writer() {
         try {
+            mapper = new ObjectMapper();
             ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
             writer.writeValue(Paths.get(PATH_FILE).toFile(), accountsMap);
         } catch (IOException e) {
@@ -60,9 +61,9 @@ public class FileStore {
     public static HashMap<String, Account> writeStore() {
         rwl.writeLock().lock();
         try {
+            writer();
             return accountsMap;
         } finally {
-            writer();
             rwl.writeLock().unlock();
         }
     }
