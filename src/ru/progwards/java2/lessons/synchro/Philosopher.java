@@ -20,6 +20,14 @@ public class Philosopher {
         eatSum += eatTime;
     }
 
+    public void reflect() {
+        System.out.println("Thinking " + name);
+    }
+
+    public void eat() {
+        System.out.println("Eating " + name);
+    }
+
     public String getName() {
         return name;
     }
@@ -58,13 +66,5 @@ public class Philosopher {
 
     public long getEatSum() {
         return eatSum;
-    }
-
-    public void reflect() {
-        System.out.println("Thinking " + name);
-    }
-
-    public void eat() {
-        System.out.println("Eating " + name);
     }
 }
