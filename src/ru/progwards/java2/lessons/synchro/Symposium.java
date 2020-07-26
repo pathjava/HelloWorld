@@ -31,16 +31,18 @@ public class Symposium {
     }
 
     public void start() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        for (Philosopher philosopher : philosophers) {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(philosopher.getReflectTime());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void stop() {
@@ -48,12 +50,21 @@ public class Symposium {
     }
 
     public void print() {
-
+        for (Philosopher philosopher : philosophers) {
+            System.out.println(philosopher.getReflectSum());
+        }
     }
 
 
     public static void main(String[] args) {
         Symposium symposium = new Symposium(500, 500, 5);
-
+        symposium.start();
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        symposium.stop();
+        symposium.print();
     }
 }

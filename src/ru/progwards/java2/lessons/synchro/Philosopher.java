@@ -8,8 +8,8 @@ public class Philosopher {
     private String name;
     private Fork right;
     private Fork left;
-    private long reflectTime;
-    private long eatTime;
+    private final long reflectTime;
+    private final long eatTime;
     private long reflectSum;
     private long eatSum;
 
@@ -42,6 +42,22 @@ public class Philosopher {
 
     public void setLeft(Fork left) {
         this.left = left;
+    }
+
+    public long getReflectTime() {
+        return reflectTime;
+    }
+
+    public long getEatTime() {
+        return eatTime;
+    }
+
+    public long getReflectSum() {
+        return reflectSum;
+    }
+
+    public long getEatSum() {
+        return eatSum;
     }
 
     public void reflect() {
