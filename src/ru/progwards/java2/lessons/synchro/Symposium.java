@@ -5,13 +5,16 @@ package ru.progwards.java2.lessons.synchro;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class Symposium implements Runnable {
+public class Symposium {
 
     private final List<Fork> forks = new LinkedList<>();
     private final List<Philosopher> philosophers = new LinkedList<>();
+    private ExecutorService executor;
 
     public Symposium(long reflectTime, long eatTime, int count) {
         for (int i = 0; i < count; i++) {
@@ -27,19 +30,25 @@ public class Symposium implements Runnable {
             philosopher.setName("Philosopher " + (i + 1));
             philosophers.add(philosopher);
         }
-    }
-
-    @Override
-    public void run() {
-
+        executor = Executors.newFixedThreadPool(count);
     }
 
     public void start() {
+        Future<?> future = executor.submit(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
+        try {
+            future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop() {
-
+        executor.shutdown();
     }
 
     public void print() {
@@ -49,6 +58,6 @@ public class Symposium implements Runnable {
 
     public static void main(String[] args) {
         Symposium symposium = new Symposium(500, 500, 5);
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+
     }
 }
