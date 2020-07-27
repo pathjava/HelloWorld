@@ -3,17 +3,18 @@
 
 package ru.progwards.java2.lessons.synchro;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
 
 public class Symposium {
 
-    private final List<Fork> forks = new LinkedList<>();
     private final List<Philosopher> philosophers = new LinkedList<>();
     private final ExecutorService executor;
 
     public Symposium(long reflectTime, long eatTime, int count) {
+        List<Fork> forks = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             forks.add(new Fork());
         }
