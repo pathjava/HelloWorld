@@ -5,7 +5,7 @@ package ru.progwards.java2.lessons.synchro;
 
 import java.util.concurrent.TimeUnit;
 
-public class Philosopher implements Runnable {
+public class Philosopher {
 
     private String name;
     private Fork right;
@@ -20,7 +20,6 @@ public class Philosopher implements Runnable {
         this.eatTime = eatTime;
     }
 
-    @Override
     public void run() {
         while (true) {
             reflect();

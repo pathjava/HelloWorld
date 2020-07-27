@@ -35,11 +35,7 @@ public class Symposium {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(philosopher.getReflectTime());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    philosopher.run();
                 }
             });
         }

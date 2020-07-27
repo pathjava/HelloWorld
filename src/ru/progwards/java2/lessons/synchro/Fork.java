@@ -3,13 +3,24 @@
 
 package ru.progwards.java2.lessons.synchro;
 
+import java.util.concurrent.Semaphore;
+
 public class Fork {
 
     private boolean usedFork;
     private int numFork;
+    private final Semaphore semaphore = new Semaphore(1);
 
     public Fork() {
         this.usedFork = false;
+    }
+
+    private boolean takeFork(){
+        return semaphore.tryAcquire();
+    }
+
+    private void putFork(){
+        semaphore.release();
     }
 
     public boolean getUsedFork() {
