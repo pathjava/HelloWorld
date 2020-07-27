@@ -7,26 +7,13 @@ import java.util.concurrent.Semaphore;
 
 public class Fork {
 
-//    private boolean usedFork;
-    private final Semaphore semaphore = new Semaphore(1);
+    private final Semaphore semaphore = new Semaphore(1); /* семафор с одним разрешением к ресурсу (вилке) */
 
-//    public Fork() {
-//        this.usedFork = false;
-//    }
-
-    public boolean takeFork(){
+    public boolean takeFork() { /* проверяем, можно ли взять вилку и если да, возвращаем true */
         return semaphore.tryAcquire();
     }
 
-    public void putFork(){
+    public void putFork() { /* кладем вилку на стол */
         semaphore.release();
     }
-
-//    public boolean getUsedFork() {
-//        return usedFork;
-//    }
-//
-//    public void setUsedFork(boolean usedFork) {
-//        this.usedFork = usedFork;
-//    }
 }

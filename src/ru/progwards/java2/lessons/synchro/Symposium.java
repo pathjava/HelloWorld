@@ -11,12 +11,12 @@ import java.util.stream.IntStream;
 
 public class Symposium {
 
-    private final List<Philosopher> philosophers = new LinkedList<>();
+    private final List<Philosopher> philosophers = new LinkedList<>(); /* лист философов */
     private final ExecutorService executor;
 
     public Symposium(long reflectTime, long eatTime, int count) {
-        List<Fork> forks = IntStream.range(0, count).mapToObj(i -> new Fork()).collect(Collectors.toList());
-        for (int i = 0; i < count; i++) {
+        List<Fork> forks = IntStream.range(0, count).mapToObj(i -> new Fork()).collect(Collectors.toList()); /* создаем вилки */
+        for (int i = 0; i < count; i++) { /* создаем философов и распределяем между ними вилки */
             int fSize = forks.size();
             Philosopher philosopher = new Philosopher(reflectTime, eatTime);
             philosopher.setLeft(philosophers.size() == fSize - 1 ? forks.get(0) : forks.get(i + 1));
@@ -24,31 +24,31 @@ public class Symposium {
             philosopher.setName("Философ " + (i + 1));
             philosophers.add(philosopher);
         }
-        executor = Executors.newFixedThreadPool(count);
+        executor = Executors.newFixedThreadPool(count); /* инициализируем пул количеством потоков */
     }
 
-    public void start() {
+    public void start() { /* запускаем философский обед */
         for (Philosopher philosopher : philosophers) {
             executor.execute(() -> {
-                while (!executor.isShutdown()) {
-                    philosopher.eat();
-                    philosopher.reflect();
+                while (!executor.isShutdown()) { /* выполняем цикл пока не выполнено завершение через shutdown() */
+                    philosopher.eat(); /* запускаем прием пищи */
+                    philosopher.reflect(); /* запускаем раздумья */
                 }
             });
         }
     }
 
-    public void stop() {
+    public void stop() { /* завершаем философский обед */
         executor.shutdown();
     }
 
     public void print() {
-        try {
+        try { /* даем время для завершения всех потоков */
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        for (Philosopher philosopher : philosophers) {
+        for (Philosopher philosopher : philosophers) { /* выводим информацию о философах - время размышлений и приема пищи */
             System.out.println(philosopher.getName() + ", ел " + philosopher.getEatSum()
                     + ", размышлял " + philosopher.getReflectSum());
         }
@@ -57,13 +57,13 @@ public class Symposium {
 
     public static void main(String[] args) {
         Symposium symposium = new Symposium(500, 500, 5);
-        symposium.start();
-        try {
+        symposium.start(); /* запускаем трапезу */
+        try { /* даем время на прием пищи и размышления */
             TimeUnit.SECONDS.sleep(7);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        symposium.stop();
-        symposium.print();
+        symposium.stop(); /* останавливаем трапезу */
+        symposium.print(); /* выводим результат в консоль */
     }
 }

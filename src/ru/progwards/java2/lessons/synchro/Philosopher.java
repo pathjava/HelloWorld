@@ -20,33 +20,34 @@ public class Philosopher {
         this.eatTime = eatTime;
     }
 
-    public void reflect() {
+    public void reflect() { /* философ думает */
         System.out.println("Думает " + name);
         try {
-            reflectSum += reflectTime;
-            TimeUnit.MILLISECONDS.sleep(reflectTime);
+            reflectSum += reflectTime; /* инкрементируем общее время размышлений философа */
+            TimeUnit.MILLISECONDS.sleep(reflectTime); /* время, которое думает философ */
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void eat() {
-        if (left.takeFork()) {
-            if (right.takeFork()) {
+    public void eat() { /* философ ест */
+        if (left.takeFork()) { /* пробуем взять левую вилку */
+            if (right.takeFork()) { /* пробуем взять правую вилку */
                 System.out.println("Ест " + name);
                 try {
-                    eatSum += eatTime;
-                    TimeUnit.MILLISECONDS.sleep(eatTime);
-                    left.putFork();
-                    right.putFork();
+                    eatSum += eatTime; /* инкрементируем общее время приема пищи философа */
+                    TimeUnit.MILLISECONDS.sleep(eatTime); /* время, которое ест философ */
+                    left.putFork(); /* кладем левую вилку */
+                    right.putFork(); /* кладем правую вилку */
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } else
+            } else /* если правую не взяли, кладем обратно левую */
                 left.putFork();
         }
     }
 
+    /* геттеры и сеттеры */
     public String getName() {
         return name;
     }
