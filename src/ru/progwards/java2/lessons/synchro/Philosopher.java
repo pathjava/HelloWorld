@@ -22,12 +22,8 @@ public class Philosopher {
 
     public void run() {
         while (true) {
-            reflect();
-            takeLeftFork();
-            takeRightFork();
             eat();
-            putLeftFork();
-            putRightFork();
+            reflect();
         }
     }
 
@@ -42,33 +38,21 @@ public class Philosopher {
     }
 
     public void eat() {
-        System.out.println("Eating " + name);
-        try {
-            eatSum += eatTime;
-            TimeUnit.MILLISECONDS.sleep(eatTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (left.takeFork()) {
+            if (right.takeFork()) {
+                System.out.println("Eating " + name);
+                try {
+                    eatSum += eatTime;
+                    TimeUnit.MILLISECONDS.sleep(eatTime);
+                    left.putFork();
+                    right.putFork();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else
+                left.putFork();
         }
     }
-
-    private void takeLeftFork() {
-        if (!left.getUsedFork())
-            left.setUsedFork(true);
-    }
-
-    private void takeRightFork() {
-        if (!right.getUsedFork())
-            right.setUsedFork(true);
-    }
-
-    private void putLeftFork() {
-        left.setUsedFork(false);
-    }
-
-    private void putRightFork() {
-        right.setUsedFork(false);
-    }
-
 
     public String getName() {
         return name;

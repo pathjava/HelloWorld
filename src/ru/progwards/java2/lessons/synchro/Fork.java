@@ -15,11 +15,11 @@ public class Fork {
         this.usedFork = false;
     }
 
-    private boolean takeFork(){
+    public boolean takeFork(){
         return semaphore.tryAcquire();
     }
 
-    private void putFork(){
+    public void putFork(){
         semaphore.release();
     }
 
