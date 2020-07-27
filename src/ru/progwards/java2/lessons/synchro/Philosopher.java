@@ -28,6 +28,7 @@ public class Philosopher {
         System.out.println("Eating " + name);
     }
 
+
     public String getName() {
         return name;
     }
