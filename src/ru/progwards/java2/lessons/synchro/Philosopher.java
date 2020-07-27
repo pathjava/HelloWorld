@@ -23,12 +23,12 @@ public class Philosopher implements Runnable {
     @Override
     public void run() {
         while (true) {
+            reflect();
             takeLeftFork();
             takeRightFork();
             eat();
             putLeftFork();
             putRightFork();
-            reflect();
         }
     }
 
@@ -53,11 +53,13 @@ public class Philosopher implements Runnable {
     }
 
     private void takeLeftFork() {
-        left.setUsedFork(true);
+        if (!left.getUsedFork())
+            left.setUsedFork(true);
     }
 
     private void takeRightFork() {
-        right.setUsedFork(true);
+        if (!right.getUsedFork())
+            right.setUsedFork(true);
     }
 
     private void putLeftFork() {
