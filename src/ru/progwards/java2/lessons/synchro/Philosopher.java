@@ -3,7 +3,9 @@
 
 package ru.progwards.java2.lessons.synchro;
 
-public class Philosopher {
+import java.util.concurrent.TimeUnit;
+
+public class Philosopher implements Runnable {
 
     private String name;
     private Fork right;
@@ -16,16 +18,54 @@ public class Philosopher {
     public Philosopher(long reflectTime, long eatTime) {
         this.reflectTime = reflectTime;
         this.eatTime = eatTime;
-        reflectSum += reflectTime;
-        eatSum += eatTime;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            takeLeftFork();
+            takeRightFork();
+            eat();
+            putLeftFork();
+            putRightFork();
+            reflect();
+        }
     }
 
     public void reflect() {
         System.out.println("Thinking " + name);
+        try {
+            reflectSum += reflectTime;
+            TimeUnit.MILLISECONDS.sleep(reflectTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void eat() {
         System.out.println("Eating " + name);
+        try {
+            eatSum += eatTime;
+            TimeUnit.MILLISECONDS.sleep(eatTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void takeLeftFork() {
+        left.setUsedFork(true);
+    }
+
+    private void takeRightFork() {
+        right.setUsedFork(true);
+    }
+
+    private void putLeftFork() {
+        left.setUsedFork(false);
+    }
+
+    private void putRightFork() {
+        right.setUsedFork(false);
     }
 
 

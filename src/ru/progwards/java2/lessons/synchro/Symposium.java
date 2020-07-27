@@ -60,7 +60,7 @@ public class Symposium {
         Symposium symposium = new Symposium(500, 500, 5);
         symposium.start();
         try {
-            TimeUnit.SECONDS.sleep(187);
+            TimeUnit.SECONDS.sleep(7);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
