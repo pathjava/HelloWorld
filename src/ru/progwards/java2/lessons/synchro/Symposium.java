@@ -3,10 +3,11 @@
 
 package ru.progwards.java2.lessons.synchro;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Symposium {
 
@@ -14,10 +15,7 @@ public class Symposium {
     private final ExecutorService executor;
 
     public Symposium(long reflectTime, long eatTime, int count) {
-        List<Fork> forks = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            forks.add(new Fork());
-        }
+        List<Fork> forks = IntStream.range(0, count).mapToObj(i -> new Fork()).collect(Collectors.toList());
         for (int i = 0; i < count; i++) {
             int fSize = forks.size();
             Philosopher philosopher = new Philosopher(reflectTime, eatTime);
