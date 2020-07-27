@@ -32,12 +32,7 @@ public class Symposium {
 
     public void start() {
         for (Philosopher philosopher : philosophers) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    philosopher.run();
-                }
-            });
+            executor.execute(philosopher::run);
         }
     }
 
