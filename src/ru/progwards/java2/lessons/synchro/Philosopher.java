@@ -20,13 +20,6 @@ public class Philosopher {
         this.eatTime = eatTime;
     }
 
-    public void run() {
-        while (true) {
-            eat();
-            reflect();
-        }
-    }
-
     public void reflect() {
         System.out.println("Думает " + name);
         try {

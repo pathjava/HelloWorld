@@ -29,7 +29,15 @@ public class Symposium {
 
     public void start() {
         for (Philosopher philosopher : philosophers) {
-            executor.execute(philosopher::run);
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (!executor.isShutdown()) {
+                        philosopher.eat();
+                        philosopher.reflect();
+                    }
+                }
+            });
         }
     }
 
@@ -38,6 +46,11 @@ public class Symposium {
     }
 
     public void print() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (Philosopher philosopher : philosophers) {
             System.out.println(philosopher.getName() + ", ел " + philosopher.getEatSum()
                     + ", размышлял " + philosopher.getReflectSum());
