@@ -29,13 +29,10 @@ public class Symposium {
 
     public void start() {
         for (Philosopher philosopher : philosophers) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    while (!executor.isShutdown()) {
-                        philosopher.eat();
-                        philosopher.reflect();
-                    }
+            executor.execute(() -> {
+                while (!executor.isShutdown()) {
+                    philosopher.eat();
+                    philosopher.reflect();
                 }
             });
         }
