@@ -15,16 +15,14 @@ public class Symposium {
 
     public Symposium(long reflectTime, long eatTime, int count) {
         for (int i = 0; i < count; i++) {
-            Fork fork = new Fork();
-            fork.setNumFork(i);
-            forks.add(fork);
+            forks.add(new Fork());
         }
         for (int i = 0; i < count; i++) {
             int fSize = forks.size();
             Philosopher philosopher = new Philosopher(reflectTime, eatTime);
             philosopher.setLeft(philosophers.size() == fSize - 1 ? forks.get(0) : forks.get(i + 1));
             philosopher.setRight(philosophers.size() == fSize - 1 ? forks.get(fSize - 1) : forks.get(i));
-            philosopher.setName("Philosopher " + (i + 1));
+            philosopher.setName("Философ " + (i + 1));
             philosophers.add(philosopher);
         }
         executor = Executors.newFixedThreadPool(count);
@@ -42,7 +40,8 @@ public class Symposium {
 
     public void print() {
         for (Philosopher philosopher : philosophers) {
-            System.out.println(philosopher.getReflectSum());
+            System.out.println(philosopher.getName() + ", ел " + philosopher.getEatSum()
+                    + ", размышлял " + philosopher.getReflectSum());
         }
     }
 

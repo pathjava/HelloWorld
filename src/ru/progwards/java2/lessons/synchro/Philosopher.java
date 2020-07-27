@@ -28,7 +28,7 @@ public class Philosopher {
     }
 
     public void reflect() {
-        System.out.println("Thinking " + name);
+        System.out.println("Думает " + name);
         try {
             reflectSum += reflectTime;
             TimeUnit.MILLISECONDS.sleep(reflectTime);
@@ -40,7 +40,7 @@ public class Philosopher {
     public void eat() {
         if (left.takeFork()) {
             if (right.takeFork()) {
-                System.out.println("Eating " + name);
+                System.out.println("Ест " + name);
                 try {
                     eatSum += eatTime;
                     TimeUnit.MILLISECONDS.sleep(eatTime);
@@ -62,28 +62,12 @@ public class Philosopher {
         this.name = name;
     }
 
-    public Fork getRight() {
-        return right;
-    }
-
     public void setRight(Fork right) {
         this.right = right;
     }
 
-    public Fork getLeft() {
-        return left;
-    }
-
     public void setLeft(Fork left) {
         this.left = left;
-    }
-
-    public long getReflectTime() {
-        return reflectTime;
-    }
-
-    public long getEatTime() {
-        return eatTime;
     }
 
     public long getReflectSum() {
