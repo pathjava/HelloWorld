@@ -48,10 +48,26 @@ public class Symposium {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        long sumRef = sumReflections();
+        long sumEat = sumEating();
         for (Philosopher philosopher : philosophers) { /* выводим информацию о философах - время размышлений и приема пищи */
             System.out.println(philosopher.getName() + ", ел " + philosopher.getEatSum()
-                    + ", размышлял " + philosopher.getReflectSum());
+                    + " (" + getPercent(philosopher.getEatSum(), sumEat) + "%)"
+                    + ", размышлял " + philosopher.getReflectSum()
+                    + " (" + getPercent(philosopher.getReflectSum(), sumRef) + "%)");
         }
+    }
+
+    private long sumReflections() {
+        return philosophers.stream().mapToInt(philosopher -> (int) philosopher.getReflectSum()).sum();
+    }
+
+    private long sumEating() {
+        return philosophers.stream().mapToInt(philosopher -> (int) philosopher.getEatSum()).sum();
+    }
+
+    private int getPercent(long sumPhilosopher, long sumTotal) {
+        return (int) ((sumPhilosopher * 100) / sumTotal);
     }
 
 
