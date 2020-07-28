@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Heap {
 
-    private byte[] bytes;
+    private final byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
