@@ -22,6 +22,7 @@ public class Heap {
     public int malloc(int size) throws OutOfMemoryException {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
+
         Integer emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         int index;
         if (emptyBlockSuitableSize != null) { /* если размер свободного блока не найден подходящего размера */
