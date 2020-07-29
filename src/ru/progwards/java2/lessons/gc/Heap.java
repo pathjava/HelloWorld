@@ -23,11 +23,11 @@ public class Heap {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
 
-        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);  //TODO description
+        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size); /* получаем ключ/значение равное или больше значения ключа */
         int index;
         if (tempEmptyBlock != null) { /* если размер свободного блока подходящего размера найден */
             index = getIndex(tempEmptyBlock); /* определяем индекс добавляемого блока */
-            addBlockToHeap(index, size, tempEmptyBlock.getKey());
+            addBlockToHeap(index, size, tempEmptyBlock.getKey()); /* добавляем блок в кучу */
         } else {
 //            defrag();
             compact(); /* если размер свободного блока подходящего размера не найден, тогда запускаем компактизацию кучи */
@@ -64,11 +64,10 @@ public class Heap {
         if (newStartIndex > oldEndIndex)
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
 
-        if (!(newStartIndex > bytes.length - 1) /*&& bytes[newStartIndex] == 0*/) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
-            emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); //TODO description
+        if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
+            emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); /*  получаем значение по ключу */
             if (emptyBlockSet != null) { /* если уже есть пустой блок такого размера */
-                /* получаем его */
-                deleteEmptyBlock(emptyBlockSuitableSize);
+                deleteEmptyBlock(emptyBlockSuitableSize); /* вызываем удаление пустого блока */
             } else {
                 deleteEmptyBlock(emptyBlockSuitableSize);
                 emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
@@ -99,9 +98,9 @@ public class Heap {
         if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
             throw new IllegalArgumentException("Неправильное значение указателя: " + ptr);
 
-        FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); //TODO description
-        if (tempFilledBlock != null) {
-            int endIndex = tempFilledBlock.getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
+        FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); /* получаем значение по ключу (указателю) */
+        if (tempFilledBlock != null) { /* если полученное значение не null */
+            int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
             int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
@@ -112,9 +111,9 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); //TODO description
-        if (emptyBlockSet == null) /* если уже есть блока такого размера */
-            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* иначе создаем новый */
+        emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); /* получаем значение по ключу (размеру удаляемого блока) */
+        if (emptyBlockSet == null) /* если блок такого размера отсутствует */
+            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* создаем новый */
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock)); /* добавляем в трисет данные о блоке */
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
