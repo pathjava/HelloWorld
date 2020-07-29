@@ -99,10 +99,10 @@ public class Heap {
         if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
             throw new IllegalArgumentException();
 
-        FilledBlock tempFilledBlocks = filledBlocksHM.get(ptr); //TODO description
-        if (tempFilledBlocks != null) {
-            int endIndex = tempFilledBlocks.getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
-            int sizeRemoveBlock = tempFilledBlocks.getSizeFilledBlock(); /* получаем размер удаляемого блока */
+        FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); //TODO description
+        if (tempFilledBlock != null) {
+            int endIndex = tempFilledBlock.getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
+            int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
 //            for (int i = ptr; i <= endIndex; i++)
