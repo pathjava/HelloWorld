@@ -89,9 +89,9 @@ public class Heap {
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
-        if (filledBlocksHM.containsKey(index))
+        /* если ключ index отсутствует в filledBlocksHM, добавляем ключ/значение, иначе выбрасываем исключение */
+        if (filledBlocksHM.putIfAbsent(index, new FilledBlock(endIndex, size)) != null)
             throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
-        filledBlocksHM.put(index, new FilledBlock(endIndex, size)); /* заполняем hashmap данными о заполненных блоках - ключ-индекс */
     }
 
     public void free(int ptr) throws InvalidPointerException {
