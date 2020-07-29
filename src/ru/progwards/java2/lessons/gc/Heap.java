@@ -61,14 +61,15 @@ public class Heap {
         int newStartIndex = index + size; /* определяем стартовый индекс нового пустого блока */
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmptyBlock();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size; /* размер нового пустого блока */
+
         if (newStartIndex > oldEndIndex)
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
 
         if (!(newStartIndex > bytes.length - 1)) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); /*  получаем значение по ключу */
-            if (emptyBlockSet != null) { /* если уже есть пустой блок такого размера */
+            if (emptyBlockSet != null) /* если уже есть пустой блок такого размера */
                 deleteEmptyBlock(emptyBlockSuitableSize); /* вызываем удаление пустого блока */
-            } else {
+            else {
                 deleteEmptyBlock(emptyBlockSuitableSize);
                 emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
             }
