@@ -23,27 +23,27 @@ public class Heap {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
 
-        Integer emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
+        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);  //TODO description
         int index;
-        if (emptyBlockSuitableSize != null) { /* если размер свободного блока подходящего размера найден */
-            index = getIndex(emptyBlockSuitableSize); /* определяем индекс добавляемого блока */
-            addBlockToHeap(index, size, emptyBlockSuitableSize);
+        if (tempEmptyBlock != null) { /* если размер свободного блока подходящего размера найден */
+            index = getIndex(tempEmptyBlock); /* определяем индекс добавляемого блока */
+            addBlockToHeap(index, size, tempEmptyBlock.getKey());
         } else {
 //            defrag();
             compact(); /* если размер свободного блока подходящего размера не найден, тогда запускаем компактизацию кучи */
-            emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
-            if (emptyBlockSuitableSize == null) /* если и после этого нет места, бросаем исключение */
+            tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);
+            if (tempEmptyBlock == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
             else {
-                index = getIndex(emptyBlockSuitableSize);
-                addBlockToHeap(index, size, emptyBlockSuitableSize);
+                index = getIndex(tempEmptyBlock);
+                addBlockToHeap(index, size, tempEmptyBlock.getKey());
             }
         }
         return index;
     }
 
-    private int getIndex(int emptyBlockSuitableSize) {
-        return emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock();
+    private int getIndex(Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock) {
+        return tempEmptyBlock.getValue().iterator().next().getStartIndexEmptyBlock();
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
@@ -67,7 +67,7 @@ public class Heap {
         if (!(newStartIndex > bytes.length - 1) /*&& bytes[newStartIndex] == 0*/) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); //TODO description
             if (emptyBlockSet != null) { /* если уже есть пустой блок такого размера */
-                 /* получаем его */
+                /* получаем его */
                 deleteEmptyBlock(emptyBlockSuitableSize);
             } else {
                 deleteEmptyBlock(emptyBlockSuitableSize);
