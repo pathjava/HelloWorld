@@ -51,9 +51,9 @@ public class Heap {
 //            bytes[index + i] = 1;
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
-        else { /* если размер добавляемого блока и найденное свободное место равны, удаляем свободный блок */
+        else /* если размер добавляемого блока и найденное свободное место равны, удаляем свободный блок */
             deleteEmptyBlock(emptyBlockSuitableSize);
-        }
+
         addFilledBlockToMap(index, size);/* добавляем информацию о занятых блоках в куче */
     }
 
