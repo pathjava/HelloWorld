@@ -89,7 +89,7 @@ public class Heap {
 
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
-        /* если ключ index отсутствует в filledBlocksHM, добавляем ключ/значение, иначе выбрасываем исключение */
+        /* если ключ index отсутствует в filledBlocksHM (проверяет метод putIfAbsent), добавляем ключ/значение, иначе выбрасываем исключение */
         if (filledBlocksHM.putIfAbsent(index, new FilledBlock(endIndex, size)) != null)
             throw new IllegalArgumentException("Значение с таким индексом уже присутствует в filledBlocksHM");
     }
