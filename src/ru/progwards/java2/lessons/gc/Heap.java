@@ -65,8 +65,9 @@ public class Heap {
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
 
         if (!(newStartIndex > bytes.length - 1) /*&& bytes[newStartIndex] == 0*/) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
-            if (emptyBlocksTM.containsKey(newKeyAndBlockSize)) { /* если уже есть пустой блок такого размера */
-                emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); /* получаем его */
+            emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); //TODO description
+            if (emptyBlockSet != null) { /* если уже есть пустой блок такого размера */
+                 /* получаем его */
                 deleteEmptyBlock(emptyBlockSuitableSize);
             } else {
                 deleteEmptyBlock(emptyBlockSuitableSize);
@@ -98,9 +99,10 @@ public class Heap {
         if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
             throw new IllegalArgumentException();
 
-        if (filledBlocksHM.containsKey(ptr)) {
-            int endIndex = filledBlocksHM.get(ptr).getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
-            int sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
+        FilledBlock tempFilledBlocks = filledBlocksHM.get(ptr); //TODO description
+        if (tempFilledBlocks != null) {
+            int endIndex = tempFilledBlocks.getEndIndexFilled(); /* по указателю получаем конечный индекс удаляемого блока */
+            int sizeRemoveBlock = tempFilledBlocks.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
 //            for (int i = ptr; i <= endIndex; i++)
@@ -110,9 +112,8 @@ public class Heap {
     }
 
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
-        if (emptyBlocksTM.containsKey(sizeEmptyBlock)) /* если уже есть блока такого размера */
-            emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); /* получаем его */
-        else
+        emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); //TODO description
+        if (emptyBlockSet == null) /* если уже есть блока такого размера */
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* иначе создаем новый */
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock)); /* добавляем в трисет данные о блоке */
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
