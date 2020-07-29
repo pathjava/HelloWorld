@@ -96,7 +96,7 @@ public class Heap {
 
     public void free(int ptr) throws InvalidPointerException {
         if (ptr < 0 || ptr > bytes.length - 1) /* проверяем корректность указателя ptr */
-            throw new IllegalArgumentException("Неправильное значение указателя: " + ptr);
+            throw new InvalidPointerException("Неправильное значение указателя: " + ptr);
 
         FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); /* получаем значение по ключу (указателю) */
         if (tempFilledBlock != null) { /* если полученное значение не null */
