@@ -26,7 +26,7 @@ public class Heap {
         Integer emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
         int index;
         if (emptyBlockSuitableSize != null) { /* если размер свободного блока подходящего размера найден */
-            index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock(); /* определяем индекс добавляемого блока */
+            index = getIndex(emptyBlockSuitableSize); /* определяем индекс добавляемого блока */
             addBlockToHeap(index, size, emptyBlockSuitableSize);
         } else {
 //            defrag();
@@ -35,11 +35,15 @@ public class Heap {
             if (emptyBlockSuitableSize == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
             else {
-                index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock();
+                index = getIndex(emptyBlockSuitableSize);
                 addBlockToHeap(index, size, emptyBlockSuitableSize);
             }
         }
         return index;
+    }
+
+    private int getIndex(int emptyBlockSuitableSize) {
+        return emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock();
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
