@@ -22,8 +22,8 @@ public class Heap {
     public int malloc(int size) throws OutOfMemoryException {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
-
-        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size); /* получаем ключ/значение равное или больше значения ключа */
+        /* получаем ключ/значение равное или больше значения ключа */
+        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);
         int index;
         if (tempEmptyBlock != null) { /* если размер свободного блока подходящего размера найден */
             index = getIndex(tempEmptyBlock); /* определяем индекс добавляемого блока */
