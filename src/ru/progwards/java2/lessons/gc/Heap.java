@@ -51,13 +51,10 @@ public class Heap {
 //            bytes[index + i] = 1;
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
-        else { /* иначе удаляем свободный блок */
-            if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
-                emptyBlocksTM.remove(emptyBlockSuitableSize); /* если блок имеет размер 1, то удаляем его целиком */
-            else
-                emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* иначе удаляем первый элемент из трисет */
+        else { /* если размер добавляемого блока и найденное свободное место равны, удаляем свободный блок */
+            deleteEmptyBlock(emptyBlockSuitableSize);
         }
-        addFilledBlockToMap(index, size);/* и о занятых блоках в куче */
+        addFilledBlockToMap(index, size);/* добавляем информацию о занятых блоках в куче */
     }
 
     private void addEmptyBlockToMap(int index, int size, int emptyBlockSuitableSize) {
@@ -70,15 +67,9 @@ public class Heap {
         if (!(newStartIndex > bytes.length - 1) /*&& bytes[newStartIndex] == 0*/) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             if (emptyBlocksTM.containsKey(newKeyAndBlockSize)) { /* если уже есть пустой блок такого размера */
                 emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); /* получаем его */
-                if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) /* если размер 1, удаляем полностью */
-                    emptyBlocksTM.remove(emptyBlockSuitableSize);
-                else
-                    emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* иначе только первый из трисет */
+                deleteEmptyBlock(emptyBlockSuitableSize);
             } else {
-                if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
-                    emptyBlocksTM.remove(emptyBlockSuitableSize);
-                else
-                    emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst();
+                deleteEmptyBlock(emptyBlockSuitableSize);
                 emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
             }
             emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
@@ -87,6 +78,13 @@ public class Heap {
             emptyBlocksTM.remove(emptyBlockSuitableSize); /* в противном случае удаляем данные */
             emptyBlockSet.clear();
         }
+    }
+
+    private void deleteEmptyBlock(int emptyBlockSuitableSize) {
+        if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
+            emptyBlocksTM.remove(emptyBlockSuitableSize); /* если блок имеет размер 1, то удаляем его целиком */
+        else
+            emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* иначе удаляем первый элемент из трисет */
     }
 
     private void addFilledBlockToMap(int index, int size) {
