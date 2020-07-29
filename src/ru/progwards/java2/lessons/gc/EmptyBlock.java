@@ -6,22 +6,22 @@ package ru.progwards.java2.lessons.gc;
 
 public class EmptyBlock {
 
-    private final int startIndexEmpty;
-    private final int endIndexEmpty;
+    private final int startIndexEmptyBlock;
+    private final int endIndexEmptyBlock;
     private final int sizeEmptyBlock;
 
     public EmptyBlock(int startIndexEmpty, int endIndexEmpty, int sizeEmptyBlock) {
-        this.startIndexEmpty = startIndexEmpty;
-        this.endIndexEmpty = endIndexEmpty;
+        this.startIndexEmptyBlock = startIndexEmpty;
+        this.endIndexEmptyBlock = endIndexEmpty;
         this.sizeEmptyBlock = sizeEmptyBlock;
     }
 
-    public int getStartIndexEmpty() {
-        return startIndexEmpty;
+    public int getStartIndexEmptyBlock() {
+        return startIndexEmptyBlock;
     }
 
-    public int getEndIndexEmpty() {
-        return endIndexEmpty;
+    public int getEndIndexEmptyBlock() {
+        return endIndexEmptyBlock;
     }
 
     public int getSizeEmptyBlock() {
@@ -32,8 +32,8 @@ public class EmptyBlock {
     @Override
     public String toString() {
         return "EmptyBlock{" +
-                "startIndexEmpty=" + startIndexEmpty +
-                ", endIndexEmpty=" + endIndexEmpty +
+                "startIndexEmpty=" + startIndexEmptyBlock +
+                ", endIndexEmpty=" + endIndexEmptyBlock +
                 ", sizeEmptyBlock=" + sizeEmptyBlock +
                 '}';
     }

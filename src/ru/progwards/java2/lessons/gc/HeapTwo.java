@@ -14,7 +14,7 @@ public class HeapTwo {
 
     public HeapTwo(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
     }
@@ -25,7 +25,7 @@ public class HeapTwo {
         Integer emptyBlockSuitableSize = checkKey(size);
         int index;
         if (emptyBlockSuitableSize != null) { /* если размер свободного блока не найден подходящего размера */
-            index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmpty(); /* определяем индекс добавляемого блока */
+            index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock(); /* определяем индекс добавляемого блока */
             addBlockToHeap(index, size, emptyBlockSuitableSize);
         } else {
 //            defrag();
@@ -34,7 +34,7 @@ public class HeapTwo {
             if (emptyBlockSuitableSize == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
             else {
-                index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmpty();
+                index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock();
                 addBlockToHeap(index, size, emptyBlockSuitableSize);
             }
         }
@@ -66,7 +66,7 @@ public class HeapTwo {
 
     private void addEmptyBlockToMap(int index, int size, int emptyBlockSuitableSize) {
         int newStartIndex = index + size; /* определяем стартовый индекс нового пустого блока */
-        int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmpty();
+        int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmptyBlock();
         int newKeyAndBlockSize = emptyBlockSuitableSize - size; /* размер нового пустого блока */
         if (newStartIndex > oldEndIndex)
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
@@ -83,7 +83,7 @@ public class HeapTwo {
                     emptyBlocksTM.remove(emptyBlockSuitableSize);
                 else
                     emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst();
-                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
             }
             emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
             emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
@@ -121,7 +121,7 @@ public class HeapTwo {
         if (emptyBlocksTM.containsKey(sizeEmptyBlock)) /* если уже есть блока такого размера */
             emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); /* получаем его */
         else
-            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty)); /* иначе создаем новый */
+            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* иначе создаем новый */
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock)); /* добавляем в трисет данные о блоке */
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
@@ -182,7 +182,7 @@ public class HeapTwo {
 
     private void rebuildEmptyBlocksTM(int emptyCellIndex) {
         emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmpty));
+        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         int newKeyAndBlockSize = bytes.length - emptyCellIndex;
         emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
         emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
@@ -194,16 +194,16 @@ public class HeapTwo {
         /* перегоняем все пустые блоки в ArrayList */
         for (Map.Entry<Integer, TreeSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
             if (entry.getValue().size() == 1)
-                tempEmptyBlocks.add(new EmptyBlock(entry.getValue().iterator().next().getStartIndexEmpty(),
-                        entry.getValue().iterator().next().getEndIndexEmpty(),
+                tempEmptyBlocks.add(new EmptyBlock(entry.getValue().iterator().next().getStartIndexEmptyBlock(),
+                        entry.getValue().iterator().next().getEndIndexEmptyBlock(),
                         entry.getValue().iterator().next().getSizeEmptyBlock()));
             else
                 for (EmptyBlock block : entry.getValue()) {
-                    tempEmptyBlocks.add(new EmptyBlock(block.getStartIndexEmpty(),
-                            block.getEndIndexEmpty(), block.getSizeEmptyBlock()));
+                    tempEmptyBlocks.add(new EmptyBlock(block.getStartIndexEmptyBlock(),
+                            block.getEndIndexEmptyBlock(), block.getSizeEmptyBlock()));
                 }
         }
-        tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmpty)); /* сортируем блоки по индексу */
+        tempEmptyBlocks.sort(Comparator.comparing(EmptyBlock::getStartIndexEmptyBlock)); /* сортируем блоки по индексу */
 
         blockMerging(tempEmptyBlocks); /* метод слияния блоков */
         rebuildEmptyBlocksTM(tempEmptyBlocks); /* перестроение пустых объединенных блоков */
@@ -214,14 +214,14 @@ public class HeapTwo {
             boolean lock = false;
             int endIndex = 0;
             int startIndex = i;
-            int startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
-            int endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+            int startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmptyBlock();
+            int endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmptyBlock();
             for (int j = i + 1; j < tempEmptyBlocks.size(); j++) {
-                int currentStart = tempEmptyBlocks.listIterator(j).next().getStartIndexEmpty();
+                int currentStart = tempEmptyBlocks.listIterator(j).next().getStartIndexEmptyBlock();
                 if (endSearch + 1 == currentStart) { /* если произошло первое совпадение индексов */
                     if (!lock)
                         lock = true;
-                    endSearch = tempEmptyBlocks.listIterator(j).next().getEndIndexEmpty();
+                    endSearch = tempEmptyBlocks.listIterator(j).next().getEndIndexEmptyBlock();
                     endIndex = j;
                 } else if (lock) { /* проверяем дальше совпадение последних и начальных индексов */
                     tempEmptyBlocks.add(new EmptyBlock(startSearch,
@@ -236,8 +236,8 @@ public class HeapTwo {
                 } else {
                     i++;
                     startIndex = i; /* если блоки не соседние, сдвигаемся на один вперед */
-                    startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmpty();
-                    endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmpty();
+                    startSearch = tempEmptyBlocks.listIterator(i).next().getStartIndexEmptyBlock();
+                    endSearch = tempEmptyBlocks.listIterator(i).next().getEndIndexEmptyBlock();
                 }
             }
         }
@@ -246,8 +246,8 @@ public class HeapTwo {
     private void rebuildEmptyBlocksTM(List<EmptyBlock> tempEmptyBlocks) {
         emptyBlocksTM.clear(); /* очищаем старую мапу */
         for (EmptyBlock block : tempEmptyBlocks) { /* перегоняем слитые блоки в новую мапу */
-            addEmptyBlockAfterRemove(block.getStartIndexEmpty(),
-                    block.getEndIndexEmpty(), block.getSizeEmptyBlock());
+            addEmptyBlockAfterRemove(block.getStartIndexEmptyBlock(),
+                    block.getEndIndexEmptyBlock(), block.getSizeEmptyBlock());
         }
     }
 
