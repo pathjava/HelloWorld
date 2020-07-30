@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.gc;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Heap {
 
@@ -47,8 +48,9 @@ public class Heap {
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
-//        for (int i = 0; i < size; i++) /* заполняем кучу согласно размера пришедшего блока */
-//            bytes[index + i] = 1;
+        /* заполняем кучу согласно размера пришедшего блока */
+//        IntStream.range(0, size).forEachOrdered(i -> bytes[index + i] = 1);
+
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
         else /* если размер добавляемого блока и найденное свободное место равны, удаляем свободный блок */
@@ -105,8 +107,8 @@ public class Heap {
             int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
-//            for (int i = ptr; i <= endIndex; i++)
-//                bytes[i] = 0; /* заменяем значения на ноли */
+            /* заменяем значения на ноли */
+//            IntStream.rangeClosed(ptr, endIndex).forEachOrdered(i -> bytes[i] = 0);
         } else
             throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
