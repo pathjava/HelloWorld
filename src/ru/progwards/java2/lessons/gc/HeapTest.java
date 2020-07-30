@@ -26,7 +26,7 @@ public class HeapTest {
     }
 
     static int getRandomSize() {
-        int n = Math.abs(ThreadLocalRandom.current().nextInt()%10);
+        int n = Math.abs(ThreadLocalRandom.current().nextInt() % 10);
         int size = Math.abs(ThreadLocalRandom.current().nextInt());
         if (n < 6)
             size %= maxSmall;
@@ -36,7 +36,7 @@ public class HeapTest {
             size %= maxBig;
         else
             size %= maxHuge;
-        return size > (maxSize-allocated)-1 ? (maxSize-allocated)/2+1 : size+1;
+        return size > (maxSize - allocated) - 1 ? (maxSize - allocated) / 2 + 1 : size + 1;
     }
 
     public static void main(String[] args) throws InvalidPointerException, OutOfMemoryException {
@@ -56,12 +56,12 @@ public class HeapTest {
             lstart = System.currentTimeMillis();
             int ptr = heap.malloc(size);
             lstop = System.currentTimeMillis();
-            allocTime += lstop-lstart;
+            allocTime += lstop - lstart;
             blocks.offer(new Block(ptr, size));
-            int n = Math.abs(ThreadLocalRandom.current().nextInt()%25);
+            int n = Math.abs(ThreadLocalRandom.current().nextInt() % 25);
             if (n == 0) {
                 //n = Math.abs(ThreadLocalRandom.current().nextInt()%blocks.size());
-                for (int i=0; i<5; i++) {
+                for (int i = 0; i < 5; i++) {
                     Block block = blocks.poll();
                     if (block == null)
                         break;
@@ -73,13 +73,13 @@ public class HeapTest {
                 }
                 //blocks.remove(n);
             }
-            n = Math.abs(ThreadLocalRandom.current().nextInt()%100000);
-            if (n==0)
-                System.out.println(maxSize-allocated);
+            n = Math.abs(ThreadLocalRandom.current().nextInt() % 100000);
+            if (n == 0)
+                System.out.println(maxSize - allocated);
         }
         long stop = System.currentTimeMillis();
-        System.out.println("malloc time: "+allocTime+" free time: "+freeTime);
-        System.out.println("total time: "+(stop-start)+" count: "+count);
+        System.out.println("malloc time: " + allocTime + " free time: " + freeTime);
+        System.out.println("total time: " + (stop - start) + " count: " + count);
 
         //Get the jvm heap size.
 //        long heapSize = Runtime.getRuntime().totalMemory();
