@@ -138,7 +138,7 @@ public class Heap {
     }
 
     private void cleanerFilledBlock() { //TODO description
-        executor.submit(() -> {
+        executor.execute(() -> {
             for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
                 if (entry.getValue().isReadyToFree()) {
                     int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
