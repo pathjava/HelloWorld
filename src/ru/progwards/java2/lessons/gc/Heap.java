@@ -11,11 +11,11 @@ public class Heap {
 
     private final byte[] bytes;
     private ConcurrentSkipListSet<EmptyBlock> emptyBlockSet;
-    private final NavigableMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
-    private final Map<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
+    private final ConcurrentSkipListMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
+    private final ConcurrentHashMap<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
     public final AtomicInteger currentSizeHeap = new AtomicInteger();
     private final int percentageOfOccupancy;
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
@@ -48,6 +48,7 @@ public class Heap {
         currentSizeHeap.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
         if (checkingHeapFullness()) {//TODO description
             System.out.println("cleanerFilledBlock() - start");
+            executor = Executors.newSingleThreadExecutor();
             cleanerFilledBlock();
         }
         return index;
