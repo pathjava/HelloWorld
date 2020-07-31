@@ -118,7 +118,7 @@ public class Heap {
         if (tempFilledBlock != null) { /* если полученное значение не null */
             int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
             int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
-            filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
+            filledBlocksHM.remove(ptr); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             atomicInteger.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
             /* заменяем значения на ноли */
