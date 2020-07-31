@@ -4,20 +4,23 @@
 package ru.progwards.java2.lessons.gc;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Heap {
 
     private final byte[] bytes;
-    private TreeSet<EmptyBlock> emptyBlockSet;
-    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
-    private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
+    private ConcurrentSkipListSet<EmptyBlock> emptyBlockSet;
+    private final NavigableMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
+    private final Map<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
     public final AtomicInteger atomicInteger = new AtomicInteger();
     private final int percentageOfOccupancy;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
+        emptyBlockSet = new ConcurrentSkipListSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
         percentageOfOccupancy = (int) (maxHeapSize * (30.0f / 100.0f));
@@ -27,7 +30,7 @@ public class Heap {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
         /* получаем ключ/значение равное или большее значения ключа */
-        Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);
+        Map.Entry<Integer, ConcurrentSkipListSet<EmptyBlock>> tempEmptyBlock = emptyBlocksTM.ceilingEntry(size);
         int index;
         if (tempEmptyBlock != null) { /* если размер свободного блока подходящего размера найден */
             index = getIndex(tempEmptyBlock); /* определяем индекс добавляемого блока */
@@ -49,7 +52,7 @@ public class Heap {
         return index;
     }
 
-    private int getIndex(Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock) {
+    private int getIndex(Map.Entry<Integer, ConcurrentSkipListSet<EmptyBlock>> tempEmptyBlock) {
         return tempEmptyBlock.getValue().iterator().next().getStartIndexEmptyBlock();
     }
 
@@ -83,7 +86,7 @@ public class Heap {
                 deleteEmptyBlock(emptyBlockSuitableSize); /* вызываем удаление пустого блока */
             else {
                 deleteEmptyBlock(emptyBlockSuitableSize);
-                emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
+                emptyBlockSet = new ConcurrentSkipListSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
             }
             emptyBlockSet.add(new EmptyBlock(newStartIndex, oldEndIndex, newKeyAndBlockSize));
             emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
@@ -127,7 +130,7 @@ public class Heap {
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
         emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); /* получаем значение по ключу (размеру удаляемого блока) */
         if (emptyBlockSet == null) /* если блок такого размера отсутствует */
-            emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* создаем новый */
+            emptyBlockSet = new ConcurrentSkipListSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* создаем новый */
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock)); /* добавляем в трисет данные о блоке */
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
@@ -192,7 +195,7 @@ public class Heap {
 
     private void rebuildEmptyBlocksTM(int emptyCellIndex) {
         emptyBlocksTM.clear(); /* после компактизации создаем единый пустой блок в конце кучи */
-        emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
+        emptyBlockSet = new ConcurrentSkipListSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         int newKeyAndBlockSize = bytes.length - emptyCellIndex;
         emptyBlockSet.add(new EmptyBlock(emptyCellIndex, bytes.length - 1, newKeyAndBlockSize));
         emptyBlocksTM.put(newKeyAndBlockSize, emptyBlockSet);
@@ -202,7 +205,7 @@ public class Heap {
 //        System.out.println("start"); /* для отладки */
         List<EmptyBlock> tempEmptyBlocks = new ArrayList<>();
         /* перегоняем все пустые блоки в ArrayList */
-        for (Map.Entry<Integer, TreeSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
+        for (Map.Entry<Integer, ConcurrentSkipListSet<EmptyBlock>> entry : emptyBlocksTM.entrySet()) {
             if (entry.getValue().size() == 1)
                 tempEmptyBlocks.add(new EmptyBlock(entry.getValue().iterator().next().getStartIndexEmptyBlock(),
                         entry.getValue().iterator().next().getEndIndexEmptyBlock(),
