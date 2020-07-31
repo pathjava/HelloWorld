@@ -15,14 +15,14 @@ public class Heap {
     private final Map<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
     public final AtomicInteger currentSizeHeap = new AtomicInteger();
     private final int percentageOfOccupancy;
-    private final ExecutorService executor = Executors.newFixedThreadPool(1);
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new ConcurrentSkipListSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
-        percentageOfOccupancy = (int) (maxHeapSize * (30.0f / 100.0f));
+        percentageOfOccupancy = (int) (maxHeapSize * (15.0f / 100.0f));
     }
 
     public int malloc(int size) throws OutOfMemoryException {
@@ -46,8 +46,10 @@ public class Heap {
             }
         }
         currentSizeHeap.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
-        if (checkingHeapFullness() && executor.isShutdown())
+        if (checkingHeapFullness()) {//TODO description
+            System.out.println("cleanerFilledBlock() - start");
             cleanerFilledBlock();
+        }
         return index;
     }
 
@@ -55,7 +57,7 @@ public class Heap {
         return tempEmptyBlock.getValue().iterator().next().getStartIndexEmptyBlock();
     }
 
-    private boolean checkingHeapFullness() {
+    private boolean checkingHeapFullness() { //TODO description
         return currentSizeHeap.get() > percentageOfOccupancy;
     }
 
@@ -115,7 +117,7 @@ public class Heap {
 
         FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); /* получаем значение по ключу (указателю) */
         if (tempFilledBlock != null) { /* если полученное значение не null */
-            filledBlocksHM.get(ptr).setReadyToFree(true);
+            filledBlocksHM.get(ptr).setReadyToFree(true); //TODO description
 //            int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
 //            int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
 //            filledBlocksHM.remove(ptr); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
@@ -135,19 +137,20 @@ public class Heap {
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
 
-    private void cleanerFilledBlock() {
-        executor.execute(() -> {
+    private void cleanerFilledBlock() { //TODO description
+        executor.submit(() -> {
             for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
-                int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
-                int sizeRemoveBlock = entry.getValue().getSizeFilledBlock(); /* получаем размер удаляемого блока */
-                if (entry.getValue().isReadyToFree())
-                    filledBlocksHM.remove(entry.getKey()); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
-//                System.out.println("deleted "+entry.getKey());
-                currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
-                addEmptyBlockAfterRemove(entry.getKey(), endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
+                if (entry.getValue().isReadyToFree()) {
+                    int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
+                    int sizeRemoveBlock = entry.getValue().getSizeFilledBlock(); /* получаем размер удаляемого блока */
+                    filledBlocksHM.remove(entry.getKey()); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
+                    currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
+                    addEmptyBlockAfterRemove(entry.getKey(), endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
+                }
             }
         });
         executor.shutdown();
+        System.out.println("heap size " + currentSizeHeap);
     }
 
     public void compact() { /* компактизация кучи */
