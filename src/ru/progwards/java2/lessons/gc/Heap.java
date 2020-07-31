@@ -13,12 +13,14 @@ public class Heap {
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
     public final AtomicInteger atomicInteger = new AtomicInteger();
+    private Integer percentageOfOccupancy;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
         emptyBlocksTM.put(maxHeapSize, emptyBlockSet);
+        percentageOfOccupancy = (int) (maxHeapSize * (30.0f / 100.0f));
     }
 
     public int malloc(int size) throws OutOfMemoryException {
@@ -42,11 +44,17 @@ public class Heap {
             }
         }
         atomicInteger.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
+        if (checkingHeapFullness())
+            cleanerFilledBlock();
         return index;
     }
 
     private int getIndex(Map.Entry<Integer, TreeSet<EmptyBlock>> tempEmptyBlock) {
         return tempEmptyBlock.getValue().iterator().next().getStartIndexEmptyBlock();
+    }
+
+    private boolean checkingHeapFullness() {
+        return atomicInteger.get() > percentageOfOccupancy;
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
@@ -122,6 +130,10 @@ public class Heap {
             emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock)); /* создаем новый */
         emptyBlockSet.add(new EmptyBlock(startIndex, endIndex, sizeEmptyBlock)); /* добавляем в трисет данные о блоке */
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
+    }
+
+    private void cleanerFilledBlock() {
+
     }
 
     public void compact() { /* компактизация кучи */
