@@ -9,13 +9,11 @@ public class EmptyBlock {
     private final int startIndexEmptyBlock;
     private final int endIndexEmptyBlock;
     private final int sizeEmptyBlock;
-    private boolean readyToFree;
 
     public EmptyBlock(int startIndexEmpty, int endIndexEmpty, int sizeEmptyBlock) {
         this.startIndexEmptyBlock = startIndexEmpty;
         this.endIndexEmptyBlock = endIndexEmpty;
         this.sizeEmptyBlock = sizeEmptyBlock;
-        readyToFree = false;
     }
 
     public int getStartIndexEmptyBlock() {
@@ -28,10 +26,6 @@ public class EmptyBlock {
 
     public int getSizeEmptyBlock() {
         return sizeEmptyBlock;
-    }
-
-    public void setReadyToFree(boolean readyToFree) {
-        this.readyToFree = readyToFree;
     }
 
     /* переопределен для отладки */

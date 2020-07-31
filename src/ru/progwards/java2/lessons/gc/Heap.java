@@ -4,9 +4,7 @@
 package ru.progwards.java2.lessons.gc;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Heap {
@@ -15,8 +13,9 @@ public class Heap {
     private ConcurrentSkipListSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
-    public final AtomicInteger atomicInteger = new AtomicInteger();
+    public final AtomicInteger currentSizeHeap = new AtomicInteger();
     private final int percentageOfOccupancy;
+    private final ExecutorService executor = Executors.newFixedThreadPool(1);
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
@@ -46,8 +45,8 @@ public class Heap {
                 addBlockToHeap(index, size, tempEmptyBlock.getKey());
             }
         }
-        atomicInteger.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
-        if (checkingHeapFullness())
+        currentSizeHeap.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
+        if (checkingHeapFullness() && executor.isShutdown())
             cleanerFilledBlock();
         return index;
     }
@@ -57,7 +56,7 @@ public class Heap {
     }
 
     private boolean checkingHeapFullness() {
-        return atomicInteger.get() > percentageOfOccupancy;
+        return currentSizeHeap.get() > percentageOfOccupancy;
     }
 
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
@@ -119,7 +118,7 @@ public class Heap {
             int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
             int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
-            atomicInteger.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
+            currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
             /* заменяем значения на ноли */
 //            IntStream.rangeClosed(ptr, endIndex).forEachOrdered(i -> bytes[i] = 0);
@@ -136,7 +135,13 @@ public class Heap {
     }
 
     private void cleanerFilledBlock() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
+        executor.shutdown();
     }
 
     public void compact() { /* компактизация кучи */

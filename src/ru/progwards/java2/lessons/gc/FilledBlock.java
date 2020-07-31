@@ -8,10 +8,12 @@ public class FilledBlock {
 
     private final int endIndexFilled;
     private final int sizeFilledBlock;
+    private boolean readyToFree;
 
     public FilledBlock(int endIndexFilled, int sizeFilledBlock) {
         this.endIndexFilled = endIndexFilled;
         this.sizeFilledBlock = sizeFilledBlock;
+        readyToFree = false;
     }
 
     public int getEndIndexFilled() {
@@ -20,6 +22,10 @@ public class FilledBlock {
 
     public int getSizeFilledBlock() {
         return sizeFilledBlock;
+    }
+
+    public void setReadyToFree(boolean readyToFree) {
+        this.readyToFree = readyToFree;
     }
 
     /* переопределен для отладки */
