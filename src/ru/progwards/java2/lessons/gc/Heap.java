@@ -115,11 +115,12 @@ public class Heap {
 
         FilledBlock tempFilledBlock = filledBlocksHM.get(ptr); /* получаем значение по ключу (указателю) */
         if (tempFilledBlock != null) { /* если полученное значение не null */
-            int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
-            int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
-            filledBlocksHM.remove(ptr); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
-            currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
-            addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
+            filledBlocksHM.get(ptr).setReadyToFree(true);
+//            int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
+//            int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
+//            filledBlocksHM.remove(ptr); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
+//            currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
+//            addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
             /* заменяем значения на ноли */
 //            IntStream.rangeClosed(ptr, endIndex).forEachOrdered(i -> bytes[i] = 0);
         } else
@@ -135,10 +136,15 @@ public class Heap {
     }
 
     private void cleanerFilledBlock() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-
+        executor.execute(() -> {
+            for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
+                int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
+                int sizeRemoveBlock = entry.getValue().getSizeFilledBlock(); /* получаем размер удаляемого блока */
+                if (entry.getValue().isReadyToFree())
+                    filledBlocksHM.remove(entry.getKey()); //TODO  /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
+//                System.out.println("deleted "+entry.getKey());
+                currentSizeHeap.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
+                addEmptyBlockAfterRemove(entry.getKey(), endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
             }
         });
         executor.shutdown();

@@ -28,6 +28,10 @@ public class FilledBlock {
         this.readyToFree = readyToFree;
     }
 
+    public boolean isReadyToFree() {
+        return readyToFree;
+    }
+
     /* переопределен для отладки */
     @Override
     public String toString() {
