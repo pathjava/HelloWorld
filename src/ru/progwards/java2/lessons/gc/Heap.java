@@ -12,7 +12,7 @@ public class Heap {
     private TreeSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
-    AtomicInteger atomicInteger = new AtomicInteger();
+    public final AtomicInteger atomicInteger = new AtomicInteger();
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
