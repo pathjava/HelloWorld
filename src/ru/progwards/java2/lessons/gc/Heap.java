@@ -4,6 +4,7 @@
 package ru.progwards.java2.lessons.gc;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Heap {
 
@@ -11,6 +12,7 @@ public class Heap {
     private TreeSet<EmptyBlock> emptyBlockSet;
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
+    AtomicInteger atomicInteger = new AtomicInteger();
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
@@ -39,6 +41,7 @@ public class Heap {
                 addBlockToHeap(index, size, tempEmptyBlock.getKey());
             }
         }
+        atomicInteger.addAndGet(size); /* прибавляем размер добавляемого блока в счетчик размера кучи */
         return index;
     }
 
@@ -105,6 +108,7 @@ public class Heap {
             int endIndex = tempFilledBlock.getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
             int sizeRemoveBlock = tempFilledBlock.getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
+            atomicInteger.addAndGet(Math.abs(sizeRemoveBlock) * -1); /* вычитаем размер удаляемого блока из счетчика размера кучи */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
             /* заменяем значения на ноли */
 //            IntStream.rangeClosed(ptr, endIndex).forEachOrdered(i -> bytes[i] = 0);

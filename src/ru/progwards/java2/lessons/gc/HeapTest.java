@@ -80,6 +80,7 @@ public class HeapTest {
         long stop = System.currentTimeMillis();
         System.out.println("malloc time: " + allocTime + " free time: " + freeTime);
         System.out.println("total time: " + (stop - start) + " count: " + count);
+        System.out.println("size Heap: " + heap.atomicInteger);
 
         //Get the jvm heap size.
 //        long heapSize = Runtime.getRuntime().totalMemory();
