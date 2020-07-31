@@ -13,7 +13,7 @@ public class Heap {
     private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
     public final AtomicInteger atomicInteger = new AtomicInteger();
-    private Integer percentageOfOccupancy;
+    private final int percentageOfOccupancy;
 
     public Heap(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
