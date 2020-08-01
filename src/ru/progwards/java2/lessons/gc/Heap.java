@@ -141,7 +141,7 @@ public class Heap {
     private void cleanerFilledBlock() { //TODO description
         executor.execute(() -> {
             for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
-                if (entry.getValue().isReadyToFree()) {
+                if (entry.getValue().isReadyToFree() /*&& entry != null*/) { //TODO -> && entry != null
                     int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
                     int sizeRemoveBlock = entry.getValue().getSizeFilledBlock(); /* получаем размер удаляемого блока */
                     filledBlocksHM.remove(entry.getKey()); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
