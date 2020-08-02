@@ -1,18 +1,26 @@
 // Oleg Kiselev
-// 25.06.2020, 12:02
+// 02.08.2020, 15:14
 
-package ru.progwards.java2.lessons.gc;
+// Oleg Kiselev
+// 25.06.2020, 12:00
+
+package ru.progwards.java2.lessons.gc.oldversionsheap;
+
+import ru.progwards.java2.lessons.gc.EmptyBlock;
+import ru.progwards.java2.lessons.gc.FilledBlock;
+import ru.progwards.java2.lessons.gc.InvalidPointerException;
+import ru.progwards.java2.lessons.gc.OutOfMemoryException;
 
 import java.util.*;
 
-public class HeapOne {
+public class HeapTwo {
 
     private byte[] bytes;
     private TreeSet<EmptyBlock> emptyBlockSet;
-    private final NavigableMap<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new TreeMap<>();
+    private final Map<Integer, TreeSet<EmptyBlock>> emptyBlocksTM = new HashMap<>();
     private final Map<Integer, FilledBlock> filledBlocksHM = new HashMap<>();
 
-    public HeapOne(int maxHeapSize) {
+    public HeapTwo(int maxHeapSize) {
         bytes = new byte[maxHeapSize];
         emptyBlockSet = new TreeSet<>(Comparator.comparingInt(EmptyBlock::getStartIndexEmptyBlock));
         emptyBlockSet.add(new EmptyBlock(0, bytes.length - 1, maxHeapSize));
@@ -22,26 +30,37 @@ public class HeapOne {
     public int malloc(int size) throws OutOfMemoryException {
         if (size < 1 || size > bytes.length) /* проверяем, чтобы значение соответствовало размерам кучи */
             throw new IllegalArgumentException();
-        int emptyBlockSuitableSize;
-        if (!(emptyBlocksTM.ceilingKey(size) == null)) /* если размер свободного блока не найден подходящего размера */
-            emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
-        else {
+        Integer emptyBlockSuitableSize = checkKey(size);
+        int index;
+        if (emptyBlockSuitableSize != null) { /* если размер свободного блока не найден подходящего размера */
+            index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock(); /* определяем индекс добавляемого блока */
+            addBlockToHeap(index, size, emptyBlockSuitableSize);
+        } else {
 //            defrag();
             compact(); /* тогда запускаем компактизацию кучи */
-            if (emptyBlocksTM.ceilingKey(size) == null) /* если и после этого нет места, бросаем исключение */
+            emptyBlockSuitableSize = checkKey(size);
+            if (emptyBlockSuitableSize == null) /* если и после этого нет места, бросаем исключение */
                 throw new OutOfMemoryException("Недостаточно памяти!");
-            else
-                emptyBlockSuitableSize = emptyBlocksTM.ceilingKey(size);
+            else {
+                index = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getStartIndexEmptyBlock();
+                addBlockToHeap(index, size, emptyBlockSuitableSize);
+            }
         }
-        /* определяем индекс добавляемого блока */
-        int index = emptyBlocksTM.get(emptyBlocksTM.ceilingKey(size)).iterator().next().getStartIndexEmptyBlock();
-        addBlockToHeap(index, size, emptyBlockSuitableSize);
         return index;
     }
 
+    private Integer checkKey(int size) {
+        if (emptyBlocksTM.containsKey(size))
+            return size;
+        else {
+            TreeSet<Integer> tempKey = new TreeSet<>(emptyBlocksTM.keySet());
+            return tempKey.ceiling(size);
+        }
+    }
+
     private void addBlockToHeap(int index, int size, int emptyBlockSuitableSize) {
-        for (int i = 0; i < size; i++) /* заполняем кучу согласно размера пришедшего блока */
-            bytes[index + i] = 1;
+//        for (int i = 0; i < size; i++) /* заполняем кучу согласно размера пришедшего блока */
+//            bytes[index + i] = 1;
         if (!(size == emptyBlockSuitableSize)) /* если размер добавляемого блока и найденное свободное место не равны */
             addEmptyBlockToMap(index, size, emptyBlockSuitableSize); /* делаем пометки о свободном месте в куче */
         else { /* иначе удаляем свободный блок */
@@ -60,7 +79,7 @@ public class HeapOne {
         if (newStartIndex > oldEndIndex)
             throw new IllegalArgumentException("Начальный индекс блока не может быть больше конечного индекса");
 
-        if (!(newStartIndex > bytes.length - 1) && bytes[newStartIndex] == 0) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
+        if (!(newStartIndex > bytes.length - 1) /*&& bytes[newStartIndex] == 0*/) { /* проверяем, чтобы индекс нового пустого блока не выходил за размер кучи */
             if (emptyBlocksTM.containsKey(newKeyAndBlockSize)) { /* если уже есть пустой блок такого размера */
                 emptyBlockSet = emptyBlocksTM.get(newKeyAndBlockSize); /* получаем его */
                 if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1) /* если размер 1, удаляем полностью */
@@ -100,8 +119,8 @@ public class HeapOne {
             sizeRemoveBlock = filledBlocksHM.get(ptr).getSizeFilledBlock(); /* получаем размер удаляемого блока */
             filledBlocksHM.remove(ptr); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
             addEmptyBlockAfterRemove(ptr, endIndex, sizeRemoveBlock); /* добавляем данные о новом пустом блоке */
-            for (int i = ptr; i <= endIndex; i++)
-                bytes[i] = 0; /* заменяем значения на ноли */
+//            for (int i = ptr; i <= endIndex; i++)
+//                bytes[i] = 0; /* заменяем значения на ноли */
         } else
             throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
@@ -242,7 +261,7 @@ public class HeapOne {
 
 
     public static void main(String[] args) {
-        HeapOne test = new HeapOne(100);
+        HeapTwo test = new HeapTwo(100);
         try {
 //            test.malloc(3);
 //            test.malloc(5);
@@ -314,3 +333,4 @@ public class HeapOne {
     }
 
 }
+

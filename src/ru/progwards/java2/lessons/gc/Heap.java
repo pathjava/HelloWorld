@@ -6,6 +6,8 @@ package ru.progwards.java2.lessons.gc;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Heap {
 
@@ -141,7 +143,7 @@ public class Heap {
     private void cleanerFilledBlock() { //TODO description
         executor.execute(() -> {
             for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
-                if (entry.getValue().isReadyToFree() /*&& entry != null*/) { //TODO -> && entry != null
+                if (entry.getValue().isReadyToFree()) {
                     int endIndex = entry.getValue().getEndIndexFilled(); /* получаем конечный индекс удаляемого блока */
                     int sizeRemoveBlock = entry.getValue().getSizeFilledBlock(); /* получаем размер удаляемого блока */
                     filledBlocksHM.remove(entry.getKey()); /* удаляем блок из мапы, хранящей данные о заполненных блоках в куче  */
