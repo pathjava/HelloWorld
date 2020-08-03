@@ -74,6 +74,7 @@ public class Heap {
         addFilledBlockToMap(index, size);/* добавляем информацию о занятых блоках в куче */
     }
 
+    /* добавление пустого блока в emptyBlocksTM */
     private void addEmptyBlockToMap(int index, int size, int emptyBlockSuitableSize) {
         int newStartIndex = index + size; /* определяем стартовый индекс нового пустого блока */
         int oldEndIndex = emptyBlocksTM.get(emptyBlockSuitableSize).iterator().next().getEndIndexEmptyBlock();
@@ -98,6 +99,7 @@ public class Heap {
         }
     }
 
+    /* удаление пустого блока из emptyBlocksTM */
     private void deleteEmptyBlock(int emptyBlockSuitableSize) {
         if (emptyBlocksTM.get(emptyBlockSuitableSize).size() == 1)
             emptyBlocksTM.remove(emptyBlockSuitableSize); /* если блок имеет размер 1, то удаляем его целиком */
@@ -105,6 +107,7 @@ public class Heap {
             emptyBlocksTM.get(emptyBlockSuitableSize).pollFirst(); /* иначе удаляем первый элемент из трисет */
     }
 
+    /* добавление информации в filledBlocksHM о занятом блоке в куче */
     private void addFilledBlockToMap(int index, int size) {
         int endIndex = index + (size - 1);
         /* если ключ index отсутствует в filledBlocksHM (проверяет метод putIfAbsent), добавляем ключ/значение, иначе выбрасываем исключение */
