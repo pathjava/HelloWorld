@@ -71,7 +71,7 @@ public class Heap {
         else /* если размер добавляемого блока и найденное свободное место равны, удаляем свободный блок */
             deleteEmptyBlock(emptyBlockSuitableSize);
 
-        addFilledBlockToMap(index, size);/* добавляем информацию о занятых блоках в куче */
+        addFilledBlockToMap(index, size);/* добавляем информацию в filledBlocksHM о занятых блоках в куче */
     }
 
     /* добавление пустого блока в emptyBlocksTM */
