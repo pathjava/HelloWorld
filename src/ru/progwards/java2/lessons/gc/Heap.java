@@ -130,6 +130,7 @@ public class Heap {
             throw new InvalidPointerException("Неверный указатель: " + ptr);
     }
 
+    /* добавление свободного блока в emptyBlocksTM взамен освобожденного из filledBlocksHM */
     private void addEmptyBlockAfterRemove(int startIndex, int endIndex, int sizeEmptyBlock) {
         emptyBlockSet = emptyBlocksTM.get(sizeEmptyBlock); /* получаем значение по ключу (размеру удаляемого блока) */
         if (emptyBlockSet == null) /* если блок такого размера отсутствует */
@@ -138,6 +139,7 @@ public class Heap {
         emptyBlocksTM.put(sizeEmptyBlock, emptyBlockSet);
     }
 
+    /* удаление занятых блоков, ранее помеченных как кандидаты на очистку */
     private void cleanerFilledBlock() { //TODO description
         executor.execute(() -> {
             for (Map.Entry<Integer, FilledBlock> entry : filledBlocksHM.entrySet()) {
