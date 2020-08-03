@@ -11,7 +11,7 @@ public class Heap {
 
     private final byte[] bytes;
     private ConcurrentSkipListSet<EmptyBlock> emptyBlockSet;
-    private final ConcurrentSkipListMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
+    private final ConcurrentNavigableMap<Integer, ConcurrentSkipListSet<EmptyBlock>> emptyBlocksTM = new ConcurrentSkipListMap<>();
     private final ConcurrentHashMap<Integer, FilledBlock> filledBlocksHM = new ConcurrentHashMap<>();
     public final AtomicInteger currentSizeHeap = new AtomicInteger();
     private final int percentageOfOccupancy;
