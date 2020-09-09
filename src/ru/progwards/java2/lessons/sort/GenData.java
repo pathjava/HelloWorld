@@ -1,4 +1,4 @@
-package ru.progwards.sever.testprogwards2.test_16;
+package ru.progwards.java2.lessons.sort;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,16 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GenData {
     static void generate() {
-        PrintWriter file = null;
-        try {
-            file = new PrintWriter(new FileOutputStream(new File("data.txt")));
+        try (PrintWriter file = new PrintWriter(new FileOutputStream(new File("data.txt")))) {
             for (int i = 0; i < 200_000_000; i++)
                 file.println(ThreadLocalRandom.current().nextInt());
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (file != null)
-                file.close();
         }
     }
 
