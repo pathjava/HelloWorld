@@ -1,10 +1,7 @@
 package ru.progwards.sever.testprogwards2.test_08;
 
-import ru.progwards.java2.lessons.basetypes.BinaryHeap;
 
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 

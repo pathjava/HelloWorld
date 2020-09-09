@@ -10,12 +10,11 @@ public class GenData {
         PrintWriter file = null;
         try {
             file = new PrintWriter(new FileOutputStream(new File("data.txt")));
-            for(int i=0; i<200_000_000; i++)
+            for (int i = 0; i < 200_000_000; i++)
                 file.println(ThreadLocalRandom.current().nextInt());
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (file != null)
                 file.close();
         }

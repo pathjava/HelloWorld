@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class SelectionSort {
 
-    public static<T extends Comparable<T>> void sort(T[] a) {
-        for (int i=0; i<a.length; i++)
-            for(int j=i+1; j<a.length; j++)
+    public static <T extends Comparable<T>> void sort(T[] a) {
+        for (int i = 0; i < a.length; i++)
+            for (int j = i + 1; j < a.length; j++)
                 if (a[i].compareTo(a[j]) < 0) {
                     T tmp = a[i];
                     a[i] = a[j];
@@ -14,8 +14,8 @@ public class SelectionSort {
                 }
     }
 
-    public static<T extends Comparable<T>> void sort2(T[] a) {
-        for (int i=0; i<a.length; i++) {
+    public static <T extends Comparable<T>> void sort2(T[] a) {
+        for (int i = 0; i < a.length; i++) {
             int min = i;
             for (int j = i + 1; j < a.length; j++) {
                 if (a[min].compareTo(a[j]) < 0)
@@ -29,16 +29,16 @@ public class SelectionSort {
         }
     }
 
-    public static<T extends Comparable<T>> void sort3(T[] a) {
-        for (int i=0; i<a.length; i++) {
+    public static <T extends Comparable<T>> void sort3(T[] a) {
+        for (int i = 0; i < a.length; i++) {
             int min = i;
             for (int j = i + 1; j < a.length; j++) {
                 if (a[min].compareTo(a[j]) < 0)
                     min = j;
             }
-        T tmp = a[i];
-        a[i] = a[min];
-        a[min] = tmp;
+            T tmp = a[i];
+            a[i] = a[min];
+            a[min] = tmp;
         }
     }
 }

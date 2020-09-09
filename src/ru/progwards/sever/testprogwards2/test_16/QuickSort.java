@@ -3,11 +3,11 @@ package ru.progwards.sever.testprogwards2.test_16;
 
 public class QuickSort {
 
-    public static<T extends Comparable<T>> int hoare(T[] a, int left, int right) {
-        T pivot = a[(left+right) / 2];
+    public static <T extends Comparable<T>> int hoare(T[] a, int left, int right) {
+        T pivot = a[(left + right) / 2];
         int i = left - 1;
         int j = right + 1;
-        for(;;) {
+        for (; ; ) {
             do {
                 i++;
             } while (a[i].compareTo(pivot) < 0);
@@ -23,7 +23,7 @@ public class QuickSort {
         }
     }
 
-    public static<T extends Comparable<T>> int lomuto(T[] a, int left, int right) {
+    public static <T extends Comparable<T>> int lomuto(T[] a, int left, int right) {
         int i = left;
         T pivot = a[right];
         for (int j = left; j < right; j++) {
@@ -34,13 +34,13 @@ public class QuickSort {
         return i;
     }
 
-    static<T> void swap(T[] a, int i, int j) {
+    static <T> void swap(T[] a, int i, int j) {
         T tmp = a[i];
         a[i] = a[j];
         a[j] = tmp;
     }
 
-    public static<T extends Comparable<T>> void sortHoare(T[] a, int left, int right) {
+    public static <T extends Comparable<T>> void sortHoare(T[] a, int left, int right) {
         if (left < right) {
             int pivot = hoare(a, left, right);
             sortHoare(a, left, pivot);
@@ -48,7 +48,7 @@ public class QuickSort {
         }
     }
 
-    public static<T extends Comparable<T>> void sortLomuto(T[] a, int left, int right) {
+    public static <T extends Comparable<T>> void sortLomuto(T[] a, int left, int right) {
         if (left < right) {
             int pivot = lomuto(a, left, right);
             sortLomuto(a, left, pivot - 1);
@@ -56,11 +56,11 @@ public class QuickSort {
         }
     }
 
-    public static<T extends Comparable<T>> void sort(T[] a) {
-        sortLomuto(a, 0, a.length-1);
+    public static <T extends Comparable<T>> void sort(T[] a) {
+        sortLomuto(a, 0, a.length - 1);
     }
 
-    public static<T extends Comparable<T>> void sort2(T[] a) {
-        sortHoare(a, 0, a.length-1);
+    public static <T extends Comparable<T>> void sort2(T[] a) {
+        sortHoare(a, 0, a.length - 1);
     }
 }

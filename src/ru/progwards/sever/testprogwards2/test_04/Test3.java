@@ -1,9 +1,7 @@
 package ru.progwards.sever.testprogwards2.test_04;
 
-import ru.progwards.java1.lessons.arrays.BArray;
+import ru.progwards.sever.testprogwards.test_16.BArray;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 public class Test3 {
     static final int ITERATIONS = 10000000;
