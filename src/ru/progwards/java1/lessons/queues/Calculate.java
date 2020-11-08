@@ -2,7 +2,7 @@ package ru.progwards.java1.lessons.queues;
 
 
 public class Calculate {
-    public static double calculation1(){
+    public static double calculation1() {
         /* создаем новый объект класса StackCalc чтобы иметь доступ к методам класса StackCalc */
         StackCalc stackCalc = new StackCalc();
         stackCalc.push(2.2);
@@ -13,7 +13,7 @@ public class Calculate {
         return stackCalc.pop();
     }
 
-    public static double calculation2(){
+    public static double calculation2() {
         StackCalc stackCalc = new StackCalc();
         /* операции проводим сверху вниз  */
         stackCalc.push(737.22);

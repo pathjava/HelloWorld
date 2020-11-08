@@ -12,10 +12,11 @@ package ru.progwards.sever.testprogwards2.test_09.javadoc;
 
 /**
  * класс Animal - прародитель в том числе коровы {@link Cow}
+ *
  * @author Oleg
  * @version 1.0
- * @since 1.1
  * @see Cow
+ * @since 1.1
  */
 
 public class Animal {
@@ -31,6 +32,7 @@ public class Animal {
 
     /**
      * конструктор по умолчанию
+     *
      * @see #Animal(double, String)
      */
     public Animal() {
@@ -38,8 +40,9 @@ public class Animal {
 
     /**
      * конструктор с параметрами про {@value #description}
+     *
      * @param weight weight animal
-     * @param name name animal
+     * @param name   name animal
      * @see #Animal()
      */
     public Animal(double weight, String name) {
@@ -68,6 +71,7 @@ public class Animal {
 
     /**
      * описание метода fly
+     *
      * @deprecated животные не летают, метод устарел
      */
     public void fly() {

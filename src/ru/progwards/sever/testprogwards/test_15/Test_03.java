@@ -11,7 +11,7 @@ import java.util.Locale;
 
 public class Test_03 {
 
-    public static ZonedDateTime parseZDT(String str){
+    public static ZonedDateTime parseZDT(String str) {
         Locale locale = Locale.forLanguageTag("EN");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("DD.MM.yyyy HH:mm:ss.SSS Z zzzz", locale);
         return ZonedDateTime.parse(str, dtf.withZone(ZoneId.of("Europe/Moscow")));

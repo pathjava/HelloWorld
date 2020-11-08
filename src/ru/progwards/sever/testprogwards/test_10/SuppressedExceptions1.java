@@ -2,16 +2,16 @@ package ru.progwards.sever.testprogwards.test_10;
 
 public class SuppressedExceptions1 {
     public static void main(String[] args) {
-        try{
+        try {
             AlwaysExceptions ae = new AlwaysExceptions(1);
-            try{
+            try {
                 ae.method();
-            } catch (Throwable t){
+            } catch (Throwable t) {
                 System.out.println(t.getMessage());
             } finally {
                 ae.close();
             }
-        } catch (Throwable t){
+        } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }

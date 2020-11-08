@@ -8,10 +8,12 @@ public class MatrixIterator<T> implements Iterator<T> {
     /* заводим переменные, которые будут использоваться для проверки текущего местоположения итератора */
     private int indexRow;
     private int indexCol;
+
     /* конструктор */
     MatrixIterator(T[][] array) {
         this.array = array;
     }
+
     /* переопределяем метод hasNext */
     @Override
     public boolean hasNext() {
@@ -35,7 +37,7 @@ public class MatrixIterator<T> implements Iterator<T> {
 
     public static void main(String[] args) {
         MatrixIterator<Integer> iterator =
-                new MatrixIterator<>(new Integer[][]{{1,2,3,4,5,6,7,8,9,10},{11,12,13,14,15,16,17,18,19,20}});
+                new MatrixIterator<>(new Integer[][]{{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}});
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }

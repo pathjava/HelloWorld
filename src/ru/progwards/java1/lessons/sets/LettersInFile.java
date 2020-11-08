@@ -25,13 +25,13 @@ public class LettersInFile {
                     /* получаем символ из строки согласно индекса (i) */
                     char ch = str.charAt(i);
                     /* проверяем, является ли поступивший символ буквой через метод isLetter, если это буква, проверяем
-                    * является ли она латинской */
+                     * является ли она латинской */
                     if (Character.isLetter(ch) && Character.UnicodeBlock.of(ch) == Character.UnicodeBlock.BASIC_LATIN) {
                         /* проверяем, является ли буква заглавной и если да, то передаем её в TreeSet через метод add */
                         if (Character.isUpperCase(ch)) {
                             latinUpper.add(ch);
                             /* если при прроверке выше буква оказалась не заглавной, а значит строчная,
-                            * тогда передаем её в TreeSet через метод add */
+                             * тогда передаем её в TreeSet через метод add */
                         } else
                             latinLower.add(ch);
                         /* проверяем, является ли поступивший символ буквой через метод isLetter, если это буква, проверяем
@@ -50,7 +50,7 @@ public class LettersInFile {
                 }
             }
             /* пробрасываем исключения наверх */
-        } catch(Throwable e){
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
         /* создаем экземляры StringBuilder для дальнейшей конкатенации символов из TreeSet */

@@ -24,7 +24,7 @@ public class ChangeFieldValue {
         }
     }
 
-    void callSetName(Person person, String name)  {
+    void callSetName(Person person, String name) {
         Class<?> clazz = person.getClass();
         Method method = null;
         try {
@@ -41,7 +41,7 @@ public class ChangeFieldValue {
         }
     }
 
-    Person callConstructor(String name){
+    Person callConstructor(String name) {
         Class<?> clazz = Person.class;
         Constructor<?> constructor = null;
         try {

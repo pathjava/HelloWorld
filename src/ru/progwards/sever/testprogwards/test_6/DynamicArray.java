@@ -12,16 +12,14 @@ public class DynamicArray {
     private int size;
     // constructor initialize value to variable
 
-    public DynamicArray()
-    {
+    public DynamicArray() {
         array = new int[1];
         count = 0;
         size = 1;
     }
     // function add an element at the end of array
 
-    public void add(int data)
-    {
+    public void add(int data) {
 
         // check no of element is equql to size of array
         if (count == size) {
@@ -32,8 +30,7 @@ public class DynamicArray {
     }
 
     // function makes size double of array
-    public void growSize()
-    {
+    public void growSize() {
 
         int temp[] = null;
         if (count == size) {
@@ -59,8 +56,7 @@ public class DynamicArray {
 
     // function shrink size of array
     // which block unnecessary remove them
-    public void shrinkSize()
-    {
+    public void shrinkSize() {
         int temp[] = null;
         if (count > 0) {
 
@@ -82,8 +78,7 @@ public class DynamicArray {
     }
     // function add an element at given index
 
-    public void addAt(int index, int data)
-    {
+    public void addAt(int index, int data) {
         // if size is not enough make size double
         if (count == size) {
             growSize();
@@ -103,8 +98,7 @@ public class DynamicArray {
 
     // function remove last element or put
     // zero at last index
-    public void remove()
-    {
+    public void remove() {
         if (count > 0) {
             array[count - 1] = 0;
             count--;
@@ -113,8 +107,7 @@ public class DynamicArray {
 
     // function shift all element of right
     // side from given index in left
-    public void removeAt(int index)
-    {
+    public void removeAt(int index) {
         if (count > 0) {
             for (int i = index; i < count - 1; i++) {
 
@@ -127,8 +120,7 @@ public class DynamicArray {
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         DynamicArray da = new DynamicArray();
 
         // add 9 elements in array
@@ -159,7 +151,7 @@ public class DynamicArray {
         da.shrinkSize();
 
         // print all array elements
-        System.out.println("Elements of array "+
+        System.out.println("Elements of array " +
                 "after shrinkSize of array:");
         for (int i = 0; i < da.size; i++) {
             System.out.print(da.array[i] + " ");
@@ -212,7 +204,7 @@ public class DynamicArray {
 
         // print Elements of array after delete
         // an element index 1
-        System.out.println("Elements of array after"+
+        System.out.println("Elements of array after" +
                 " delete element at index 1:");
         for (int i = 0; i < da.size; i++) {
             System.out.print(da.array[i] + " ");

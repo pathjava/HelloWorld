@@ -12,6 +12,7 @@ public class ADeque<E> {
     public ADeque() {
         elements = new Object[16 + 1];
     }
+
     static final <E> E elementAt(Object[] es, int i) {
         return (E) es[i];
     }
@@ -68,7 +69,10 @@ public class ADeque<E> {
                 es[i] = null;
         }
     }
-    /** Capacity calculation for edge conditions, especially overflow. */
+
+    /**
+     * Capacity calculation for edge conditions, especially overflow.
+     */
     private int newCapacity(int needed, int jump) {
         final int oldCapacity = elements.length, minCapacity;
         if ((minCapacity = oldCapacity + needed) - MAX_ARRAY_SIZE > 0) {

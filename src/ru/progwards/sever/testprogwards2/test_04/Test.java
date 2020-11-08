@@ -7,7 +7,7 @@ public class Test {
         list.add(1);
         list.add(5);
         OList<Integer>.ListItem<Integer> current = list.getHead();
-        while(current != null) {
+        while (current != null) {
             System.out.println(current.getItem());
             current = current.getNext();
         }

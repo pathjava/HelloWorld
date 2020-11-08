@@ -4,10 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Test_01 {
-    public static Date createDate(){
+    public static Date createDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
-        calendar.set(1986,1,28);
+        calendar.set(1986, 1, 28);
         return calendar.getTime();
     }
 

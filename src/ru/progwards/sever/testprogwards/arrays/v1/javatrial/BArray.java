@@ -19,11 +19,11 @@ public class BArray<T extends Object> {
             array = (T[]) newArray;
         }
         size++;
-        array[size-1] = item;
+        array[size - 1] = item;
     }
 
     void copyData(T[] src, Object[] dst) {
-        for(int i=0; i<src.length; i++)
+        for (int i = 0; i < src.length; i++)
             dst[i] = src[i];
     }
 

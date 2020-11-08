@@ -26,7 +26,7 @@ public class SumSingleSimpleCalculatorTest {
     }
 
     @AfterClass
-    public static void removeInstance(){
+    public static void removeInstance() {
         simpleCalculator = null;
     }
 

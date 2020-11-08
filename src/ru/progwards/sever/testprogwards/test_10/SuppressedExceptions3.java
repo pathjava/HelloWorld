@@ -8,13 +8,13 @@ public class SuppressedExceptions3 {
         Throwable suppressed = null;
         try {
             ae.method();
-        } catch (Throwable t){
+        } catch (Throwable t) {
             suppressed = t;
             throw t;
         } finally {
-            try{
+            try {
                 ae.close();
-            } catch (Throwable t){
+            } catch (Throwable t) {
                 if (suppressed != null)
                     t.addSuppressed(suppressed);
                 throw t;
@@ -25,7 +25,7 @@ public class SuppressedExceptions3 {
     public static void main(String[] args) {
         try {
             doAlwaysExceptions();
-        } catch (Throwable e){
+        } catch (Throwable e) {
             System.out.println(e.getMessage());
             for (Throwable t : e.getSuppressed())
                 System.out.println(t.getMessage() + " (подавленное)");

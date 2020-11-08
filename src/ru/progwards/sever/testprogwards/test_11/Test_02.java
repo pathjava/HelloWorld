@@ -3,7 +3,7 @@ package ru.progwards.sever.testprogwards.test_11;
 import java.util.*;
 
 public class Test_02 {
-    public static List<Integer> filter(List<Integer> list){
+    public static List<Integer> filter(List<Integer> list) {
         int sum = 0;
         for (Integer integer : list) {
             sum += integer;
@@ -40,7 +40,7 @@ public class Test_02 {
     public static void main(String[] args) {
 
         List<Integer> list = new ArrayList<>();
-        for(Integer e:new Integer[]{40, 300, 0, 4, 3, 1, 2}) list.add(e);
+        for (Integer e : new Integer[]{40, 300, 0, 4, 3, 1, 2}) list.add(e);
         System.out.println(filter(list));
 
 //        List<Integer> list = new ArrayList<>();

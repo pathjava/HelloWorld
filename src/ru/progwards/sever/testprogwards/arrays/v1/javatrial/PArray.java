@@ -15,13 +15,13 @@ public class PArray<T extends Object> {
     public void add(T item) {
         if (blockSize == size)
             addPage();
-        T[] page = array.get(pages-1);
+        T[] page = array.get(pages - 1);
         size++;
-        page[size-1] = item;
+        page[size - 1] = item;
     }
 
     void addPage() {
-        array.add((T[])new Object[blockSize]);
+        array.add((T[]) new Object[blockSize]);
         pages++;
         size = 0;
     }

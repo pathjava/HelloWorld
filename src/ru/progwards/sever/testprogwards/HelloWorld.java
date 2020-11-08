@@ -4,11 +4,11 @@
 package ru.progwards.sever.testprogwards;
 
 public class HelloWorld {
-    static void println(String str){
+    static void println(String str) {
         System.out.println(str);
     }
 
-    static int addition(int x, int y){
+    static int addition(int x, int y) {
         return x + y;
     }
 

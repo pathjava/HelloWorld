@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class TestHeap {
     public static void test1() {
         BinaryHeap<Integer> heap = new BinaryHeap<>();
-        for(int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             heap.add(i);
             System.out.println(heap);
         }
@@ -13,6 +13,7 @@ public class TestHeap {
             System.out.println(heap.poll());
         }
     }
+
     public static void test2() {
         Integer[] array = new Integer[10];
         for (int i = 0; i < 10; i++) {
@@ -21,6 +22,7 @@ public class TestHeap {
         BinaryHeap.sort(BinaryHeap.Type.MIN_HEAP, array);
         System.out.println(Arrays.toString(array));
     }
+
     public static void main(String[] args) {
         test2();
     }

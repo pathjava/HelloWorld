@@ -3,11 +3,11 @@ package ru.progwards.java1.lessons.queues;
 import java.util.*;
 
 public class CollectionsSort {
-    public static void mySort(Collection<Integer> data){
+    public static void mySort(Collection<Integer> data) {
         List<Integer> list = new ArrayList<>(data);
         int i = 0;
         while (i < list.size()) {
-            for (int j = i+1; j < list.size(); j++) {
+            for (int j = i + 1; j < list.size(); j++) {
                 if (list.get(i) > list.get(j)) {
                     Collections.swap(list, i, j);
                 }
@@ -17,8 +17,9 @@ public class CollectionsSort {
         data.clear();
         data.addAll(list);
     }
+
     /* сортировка на основе пузырькового метода */
-    public static void mySort2(Collection<Integer> data){
+    public static void mySort2(Collection<Integer> data) {
         /* создаем ArrayList, который наполняем содержимым параметра data */
         List<Integer> list = new ArrayList<>(data);
         /* создаем и инициализируем переменную sort */
@@ -26,14 +27,14 @@ public class CollectionsSort {
         /* заводим цикл с условием выполнения, пока sort не будет истина (true) */
         while (!sort) {
             /* присваиваем переменной sort значение истина и когда все значения ArrayList будут отсортированы и
-            * цикл for не будет доходить до sort = false, тогда в условие цикла while вернется true и он завершится */
+             * цикл for не будет доходить до sort = false, тогда в условие цикла while вернется true и он завершится */
             sort = true;
             /* создаем цикл */
-            for (int i = 0; i < list.size() -1; i++) {
+            for (int i = 0; i < list.size() - 1; i++) {
                 /* в условие проверяем, больше ли значение get(i) чем get(i+1) и если истина, переходим к методу swap */
-                if (list.get(i) > list.get(i+1)) {
+                if (list.get(i) > list.get(i + 1)) {
                     /* меняем местами значения под индексами i и i+1 */
-                    Collections.swap(list, i, i+1);
+                    Collections.swap(list, i, i + 1);
                     /* так как в ArrayList не все отсортировано, то цикл доходит до переменной sort и ей присваивается ложь */
                     sort = false;
                 }
@@ -101,12 +102,12 @@ public class CollectionsSort {
 //        }
 //    }
 
-    public static void minSort(Collection<Integer> data){
+    public static void minSort(Collection<Integer> data) {
         /* создаем временный ArrayList, который наполняем значениями, полученными методом Collections.min(data)
-        * заполнение происходит от самого меньшего к большему */
+         * заполнение происходит от самого меньшего к большему */
         Collection<Integer> tempList = new ArrayList<>();
         /* в цикле методом Collections.min находим минимальные значения и передаем в tempList*/
-        for (int i = data.size() -1; i >= 0; i--) {
+        for (int i = data.size() - 1; i >= 0; i--) {
             tempList.add(Collections.min(data));
             /* после того как найденное значение переданов Collections.min, функцией remove удаляем его из data */
             data.remove(Collections.min(data));
@@ -125,9 +126,9 @@ public class CollectionsSort {
 //        }
     }
 
-    static void collSort(Collection<Integer> data){
+    static void collSort(Collection<Integer> data) {
         /* методом Collections.sort сортируем все значения в data */
-        Collections.sort((List)data);
+        Collections.sort((List) data);
 
 //        String str;
 //        int output = 0;
@@ -139,9 +140,11 @@ public class CollectionsSort {
 //            output++;
 //        }
     }
+
     /* заводим константу и присваиваем ей значение */
     static final int ELEMENT = 100_000;
-    public static Collection<String> compareSort(){
+
+    public static Collection<String> compareSort() {
         /* заводим массив ArrayList размером равным значению константы ELEMENT */
         List<Integer> listMySort = new ArrayList<>(ELEMENT);
         /* заводим генератор псевдослучайных чисел */
@@ -185,7 +188,7 @@ public class CollectionsSort {
         res.add(addResult(speed, nameMethod));
 
         /* тестирование скорости выполнения сортировки через switch, когда каждый метод запускается и выолняется единолично
-        * и только после выполнения предыдущего метода запускается следующий */
+         * и только после выполнения предыдущего метода запускается следующий */
 //        for (int i = 0; i < 3; i++) {
 //            switch (i){
 //                case 0:
@@ -224,7 +227,7 @@ public class CollectionsSort {
             /* выделяем место в памяти для переменной methodName */
             methodName = new StringBuilder();
             /* в цикле проверяем каждый символ полученного значения из массива res и если это буква
-            * конкатенируем её в переменную methodName */
+             * конкатенируем её в переменную methodName */
             for (int j = 0; j < re.length(); j++) {
                 char ch = re.charAt(j);
                 if (Character.isAlphabetic(ch)) {
@@ -237,17 +240,18 @@ public class CollectionsSort {
         /* возвращаем результат в метод */
         return finalResult;
     }
+
     /* метод, в котором объединяем результат скорости метода сортировки и имя метода*/
-    static String addResult(long speed, String name){
+    static String addResult(long speed, String name) {
         /* переменной n присваиваем значение максимального количества символов числа long - 19 */
         int n = String.valueOf(Long.MAX_VALUE).length();
         /* строковую переменную str заполняем девятнадцатью нолями и добавляем результат скорости выполнения метода сортировки */
         String str = "0".repeat(n) + speed;
         /* функцией substring определяем индекс, с которого будет возвращена строка
-        * в данном случае берем длину строки str.length() и отнимаем от неё -n (то есть 19) и получаем индекс
-        * далее к полученному значению конкатенируем вертикальную черту и имя метода
-        * (вертикальная черта сугубо для наглядности и никакого функционала не несёт ) */
-        str = str.substring(str.length()-n) + "|" + name;
+         * в данном случае берем длину строки str.length() и отнимаем от неё -n (то есть 19) и получаем индекс
+         * далее к полученному значению конкатенируем вертикальную черту и имя метода
+         * (вертикальная черта сугубо для наглядности и никакого функционала не несёт ) */
+        str = str.substring(str.length() - n) + "|" + name;
         return str;
     }
 

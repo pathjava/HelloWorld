@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryHeap<T extends Comparable<T>> {
-    public enum Type {MAX_HEAP, MIN_HEAP};
+    public enum Type {MAX_HEAP, MIN_HEAP}
+
+    ;
 
     private List<T> list;
     private Type type;
@@ -94,7 +96,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 
     public List<T> sort() {
         List<T> sorted = new ArrayList<>();
-        for (int i=0; size() > 0; i++) {
+        for (int i = 0; size() > 0; i++) {
             sorted.add(poll());
         }
         return sorted;
@@ -102,7 +104,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 
     public static <T extends Comparable<T>> BinaryHeap<T> from(Type type, List<T> list) {
         BinaryHeap<T> heap = new BinaryHeap<>(type);
-        for(T item: list) {
+        for (T item : list) {
             heap.add(item);
         }
         return heap;
@@ -110,19 +112,19 @@ public class BinaryHeap<T extends Comparable<T>> {
 
     public static <T extends Comparable<T>> BinaryHeap<T> from(Type type, T[] array) {
         BinaryHeap<T> heap = new BinaryHeap<>(type);
-        for(T item: array) {
+        for (T item : array) {
             heap.add(item);
         }
         return heap;
     }
 
-    public static <T extends Comparable<T>> BinaryHeap<T> of(Type type, T...array) {
+    public static <T extends Comparable<T>> BinaryHeap<T> of(Type type, T... array) {
         return from(type, array);
     }
 
     public static <T extends Comparable<T>> void sort(Type type, T[] array) {
         BinaryHeap<T> heap = from(type, array);
-        for (int i=0; heap.size() > 0; i++) {
+        for (int i = 0; heap.size() > 0; i++) {
             array[i] = heap.poll();
         }
     }

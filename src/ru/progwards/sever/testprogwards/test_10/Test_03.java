@@ -3,10 +3,10 @@ package ru.progwards.sever.testprogwards.test_10;
 import java.util.Arrays;
 
 public class Test_03 {
-    String invertWords(String sentence){
+    String invertWords(String sentence) {
         StringBuilder strResult = new StringBuilder();
         String[] wordsArr = sentence.split(" ");
-        for (int i = wordsArr.length - 1; i >= 0; i--){
+        for (int i = wordsArr.length - 1; i >= 0; i--) {
             strResult.append(wordsArr[i]);
             if (i > 0) strResult.append('.');
         }

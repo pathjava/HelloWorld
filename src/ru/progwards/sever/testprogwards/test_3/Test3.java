@@ -1,7 +1,10 @@
 // Oleg Kiselev
+// 06.11.2020, 18:02
+
+// Oleg Kiselev
 // 06.05.2020, 14:50
 
-package ru.progwards.sever.testprogwards;
+package ru.progwards.sever.testprogwards.test_3;
 
 //public class Test3 {
 //    public static void main(String[] args) {
@@ -28,7 +31,7 @@ public class Test3 {
         this.name = name;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Test3 user = new Test3(879745, "John");
         SpecificUser specificUser = new SpecificUser("1AAAA", 877777, "Jim");
         Test3 anotherSpecificUser = new SpecificUser("1BBBB", 812345, "Jenny");

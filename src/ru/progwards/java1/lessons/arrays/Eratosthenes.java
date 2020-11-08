@@ -9,21 +9,21 @@ public class Eratosthenes {
 
     private boolean[] sieve;
 
-    public Eratosthenes(int N){
+    public Eratosthenes(int N) {
         this.N = N;
-        sieve = new boolean[N+1];
+        sieve = new boolean[N + 1];
         Arrays.fill(sieve, true);
         sift();
     }
 
-    private void sift(){
+    private void sift() {
         sieve[0] = false;
         sieve[1] = false;
 //        int i = 2;
 //        int j = 2;
-        for (int i = 2; i < sieve.length; i++){
-            if (sieve[i]){
-                for (int j = 2; i * j < sieve.length; ++j){
+        for (int i = 2; i < sieve.length; i++) {
+            if (sieve[i]) {
+                for (int j = 2; i * j < sieve.length; ++j) {
                     sieve[i * j] = false;
                 }
             }
@@ -31,7 +31,7 @@ public class Eratosthenes {
 
     }
 
-    public boolean isSimple(int n){
+    public boolean isSimple(int n) {
         return sieve[n];
     }
 

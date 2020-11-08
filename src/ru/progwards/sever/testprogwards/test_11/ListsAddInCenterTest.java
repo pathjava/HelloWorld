@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListsAddInCenterTest {
-//    static final int ELEMENT_COUNT = 250_000;
+    //    static final int ELEMENT_COUNT = 250_000;
     static final int ELEMENT_COUNT = 25_000;
 
     /* тестирование скорости добавления элементов в середину массивов ArrayList и LinkedList*/

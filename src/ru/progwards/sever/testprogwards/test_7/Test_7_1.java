@@ -10,7 +10,7 @@ public class Test_7_1 {
     }
 
     public double area() {
-        return a*b;
+        return a * b;
     }
 
     @Override

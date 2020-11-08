@@ -9,7 +9,7 @@ public class LineCount {
     public static int calcEmpty(String fileName) {
         int lines = 0;
         int allError = -1;
-        try{
+        try {
             FileReader fileReader = new FileReader(fileName);
             Scanner scanner = new Scanner(fileReader);
             while (scanner.hasNextLine()) {
@@ -18,17 +18,17 @@ public class LineCount {
 //                if (str.isEmpty())
                 /* вариант решения через equals */
 //                if ("".equals(str))
-                if(str.length() == 0) {
+                if (str.length() == 0) {
                     lines++;
                 }
             }
             System.out.println(lines);
             scanner.close();
             fileReader.close();
-          // FileNotFoundException является наследником IOException
-          // и по идее должно хватать указания только IOException
-          // но задача не проходит проверку без указания FileNotFoundException
-          // зачем писать дважды фактически одно и тоже?
+            // FileNotFoundException является наследником IOException
+            // и по идее должно хватать указания только IOException
+            // но задача не проходит проверку без указания FileNotFoundException
+            // зачем писать дважды фактически одно и тоже?
         } catch (FileNotFoundException e) {
             lines = allError;
         } catch (IOException e) {

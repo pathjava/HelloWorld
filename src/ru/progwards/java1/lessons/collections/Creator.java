@@ -21,11 +21,11 @@ public class Creator {
         /* создаем ArrayList типа Integer */
 //        Collection<Integer> fillList = new ArrayList<>();
         /* запускаем цикл, начиная от 2, где в условие i <= (n * 2) n умножаем на 2,
-        * так как количество проходов и соответственно добавленных элементов
-        * регламентируется входящим значением int n, а так как при выявлении четных чисел через (i % 2 == 0)
-        * количество добавленных символов будет в два раза меньше, то значение int n увеличиваем вдвое */
+         * так как количество проходов и соответственно добавленных элементов
+         * регламентируется входящим значением int n, а так как при выявлении четных чисел через (i % 2 == 0)
+         * количество добавленных символов будет в два раза меньше, то значение int n увеличиваем вдвое */
 //        for (int i = 2; i <= (n * 2); i++) {
-                /* проверяем, является ли значение четным и если да, то добавляем его в лист */
+        /* проверяем, является ли значение четным и если да, то добавляем его в лист */
 //            if (i % 2 == 0){
 //                fillList.add(i);
 //            }
@@ -51,7 +51,7 @@ public class Creator {
 //        return fillList;
     }
 
-    public static Collection <Integer> fill3(int n){
+    public static Collection<Integer> fill3(int n) {
         Collection<Integer> fillList = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             /* добавляем элемент со значением i */
@@ -61,9 +61,9 @@ public class Creator {
             /* устанавливаем значение индекса вместо значения последнего элемента*/
             ((ArrayList<Integer>) fillList).set(index, index);
             /* добавляем новый следующий элемент в лист со значением index в квадрате */
-            fillList.add(index*index);
+            fillList.add(index * index);
             /* добавляем новый следующий элемент в лист со значением index в кубе */
-            fillList.add(index*index*index);
+            fillList.add(index * index * index);
         }
         return fillList;
 

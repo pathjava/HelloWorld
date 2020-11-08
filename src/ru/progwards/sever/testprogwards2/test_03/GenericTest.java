@@ -64,7 +64,7 @@ public class GenericTest {
 
         //-------------------------
 
-        System.out.println(compare(1,2));
+        System.out.println(compare(1, 2));
         System.out.println(compare("Петя", "Вася"));
         System.out.println(compare(CompareResult.GREATER, CompareResult.GREATER));
     }

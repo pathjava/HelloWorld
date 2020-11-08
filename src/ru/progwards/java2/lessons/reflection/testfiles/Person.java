@@ -53,7 +53,7 @@ public class Person {
         return height;
     }
 
-    private static void testMethod(){
+    private static void testMethod() {
 
     }
 }

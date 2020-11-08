@@ -12,7 +12,7 @@ public class LinkedListAsStack {
         }
 
         Integer current = stack.poll();
-        while (current != null){
+        while (current != null) {
             System.out.println("Take from stack " + current);
             current = stack.poll();
         }

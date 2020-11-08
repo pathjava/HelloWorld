@@ -1,10 +1,10 @@
 package ru.progwards.sever.testprogwards.test_9;
 
 public class Test_01 {
-    public Integer sqr(Integer n){
-        try{
+    public Integer sqr(Integer n) {
+        try {
             return (int) Math.pow(n, 2);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return -1;
         }
     }

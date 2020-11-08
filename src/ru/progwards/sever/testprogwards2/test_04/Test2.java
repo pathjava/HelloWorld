@@ -3,6 +3,7 @@ package ru.progwards.sever.testprogwards2.test_04;
 public class Test2 {
     public static class MyItem extends EList.ListItem {
         int num;
+
         MyItem(int num) {
             this.num = num;
         }
@@ -14,7 +15,7 @@ public class Test2 {
         list.add(new MyItem(1));
         list.add(new MyItem(5));
         MyItem current = (MyItem) list.getHead();
-        while(current != null) {
+        while (current != null) {
             System.out.println(current.num);
             current = (MyItem) current.getNext();
         }

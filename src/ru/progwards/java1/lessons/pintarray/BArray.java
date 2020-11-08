@@ -23,7 +23,7 @@ public class BArray<T extends Object> {
     }
 
     void copyData(T[] src, Object[] dst) {
-        for(int i=0; i<src.length; i++)
+        for (int i = 0; i < src.length; i++)
             dst[i] = src[i];
     }
 

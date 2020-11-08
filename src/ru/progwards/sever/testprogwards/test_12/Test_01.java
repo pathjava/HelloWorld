@@ -7,9 +7,9 @@ import java.util.Set;
 
 public class Test_01 {
 
-    public Set<Integer> a2set(int[] a){
+    public Set<Integer> a2set(int[] a) {
         Set<Integer> arraySet = new HashSet<>();
-        for(int arr : a){
+        for (int arr : a) {
             arraySet.add(arr);
         }
         return arraySet;

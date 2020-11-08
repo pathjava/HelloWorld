@@ -15,7 +15,6 @@ public class Cow extends Animal {
     }
 
     /**
-     *
      * @throws RuntimeException исключение, так как коровы не летают
      */
     @Override
@@ -24,9 +23,8 @@ public class Cow extends Animal {
     }
 
     /**
-     *
      * @return удойность коровы
-     * @exception ArithmeticException вес коровы не может быть меньше 0
+     * @throws ArithmeticException вес коровы не может быть меньше 0
      */
     public double milkForWeight() {
         if (weight <= 0)

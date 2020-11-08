@@ -9,16 +9,16 @@ public class ATest {
         BIntArray a2 = new BIntArray(1000);
 
         long start = System.currentTimeMillis();
-        for(int i=0; i<count1; i++)
+        for (int i = 0; i < count1; i++)
             a1.add(i);
         long middle = System.currentTimeMillis();
-        for(int i=0; i<count1; i++)
+        for (int i = 0; i < count1; i++)
             a2.add(i);
         long stop = System.currentTimeMillis();
 
-        for(int i=0; i<count1; i++)
-        System.out.println(i+" "+a1.get(i)+" "+a1.get(i));
-        System.out.println("DIntArray add time ="+(middle-start));
-        System.out.println("BIntArray add time ="+(stop-middle));
+        for (int i = 0; i < count1; i++)
+            System.out.println(i + " " + a1.get(i) + " " + a1.get(i));
+        System.out.println("DIntArray add time =" + (middle - start));
+        System.out.println("BIntArray add time =" + (stop - middle));
     }
 }

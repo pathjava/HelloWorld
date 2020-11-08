@@ -9,7 +9,7 @@ public class AlwaysExceptions implements AutoCloseable {
         this.id = id;
     }
 
-    public void method() throws IOException{
+    public void method() throws IOException {
         throw new IOException(this + ": exception from method");
     }
 

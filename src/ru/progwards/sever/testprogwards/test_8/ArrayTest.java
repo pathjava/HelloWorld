@@ -11,21 +11,26 @@ public class ArrayTest {
         digits = new byte[n];
         clear(n);
     }
+
     ArrayTest(int n) {
         digits = new byte[n];
         clear(n);
     }
+
     ArrayTest(String value) {
         this();
         fromString(value);
     }
+
     private void clear() {
         clear(signif);
     }
+
     private void clear(int count) {
         for (int i = 0; i < count; i++) digits[i] = 0;
         signif = 0;
     }
+
     void fromString(String value) {
         char[] s = value.toCharArray();
         int sig = s.length;
@@ -39,21 +44,24 @@ public class ArrayTest {
         }
         signif = sig;
     }
+
     void fromInt(BigDecimal value) {
         fromString(value.toString());
     }
+
     BigDecimal toInt() {
         char[] s = new char[signif];
         for (int i = signif - 1, k = 0; i >= 0; i--, k++) {
-            s[i] = (char)((digits[k] + '0') & 0xFF);
+            s[i] = (char) ((digits[k] + '0') & 0xFF);
         }
         return new BigDecimal(s);
     }
 
-    boolean raiseCalcError(){
+    boolean raiseCalcError() {
         clear(digits.length);
         return false;
     }
+
     boolean add(ArrayTest num) {
         int sigMax = num.signif >= signif ? num.signif : signif; // max significant
         int l = digits.length;
@@ -80,7 +88,7 @@ public class ArrayTest {
 
     @Override
     public String toString() {
-        byte[] r = new byte [signif];
+        byte[] r = new byte[signif];
         for (int i = signif - 1, k = 0; i >= 0; i--, k++) {
             r[k] = (byte) (digits[i] + '0');
         }

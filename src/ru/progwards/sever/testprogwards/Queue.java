@@ -13,15 +13,17 @@ public class Queue {
         putLoc = 0;
         getLoc = 0;
     }
-    void put(char ch){
-        if (putLoc == q.length){
+
+    void put(char ch) {
+        if (putLoc == q.length) {
             System.out.println(" - очередь заполнена");
             return;
         }
         q[putLoc++] = ch;
     }
-    char get(){
-        if (getLoc == putLoc){
+
+    char get() {
+        if (getLoc == putLoc) {
             System.out.println(" - очередь пустая");
             return (char) 0;
         }
@@ -35,18 +37,18 @@ public class Queue {
         int i;
 
         System.out.println("использование очереди bigQ для сохраненя алфавита");
-        for (i = 0; i < 26; i++){
+        for (i = 0; i < 26; i++) {
             bigQ.put((char) ('A' + i));
         }
         System.out.print("содержимое очереди bigQ: ");
-        for (i = 0; i < 26; i++){
+        for (i = 0; i < 26; i++) {
             ch = bigQ.get();
             if (ch != (char) 0) System.out.print(ch);
         }
         System.out.println("\n");
 
         System.out.println("использование очереди smallQ для генерации ошибок");
-        for (i = 0; i < 5; i++){
+        for (i = 0; i < 5; i++) {
             System.out.print("попытка сохранения " + (char) ('Z' - i));
             smallQ.put((char) ('Z' - i));
             System.out.println();
@@ -54,7 +56,7 @@ public class Queue {
         System.out.println();
 
         System.out.print("содержимое очереди smallQ: ");
-        for (i = 0; i < 5; i++){
+        for (i = 0; i < 5; i++) {
             ch = smallQ.get();
 
             if (ch != (char) 0) System.out.print(ch);

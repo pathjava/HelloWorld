@@ -18,6 +18,6 @@ public class SHashTable<T> {
 
     T get(int key) {
         int index = getHash(key);
-        return (T)table[index];
+        return (T) table[index];
     }
 }

@@ -7,6 +7,7 @@ public class Rectangle {
         this.a = a;
         this.b = b;
     }
+
     public BigDecimal a;
     public BigDecimal b;
 

@@ -15,10 +15,10 @@ public class SortTestStr {
         String line;
         List<String> strings = new ArrayList<>();
         try {
-            BufferedReader bufferreader = new BufferedReader(new FileReader("wiki.train.tokens" ));
+            BufferedReader bufferreader = new BufferedReader(new FileReader("wiki.train.tokens"));
             while ((line = bufferreader.readLine()) != null) {
                 String s[] = line.split("[ :\".,!<>{}=]");
-                for (String str: s) {
+                for (String str : s) {
                     str = str.trim();
                     if (str.length() > 0) {
                         strings.add(str);
@@ -38,7 +38,7 @@ public class SortTestStr {
 
     static String[] copy(String[] src) {
         String[] res = new String[src.length];
-        for(int i=0; i < src.length; i++)
+        for (int i = 0; i < src.length; i++)
             res[i] = src[i];
         return res;
     }
@@ -47,8 +47,8 @@ public class SortTestStr {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         SelectionSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("selection sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("selection sort: " + sort);
     }
 
     static void heap(String[] org) {
@@ -58,8 +58,8 @@ public class SortTestStr {
         BinaryHeap<String> heap = BinaryHeap.from(BinaryHeap.Type.MIN_HEAP, a);
         heap.sort();
 //        heap.sort(a);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("heap sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("heap sort: " + sort);
     }
 
     static void tree(String[] org) throws TreeException {
@@ -68,46 +68,46 @@ public class SortTestStr {
         long start = System.currentTimeMillis();
         BinaryTree<String, String> tree = new BinaryTree<>();
         tree.process(sorted::add);
-        for(String n: org)
+        for (String n : org)
             tree.add(n, n);
         tree.process(sorted::add);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("tree sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("tree sort: " + sort);
     }
 
     static void bubble(String[] org) {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         BubbleSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
+        long sort = System.currentTimeMillis() - start;
 
-        System.out.println("bubble sort: "+sort);
+        System.out.println("bubble sort: " + sort);
     }
 
     static void shaker(String[] org) {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         ShakerSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
+        long sort = System.currentTimeMillis() - start;
 
-        System.out.println("shaker sort: "+sort);
+        System.out.println("shaker sort: " + sort);
     }
 
     static void comb(String[] org) {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         CombSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
+        long sort = System.currentTimeMillis() - start;
 
-        System.out.println("comb sort: "+sort);
+        System.out.println("comb sort: " + sort);
     }
 
     static void insertion(String[] org) {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         InsertionSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("insertion sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("insertion sort: " + sort);
 
 //        long start = System.currentTimeMillis();
 //        InsertionSort.sort2(a);
@@ -124,8 +124,8 @@ public class SortTestStr {
 //        a = copy(org);
         long start = System.currentTimeMillis();
         QuickSort.sort2(a);
-        long sort2 = System.currentTimeMillis()-start;
-        System.out.println("quick sort2: "+sort2);
+        long sort2 = System.currentTimeMillis() - start;
+        System.out.println("quick sort2: " + sort2);
         //System.out.println(Arrays.toString(a));
     }
 
@@ -133,8 +133,8 @@ public class SortTestStr {
         String[] a = copy(org);
         long start = System.currentTimeMillis();
         ShellSort.sort(a);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("shell sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("shell sort: " + sort);
         //System.out.println(Arrays.toString(a));
     }
 
@@ -143,8 +143,8 @@ public class SortTestStr {
         long start = System.currentTimeMillis();
 
         Arrays.sort(a);
-        long sort = System.currentTimeMillis()-start;
-        System.out.println("arrays sort: "+sort);
+        long sort = System.currentTimeMillis() - start;
+        System.out.println("arrays sort: " + sort);
     }
 
     public static void main(String[] args) throws TreeException {

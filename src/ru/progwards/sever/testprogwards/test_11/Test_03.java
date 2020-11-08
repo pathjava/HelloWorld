@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Test_03 {
-    public static void iterator3(ListIterator<Integer> iterator){
+    public static void iterator3(ListIterator<Integer> iterator) {
         // методом iterator.hasNext() проверяем, есть ли следующий элемент
         while (iterator.hasNext()) {
             // если метод выше определил наличие элемента

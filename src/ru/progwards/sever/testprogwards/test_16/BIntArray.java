@@ -13,7 +13,7 @@ public class BIntArray {
 
     public void add(int item) {
         if (size == array.length) {
-            int[] newArray = new int[array.length+blockSize];
+            int[] newArray = new int[array.length + blockSize];
             copyData(array, newArray);
             array = newArray;
             size = 0;
@@ -22,7 +22,7 @@ public class BIntArray {
     }
 
     void copyData(int[] src, int[] dst) {
-        for(int i=0; i<src.length; i++)
+        for (int i = 0; i < src.length; i++)
             dst[i] = src[i];
     }
 

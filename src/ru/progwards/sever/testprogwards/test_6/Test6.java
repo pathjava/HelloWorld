@@ -10,7 +10,7 @@ class Test6 {
     }
 
     public double area() {
-        return a*b;
+        return a * b;
     }
 
     @Override
@@ -42,14 +42,12 @@ class Test6 {
         Test6 g1 = new Test6(3.0, 2.0);
         Test6 g2 = new Test6(2.0, 3.0);
 
-        if(g1.hashCode() == g2.hashCode())
-        {
-            if(g1.equals(g2))
+        if (g1.hashCode() == g2.hashCode()) {
+            if (g1.equals(g2))
                 System.out.println("Both Objects are equal. ");
             else
                 System.out.println("Both Objects are not equal. ");
-        }
-        else
+        } else
             System.out.println("Both Objects are not equal. ");
     }
 }

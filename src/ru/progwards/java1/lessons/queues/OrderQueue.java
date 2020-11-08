@@ -10,25 +10,25 @@ public class OrderQueue {
     ArrayDeque<Order> firstQueue = new ArrayDeque<>();
 
     /* метод, отвечающий за добавление заказов в очередь ArrayDeque */
-    public void add(Order order){
+    public void add(Order order) {
         /* проверяем сумму заказа и помещаем заказ в соответствующую очередь */
-        if (order.getSum() > 0 && order.getSum() <= 10000.0){
+        if (order.getSum() > 0 && order.getSum() <= 10000.0) {
             thirdQueue.offer(order);
-        } else if (order.getSum() > 10000.0 && order.getSum() <= 20000.0){
+        } else if (order.getSum() > 10000.0 && order.getSum() <= 20000.0) {
             secondQueue.offer(order);
         } else
             firstQueue.offer(order);
     }
 
     /* метод, отвечающий за получение/вывод заказа */
-    public Order get(){
+    public Order get() {
         /* если первая очередь не пустая, извлекаем первый заказ в очереди и возвращаем его в метод */
-        if (!firstQueue.isEmpty()){
+        if (!firstQueue.isEmpty()) {
             return firstQueue.poll();
             /* если первая очередь дошла до конца и пустая, переходим ко второй очереди и т.д. */
-        } else if (!secondQueue.isEmpty()){
+        } else if (!secondQueue.isEmpty()) {
             return secondQueue.poll();
-        } else if (!thirdQueue.isEmpty()){
+        } else if (!thirdQueue.isEmpty()) {
             return thirdQueue.poll();
         }
         /* когда все очереди заказов пустые, возвращаем null */
@@ -71,7 +71,7 @@ public class OrderQueue {
 //        orderQueue.add(new Order(27393.0));
 
         Order order = orderQueue.get();
-        while (order != null){
+        while (order != null) {
             System.out.println(order);
             order = orderQueue.get();
         }

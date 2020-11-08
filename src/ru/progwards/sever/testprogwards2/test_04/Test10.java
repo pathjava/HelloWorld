@@ -6,12 +6,11 @@ public class Test10 {
     static final double A = 0.6180339887;
 
     static int hash(int k) {
-        double d = A*k;
-        return (int)(N*(d-Math.floor(d)));
+        double d = A * k;
+        return (int) (N * (d - Math.floor(d)));
     }
 
-    static long RSHash (String str)
-    {
+    static long RSHash(String str) {
         long b = 378551;
         long a = 63689;
         long hash = 0;

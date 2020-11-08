@@ -7,18 +7,18 @@ public class StackCalc {
     ArrayDeque<Double> arrayDeque = new ArrayDeque<>();
 
     /* заполняем массив, он же стек */
-    public void push(double value){
+    public void push(double value) {
         arrayDeque.push(value);
     }
 
     /* если стек не пустой получаем и удаляем верхнее значение в стеке */
-    public double pop(){
+    public double pop() {
         return arrayDeque.pop();
     }
 
     /* заводим две переменные, проверяем не пустой ли стек и извлекаем из него
-    * первые значения по очереди, помещая их в переменные */
-    public void add(){
+     * первые значения по очереди, помещая их в переменные */
+    public void add() {
         double one = 0;
         double two = 0;
         if (!arrayDeque.isEmpty()) {
@@ -31,7 +31,7 @@ public class StackCalc {
         arrayDeque.push(one + two);
     }
 
-    public void sub(){
+    public void sub() {
         double one = 0;
         double two = 0;
         if (!arrayDeque.isEmpty()) {
@@ -44,7 +44,7 @@ public class StackCalc {
         arrayDeque.push(two - one);
     }
 
-    public void mul(){
+    public void mul() {
         double one = 0;
         double two = 0;
         if (!arrayDeque.isEmpty()) {
@@ -57,7 +57,7 @@ public class StackCalc {
         arrayDeque.push(one * two);
     }
 
-    public void div(){
+    public void div() {
         double one = 0;
         double two = 0;
         if (!arrayDeque.isEmpty()) {
@@ -73,7 +73,7 @@ public class StackCalc {
 
     public static void main(String[] args) {
         /* создаем массив и заполняем его значениями */
-        ArrayDeque<Double> arrDeq = new ArrayDeque<>(List.of(10.2,45.11,14.124,28.1,5.783,15.02,20.154));
+        ArrayDeque<Double> arrDeq = new ArrayDeque<>(List.of(10.2, 45.11, 14.124, 28.1, 5.783, 15.02, 20.154));
 
         /* создаем объект класса */
         StackCalc calc = new StackCalc();

@@ -9,17 +9,17 @@ public class Translator {
         this.outLang = outLang;
     }
 
-    public String translate(String sentence){
+    public String translate(String sentence) {
         StringBuilder stringBuilders = new StringBuilder();
         /*разбиваем предложение по словам, пробелам и знакам препинания и размещаем в отдельные ячейки массива*/
         String[] tempArr = sentence.split("(?<=\\b|[^\\p{L}])");
         for (int i = 0; i < tempArr.length; i++) {
             /*проверяем, является ли символ под индексом 0 буквой и если да, запускаем проверку*/
             char temp = tempArr[i].charAt(0);
-            if (Character.isAlphabetic(temp)){
+            if (Character.isAlphabetic(temp)) {
                 for (int j = 0; j < inLang.length; j++) {
                     /*проверяем первый символ каждого слова из строки sentence - Заглавный или строчный*/
-                    if (tempArr[i].toLowerCase().equals(inLang[j])){
+                    if (tempArr[i].toLowerCase().equals(inLang[j])) {
                         char chTemp = tempArr[i].charAt(0);
                         /*если Заглавный, то в методе FirstUpperCase делаем первую букву слова из outLang[j] Заглавной*/
                         tempArr[i] = Character.isUpperCase(chTemp) ? FirstUpperCase(outLang[j]) : outLang[j];
@@ -31,7 +31,7 @@ public class Translator {
         return stringBuilders.toString();
     }
 
-    public static String FirstUpperCase(String outLang){
+    public static String FirstUpperCase(String outLang) {
         return outLang.substring(0, 1).toUpperCase() + outLang.substring(1);
     }
 

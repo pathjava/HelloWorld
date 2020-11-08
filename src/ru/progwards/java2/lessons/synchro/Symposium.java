@@ -66,8 +66,8 @@ public class Symposium {
         return philosophers.stream().mapToInt(philosopher -> (int) philosopher.getEatSum()).sum();
     }
 
-    private int getPercent(long sumPhilosopher, long sumTotal) {
-        return (int) ((sumPhilosopher * 100) / sumTotal);
+    private double getPercent(long sumPhilosopher, long sumTotal) {
+        return ((sumPhilosopher * 100.0) / sumTotal);
     }
 
 

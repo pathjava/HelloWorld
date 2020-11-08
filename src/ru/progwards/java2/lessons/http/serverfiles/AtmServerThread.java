@@ -22,7 +22,7 @@ public class AtmServerThread implements Runnable {
     private final Socket socket;
     private String methodName;
     private String answer;
-//    private final StoreServiceImpl service = new StoreServiceImpl(); /* аккаунты из памяти */
+    //    private final StoreServiceImpl service = new StoreServiceImpl(); /* аккаунты из памяти */
     private final FileStoreServiceImpl service = new FileStoreServiceImpl(); /* аккаунты из файла Json */
     private final AccountServiceImpl asi = new AccountServiceImpl(service);
     private final List<String> methodParamValue = new ArrayList<>();

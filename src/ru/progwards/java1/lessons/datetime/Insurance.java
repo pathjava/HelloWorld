@@ -45,7 +45,7 @@ public class Insurance {
 
     public void setDuration(int months, int days, int hours) {
         /* прибавляем к дате начала действия страховки количество месяцев, дней и часов и
-        * отправляем полученную дату для рассчета продолжительности в метод выше */
+         * отправляем полученную дату для рассчета продолжительности в метод выше */
         ZonedDateTime endDate = start.plusMonths(months).plusDays(days).plusHours(hours);
         setDuration(endDate);
     }
@@ -59,8 +59,8 @@ public class Insurance {
                 break;
             case LONG:
                 /* получаем дату в формате "0000-01-01T00:00:00", которая означает продолжительность 1 месяц и 1 день.
-                * парсим дату из текстового формата и далее поочередно выдергивая значения - количество лет, месяцев, дней, часов и т.д.
-                * приплюссовываем к стартовой дате */
+                 * парсим дату из текстового формата и далее поочередно выдергивая значения - количество лет, месяцев, дней, часов и т.д.
+                 * приплюссовываем к стартовой дате */
                 ZonedDateTime inputDateTime = ZonedDateTime.parse(strDuration, DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneOffset.UTC));
                 ZonedDateTime endDateTime = start.plusYears(inputDateTime.getYear()).
                         plusMonths(inputDateTime.getMonthValue()).
@@ -84,14 +84,14 @@ public class Insurance {
         long longDateTime = dateTime.toEpochSecond();
 
         /* если проверочная дата меньше даты начала, то есть, до того как страховка начала действовать, возвращаем ложь */
-        if (longDateTime < longStart){
+        if (longDateTime < longStart) {
             return false;
-        /* если продолжительность ровна нулю, значит страховка бессрочная и возвращаем истину */
-        } else if (duration == null){
+            /* если продолжительность ровна нулю, значит страховка бессрочная и возвращаем истину */
+        } else if (duration == null) {
             return true;
-        /* если проверочная дата меньше даты окончания страховки, возвращается истина, если больше, то возвращается ложь */
+            /* если проверочная дата меньше даты окончания страховки, возвращается истина, если больше, то возвращается ложь */
         } else
-        return longDateTime <= (start.plus(duration)).toEpochSecond();
+            return longDateTime <= (start.plus(duration)).toEpochSecond();
     }
 
     @Override

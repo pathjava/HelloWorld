@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class CharFilter {
     public static void filterFile(String inFileName, String outFileName, String filter) {
-        try{
+        try {
             FileReader fileReader = new FileReader(inFileName);
             Scanner scanner = new Scanner(fileReader);
             FileWriter fileWriter = new FileWriter(outFileName);
@@ -16,14 +16,14 @@ public class CharFilter {
 //                str.toCharArray()
                 // это рабочий вариант через регулярное выражение, но в нем нет гибкости применения
 //                str = str.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
-                for (int i = 0; i < filter.length(); i++){
+                for (int i = 0; i < filter.length(); i++) {
                     str = str.replace(String.valueOf(filter.charAt(i)), "");
                 }
                 fileWriter.write(str);
                 scanner.close();
                 fileWriter.close();
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }

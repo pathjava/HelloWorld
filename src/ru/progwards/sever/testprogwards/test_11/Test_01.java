@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Collection;
 
 public class Test_01 {
-    public List<Integer> listAction(List<Integer> list){
+    public List<Integer> listAction(List<Integer> list) {
         list.remove(Collections.min(list));
         list.add(0, list.size());
         list.add(2, Collections.max(list));
@@ -19,7 +19,7 @@ public class Test_01 {
 //        for(int i=0; i<5; i++)
 //            list.add(i);
 
-        for(int i=5; i>0; i--)
+        for (int i = 5; i > 0; i--)
             list.add(i);
 
         System.out.println(list);

@@ -3,10 +3,10 @@ package ru.progwards.sever.testprogwards.test_10;
 import java.io.RandomAccessFile;
 
 public class Test_04 {
-    public String setStars(String filename){
-        int starInsert = (int)'*';
+    public String setStars(String filename) {
+        int starInsert = (int) '*';
         StringBuilder result = new StringBuilder();
-        try (RandomAccessFile file = new RandomAccessFile(filename,"rw")){
+        try (RandomAccessFile file = new RandomAccessFile(filename, "rw")) {
             long sumBytes = file.length();
 //            for (long i = 9; i < sumBytes; i += 10){
 //                file.seek(i);
@@ -17,7 +17,7 @@ public class Test_04 {
             long i = 9;
             while (i < sumBytes) {
                 file.seek(i);
-                result.append((char)file.read());
+                result.append((char) file.read());
                 file.seek(i);
                 file.write(starInsert);
                 i += 10;

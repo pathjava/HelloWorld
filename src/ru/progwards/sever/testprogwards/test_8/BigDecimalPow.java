@@ -8,12 +8,13 @@ public class BigDecimalPow {
         BigDecimal b = new BigDecimal(1.5);
         BigInteger e = new BigInteger("325322");
         BigDecimal result = pow(b, e);
-        System.out.println("Done "+result.scale());
+        System.out.println("Done " + result.scale());
         System.out.println(result);
     }
 
     /**
      * Computes d to the power of e
+     *
      * @param b The value
      * @param e The exponent
      * @return The power

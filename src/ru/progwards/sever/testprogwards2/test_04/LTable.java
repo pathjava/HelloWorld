@@ -24,7 +24,7 @@ public class LTable<T> {
         }
 
         public String toString() {
-            return key+":"+item.toString();
+            return key + ":" + item.toString();
         }
 
     }
@@ -43,25 +43,25 @@ public class LTable<T> {
     public void add(int key, T item) {
         int index = getHash(key);
         int i = 0;
-        while (table[index+i] != null) {
+        while (table[index + i] != null) {
             i++;
-            if (index+i >= table.length || i >= depth)
+            if (index + i >= table.length || i >= depth)
                 throw new ArrayIndexOutOfBoundsException();
         }
-        table[index+i] = new TableItem<T>(key, item);
+        table[index + i] = new TableItem<T>(key, item);
     }
 
     public T get(int key) {
         int index = getHash(key);
         int i = 0;
-        while (table[index+i] != null && ((TableItem<T>)(table[index+i])).getKey() != key) {
+        while (table[index + i] != null && ((TableItem<T>) (table[index + i])).getKey() != key) {
             i++;
-            if (index+i >= table.length || i >= depth)
+            if (index + i >= table.length || i >= depth)
                 return null;
         }
-        if (table[index+i] == null)
+        if (table[index + i] == null)
             return null;
-        return ((TableItem<T>)(table[index+i])).getItem();
+        return ((TableItem<T>) (table[index + i])).getItem();
     }
 
     public String toString() {

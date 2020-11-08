@@ -27,7 +27,7 @@ public class DivSimpleCalculatorTest {
     }
 
     @AfterClass
-    public static void removeInstance(){
+    public static void removeInstance() {
         simpleCalculator = null;
     }
 

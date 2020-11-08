@@ -48,17 +48,17 @@ public class BTree<K extends Comparable<K>, V> {
             return maxSize == keys.length;
         }
 
-        void moveTo(Page<K,V> page, int from) {
-            int n = keys.length-from+1;
+        void moveTo(Page<K, V> page, int from) {
+            int n = keys.length - from + 1;
             System.arraycopy(page.keys, from, keys, 0, n);
             System.arraycopy(page.values, from, values, 0, n);
-            System.arraycopy(page.children, from, children, 0, n+1);
+            System.arraycopy(page.children, from, children, 0, n + 1);
         }
 
         void splitPage() {
-            int middle = keys.length/2+1;
+            int middle = keys.length / 2 + 1;
             Page<K, V> newpage = new Page<>();
-            newpage.moveTo(this, middle+1);
+            newpage.moveTo(this, middle + 1);
             parent.addItem(-1, keys[middle], values[middle], newpage);
             maxSize--;
         }
@@ -68,10 +68,10 @@ public class BTree<K extends Comparable<K>, V> {
 
     public V find(K key) {
         Page cur = root;
-        while(cur != null) {
+        while (cur != null) {
             int i = cur.findKey2(key);
-            if (i < cur.keys.length && key.compareTo((K)cur.keys[i]) == 0)
-                return (V)cur.values[i];
+            if (i < cur.keys.length && key.compareTo((K) cur.keys[i]) == 0)
+                return (V) cur.values[i];
             cur = cur.children[i];
         }
         return null;

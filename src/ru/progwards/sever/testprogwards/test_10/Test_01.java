@@ -7,11 +7,11 @@ public class Test_01 {
     public void doSomething(int n) throws IOException {
     }
 
-    public void test (int n) throws IOException {
+    public void test(int n) throws IOException {
         //Throwable suppressed = null;
         try {
             doSomething(n);
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
             //suppressed = e;
             throw e;

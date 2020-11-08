@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SortLambda{
+public class SortLambda {
 
     // решение, предложенное IDE на основе моего - ниже вариант
-    void sortAndPrint(List<Person> list){
+    void sortAndPrint(List<Person> list) {
         list.sort(Comparator.comparingInt(i -> i.age));
         list.forEach(System.out::println);
     }

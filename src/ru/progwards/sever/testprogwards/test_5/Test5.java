@@ -1,7 +1,10 @@
 // Oleg Kiselev
+// 06.11.2020, 18:01
+
+// Oleg Kiselev
 // 06.05.2020, 14:50
 
-package ru.progwards.sever.testprogwards;
+package ru.progwards.sever.testprogwards.test_5;
 
 import java.math.BigDecimal;
 

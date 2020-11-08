@@ -18,6 +18,7 @@ public class Order {
     public double getSum() {
         return sum;
     }
+
     public int getNum() {
         return num;
     }

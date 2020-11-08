@@ -2,7 +2,7 @@ package ru.progwards.sever.testprogwards.arrays.v2.javatrial;
 
 import java.util.Arrays;
 
-public class BArray<T extends Object> extends DArray{
+public class BArray<T extends Object> extends DArray {
     int size;
     int blockSize;
 
@@ -17,7 +17,7 @@ public class BArray<T extends Object> extends DArray{
         if (array.length == size)
             array = copyData(array.length + blockSize);
         size++;
-        array[size-1] = (T)item;
+        array[size - 1] = (T) item;
     }
 
     @Override

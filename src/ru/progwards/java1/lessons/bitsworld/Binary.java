@@ -3,13 +3,13 @@ package ru.progwards.java1.lessons.bitsworld;
 public class Binary {
     public byte num;
 
-    public Binary(byte num){
+    public Binary(byte num) {
         this.num = num;
     }
 
 //    String result = "";
 
-    public String toString(){
+    public String toString() {
         String result = "";
 
 //        for (int i = 0; i < Byte.SIZE; i++) {

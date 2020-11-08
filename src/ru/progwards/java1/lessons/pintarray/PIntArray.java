@@ -21,7 +21,7 @@ class PIntArray {
     }
 
     void copyData(BArray<int[]> src, Object[] dst) {
-        for(int i=0; i<src.blockSize; i++)
+        for (int i = 0; i < src.blockSize; i++)
             dst[i] = src.get(i)[i];
     }
 

@@ -14,8 +14,8 @@ public class HappyNewYear {
         char[] akey = key.toCharArray();
         String res = "";
         int j = 0;
-        for(int i=0; i<code.length();i+=4) {
-            res += (char)(Integer.parseInt(code.substring(i, i+4))^akey[j++]);
+        for (int i = 0; i < code.length(); i += 4) {
+            res += (char) (Integer.parseInt(code.substring(i, i + 4)) ^ akey[j++]);
             if (j == akey.length)
                 j = 0;
         }

@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Test_02 {
-    boolean replaceF(String name){
+    boolean replaceF(String name) {
         String oldContent;
         String newContent;
         Path path = Paths.get(name);

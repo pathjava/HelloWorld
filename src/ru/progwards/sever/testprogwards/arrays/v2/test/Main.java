@@ -28,11 +28,11 @@ public class Main {
 
     static void testArray(AArray a, DArray.CopyType copy) {
         Date start = new Date();
-        for(int i=0; i<count2; i++)
+        for (int i = 0; i < count2; i++)
             a.add(i);
         Date stop = new Date();
         //for(int i=0; i<count1*11; i++)
         //    System.out.println(i+" "+a.get(i));
-        System.out.println(a.getClass().getName()+" "+copy+" add time ="+(stop.getTime()-start.getTime()));
+        System.out.println(a.getClass().getName() + " " + copy + " add time =" + (stop.getTime() - start.getTime()));
     }
 }

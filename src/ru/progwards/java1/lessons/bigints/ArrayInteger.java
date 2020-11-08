@@ -7,11 +7,11 @@ public class ArrayInteger {
     int digitsNum = 0;
     boolean signNegative = false;
 
-    ArrayInteger(int n){
+    ArrayInteger(int n) {
         digits = new byte[n];
     }
 
-    void fromInt(BigInteger value){
+    void fromInt(BigInteger value) {
         signNegative = value.compareTo(BigInteger.ZERO) < 0;
         value = value.abs();
         digitsNum = 0;
@@ -21,9 +21,9 @@ public class ArrayInteger {
         }
     }
 
-    BigInteger toInt(){
+    BigInteger toInt() {
         BigInteger result = BigInteger.ZERO;
-        for (int i = digitsNum-1; i >= 0; i--) {
+        for (int i = digitsNum - 1; i >= 0; i--) {
             result = result.multiply(BigInteger.TEN);
             result = result.add(BigInteger.valueOf(digits[i]));
         }
@@ -35,12 +35,12 @@ public class ArrayInteger {
 //        signNegative = (num < 0) ? true : false;
         int result = 0;
         int outOfNine = 0;
-        if (digits.length < num.digitsNum){
+        if (digits.length < num.digitsNum) {
             return false;
         }
-        for (int i = 0; i < digits.length; i++){
+        for (int i = 0; i < digits.length; i++) {
             result = digits[i] + (i < num.digits.length ? num.digits[i] : 0) + outOfNine;
-            if (result > 9){
+            if (result > 9) {
                 outOfNine = 1;
                 result -= 10;
             } else {
@@ -48,7 +48,7 @@ public class ArrayInteger {
             }
             digits[i] = (byte) result;
         }
-        if (outOfNine != 0){
+        if (outOfNine != 0) {
             return false;
         }
         return true;

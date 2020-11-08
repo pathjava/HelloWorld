@@ -8,7 +8,7 @@ public class Coder {
         FileReader fileReader = null;
 //        Scanner scanner = null;
         FileWriter fileWriter = null;
-        try{
+        try {
             fileReader = new FileReader(inFileName);
 //            scanner = new Scanner(fileReader);
             fileWriter = new FileWriter(outFileName);
@@ -35,10 +35,10 @@ public class Coder {
 //                fileWriter.close();
 //            }
 
-       } catch (Throwable e){
+        } catch (Throwable e) {
             FileWriter fileWriterLog = null;
             try {
-                fileWriterLog = new  FileWriter(logName, true);
+                fileWriterLog = new FileWriter(logName, true);
                 fileWriterLog.write(e.getMessage());
                 fileWriterLog.close();
             } catch (Throwable e1) {
@@ -75,7 +75,7 @@ public class Coder {
         char[] code = new char[256];
         // заполняем исходящий файл
         for (int i = 0; i < code.length; i++) {
-            code[i] = (char)i;
+            code[i] = (char) i;
         }
         // вызываем ошибку - если в тексте есть цифра, увеличиваем её значение +1
 //        for(int i = 0; i < code.length; i++){

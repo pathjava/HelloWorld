@@ -3,7 +3,7 @@
 
 package ru.progwards.sever.testprogwards;
 
-class Test{
+class Test {
 
     public static int a = 1;
     public static int b = 3;
@@ -15,18 +15,17 @@ class Test{
         System.out.println(value);
 
 
-        int result = - a + b - c + d;
+        int result = -a + b - c + d;
         System.out.println(result);
 
 
     }
 
 
-
     public enum Grade {VERYBAD, BAD, SATISFACTORILY, GOOD, EXCELLENT, NOTDEFINED}
 
-    static Grade intToGrade(int grade){
-        switch (grade){
+    static Grade intToGrade(int grade) {
+        switch (grade) {
             case 1:
                 return Grade.VERYBAD;
             case 2:

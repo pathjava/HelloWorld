@@ -34,6 +34,7 @@ public class StatisticInfo {
     public long getStartTime() {
         return startTime;
     }
+
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
@@ -41,6 +42,7 @@ public class StatisticInfo {
     public long getEndTime() {
         return endTime;
     }
+
     public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
@@ -48,6 +50,7 @@ public class StatisticInfo {
     public int getLevel() {
         return level;
     }
+
     public void setLevel(int level) {
         this.level = level;
     }

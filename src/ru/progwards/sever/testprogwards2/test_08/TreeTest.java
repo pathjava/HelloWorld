@@ -7,10 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TreeTest {
     static final int ITERATIONS = 1000;
+
     public static void main(String[] args) throws TreeException {
         TreeMap<Integer, Integer> map = new TreeMap<>();
         BinaryTree<Integer, String> tree = new BinaryTree<>();
-        for(int i=0; i<ITERATIONS; i++) {
+        for (int i = 0; i < ITERATIONS; i++) {
             int key = ThreadLocalRandom.current().nextInt();
             if (!map.containsKey(key)) {
                 map.put(key, key);
@@ -21,11 +22,11 @@ public class TreeTest {
         //tree.process(System.out::println);
         ArrayList<BinaryTree.TreeLeaf> sorted = new ArrayList<>();
         tree.process(sorted::add);
-        for(BinaryTree.TreeLeaf leaf: sorted) {
+        for (BinaryTree.TreeLeaf leaf : sorted) {
             System.out.println(leaf.toString());
         }
 
-        for(Integer i:map.keySet()) {
+        for (Integer i : map.keySet()) {
             tree.find(i);
             tree.delete(i);
         }

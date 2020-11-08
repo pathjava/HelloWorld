@@ -13,9 +13,9 @@ public class SuppressedExceptions2 {
     }
 
     public static void main(String[] args) {
-        try{
+        try {
             doAlwaysExceptions();
-        } catch (Throwable e){
+        } catch (Throwable e) {
             System.out.println(e.getMessage());
         }
     }
